@@ -16,18 +16,14 @@ typedef struct _masse2D {
   t_float x_f; // random
 } t_masse2D;
 
-extern t_float max(t_float, t_float);
-extern t_float min(t_float, t_float);
-
-
-static int makeseed(void)
+static int makeseed2D(void)
 {
     static unsigned int random_nextseed = 1489853723;
     random_nextseed = random_nextseed * 435898247 + 938284287;
     return (random_nextseed & 0x7fffffff);
 }
 
-static float random_bang(t_masse2D *x)
+static float random_bang2D(t_masse2D *x)
 {
     int nval;
     int range = 2000000;
@@ -143,7 +139,6 @@ void masse2D_bang(t_masse2D *x)
  	x->forceX += x->damp * ((x->posX_old_2)-(x->posX_old_1));
 	x->forceY += x->damp * ((x->posY_old_2)-(x->posY_old_1)); // damping
 
-
   if (x->masse2D != 0)
   {
 	  posX_new = x->forceX/x->masse2D + 2*x->posX_old_1 - x->posX_old_2;
@@ -182,9 +177,13 @@ void masse2D_bang(t_masse2D *x)
   SETFLOAT(&(x->force[1]), x->forceY );
   SETFLOAT(&(x->force[2]), sqrt( (x->forceX * x->forceX) + (x->forceY * x->forceY) ));
  
-  x->forceX=0;
-  x->forceY=0;
-   
+//  x->forceX=0;
+//  x->forceY=0;
+
+  x->forceX = random_bang2D(x)*1e-25;
+  x->forceY = random_bang2D(x)*1e-25; // avoiding denormal problem by adding low amplitude noise
+
+
   x->dX=0;
   x->dY=0;
 
@@ -322,8 +321,8 @@ void masse2D_inter_ambient(t_masse2D *x, t_symbol *s, int argc, t_atom *argv)
 						x->forceX += atom_getfloatarg(0, argc, argv);
 						x->forceY += atom_getfloatarg(1, argc, argv); // constant
 
-						x->forceX += random_bang(x)*atom_getfloatarg(2, argc, argv);
-						x->forceY += random_bang(x)*atom_getfloatarg(3, argc, argv); // random
+						x->forceX += random_bang2D(x)*atom_getfloatarg(2, argc, argv);
+						x->forceY += random_bang2D(x)*atom_getfloatarg(3, argc, argv); // random
 	
 						x->forceX += atom_getfloatarg(4, argc, argv) * ((x->posX_old_2)-(x->posX_old_1));
 						x->forceY += atom_getfloatarg(4, argc, argv) * ((x->posY_old_2)-(x->posY_old_1)); // damping
@@ -688,7 +687,7 @@ void *masse2D_new(t_symbol *s, int argc, t_atom *argv)
   t_masse2D *x = (t_masse2D *)pd_new(masse2D_class);
 
   x->x_sym = atom_getsymbolarg(0, argc, argv);
-  x->x_state = makeseed();
+  x->x_state = makeseed2D();
 
   pd_bind(&x->x_obj.ob_pd, atom_getsymbolarg(0, argc, argv));
 

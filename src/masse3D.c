@@ -3,10 +3,6 @@
 
 static t_class *masse3D_class;
 
-extern t_float max(t_float, t_float);
-extern t_float min(t_float, t_float);
-
-
 typedef struct _masse3D {
   t_object  x_obj;
   t_float posX_old_1, posX_old_2, posY_old_1, posY_old_2, posZ_old_1, posZ_old_2;
@@ -19,6 +15,31 @@ typedef struct _masse3D {
   unsigned int x_state; // random
   t_float x_f; // random
 } t_masse3D;
+
+static int makeseed3D(void)
+{
+    static unsigned int random_nextseed = 1489853723;
+    random_nextseed = random_nextseed * 435898247 + 938284287;
+    return (random_nextseed & 0x7fffffff);
+}
+
+static float random_bang3D(t_masse3D *x)
+{
+    int nval;
+    int range = 2000000;
+	float rnd;
+	unsigned int randval = x->x_state;
+	x->x_state = randval = randval * 472940017 + 832416023;
+    nval = ((double)range) * ((double)randval)
+    	* (1./4294967296.);
+    if (nval >= range) nval = range-1;
+
+	rnd=nval;
+
+	rnd-=1000000;
+	rnd=rnd/1000000.;	//pour mettre entre -1 et 1;
+    return (rnd);
+}
 
 void masse3D_on(t_masse3D *x)
 {
@@ -142,9 +163,9 @@ void masse3D_set_masse3D(t_masse3D *x, t_float mass)
 
 void masse3D_force(t_masse3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
 {
-  x->forceX = x->forceX+f1;
-  x->forceY = x->forceY+f2;
-  x->forceZ = x->forceZ+f3;
+  x->forceX += f1;
+  x->forceY += f2;
+  x->forceZ += f3;
 }
 
 void masse3D_dXYZ(t_masse3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
@@ -288,9 +309,14 @@ void masse3D_bang(t_masse3D *x)
   SETFLOAT(&(x->force[2]), x->forceZ );
   SETFLOAT(&(x->force[3]), sqrt( (x->forceX * x->forceX) + (x->forceY * x->forceY) + (x->forceZ * x->forceZ) ));
  
-  x->forceX=0;
-  x->forceY=0;
-  x->forceZ=0;
+//  x->forceX=0;
+//  x->forceY=0;
+//  x->forceZ=0;
+
+  x->forceX = random_bang3D(x)*1e-25;
+  x->forceY = random_bang3D(x)*1e-25; // avoiding denormal problem by adding low amplitude noise
+  x->forceZ = random_bang3D(x)*1e-25; 
+
 
   x->dX=0;
   x->dY=0;
@@ -369,32 +395,6 @@ void masse3D_resetf(t_masse3D *x)
   x->dY=0;
   x->dZ=0;
 }
-
-static int makeseed3D(void)
-{
-    static unsigned int random_nextseed = 1489853723;
-    random_nextseed = random_nextseed * 435898247 + 938284287;
-    return (random_nextseed & 0x7fffffff);
-}
-
-static float random_bang3D(t_masse3D *x)
-{
-    int nval;
-    int range = 2000000;
-	float rnd;
-	unsigned int randval = x->x_state;
-	x->x_state = randval = randval * 472940017 + 832416023;
-    nval = ((double)range) * ((double)randval)
-    	* (1./4294967296.);
-    if (nval >= range) nval = range-1;
-
-	rnd=nval;
-
-	rnd-=1000000;
-	rnd=rnd/1000000.;	//pour mettre entre -1 et 1;
-    return (rnd);
-}
-
 
 void masse3D_inter_ambient(t_masse3D *x, t_symbol *s, int argc, t_atom *argv)
 {

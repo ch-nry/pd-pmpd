@@ -10,11 +10,35 @@ typedef struct _masse {
   t_float minX, maxX;
   t_outlet *position_new, *vitesse_out, *force_out;
   t_symbol *x_sym; // receive
+  unsigned int x_state; // random
+  t_float x_f; // random
+
 } t_masse;
 
-extern t_float max(t_float, t_float);
-extern t_float min(t_float, t_float);
+static int makeseed(void)
+{
+    static unsigned int random_nextseed = 1489853723;
+    random_nextseed = random_nextseed * 435898247 + 938284287;
+    return (random_nextseed & 0x7fffffff);
+}
 
+static float random_bang(t_masse *x)
+{
+    int nval;
+    int range = 2000000;
+	float rnd;
+	unsigned int randval = x->x_state;
+	x->x_state = randval = randval * 472940017 + 832416023;
+    nval = ((double)range) * ((double)randval)
+    	* (1./4294967296.);
+    if (nval >= range) nval = range-1;
+
+	rnd=nval;
+
+	rnd-=1000000;
+	rnd=rnd/1000000.;	//pour mettre entre -1 et 1;
+    return (rnd);
+}
 
 void masse_minX(t_masse *x, t_floatarg f1)
 {
@@ -52,7 +76,10 @@ void masse_bang(t_masse *x)
   x->pos_old_2 = x->pos_old_1;
   x->pos_old_1 = pos_new;
 
-  x->force = 0;
+//  x->force = 0;
+
+  x->force = random_bang(x)*1e-25; // avoiding denormal problem by adding low amplitude noise
+
   x->dX = 0;
 
 }
@@ -70,6 +97,7 @@ void masse_reset(t_masse *x)
 void masse_resetF(t_masse *x)
 {
   x->force=0;
+
 }
 
 void masse_dX(t_masse *x, t_float posX)
@@ -79,7 +107,7 @@ void masse_dX(t_masse *x, t_float posX)
 
 void masse_setX(t_masse *x, t_float posX)
 {
-  x->pos_old_2 = posX;			// clear hystory for stability (instability) problem
+  x->pos_old_2 = posX;			// clear history for stability (instability) problem
   x->pos_old_1 = posX;
 
   x->force=0;
@@ -125,6 +153,8 @@ void *masse_new(t_symbol *s, t_floatarg M, t_floatarg X)
   x->maxX = 100000;
 
   if (x->masse<=0) x->masse=1;
+
+  makeseed();
 
   return (void *)x;
 }
