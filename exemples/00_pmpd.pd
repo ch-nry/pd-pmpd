@@ -1,0 +1,36 @@
+#N canvas 69 504 385 281 10;
+#X obj 17 29 pmpd;
+#X text 64 28 this object load the pmpd lib in memory.;
+#X text 17 54 you are ready to try the exemples patchs. Please do not
+run 2 exemples in the same time (somes use same send and receive name).
+;
+#N canvas 0 0 297 347 cpu 0;
+#X obj 118 168 cputime;
+#X obj 118 28 loadbang;
+#X obj 118 112 metro 1000;
+#X msg 118 56 1;
+#X floatatom 118 84 0 0 0 0 - - -;
+#X obj 118 140 t b b;
+#X obj 118 228 * 0.1;
+#X obj 118 197 int;
+#X text 163 84 <-- on/off;
+#X text 163 228 CPU load in percent;
+#X obj 118 252 outlet;
+#X connect 0 0 7 0;
+#X connect 1 0 3 0;
+#X connect 2 0 5 0;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X connect 5 0 0 0;
+#X connect 5 1 0 1;
+#X connect 6 0 10 0;
+#X connect 7 0 6 0;
+#X restore 20 212 pd cpu;
+#X floatatom 20 233 5 0 0 0 - - -;
+#X text 17 169 for big patch : look at the cpu used \, you have to
+reduce the simulation speed if your computer is to slow.;
+#X text 17 102 For most exmples \, a recent version of gem is neaded.
+;
+#X text 17 126 exemples are the files begginig with xx_name. xx is
+a number. others files are abstractions used by this examples.;
+#X connect 3 0 4 0;

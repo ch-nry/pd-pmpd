@@ -1,0 +1,12 @@
+#N canvas 705 218 349 316 12;
+#X obj 25 38 inlet;
+#X obj 25 100 outlet;
+#X obj 86 100 unpack s f f f;
+#X obj 25 70 masse3D masse2 \$1 \$2 \$3 \$4;
+#X obj 121 131 pack f f f \$2 \$3;
+#X connect 0 0 3 0;
+#X connect 2 1 4 0;
+#X connect 2 2 4 1;
+#X connect 2 3 4 2;
+#X connect 3 0 1 0;
+#X connect 3 0 2 0;
