@@ -12,13 +12,13 @@ pd_nt: pmpd.dll
 PDNTCFLAGS = /W3 /WX /DNT /DPD /nologo
 VC="C:\Program Files\Microsoft Visual Studio\Vc98"
 
-PDNTINCLUDE = /I. /I\tcl\include /I\pds\win32\pd36\src /I$(VC)\include
+PDNTINCLUDE = /I. /I\tcl\include /I..\..\..\pd\src /I$(VC)\include
 
 PDNTLDIR = $(VC)\lib
 PDNTLIB = $(PDNTLDIR)\libc.lib \
 	$(PDNTLDIR)\oldnames.lib \
 	$(PDNTLDIR)\kernel32.lib \
-	\pds\win32\pd37\bin\pd.lib 
+	..\..\..\pd\bin\pd.lib 
 
 .c.dll:
 	cl $(PDNTCFLAGS) $(PDNTINCLUDE) /c $*.c
@@ -26,7 +26,7 @@ PDNTLIB = $(PDNTLDIR)\libc.lib \
 
 # ----------------------- IRIX 5.x -----------------------
 
-pd_irix5: foo1.pd_irix5 foo2.pd_irix5 dspobj~.pd_irix5
+pd_irix5: pmpd.pd_irix5
 
 .SUFFIXES: .pd_irix5
 
@@ -42,7 +42,7 @@ SGIINCLUDE =  -I../../src/
 
 # ----------------------- IRIX 6.x -----------------------
 
-pd_irix6: foo1.pd_irix6 foo2.pd_irix6 dspobj~.pd_irix6
+pd_irix6: pmpd.pd_irix6
 
 .SUFFIXES: .pd_irix6
 
