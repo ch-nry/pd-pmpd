@@ -1,6 +1,6 @@
-#N canvas 210 246 506 335 10;
+#N canvas 210 246 510 339 10;
 #X obj 23 122 t b b;
-#X obj 23 50 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
+#X obj 23 50 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
 ;
 #X msg 222 144 0 \, destroy;
 #X obj 199 172 gemwin;
@@ -217,6 +217,7 @@ is diferent.;
 #X obj 69 264 iCircle2D masse -3.1 2 0 3 0 0 1 0 0 0 0.1;
 #X text 461 94 <- 1;
 #X text 49 47 <- 2;
+#X text 204 62 houagalss;
 #X connect 0 0 4 0;
 #X connect 0 1 7 0;
 #X connect 0 1 15 0;

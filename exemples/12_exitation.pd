@@ -1,4 +1,4 @@
-#N canvas 120 -1 585 638 12;
+#N canvas 120 0 589 642 12;
 #X obj 32 75 t b b;
 #X obj 32 27 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
 ;
@@ -1776,7 +1776,7 @@
 #X obj 268 260 / 2;
 #X obj 268 284 + 64;
 #X obj 268 309 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 10968 1;
+-1 -1 2447 1;
 #N canvas 931 259 458 308 MP_lfo 0;
 #X obj 84 126 lia lfo-l 0 1 0 0;
 #X obj 67 89 masse lfo-m 1000 100;
@@ -1802,11 +1802,11 @@ main structure. So the main structure is moving.;
 ;
 #X obj 265 140 s \$0-masse;
 #X obj 265 165 s lfo-m;
-#X msg 34 384 \; dsp 1 \;;
-#X msg 99 383 \; dsp 0 \;;
 #X text 32 695 sound is generated with masses position;
 #X text 52 26 <- 1;
 #X text 178 251 <- 2;
+#X msg 33 384 \; pd dsp 1 \;;
+#X msg 137 381 \; pd dsp 0 \;;
 #X connect 0 0 11 0;
 #X connect 0 0 17 0;
 #X connect 0 1 10 0;
