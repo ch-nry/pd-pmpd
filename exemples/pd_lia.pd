@@ -7,7 +7,7 @@
 #X obj 24 186 gemhead;
 #X msg 134 155 \$1 \$2 0;
 #X obj 45 61 lia2D \$1-lia 0 10 2.5 0.001;
-#X obj 26 210 curve2;
+#X obj 26 210 curve 2;
 #X connect 0 0 6 0;
 #X connect 0 0 7 1;
 #X connect 2 0 4 0;
