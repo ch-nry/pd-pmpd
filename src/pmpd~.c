@@ -16,6 +16,13 @@
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
 
+#define nb_max_link   2000
+#define nb_max_mass   2000
+#define nb_max_out    200
+#define nb_max_in     200
+#define nb_max_outlet 20
+#define nb_max_inlet  20 // hard-coded on the methods definition
+
 static t_class *pmpd_tilde_class;
 
 typedef struct _mass {
@@ -31,7 +38,7 @@ typedef struct _link {
 	struct _mass *mass1;
 	struct _mass *mass2;
 	t_float Ke, K1, D1, K2, D2;
-} foo1;
+} foo1 ;
 
 typedef struct _out {
 	// TODO ajouter un type pour diferencier les outlets en forces et celles en position

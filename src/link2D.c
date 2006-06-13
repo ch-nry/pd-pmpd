@@ -1,9 +1,9 @@
 #include "m_pd.h"
 #include "math.h"
 
-static t_class *lia2D_class;
+static t_class *link2D_class;
 
-typedef struct _lia2D {
+typedef struct _link2D {
   t_object  x_obj;
   t_float raideur, viscosite, D2, longueur, distance_old;
   t_float position2Dx1, position2Dx2, posx_old1, posx_old2;
@@ -12,21 +12,21 @@ typedef struct _lia2D {
   t_outlet *force1;
   t_outlet *force2;
   t_symbol *x_sym;  // receive
-} t_lia2D;
+} t_link2D;
 
-void lia2D_position2D(t_lia2D *x, t_floatarg f1, t_floatarg f2)
+void link2D_position2D(t_link2D *x, t_floatarg f1, t_floatarg f2)
 {
   x->position2Dx1 = f1;
   x->position2Dy1 = f2;
 }
 
-void lia2D_position2D2(t_lia2D *x, t_floatarg f1, t_floatarg f2)
+void link2D_position2D2(t_link2D *x, t_floatarg f1, t_floatarg f2)
 {
   x->position2Dx2 = f1;
   x->position2Dy2 = f2;
 }
 
-void lia2D_bang(t_lia2D *x)
+void link2D_bang(t_link2D *x)
 {
   t_float force, force2, forcex1, forcey1, forcex2, forcey2, distance;
   t_atom force1[2];
@@ -77,7 +77,7 @@ void lia2D_bang(t_lia2D *x)
   x->distance_old = distance;
 }
 
-void lia2D_reset(t_lia2D *x)
+void link2D_reset(t_link2D *x)
 {
   x->position2Dx1 = 0;
   x->position2Dx2 = 0;
@@ -92,7 +92,7 @@ void lia2D_reset(t_lia2D *x)
   x->distance_old = x->longueur;
 }
 
-void lia2D_resetF(t_lia2D *x)
+void link2D_resetF(t_link2D *x)
 {
 
   x->posx_old1 = x->position2Dx1;
@@ -105,56 +105,56 @@ void lia2D_resetF(t_lia2D *x)
 
 }
 
-void lia2D_resetL(t_lia2D *x)
+void link2D_resetL(t_link2D *x)
 {
   x->longueur = sqrt ( pow((x->position2Dx2-x->position2Dx1), 2) + pow((x->position2Dy2-x->position2Dy1), 2) );
 }
 
 
-void lia2D_setK(t_lia2D *x, t_float K)
+void link2D_setK(t_link2D *x, t_float K)
 {
   x->raideur = K;
 }
 
-void lia2D_setL(t_lia2D *x, t_float L)
+void link2D_setL(t_link2D *x, t_float L)
 {
   x->longueur = L;
 }
 
-void lia2D_setD(t_lia2D *x, t_float D)
+void link2D_setD(t_link2D *x, t_float D)
 {
   x->viscosite = D;
 }
 
-void lia2D_setD2(t_lia2D *x, t_float D)
+void link2D_setD2(t_link2D *x, t_float D)
 {
   x->D2 = D;
 }
 
-void lia2D_Lmin(t_lia2D *x, t_float Lmin)
+void link2D_Lmin(t_link2D *x, t_float Lmin)
 {
   x->Lmin = Lmin;
 }
 
-void lia2D_Lmax(t_lia2D *x, t_float Lmax)
+void link2D_Lmax(t_link2D *x, t_float Lmax)
 {
   x->Lmax = Lmax;
 }
 
-void lia2D_muscle(t_lia2D *x, t_float muscle)
+void link2D_muscle(t_link2D *x, t_float muscle)
 {
   x->muscle = muscle;
 }
 
-static void lia2D_free(t_lia2D *x)
+static void link2D_free(t_link2D *x)
 {
     pd_unbind(&x->x_obj.ob_pd, x->x_sym);
 }
 
-void *lia2D_new(t_symbol *s, t_floatarg l, t_floatarg K, t_floatarg D, t_floatarg D2)
+void *link2D_new(t_symbol *s, t_floatarg l, t_floatarg K, t_floatarg D, t_floatarg D2)
 {
   
-  t_lia2D *x = (t_lia2D *)pd_new(lia2D_class);
+  t_link2D *x = (t_link2D *)pd_new(link2D_class);
 
   x->x_sym = s;
   pd_bind(&x->x_obj.ob_pd, s);
@@ -184,30 +184,29 @@ void *lia2D_new(t_symbol *s, t_floatarg l, t_floatarg K, t_floatarg D, t_floatar
   return (x);
 }
 
-void lia2D_setup(void) 
+void link2D_setup(void) 
 {
 
-  lia2D_class = class_new(gensym("lia2D"),
-        (t_newmethod)lia2D_new,
-        (t_method)lia2D_free, 
-		sizeof(t_lia2D),
+  link2D_class = class_new(gensym("link2D"),
+        (t_newmethod)link2D_new,
+        (t_method)link2D_free, 
+		sizeof(t_link2D),
         CLASS_DEFAULT, A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 
-  class_addcreator((t_newmethod)lia2D_new, gensym("link2D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addcreator((t_newmethod)lia2D_new, gensym("pmpd.link2D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addcreator((t_newmethod)link2D_new, gensym("lia2D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 
-  class_addbang(lia2D_class, lia2D_bang);
-  class_addmethod(lia2D_class, (t_method)lia2D_reset, gensym("reset"), 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_resetL, gensym("resetL"), 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_resetF, gensym("resetF"), 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_setD, gensym("setD"), A_DEFFLOAT, 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_setD2, gensym("setD2"), A_DEFFLOAT, 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_setK, gensym("setK"), A_DEFFLOAT, 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_setL, gensym("setL"), A_DEFFLOAT, 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_Lmin, gensym("setLmin"), A_DEFFLOAT, 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_Lmax, gensym("setLmax"), A_DEFFLOAT, 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_muscle, gensym("setM"), A_DEFFLOAT, 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_position2D, gensym("position2D"), A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addmethod(lia2D_class, (t_method)lia2D_position2D2, gensym("position2D2"), A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addbang(link2D_class, link2D_bang);
+  class_addmethod(link2D_class, (t_method)link2D_reset, gensym("reset"), 0);
+  class_addmethod(link2D_class, (t_method)link2D_resetL, gensym("resetL"), 0);
+  class_addmethod(link2D_class, (t_method)link2D_resetF, gensym("resetF"), 0);
+  class_addmethod(link2D_class, (t_method)link2D_setD, gensym("setD"), A_DEFFLOAT, 0);
+  class_addmethod(link2D_class, (t_method)link2D_setD2, gensym("setD2"), A_DEFFLOAT, 0);
+  class_addmethod(link2D_class, (t_method)link2D_setK, gensym("setK"), A_DEFFLOAT, 0);
+  class_addmethod(link2D_class, (t_method)link2D_setL, gensym("setL"), A_DEFFLOAT, 0);
+  class_addmethod(link2D_class, (t_method)link2D_Lmin, gensym("setLmin"), A_DEFFLOAT, 0);
+  class_addmethod(link2D_class, (t_method)link2D_Lmax, gensym("setLmax"), A_DEFFLOAT, 0);
+  class_addmethod(link2D_class, (t_method)link2D_muscle, gensym("setM"), A_DEFFLOAT, 0);
+  class_addmethod(link2D_class, (t_method)link2D_position2D, gensym("position2D"), A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addmethod(link2D_class, (t_method)link2D_position2D2, gensym("position2D2"), A_DEFFLOAT, A_DEFFLOAT, 0);
 
 }

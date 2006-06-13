@@ -1,20 +1,23 @@
 #include "m_pd.h"
 #include "math.h"
 
-static t_class *masse2D_class;
+#define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
+#define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
 
-typedef struct _masse2D {
+static t_class *mass2D_class;
+
+typedef struct _mass2D {
   t_object  x_obj;
   t_float posX_old_1, posX_old_2, posY_old_1, posY_old_2, Xinit, Yinit;
   t_float forceX, forceY, VX, VY, dX, dY, onoff;
-  t_float masse2D, seuil, damp;
+  t_float mass2D, seuil, damp;
   t_float minX, maxX, minY, maxY;
   t_atom  pos_new[2], vitesse[3], force[3];
   t_outlet *position2D_new, *vitesse_out, *force_out;
   t_symbol *x_sym; // receive
   unsigned int x_state; // random
   t_float x_f; // random
-} t_masse2D;
+} t_mass2D;
 
 static int makeseed2D(void)
 {
@@ -23,7 +26,7 @@ static int makeseed2D(void)
     return (random_nextseed & 0x7fffffff);
 }
 
-static float random_bang2D(t_masse2D *x)
+static float random_bang2D(t_mass2D *x)
 {
     int nval;
     int range = 2000000;
@@ -41,69 +44,69 @@ static float random_bang2D(t_masse2D *x)
     return (rnd);
 }
 
-void masse2D_seuil(t_masse2D *x, t_floatarg f1)
+void mass2D_seuil(t_mass2D *x, t_floatarg f1)
 {
   x->seuil = f1;
 }
 
-void masse2D_on(t_masse2D *x)
+void mass2D_on(t_mass2D *x)
 {
   x->onoff = 1;
 }
 
-void masse2D_off(t_masse2D *x)
+void mass2D_off(t_mass2D *x)
 {
   x->onoff = 0;
 }
 
-void masse2D_minX(t_masse2D *x, t_floatarg f1)
+void mass2D_minX(t_mass2D *x, t_floatarg f1)
 {
   x->minX = f1;
 }
 
-void masse2D_maxX(t_masse2D *x, t_floatarg f1)
+void mass2D_maxX(t_mass2D *x, t_floatarg f1)
 {
   x->maxX = f1;
 }
 
-void masse2D_minY(t_masse2D *x, t_floatarg f1)
+void mass2D_minY(t_mass2D *x, t_floatarg f1)
 {
   x->minY = f1;
 }
 
-void masse2D_maxY(t_masse2D *x, t_floatarg f1)
+void mass2D_maxY(t_mass2D *x, t_floatarg f1)
 {
   x->maxY = f1;
 }
 
-void masse2D_force(t_masse2D *x, t_floatarg f1, t_floatarg f2)
+void mass2D_force(t_mass2D *x, t_floatarg f1, t_floatarg f2)
 {
   x->forceX = x->forceX+f1;
   x->forceY = x->forceY+f2;
 }
 
-void masse2D_displace(t_masse2D *x, t_floatarg f1, t_floatarg f2)
+void mass2D_displace(t_mass2D *x, t_floatarg f1, t_floatarg f2)
 {
   x->dX += f1;
   x->dY += f2;
 }
 
-void masse2D_damp(t_masse2D *x, t_floatarg f1)
+void mass2D_damp(t_mass2D *x, t_floatarg f1)
 {
   x->damp = f1;
 }
 
-void masse2D_dX(t_masse2D *x, t_floatarg f1)
+void mass2D_dX(t_mass2D *x, t_floatarg f1)
 {
   x->dX += f1;
 }
 
-void masse2D_dY(t_masse2D *x, t_floatarg f1)
+void mass2D_dY(t_mass2D *x, t_floatarg f1)
 {
   x->dY += f1;
 }
 
-void masse2D_bang(t_masse2D *x)
+void mass2D_bang(t_mass2D *x)
 {
   t_float posX_new, posY_new, vX=1, vY=1;
  if (x->onoff != 0)
@@ -139,10 +142,10 @@ void masse2D_bang(t_masse2D *x)
  	x->forceX += x->damp * ((x->posX_old_2)-(x->posX_old_1));
 	x->forceY += x->damp * ((x->posY_old_2)-(x->posY_old_1)); // damping
 
-  if (x->masse2D != 0)
+  if (x->mass2D != 0)
   {
-	  posX_new = x->forceX/x->masse2D + 2*x->posX_old_1 - x->posX_old_2;
-  	  posY_new = x->forceY/x->masse2D + 2*x->posY_old_1 - x->posY_old_2;
+	  posX_new = x->forceX/x->mass2D + 2*x->posX_old_1 - x->posX_old_2;
+  	  posY_new = x->forceY/x->mass2D + 2*x->posY_old_1 - x->posY_old_2;
   }
   else 
   {
@@ -200,7 +203,7 @@ void masse2D_bang(t_masse2D *x)
  }
 }
 
-void masse2D_reset(t_masse2D *x)
+void mass2D_reset(t_mass2D *x)
 {
   x->posX_old_2 = x->Xinit;
   x->posX_old_1 = x->Xinit;
@@ -236,7 +239,7 @@ void masse2D_reset(t_masse2D *x)
   outlet_anything(x->position2D_new, gensym("position2D"), 2, x->pos_new);
 }
 
-void masse2D_resetf(t_masse2D *x)
+void mass2D_resetf(t_mass2D *x)
 {
   x->dX=0;
   x->dY=0;
@@ -245,7 +248,7 @@ void masse2D_resetf(t_masse2D *x)
   x->forceY=0;
 }
 
-void masse2D_setXY(t_masse2D *x, t_float posX, t_float posY)
+void mass2D_setXY(t_mass2D *x, t_float posX, t_float posY)
 {
   x->posX_old_2 = posX;
   x->posX_old_1 = posX;
@@ -261,7 +264,7 @@ void masse2D_setXY(t_masse2D *x, t_float posX, t_float posY)
   outlet_anything(x->position2D_new, gensym("position2D"), 2, x->pos_new);
 }
 
-void masse2D_setX(t_masse2D *x, t_float posX)
+void mass2D_setX(t_mass2D *x, t_float posX)
 {
   x->posX_old_2 = posX;
   x->posX_old_1 = posX;
@@ -272,7 +275,7 @@ void masse2D_setX(t_masse2D *x, t_float posX)
   outlet_anything(x->position2D_new, gensym("position2D"), 2, x->pos_new);
 }
 
-void masse2D_setY(t_masse2D *x, t_float posY)
+void mass2D_setY(t_mass2D *x, t_float posY)
 {
   x->posY_old_2 = posY;
   x->posY_old_1 = posY;
@@ -283,18 +286,18 @@ void masse2D_setY(t_masse2D *x, t_float posY)
   outlet_anything(x->position2D_new, gensym("position2D"), 2, x->pos_new);
 }
 
-void masse2D_loadbang(t_masse2D *x)
+void mass2D_loadbang(t_mass2D *x)
 {
   outlet_anything(x->position2D_new, gensym("position2D"), 2, x->pos_new);
 }
 
 
-void masse2D_set_masse2D(t_masse2D *x, t_float mass)
+void mass2D_set_mass2D(t_mass2D *x, t_float mass)
 {
-  x->masse2D=mass;
+  x->mass2D=mass;
 }
 
-void masse2D_inter_ambient(t_masse2D *x, t_symbol *s, int argc, t_atom *argv)
+void mass2D_inter_ambient(t_mass2D *x, t_symbol *s, int argc, t_atom *argv)
 {
 	if (argc == 12) 
 		// 0 : FX
@@ -340,7 +343,7 @@ void masse2D_inter_ambient(t_masse2D *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
-void masse2D_inter_seg(t_masse2D *x, t_symbol *s, int argc, t_atom *argv)
+void mass2D_inter_seg(t_mass2D *x, t_symbol *s, int argc, t_atom *argv)
 {
 t_float a1, b1, c1, a2, b2, c2, a3, b3, c3, tmp;
 t_float posx1, posx2, posy1, posy2;
@@ -441,7 +444,7 @@ t_float profondeur, prof_max;
 	}
 }
 
-void masse2D_inter_line(t_masse2D *x, t_symbol *s, int argc, t_atom *argv)
+void mass2D_inter_line(t_mass2D *x, t_symbol *s, int argc, t_atom *argv)
 {
 t_float a1, b1, c1, tmp;
 t_float posx1, posx2, posy1, posy2;
@@ -518,7 +521,7 @@ t_float profondeur, prof_max;
 	}
 }
 
-void masse2D_inter_circle(t_masse2D *x, t_symbol *s, int argc, t_atom *argv)
+void mass2D_inter_circle(t_mass2D *x, t_symbol *s, int argc, t_atom *argv)
 {
 t_float posx1, posy1, Nx, Ny, dx, dy, distance, Dmax, tmp;
 t_float deltaX_old, deltaY_old, distance_old ;
@@ -681,10 +684,10 @@ t_float ftx=0, fty=0;
 	}
 }
 
-void *masse2D_new(t_symbol *s, int argc, t_atom *argv)
+void *mass2D_new(t_symbol *s, int argc, t_atom *argv)
 {
  
-  t_masse2D *x = (t_masse2D *)pd_new(masse2D_class);
+  t_mass2D *x = (t_mass2D *)pd_new(mass2D_class);
 
   x->x_sym = atom_getsymbolarg(0, argc, argv);
   x->x_state = makeseed2D();
@@ -699,9 +702,9 @@ void *masse2D_new(t_symbol *s, int argc, t_atom *argv)
   x->forceY=0;
 
   if (argc >= 2)
-    x->masse2D = atom_getfloatarg(1, argc, argv) ;
+    x->mass2D = atom_getfloatarg(1, argc, argv) ;
   else
-    x->masse2D = 1;
+    x->mass2D = 1;
 
   x->onoff = 1;
 
@@ -762,48 +765,47 @@ void *masse2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-static void masse2D_free(t_masse2D *x)
+static void mass2D_free(t_mass2D *x)
 {
     pd_unbind(&x->x_obj.ob_pd, x->x_sym);
 }
 
-void masse2D_setup(void) 
+void mass2D_setup(void) 
 {
 
-  masse2D_class = class_new(gensym("masse2D"),
-        (t_newmethod)masse2D_new,
-        (t_method)masse2D_free, sizeof(t_masse2D),
+  mass2D_class = class_new(gensym("mass2D"),
+        (t_newmethod)mass2D_new,
+        (t_method)mass2D_free, sizeof(t_mass2D),
         CLASS_DEFAULT, A_GIMME, 0);
 
-  class_addcreator((t_newmethod)masse2D_new, gensym("mass2D"), A_GIMME, 0);
-  class_addcreator((t_newmethod)masse2D_new, gensym("pmpd.mass2D"), A_GIMME, 0);
+  class_addcreator((t_newmethod)mass2D_new, gensym("masse2D"), A_GIMME, 0);
 
-  class_addbang(masse2D_class, masse2D_bang);
+  class_addbang(mass2D_class, mass2D_bang);
 
-  class_addmethod(masse2D_class, (t_method)masse2D_force, gensym("force2D"),A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_displace, gensym("dXY"),A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_dX, gensym("dX"),A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_dY, gensym("dY"),A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_force, gensym("force2D"),A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_displace, gensym("dXY"),A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_dX, gensym("dX"),A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_dY, gensym("dY"),A_DEFFLOAT, 0);
 
-  class_addmethod(masse2D_class, (t_method)masse2D_inter_ambient, gensym("interactor_ambient_2D"), A_GIMME, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_inter_line, gensym("interactor_line_2D"), A_GIMME, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_inter_seg, gensym("interactor_segment_2D"), A_GIMME, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_inter_circle, gensym("interactor_circle_2D"), A_GIMME, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_inter_ambient, gensym("interactor_ambient_2D"), A_GIMME, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_inter_line, gensym("interactor_line_2D"), A_GIMME, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_inter_seg, gensym("interactor_segment_2D"), A_GIMME, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_inter_circle, gensym("interactor_circle_2D"), A_GIMME, 0);
 
-  class_addmethod(masse2D_class, (t_method)masse2D_seuil, gensym("setT"), A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_set_masse2D, gensym("setM"), A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_setX, gensym("setX"), A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_setY, gensym("setY"), A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_minX, gensym("setXmin"), A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_minY, gensym("setYmin"), A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_maxX, gensym("setXmax"), A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_maxY, gensym("setYmax"), A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_setXY, gensym("setXY"), A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_damp, gensym("setD"), A_DEFFLOAT, 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_on, gensym("on"), 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_off, gensym("off"), 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_reset, gensym("reset"), 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_resetf, gensym("resetF"), 0);
-  class_addmethod(masse2D_class, (t_method)masse2D_loadbang, gensym("loadbang"), 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_seuil, gensym("setT"), A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_set_mass2D, gensym("setM"), A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_setX, gensym("setX"), A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_setY, gensym("setY"), A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_minX, gensym("setXmin"), A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_minY, gensym("setYmin"), A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_maxX, gensym("setXmax"), A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_maxY, gensym("setYmax"), A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_setXY, gensym("setXY"), A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_damp, gensym("setD"), A_DEFFLOAT, 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_on, gensym("on"), 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_off, gensym("off"), 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_reset, gensym("reset"), 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_resetf, gensym("resetF"), 0);
+  class_addmethod(mass2D_class, (t_method)mass2D_loadbang, gensym("loadbang"), 0);
 
 }

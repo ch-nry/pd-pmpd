@@ -1,20 +1,23 @@
 #include "m_pd.h"
 #include "math.h"
 
-static t_class *masse3D_class;
+#define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
+#define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
 
-typedef struct _masse3D {
+static t_class *mass3D_class;
+
+typedef struct _mass3D {
   t_object  x_obj;
   t_float posX_old_1, posX_old_2, posY_old_1, posY_old_2, posZ_old_1, posZ_old_2;
   t_float Xinit, Yinit, Zinit, forceX, forceY, forceZ, VX, VY, VZ, dX, dY, dZ;
-  t_float masse3D, seuil, onoff, damp;
+  t_float mass3D, seuil, onoff, damp;
   t_atom  pos_new[3], vitesse[4], force[4];
   t_float minX, maxX, minY, maxY, minZ, maxZ;
   t_outlet *position3D_new, *vitesse_out, *force_out;
   t_symbol *x_sym; // receive
   unsigned int x_state; // random
   t_float x_f; // random
-} t_masse3D;
+} t_mass3D;
 
 static int makeseed3D(void)
 {
@@ -23,7 +26,7 @@ static int makeseed3D(void)
     return (random_nextseed & 0x7fffffff);
 }
 
-static float random_bang3D(t_masse3D *x)
+static float random_bang3D(t_mass3D *x)
 {
     int nval;
     int range = 2000000;
@@ -41,62 +44,62 @@ static float random_bang3D(t_masse3D *x)
     return (rnd);
 }
 
-void masse3D_on(t_masse3D *x)
+void mass3D_on(t_mass3D *x)
 {
   x->onoff = 1;
 }
 
-void masse3D_off(t_masse3D *x)
+void mass3D_off(t_mass3D *x)
 {
   x->onoff = 0;
 }
 
-void masse3D_minX(t_masse3D *x, t_floatarg f1)
+void mass3D_minX(t_mass3D *x, t_floatarg f1)
 {
   x->minX = f1;
 }
 
-void masse3D_maxX(t_masse3D *x, t_floatarg f1)
+void mass3D_maxX(t_mass3D *x, t_floatarg f1)
 {
   x->maxX = f1;
 }
 
-void masse3D_minY(t_masse3D *x, t_floatarg f1)
+void mass3D_minY(t_mass3D *x, t_floatarg f1)
 {
   x->minY = f1;
 }
 
-void masse3D_maxY(t_masse3D *x, t_floatarg f1)
+void mass3D_maxY(t_mass3D *x, t_floatarg f1)
 {
   x->maxY = f1;
 }
 
-void masse3D_minZ(t_masse3D *x, t_floatarg f1)
+void mass3D_minZ(t_mass3D *x, t_floatarg f1)
 {
   x->minZ = f1;
 }
 
-void masse3D_maxZ(t_masse3D *x, t_floatarg f1)
+void mass3D_maxZ(t_mass3D *x, t_floatarg f1)
 {
   x->maxZ = f1;
 }
 
-void masse3D_seuil(t_masse3D *x, t_floatarg f1)
+void mass3D_seuil(t_mass3D *x, t_floatarg f1)
 {
   x->seuil = f1;
 }
 
-void masse3D_damp(t_masse3D *x, t_floatarg f1)
+void mass3D_damp(t_mass3D *x, t_floatarg f1)
 {
   x->damp = f1;
 }
 
-void masse3D_loadbang(t_masse3D *x, t_float posZ)
+void mass3D_loadbang(t_mass3D *x, t_float posZ)
 {
   outlet_anything(x->position3D_new, gensym("position3D"), 3, x->pos_new);
 }
 
-void masse3D_setX(t_masse3D *x, t_float posX)
+void mass3D_setX(t_mass3D *x, t_float posX)
 {
   
   x->posX_old_2 = posX;
@@ -109,7 +112,7 @@ void masse3D_setX(t_masse3D *x, t_float posX)
 
 }
 
-void masse3D_setY(t_masse3D *x, t_float posY)
+void mass3D_setY(t_mass3D *x, t_float posY)
 {
   x->posY_old_2 = posY;
   x->posY_old_1 = posY;
@@ -121,7 +124,7 @@ void masse3D_setY(t_masse3D *x, t_float posY)
 
 }
 
-void masse3D_setZ(t_masse3D *x, t_float posZ)
+void mass3D_setZ(t_mass3D *x, t_float posZ)
 {
   x->posZ_old_2 = posZ;
   x->posZ_old_1 = posZ;
@@ -133,7 +136,7 @@ void masse3D_setZ(t_masse3D *x, t_float posZ)
 
 }
 
-void masse3D_setXYZ(t_masse3D *x, t_float posX, t_float posY, t_float posZ)
+void mass3D_setXYZ(t_mass3D *x, t_float posX, t_float posY, t_float posZ)
 {
   
   x->posX_old_2 = posX;
@@ -155,42 +158,42 @@ void masse3D_setXYZ(t_masse3D *x, t_float posX, t_float posY, t_float posZ)
   outlet_anything(x->position3D_new, gensym("position3D"), 3, x->pos_new);
 }
 
-void masse3D_set_masse3D(t_masse3D *x, t_float mass)
+void mass3D_set_mass3D(t_mass3D *x, t_float mass)
 {
-  x->masse3D=mass;
+  x->mass3D=mass;
 }
 
 
-void masse3D_force(t_masse3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
+void mass3D_force(t_mass3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
 {
   x->forceX += f1;
   x->forceY += f2;
   x->forceZ += f3;
 }
 
-void masse3D_dXYZ(t_masse3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
+void mass3D_dXYZ(t_mass3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
 {
   x->dX += f1;
   x->dY += f2;
   x->dZ += f3;
 }
 
-void masse3D_dX(t_masse3D *x, t_floatarg f1 )
+void mass3D_dX(t_mass3D *x, t_floatarg f1 )
 {
   x->dX += f1;
 }
 
-void masse3D_dY(t_masse3D *x, t_floatarg f1 )
+void mass3D_dY(t_mass3D *x, t_floatarg f1 )
 {
   x->dY += f1;
 }
 
-void masse3D_dZ(t_masse3D *x, t_floatarg f1 )
+void mass3D_dZ(t_mass3D *x, t_floatarg f1 )
 {
   x->dZ += f1;
 }
 
-void masse3D_bang(t_masse3D *x)
+void mass3D_bang(t_mass3D *x)
 {
   t_float posX_new, posY_new, posZ_new, vX=1, vY=1, vZ=1;
  if (x->onoff != 0)
@@ -257,11 +260,11 @@ void masse3D_bang(t_masse3D *x)
 	x->forceY += x->damp * ((x->posY_old_2)-(x->posY_old_1)); // damping
 	x->forceZ += x->damp * ((x->posZ_old_2)-(x->posZ_old_1)); // damping
 
-  if (!(x->masse3D == 0))
+  if (!(x->mass3D == 0))
   {
-  posX_new = x->forceX/x->masse3D + 2*x->posX_old_1 - x->posX_old_2;
-  posY_new = x->forceY/x->masse3D + 2*x->posY_old_1 - x->posY_old_2;
-  posZ_new = x->forceZ/x->masse3D + 2*x->posZ_old_1 - x->posZ_old_2;
+  posX_new = x->forceX/x->mass3D + 2*x->posX_old_1 - x->posX_old_2;
+  posY_new = x->forceY/x->mass3D + 2*x->posY_old_1 - x->posY_old_2;
+  posZ_new = x->forceZ/x->mass3D + 2*x->posZ_old_1 - x->posZ_old_2;
   }
   else 
   {
@@ -337,7 +340,7 @@ void masse3D_bang(t_masse3D *x)
  }
 }
 
-void masse3D_reset(t_masse3D *x)
+void mass3D_reset(t_mass3D *x)
 {
   
   x->posX_old_2 = x->Xinit;
@@ -385,7 +388,7 @@ void masse3D_reset(t_masse3D *x)
 }
 
 
-void masse3D_resetf(t_masse3D *x)
+void mass3D_resetf(t_mass3D *x)
 {
   x->forceX=0;
   x->forceY=0;
@@ -396,7 +399,7 @@ void masse3D_resetf(t_masse3D *x)
   x->dZ=0;
 }
 
-void masse3D_inter_ambient(t_masse3D *x, t_symbol *s, int argc, t_atom *argv)
+void mass3D_inter_ambient(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_float tmp;
 
@@ -463,7 +466,7 @@ void masse3D_inter_ambient(t_masse3D *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
-void masse3D_inter_plane(t_masse3D *x, t_symbol *s, int argc, t_atom *argv)
+void mass3D_inter_plane(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_float a, b, c, d, profondeur, distance, tmp, profondeur_old;
 
@@ -559,7 +562,7 @@ void masse3D_inter_plane(t_masse3D *x, t_symbol *s, int argc, t_atom *argv)
 }
 
 
-void masse3D_inter_sphere(t_masse3D *x, t_symbol *s, int argc, t_atom *argv)
+void mass3D_inter_sphere(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 {
 t_float posx1, posy1, posz1, Nx, Ny, Nz, dx, dy, dz, distance, Dmax, tmp;
 t_float deltaX_old, deltaY_old, deltaZ_old, distance_old ;
@@ -673,7 +676,7 @@ t_float deltaX_old, deltaY_old, deltaZ_old, distance_old ;
 }
 
 
-void masse3D_inter_circle(t_masse3D *x, t_symbol *s, int argc, t_atom *argv)
+void mass3D_inter_circle(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_float a, b, c, d, profondeur, distance, tmp, profondeur_old, rayon, rayon_old;
 
@@ -766,7 +769,7 @@ void masse3D_inter_circle(t_masse3D *x, t_symbol *s, int argc, t_atom *argv)
 }
 
 
-void masse3D_inter_cylinder(t_masse3D *x, t_symbol *s, int argc, t_atom *argv)
+void mass3D_inter_cylinder(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_float a, b, c, d, profondeur, profondeur_old, distance, tmp, rayon_old, rayon;
 	t_float Xb, Yb, Zb, Ta, Tb, Tc, Xb_old, Yb_old, Zb_old;
@@ -937,12 +940,12 @@ void masse3D_inter_cylinder(t_masse3D *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
-void *masse3D_new(t_symbol *s, int argc, t_atom *argv)
+void *mass3D_new(t_symbol *s, int argc, t_atom *argv)
 {
-  t_masse3D *x = (t_masse3D *)pd_new(masse3D_class);
+  t_mass3D *x = (t_mass3D *)pd_new(mass3D_class);
 
   x->x_sym = atom_getsymbolarg(0, argc, argv);
-  x->x_state = makeseed();
+  x->x_state = makeseed3D();
 
   pd_bind(&x->x_obj.ob_pd, atom_getsymbolarg(0, argc, argv));
 
@@ -955,9 +958,9 @@ void *masse3D_new(t_symbol *s, int argc, t_atom *argv)
   x->forceZ=0;
 
   if (argc >= 2)
-    x->masse3D = atom_getfloatarg(1, argc, argv) ;
+    x->mass3D = atom_getfloatarg(1, argc, argv) ;
   else
-    x->masse3D = 1;
+    x->mass3D = 1;
 
   x->onoff = 1;
 
@@ -1040,54 +1043,53 @@ void *masse3D_new(t_symbol *s, int argc, t_atom *argv)
   return (void *)x;
 }
 
-static void masse3D_free(t_masse3D *x)
+static void mass3D_free(t_mass3D *x)
 {
     pd_unbind(&x->x_obj.ob_pd, x->x_sym);
 }
 
 
-void masse3D_setup(void) 
+void mass3D_setup(void) 
 {
 
-  masse3D_class = class_new(gensym("masse3D"),
-        (t_newmethod)masse3D_new,
-        (t_method)masse3D_free,
-		sizeof(t_masse3D),
+  mass3D_class = class_new(gensym("mass3D"),
+        (t_newmethod)mass3D_new,
+        (t_method)mass3D_free,
+		sizeof(t_mass3D),
         CLASS_DEFAULT, A_GIMME, 0);
 
-  class_addcreator((t_newmethod)masse3D_new, gensym("mass3D"), A_GIMME, 0);
-  class_addcreator((t_newmethod)masse3D_new, gensym("pmpd.mass3D"), A_GIMME, 0);
+  class_addcreator((t_newmethod)mass3D_new, gensym("masse3D"), A_GIMME, 0);
 
-  class_addmethod(masse3D_class, (t_method)masse3D_force, gensym("force3D"),A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addbang(masse3D_class, masse3D_bang);
+  class_addmethod(mass3D_class, (t_method)mass3D_force, gensym("force3D"),A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addbang(mass3D_class, mass3D_bang);
 
-  class_addmethod(masse3D_class, (t_method)masse3D_dX, gensym("dX"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_dY, gensym("dY"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_dZ, gensym("dZ"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_dXYZ, gensym("dXYZ"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_setX, gensym("setX"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_setY, gensym("setY"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_setZ, gensym("setZ"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_setXYZ, gensym("setXYZ"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_minX, gensym("setXmin"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_minY, gensym("setYmin"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_maxX, gensym("setXmax"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_maxY, gensym("setYmax"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_minZ, gensym("setZmin"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_maxZ, gensym("setZmax"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_set_masse3D, gensym("setM"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_reset, gensym("reset"), 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_resetf, gensym("resetF"), 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_reset, gensym("loadbang"), 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_on, gensym("on"), 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_off, gensym("off"), 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_seuil, gensym("setT"), A_DEFFLOAT, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_damp, gensym("setD"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_dX, gensym("dX"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_dY, gensym("dY"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_dZ, gensym("dZ"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_dXYZ, gensym("dXYZ"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_setX, gensym("setX"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_setY, gensym("setY"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_setZ, gensym("setZ"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_setXYZ, gensym("setXYZ"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_minX, gensym("setXmin"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_minY, gensym("setYmin"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_maxX, gensym("setXmax"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_maxY, gensym("setYmax"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_minZ, gensym("setZmin"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_maxZ, gensym("setZmax"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_set_mass3D, gensym("setM"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_reset, gensym("reset"), 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_resetf, gensym("resetF"), 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_reset, gensym("loadbang"), 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_on, gensym("on"), 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_off, gensym("off"), 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_seuil, gensym("setT"), A_DEFFLOAT, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_damp, gensym("setD"), A_DEFFLOAT, 0);
 
-  class_addmethod(masse3D_class, (t_method)masse3D_inter_ambient, gensym("interactor_ambient_3D"), A_GIMME, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_inter_sphere, gensym("interactor_sphere_3D"), A_GIMME, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_inter_plane, gensym("interactor_plane_3D"), A_GIMME, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_inter_circle, gensym("interactor_circle_3D"), A_GIMME, 0);
-  class_addmethod(masse3D_class, (t_method)masse3D_inter_cylinder, gensym("interactor_cylinder_3D"), A_GIMME, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_inter_ambient, gensym("interactor_ambient_3D"), A_GIMME, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_inter_sphere, gensym("interactor_sphere_3D"), A_GIMME, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_inter_plane, gensym("interactor_plane_3D"), A_GIMME, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_inter_circle, gensym("interactor_circle_3D"), A_GIMME, 0);
+  class_addmethod(mass3D_class, (t_method)mass3D_inter_cylinder, gensym("interactor_cylinder_3D"), A_GIMME, 0);
 
 }

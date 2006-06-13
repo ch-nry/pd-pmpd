@@ -1,19 +1,23 @@
 #include "m_pd.h"
 #include "math.h"
 
-static t_class *masse_class;
+#define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
+#define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
 
-typedef struct _masse {
+
+static t_class *mass_class;
+
+typedef struct _mass {
   t_object  x_obj;
   t_float pos_old_1, pos_old_2, Xinit;
-  t_float force, masse, dX;
+  t_float force, mass, dX;
   t_float minX, maxX;
   t_outlet *position_new, *vitesse_out, *force_out;
   t_symbol *x_sym; // receive
   unsigned int x_state; // random
   t_float x_f; // random
 
-} t_masse;
+} t_mass;
 
 static int makeseed(void)
 {
@@ -22,7 +26,7 @@ static int makeseed(void)
     return (random_nextseed & 0x7fffffff);
 }
 
-static float random_bang(t_masse *x)
+static float random_bang(t_mass *x)
 {
     int nval;
     int range = 2000000;
@@ -40,27 +44,27 @@ static float random_bang(t_masse *x)
     return (rnd);
 }
 
-void masse_minX(t_masse *x, t_floatarg f1)
+void mass_minX(t_mass *x, t_floatarg f1)
 {
   x->minX = f1;
 }
 
-void masse_maxX(t_masse *x, t_floatarg f1)
+void mass_maxX(t_mass *x, t_floatarg f1)
 {
   x->maxX = f1;
 }
 
-void masse_float(t_masse *x, t_floatarg f1)
+void mass_float(t_mass *x, t_floatarg f1)
 {
   x->force += f1;
 }
 
-void masse_bang(t_masse *x)
+void mass_bang(t_mass *x)
 {
   t_float pos_new;
 
-	if (x->masse > 0)
-  pos_new = x->force/x->masse + 2*x->pos_old_1 - x->pos_old_2;
+	if (x->mass > 0)
+  pos_new = x->force/x->mass + 2*x->pos_old_1 - x->pos_old_2;
 	else pos_new = x->pos_old_1;
 
   pos_new = max(min(x->maxX, pos_new), x->minX);
@@ -84,7 +88,7 @@ void masse_bang(t_masse *x)
 
 }
 
-void masse_reset(t_masse *x)
+void mass_reset(t_mass *x)
 {
   x->pos_old_2 = x->Xinit;
   x->pos_old_1 = x->Xinit;
@@ -94,18 +98,18 @@ void masse_reset(t_masse *x)
   outlet_float(x->position_new, x->Xinit);
 }
 
-void masse_resetF(t_masse *x)
+void mass_resetF(t_mass *x)
 {
   x->force=0;
 
 }
 
-void masse_dX(t_masse *x, t_float posX)
+void mass_dX(t_mass *x, t_float posX)
 {
   x->dX += posX;
 }
 
-void masse_setX(t_masse *x, t_float posX)
+void mass_setX(t_mass *x, t_float posX)
 {
   x->pos_old_2 = posX;			// clear history for stability (instability) problem
   x->pos_old_1 = posX;
@@ -115,25 +119,25 @@ void masse_setX(t_masse *x, t_float posX)
   outlet_float(x->position_new, posX);
 }
 
-void masse_loadbang(t_masse *x)
+void mass_loadbang(t_mass *x)
 {
   outlet_float(x->position_new, x->Xinit);
 }
 
-void masse_set_masse(t_masse *x, t_float mass)
+void mass_set_mass(t_mass *x, t_float mass)
 {
-  x->masse=mass;
+  x->mass=mass;
 }
 
-static void masse_free(t_masse *x)
+static void mass_free(t_mass *x)
 {
     pd_unbind(&x->x_obj.ob_pd, x->x_sym);
 }
 
-void *masse_new(t_symbol *s, t_floatarg M, t_floatarg X)
+void *mass_new(t_symbol *s, t_floatarg M, t_floatarg X)
 {
   
-  t_masse *x = (t_masse *)pd_new(masse_class);
+  t_mass *x = (t_mass *)pd_new(mass_class);
 
   x->x_sym = s;
   pd_bind(&x->x_obj.ob_pd, s);
@@ -147,37 +151,36 @@ void *masse_new(t_symbol *s, t_floatarg M, t_floatarg X)
   x->pos_old_1 = X;
   x->pos_old_2 = X;
   x->force=0;
-  x->masse=M;
+  x->mass=M;
 
   x->minX = -100000;
   x->maxX = 100000;
 
-  if (x->masse<=0) x->masse=1;
+  if (x->mass<=0) x->mass=1;
 
   makeseed();
 
   return (void *)x;
 }
 
-void masse_setup(void) 
+void mass_setup(void) 
 {
 
-  masse_class = class_new(gensym("masse"),
-        (t_newmethod)masse_new,
-        (t_method)masse_free,
-		sizeof(t_masse),
+  mass_class = class_new(gensym("mass"),
+        (t_newmethod)mass_new,
+        (t_method)mass_free,
+		sizeof(t_mass),
         CLASS_DEFAULT, A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT,0);
-  class_addcreator((t_newmethod)masse_new, gensym("mass"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT,0);
-  class_addcreator((t_newmethod)masse_new, gensym("pmpd.mass"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT,0);
-  class_addfloat(masse_class, masse_float);
-  class_addbang(masse_class, masse_bang);
-  class_addmethod(masse_class, (t_method)masse_set_masse, gensym("setM"), A_DEFFLOAT, 0);
-  class_addmethod(masse_class, (t_method)masse_setX, gensym("setX"), A_DEFFLOAT, 0);
-  class_addmethod(masse_class, (t_method)masse_dX, gensym("dX"), A_DEFFLOAT, 0);
-  class_addmethod(masse_class, (t_method)masse_reset, gensym("reset"), 0);
-  class_addmethod(masse_class, (t_method)masse_resetF, gensym("resetF"), 0);
-  class_addmethod(masse_class, (t_method)masse_minX, gensym("setXmin"), A_DEFFLOAT, 0);
-  class_addmethod(masse_class, (t_method)masse_maxX, gensym("setXmax"), A_DEFFLOAT, 0);
-  class_addmethod(masse_class, (t_method)masse_loadbang, gensym("loadbang"), 0);
+  class_addcreator((t_newmethod)mass_new, gensym("masse"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT,0);
+  class_addfloat(mass_class, mass_float);
+  class_addbang(mass_class, mass_bang);
+  class_addmethod(mass_class, (t_method)mass_set_mass, gensym("setM"), A_DEFFLOAT, 0);
+  class_addmethod(mass_class, (t_method)mass_setX, gensym("setX"), A_DEFFLOAT, 0);
+  class_addmethod(mass_class, (t_method)mass_dX, gensym("dX"), A_DEFFLOAT, 0);
+  class_addmethod(mass_class, (t_method)mass_reset, gensym("reset"), 0);
+  class_addmethod(mass_class, (t_method)mass_resetF, gensym("resetF"), 0);
+  class_addmethod(mass_class, (t_method)mass_minX, gensym("setXmin"), A_DEFFLOAT, 0);
+  class_addmethod(mass_class, (t_method)mass_maxX, gensym("setXmax"), A_DEFFLOAT, 0);
+  class_addmethod(mass_class, (t_method)mass_loadbang, gensym("loadbang"), 0);
 }
 

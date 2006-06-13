@@ -28,10 +28,11 @@
 */
 
 #ifndef VERSION
-#define VERSION "0.06"
+#define VERSION "0.07"
 #endif
 
-// #include "m_pd.h"
+#include "m_pd.h"
+#include "stdio.h"
 
 #ifndef __DATE__ 
 #define __DATE__ ""
@@ -47,6 +48,7 @@
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
 
+/*
 #include "masse.c"
 #include "lia.c"
 #include "masse2D.c"
@@ -80,8 +82,40 @@
 #include "tLia3D.c"
 
 #include "pmpd~.c"
+*/
 
 static t_class *pmpd_class;
+
+typedef struct _mass {
+	t_int Id;
+	t_float invM;
+	t_float speedX;
+	t_float posX;
+	t_float forceX;
+} foo;
+
+typedef struct _link {
+	t_int Id;
+	struct _mass *mass1;
+	struct _mass *mass2;
+	t_float Ke, K1, D1, K2, D2;
+} foo1 ;
+
+typedef struct _out {
+	// TODO ajouter un type pour diferencier les outlets en forces et celles en position
+	t_int Id;
+	t_int nbr_outlet;
+	struct _mass *mass1;
+	t_float influence;
+} foo2;
+
+typedef struct _in {
+	// TODO ajouter un type pour diferencier les inlets en forces et celles en position
+	t_int Id;
+	t_int nbr_inlet;
+	struct _mass *mass1;
+	t_float influence;
+} foo3;
 
 typedef struct _pmpd 
 {
@@ -95,9 +129,6 @@ typedef struct _pmpd
 	t_float inlet[nb_max_inlet];
 	int nb_link, nb_mass, nb_outlet, nb_inlet, nb_in, nb_out;
 } t_pmpd;
-
-#define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
-#define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
 
 void pmpd_bang(t_pmpd *x)
 ///////////////////////////////////////////////////////////////////////////////////
@@ -330,7 +361,7 @@ void pmpd_setup(void)
 	class_addmethod(pmpd_class, (t_method)pmpd_forceX_20,  gensym("forceX_20"), A_DEFFLOAT, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_reset,  gensym("reset"), 0);
 
-
+/*
  post("");
  post("     pmpd = Physical Modeling for Pure Data");
  post("     version "VERSION);
@@ -371,5 +402,6 @@ tCircle3D_setup();
 
 pmpd_tilde_setup();
 
+*/
 }
 

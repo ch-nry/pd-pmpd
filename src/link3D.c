@@ -1,9 +1,9 @@
 #include "m_pd.h"
 #include "math.h"
 
-static t_class *lia3D_class;
+static t_class *link3D_class;
 
-typedef struct _lia3D {
+typedef struct _link3D {
   t_object  x_obj;
   t_float raideur, viscosite, D2, longueur, distance_old;
   t_float position3Dx1, position3Dx2, posx_old1, posx_old2;
@@ -13,9 +13,9 @@ typedef struct _lia3D {
   t_outlet *force1;
   t_outlet *force2;
   t_symbol *x_sym;  // receive
-} t_lia3D;
+} t_link3D;
 
-void lia3D_position3D(t_lia3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
+void link3D_position3D(t_link3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
 {
   x->position3Dx1 = f1;
   x->position3Dy1 = f2;
@@ -23,14 +23,14 @@ void lia3D_position3D(t_lia3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
 
 }
 
-void lia3D_position3D2(t_lia3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
+void link3D_position3D2(t_link3D *x, t_floatarg f1, t_floatarg f2, t_floatarg f3)
 {
   x->position3Dx2 = f1;
   x->position3Dy2 = f2;
   x->position3Dz2 = f3;
 }
 
-void lia3D_bang(t_lia3D *x)
+void link3D_bang(t_link3D *x)
 {
   t_float force, force2, forcex1, forcey1, forcez1, forcex2, forcey2, forcez2, distance;
   t_atom force1[3];
@@ -91,7 +91,7 @@ void lia3D_bang(t_lia3D *x)
   x->distance_old = distance;
 }
 
-void lia3D_reset(t_lia3D *x)
+void link3D_reset(t_link3D *x)
 {
   x->position3Dx1 = 0;
   x->position3Dx2 = 0;
@@ -112,7 +112,7 @@ void lia3D_reset(t_lia3D *x)
 
 }
 
-void lia3D_resetF(t_lia3D *x)
+void link3D_resetF(t_link3D *x)
 {
 
   x->posx_old1 = x->position3Dx1;
@@ -128,55 +128,55 @@ void lia3D_resetF(t_lia3D *x)
 
 }
 
-void lia3D_resetL(t_lia3D *x)
+void link3D_resetL(t_link3D *x)
 {
   x->longueur = sqrt ( pow((x->position3Dx2-x->position3Dx1), 2) + pow((x->position3Dy2-x->position3Dy1),2) + pow((x->position3Dz2-x->position3Dz1), 2) );
 }
 
-void lia3D_setK(t_lia3D *x, t_float K)
+void link3D_setK(t_link3D *x, t_float K)
 {
   x->raideur = K;
 }
 
-void lia3D_setL(t_lia3D *x, t_float L)
+void link3D_setL(t_link3D *x, t_float L)
 {
   x->longueur = L;
 }
 
-void lia3D_setD(t_lia3D *x, t_float D)
+void link3D_setD(t_link3D *x, t_float D)
 {
   x->viscosite = D;
 }
 
-void lia3D_setD2(t_lia3D *x, t_float D2)
+void link3D_setD2(t_link3D *x, t_float D2)
 {
   x->D2 = D2;
 }
 
-void lia3D_Lmin(t_lia3D *x, t_float Lmin)
+void link3D_Lmin(t_link3D *x, t_float Lmin)
 {
   x->Lmin = Lmin;
 }
 
-void lia3D_Lmax(t_lia3D *x, t_float Lmax)
+void link3D_Lmax(t_link3D *x, t_float Lmax)
 {
   x->Lmax = Lmax;
 }
 
-void lia3D_muscle(t_lia3D *x, t_float muscle)
+void link3D_muscle(t_link3D *x, t_float muscle)
 {
   x->muscle = muscle;
 }
 
-static void lia3D_free(t_lia3D *x)
+static void link3D_free(t_link3D *x)
 {
     pd_unbind(&x->x_obj.ob_pd, x->x_sym);
 }
 
-void *lia3D_new(t_symbol *s, t_floatarg l, t_floatarg K, t_floatarg D, t_floatarg D2)
+void *link3D_new(t_symbol *s, t_floatarg l, t_floatarg K, t_floatarg D, t_floatarg D2)
 {
   
-  t_lia3D *x = (t_lia3D *)pd_new(lia3D_class);
+  t_link3D *x = (t_link3D *)pd_new(link3D_class);
 
   x->x_sym = s;
   pd_bind(&x->x_obj.ob_pd, s);
@@ -209,30 +209,29 @@ void *lia3D_new(t_symbol *s, t_floatarg l, t_floatarg K, t_floatarg D, t_floatar
   return (void *)x;
 }
 
-void lia3D_setup(void) 
+void link3D_setup(void) 
 {
 
-  lia3D_class = class_new(gensym("lia3D"),
-        (t_newmethod)lia3D_new,
-        (t_method)lia3D_free,
-		sizeof(t_lia3D),
+  link3D_class = class_new(gensym("link3D"),
+        (t_newmethod)link3D_new,
+        (t_method)link3D_free,
+		sizeof(t_link3D),
         CLASS_DEFAULT, A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT,  A_DEFFLOAT, 0);
 
-  class_addcreator((t_newmethod)lia3D_new, gensym("link3D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addcreator((t_newmethod)lia3D_new, gensym("pmpd.link3D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addcreator((t_newmethod)link3D_new, gensym("lia3D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 
-  class_addbang(lia3D_class, lia3D_bang);
-  class_addmethod(lia3D_class, (t_method)lia3D_reset, gensym("reset"), 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_resetL, gensym("resetL"), 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_resetF, gensym("resetF"), 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_setD, gensym("setD"), A_DEFFLOAT, 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_setD2, gensym("setD2"), A_DEFFLOAT, 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_setK, gensym("setK"), A_DEFFLOAT, 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_setL, gensym("setL"), A_DEFFLOAT, 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_Lmin, gensym("setLmin"), A_DEFFLOAT, 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_Lmax, gensym("setLmax"), A_DEFFLOAT, 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_muscle, gensym("setM"), A_DEFFLOAT, 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_position3D, gensym("position3D"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addmethod(lia3D_class, (t_method)lia3D_position3D2, gensym("position3D2"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addbang(link3D_class, link3D_bang);
+  class_addmethod(link3D_class, (t_method)link3D_reset, gensym("reset"), 0);
+  class_addmethod(link3D_class, (t_method)link3D_resetL, gensym("resetL"), 0);
+  class_addmethod(link3D_class, (t_method)link3D_resetF, gensym("resetF"), 0);
+  class_addmethod(link3D_class, (t_method)link3D_setD, gensym("setD"), A_DEFFLOAT, 0);
+  class_addmethod(link3D_class, (t_method)link3D_setD2, gensym("setD2"), A_DEFFLOAT, 0);
+  class_addmethod(link3D_class, (t_method)link3D_setK, gensym("setK"), A_DEFFLOAT, 0);
+  class_addmethod(link3D_class, (t_method)link3D_setL, gensym("setL"), A_DEFFLOAT, 0);
+  class_addmethod(link3D_class, (t_method)link3D_Lmin, gensym("setLmin"), A_DEFFLOAT, 0);
+  class_addmethod(link3D_class, (t_method)link3D_Lmax, gensym("setLmax"), A_DEFFLOAT, 0);
+  class_addmethod(link3D_class, (t_method)link3D_muscle, gensym("setM"), A_DEFFLOAT, 0);
+  class_addmethod(link3D_class, (t_method)link3D_position3D, gensym("position3D"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addmethod(link3D_class, (t_method)link3D_position3D2, gensym("position3D2"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 
 }

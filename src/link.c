@@ -1,23 +1,23 @@
 #include "m_pd.h"
 #include "math.h"
 
-static t_class *liaKD_class;
+static t_class *linkKD_class;
 
-typedef struct _liaKD {
+typedef struct _linkKD {
   t_object  x_obj;
   t_float raideur, viscosite, D2, longueur, distance_old, position1,  position2, position_old1, position_old2;
   t_outlet *force1;
   t_outlet *force2;
   t_float Lmin, Lmax;
   t_symbol *x_sym;  // receive
-} t_liaKD;
+} t_linkKD;
 
-void liaKD_float(t_liaKD *x, t_floatarg f1)
+void linkKD_float(t_linkKD *x, t_floatarg f1)
 {
   x->position1 = f1;
 }
 
-void liaKD_bang(t_liaKD *x)
+void linkKD_bang(t_linkKD *x)
 {
   t_float force1, force2, distance;
 
@@ -50,7 +50,7 @@ void liaKD_bang(t_liaKD *x)
 
 }
 
-void liaKD_reset(t_liaKD *x)
+void linkKD_reset(t_linkKD *x)
 {
   x->position1 = 0;
   x->position2 = 0;
@@ -61,7 +61,7 @@ void liaKD_reset(t_liaKD *x)
   x->distance_old = x->longueur;
 }
 
-void liaKD_resetF(t_liaKD *x)
+void linkKD_resetF(t_linkKD *x)
 {
   x->position_old1 = x->position1;
   x->position_old2 = x->position2;
@@ -69,50 +69,50 @@ void liaKD_resetF(t_liaKD *x)
   x->distance_old = x->longueur;
 }
 
-void liaKD_resetl(t_liaKD *x)
+void linkKD_resetl(t_linkKD *x)
 {
   x->longueur = (x->position1 - x->position2);
 }
 
-void liaKD_setL(t_liaKD *x, t_float L)
+void linkKD_setL(t_linkKD *x, t_float L)
 {
   x->longueur = L;
 }
 
-void liaKD_setK(t_liaKD *x, t_float K)
+void linkKD_setK(t_linkKD *x, t_float K)
 {
   x->raideur = K;
 }
 
-void liaKD_setD(t_liaKD *x, t_float D)
+void linkKD_setD(t_linkKD *x, t_float D)
 {
   x->viscosite = D;
 }
 
-void liaKD_setD2(t_liaKD *x, t_float D2)
+void linkKD_setD2(t_linkKD *x, t_float D2)
 {
   x->D2 = D2;
 }
 
-void liaKD_Lmin(t_liaKD *x, t_float Lmin)
+void linkKD_Lmin(t_linkKD *x, t_float Lmin)
 {
   x->Lmin = Lmin;
 }
 
-void liaKD_Lmax(t_liaKD *x, t_float Lmax)
+void linkKD_Lmax(t_linkKD *x, t_float Lmax)
 {
   x->Lmax = Lmax;
 }
 
-static void liaKD_free(t_liaKD *x)
+static void linkKD_free(t_linkKD *x)
 {
     pd_unbind(&x->x_obj.ob_pd, x->x_sym);
 }
 
-void *liaKD_new(t_symbol *s, t_floatarg L, t_floatarg K, t_floatarg D, t_floatarg D2 )
+void *linkKD_new(t_symbol *s, t_floatarg L, t_floatarg K, t_floatarg D, t_floatarg D2 )
 {
   
-  t_liaKD *x = (t_liaKD *)pd_new(liaKD_class);
+  t_linkKD *x = (t_linkKD *)pd_new(linkKD_class);
 
   x->x_sym = s;
   pd_bind(&x->x_obj.ob_pd, s);
@@ -137,26 +137,25 @@ void *liaKD_new(t_symbol *s, t_floatarg L, t_floatarg K, t_floatarg D, t_floatar
   return (void *)x;
 }
 
-void lia_setup(void) 
+void link_setup(void) 
 {
-  liaKD_class = class_new(gensym("lia"),
-        (t_newmethod)liaKD_new,
-        (t_method)liaKD_free,
-		sizeof(t_liaKD),
+  linkKD_class = class_new(gensym("link"),
+        (t_newmethod)linkKD_new,
+        (t_method)linkKD_free,
+		sizeof(t_linkKD),
         CLASS_DEFAULT, A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 
-  class_addcreator((t_newmethod)liaKD_new, gensym("link"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
-  class_addcreator((t_newmethod)liaKD_new, gensym("pmpd.link"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addcreator((t_newmethod)linkKD_new, gensym("lia"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 
-  class_addfloat(liaKD_class, liaKD_float);
-  class_addbang(liaKD_class, liaKD_bang);
-  class_addmethod(liaKD_class, (t_method)liaKD_reset, gensym("reset"), 0);
-  class_addmethod(liaKD_class, (t_method)liaKD_resetl, gensym("resetL"), 0);
-  class_addmethod(liaKD_class, (t_method)liaKD_resetF, gensym("resetF"), 0);
-  class_addmethod(liaKD_class, (t_method)liaKD_setD, gensym("setD"), A_DEFFLOAT, 0);
-  class_addmethod(liaKD_class, (t_method)liaKD_setD2, gensym("setD2"), A_DEFFLOAT, 0);
-  class_addmethod(liaKD_class, (t_method)liaKD_setK, gensym("setK"), A_DEFFLOAT, 0);
-  class_addmethod(liaKD_class, (t_method)liaKD_setL, gensym("setL"), A_DEFFLOAT, 0);
-  class_addmethod(liaKD_class, (t_method)liaKD_Lmin, gensym("setLmin"), A_DEFFLOAT, 0);
-  class_addmethod(liaKD_class, (t_method)liaKD_Lmax, gensym("setLmax"), A_DEFFLOAT, 0);
+  class_addfloat(linkKD_class, linkKD_float);
+  class_addbang(linkKD_class, linkKD_bang);
+  class_addmethod(linkKD_class, (t_method)linkKD_reset, gensym("reset"), 0);
+  class_addmethod(linkKD_class, (t_method)linkKD_resetl, gensym("resetL"), 0);
+  class_addmethod(linkKD_class, (t_method)linkKD_resetF, gensym("resetF"), 0);
+  class_addmethod(linkKD_class, (t_method)linkKD_setD, gensym("setD"), A_DEFFLOAT, 0);
+  class_addmethod(linkKD_class, (t_method)linkKD_setD2, gensym("setD2"), A_DEFFLOAT, 0);
+  class_addmethod(linkKD_class, (t_method)linkKD_setK, gensym("setK"), A_DEFFLOAT, 0);
+  class_addmethod(linkKD_class, (t_method)linkKD_setL, gensym("setL"), A_DEFFLOAT, 0);
+  class_addmethod(linkKD_class, (t_method)linkKD_Lmin, gensym("setLmin"), A_DEFFLOAT, 0);
+  class_addmethod(linkKD_class, (t_method)linkKD_Lmax, gensym("setLmax"), A_DEFFLOAT, 0);
 }
