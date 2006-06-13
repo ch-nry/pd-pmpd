@@ -12,7 +12,6 @@ arg number / description;
 is outside or inside this sphere \, it will not interact with this
 link.;
 #X obj 16 302 tSphere3D;
-#X obj 77 302 pmpd.tSphere3D;
 #X text 248 6 Spherical test;
 #X text 178 132 1 : X coordonate of the center of the sphere;
 #X text 178 159 2 : Y coordonate of the center of the sphere;
@@ -32,6 +31,6 @@ link.;
 #X connect 4 0 8 0;
 #X connect 5 0 8 0;
 #X connect 6 0 8 0;
-#X connect 8 0 18 0;
-#X connect 8 1 17 0;
-#X connect 8 2 16 0;
+#X connect 8 0 17 0;
+#X connect 8 1 16 0;
+#X connect 8 2 15 0;

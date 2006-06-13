@@ -16,7 +16,6 @@ link.;
 #X text 199 432 constant force normal to the circle.;
 #X msg 103 413 setFN 0;
 #X obj 20 632 iCircle3D;
-#X obj 37 655 pmpd.iCircle3D;
 #X text 176 170 2 : X coordonate of the orientation vector of the circle
 ;
 #X text 175 195 3 : Y coordonate of the orientation vector of the circle
@@ -57,14 +56,14 @@ more limited in space.;
 #X connect 5 0 10 0;
 #X connect 6 0 10 0;
 #X connect 9 0 10 0;
+#X connect 14 0 10 0;
 #X connect 15 0 10 0;
 #X connect 16 0 10 0;
-#X connect 17 0 10 0;
+#X connect 20 0 10 0;
 #X connect 21 0 10 0;
 #X connect 22 0 10 0;
-#X connect 23 0 10 0;
-#X connect 31 0 10 0;
-#X connect 34 0 10 0;
+#X connect 30 0 10 0;
+#X connect 33 0 10 0;
+#X connect 36 0 10 0;
 #X connect 37 0 10 0;
-#X connect 38 0 10 0;
-#X connect 41 0 10 0;
+#X connect 40 0 10 0;

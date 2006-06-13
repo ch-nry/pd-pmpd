@@ -31,7 +31,6 @@ and the circle plane.;
 #X msg 95 493 setdKN 0;
 #X text 283 12 Plane interaction;
 #X obj 21 521 iPlane3D;
-#X obj 38 544 pmpd.iPlane3D;
 #X text 177 41 This object sould be used for the simulation of interaction
 between a collection of masse and a plane;
 #X text 174 170 2 : X coordonate of the orientation vector of the plane

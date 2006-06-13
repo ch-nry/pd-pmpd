@@ -37,7 +37,6 @@ between a collection of masse and a segment.;
 #X text 135 596 this object is like iLine2D \, but the action is more
 limited in space;
 #X obj 17 577 iSeg2D;
-#X obj 34 600 pmpd.iSeg2D;
 #X text 177 169 2 : X coordonate of the the 1st point of the segment
 ;
 #X text 176 193 3 : Y coordonate of the the 1st point of the segment

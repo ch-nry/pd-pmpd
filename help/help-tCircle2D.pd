@@ -14,7 +14,6 @@ arg number / description;
 #X text 165 266 minimal and maximal radius of the circle. If the mass
 is outside or inside this circles \, it will not interact with this
 link.;
-#X obj 105 408 pmpd.tCircle2D;
 #X obj 32 408 tCircle2D;
 #X floatatom 32 486 5 0 0 0 - - -;
 #X text 169 485 0/1 according to the position of the masse;
@@ -30,11 +29,11 @@ link.;
 #X text 138 182 2 : center circle Y;
 #X text 137 221 3 : Minimum Radius;
 #X text 138 244 4 : Maximum Radius;
-#X connect 4 0 11 0;
-#X connect 5 0 11 0;
-#X connect 6 0 11 0;
-#X connect 7 0 11 0;
-#X connect 11 0 12 0;
-#X connect 11 1 15 0;
-#X connect 11 2 16 0;
-#X connect 14 0 11 0;
+#X connect 4 0 10 0;
+#X connect 5 0 10 0;
+#X connect 6 0 10 0;
+#X connect 7 0 10 0;
+#X connect 10 0 11 0;
+#X connect 10 1 14 0;
+#X connect 10 2 15 0;
+#X connect 13 0 10 0;

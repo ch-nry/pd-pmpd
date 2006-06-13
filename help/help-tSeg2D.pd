@@ -35,7 +35,6 @@ to allow an interaction with this mass.;
 ;
 #X msg 92 379 position2D 0 0;
 #X obj 35 450 tSeg2D;
-#X obj 92 450 pmpd.tSeg2D;
 #X connect 6 0 27 0;
 #X connect 7 0 27 0;
 #X connect 8 0 27 0;

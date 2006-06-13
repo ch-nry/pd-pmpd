@@ -6,7 +6,6 @@ between a collection of masse and a commun environement;
 #X text 179 143 1 : name;
 #X text 176 71 This object should receive a bang to be active (act
 like the link object);
-#X obj 46 672 pmpd.iAmbient2D;
 #X text 196 155 this is the name of the mass interacting with this
 object. you can also conect the output of this object to a mass \,
 to allow an interaction with this mass.;
@@ -47,6 +46,7 @@ arg number / description;
 #X text 205 640 X and Y displacement field. displace the mass if it's
 inside the interactor field;
 #X msg 72 202 setFXY 0 0;
+#X connect 10 0 0 0;
 #X connect 11 0 0 0;
 #X connect 12 0 0 0;
 #X connect 13 0 0 0;
@@ -55,7 +55,6 @@ inside the interactor field;
 #X connect 16 0 0 0;
 #X connect 17 0 0 0;
 #X connect 18 0 0 0;
-#X connect 19 0 0 0;
+#X connect 24 0 0 0;
 #X connect 25 0 0 0;
-#X connect 26 0 0 0;
-#X connect 36 0 0 0;
+#X connect 35 0 0 0;
