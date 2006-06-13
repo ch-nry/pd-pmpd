@@ -166,7 +166,7 @@
 #X obj 42 482 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
 #X msg 141 187 resetF \, setK 0.1 \, setD 1 \, setD2 1;
-#X text 287 9 interactors on a masse field;
+#X text 287 9 interactors on a mass field;
 #X obj 58 497 iSphere3D mass 0 0 0 0.1 5 0 1;
 #X obj 42 528 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;

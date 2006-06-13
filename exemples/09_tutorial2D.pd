@@ -6,7 +6,7 @@
 #X floatatom 200 94 5 -10 200 0 - - -;
 #X floatatom 274 92 5 0 0 0 - - -;
 #X floatatom 416 92 5 0 0 0 - - -;
-#X obj 416 143 s masse;
+#X obj 416 143 s mass;
 #X obj 200 143 / 10;
 #X obj 200 117 + 1;
 #X obj 274 116 / 10;
@@ -19,8 +19,8 @@
 #X msg 341 143 setD2 \$1;
 #X msg 341 68 1;
 #X obj 139 23 inlet;
-#X obj 47 201 s tut_masse;
-#X obj 200 201 s tut_lia;
+#X obj 47 201 s tut_mass;
+#X obj 200 201 s tut_link;
 #X msg 44 84 setXmin -3.8;
 #X msg 58 110 setXmax 3.8;
 #X msg 81 131 setYmin -3.8;
@@ -63,46 +63,46 @@
 #X obj 41 259 gemwin;
 #X msg 41 206 reset \, create \, 1;
 #N canvas 115 18 1382 984 structure 0;
-#X obj 503 58 tut_lia;
-#X obj 193 331 tut_lia;
-#X obj 243 219 tut_lia;
-#X obj 353 120 tut_lia;
-#X obj 1022 465 tut_lia;
-#X obj 791 778 tut_lia;
-#X obj 910 681 tut_lia;
-#X obj 997 574 tut_lia;
-#X obj 988 236 tut_lia;
-#X obj 746 55 tut_lia;
-#X obj 907 142 tut_lia;
-#X obj 1009 345 tut_lia;
-#X obj 556 793 tut_lia;
-#X obj 188 450 tut_lia;
-#X obj 252 593 tut_lia;
-#X obj 384 717 tut_lia;
-#X obj 654 751 tut_lia;
-#X obj 801 707 tut_lia;
-#X obj 850 622 tut_lia;
-#X obj 902 500 tut_lia;
-#X obj 908 405 tut_lia;
-#X obj 907 301 tut_lia;
-#X obj 865 207 tut_lia;
-#X obj 769 154 tut_lia;
-#X obj 226 276 tut_masse -0.9 0.4;
-#X obj 422 90 tut_masse -0.4 0.9;
-#X obj 997 291 tut_masse 0.9 0.4;
-#X obj 637 815 tut_masse 0 -1;
-#X obj 972 633 tut_masse 0.7 -0.7;
-#X obj 947 189 tut_masse 0.7 0.7;
-#X obj 173 374 tut_masse -1 0;
-#X obj 272 165 tut_masse -0.7 0.7;
-#X obj 304 648 tut_masse -0.7 -0.7;
-#X obj 837 97 tut_masse 0.4 0.9;
-#X obj 207 520 tut_masse -0.9 -0.4;
-#X obj 1015 400 tut_masse 1 0;
-#X obj 445 758 tut_masse -0.4 -0.9;
-#X obj 873 734 tut_masse 0.4 -0.9;
-#X obj 598 28 tut_masse 0 1;
-#X obj 1017 517 tut_masse 0.9 -0.4;
+#X obj 503 58 tut_link;
+#X obj 193 331 tut_link;
+#X obj 243 219 tut_link;
+#X obj 353 120 tut_link;
+#X obj 1022 465 tut_link;
+#X obj 791 778 tut_link;
+#X obj 910 681 tut_link;
+#X obj 997 574 tut_link;
+#X obj 988 236 tut_link;
+#X obj 746 55 tut_link;
+#X obj 907 142 tut_link;
+#X obj 1009 345 tut_link;
+#X obj 556 793 tut_link;
+#X obj 188 450 tut_link;
+#X obj 252 593 tut_link;
+#X obj 384 717 tut_link;
+#X obj 654 751 tut_link;
+#X obj 801 707 tut_link;
+#X obj 850 622 tut_link;
+#X obj 902 500 tut_link;
+#X obj 908 405 tut_link;
+#X obj 907 301 tut_link;
+#X obj 865 207 tut_link;
+#X obj 769 154 tut_link;
+#X obj 226 276 tut_mass -0.9 0.4;
+#X obj 422 90 tut_mass -0.4 0.9;
+#X obj 997 291 tut_mass 0.9 0.4;
+#X obj 637 815 tut_mass 0 -1;
+#X obj 972 633 tut_mass 0.7 -0.7;
+#X obj 947 189 tut_mass 0.7 0.7;
+#X obj 173 374 tut_mass -1 0;
+#X obj 272 165 tut_mass -0.7 0.7;
+#X obj 304 648 tut_mass -0.7 -0.7;
+#X obj 837 97 tut_mass 0.4 0.9;
+#X obj 207 520 tut_mass -0.9 -0.4;
+#X obj 1015 400 tut_mass 1 0;
+#X obj 445 758 tut_mass -0.4 -0.9;
+#X obj 873 734 tut_mass 0.4 -0.9;
+#X obj 598 28 tut_mass 0 1;
+#X obj 1017 517 tut_mass 0.9 -0.4;
 #X connect 0 0 25 0;
 #X connect 0 1 38 0;
 #X connect 1 0 30 0;
@@ -213,34 +213,34 @@
 #X msg 54 150 force2D 0 -0.1;
 #X obj 168 22 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
-#X obj 246 354 s tut_masse;
-#X obj 42 178 s tut_masse;
-#X obj 77 117 s tut_lia;
+#X obj 246 354 s tut_mass;
+#X obj 42 178 s tut_mass;
+#X obj 77 117 s tut_link;
 #X text 39 403 You can use this exemple to try to make you own structure.
 ;
 #X text 58 506 Go to pd structure;
 #X text 59 526 Remove everything;
-#X text 41 427 look at the structure \, and look a the patch : a lia
+#X text 41 427 look at the structure \, and look a the patch : a link
 is corespnding to a segment \, and a maase is a white sphere;
 #X text 41 462 everyting is here to make a 2D structure easilly;
 #X text 40 486 to make your own strucute :;
-#X text 59 546 put "tut_masse" object in the screen where you want
-to put your masse in the gem windows.;
-#X text 58 658 create a "tut_lia" object for each link you whant to
+#X text 59 546 put "tut_mass" object in the screen where you want
+to put your mass in the gem windows.;
+#X text 58 658 create a "tut_link" object for each link you whant to
 put in the structure.;
 #X text 60 726 The structure is ready. you should now do the initialisation
 part :;
 #X text 222 19 <- init;
 #X text 375 20 <- reset;
 #X text 59 763 click on pd init : this will give a minimal and maximal
-position to the masse. (for them to stay on the screen).;
+position to the mass. (for them to stay on the screen).;
 #X text 60 806 click on reset : this will tell the link to learn there
 good initial lenght \, reset forces etc...;
-#X text 59 584 when all masse are there \, you can specifie them ther
-initial position : edit "tut_masse" object and add 2 float corresponding
+#X text 59 584 when all mass are there \, you can specifie them ther
+initial position : edit "tut_mass" object and add 2 float corresponding
 to ther X and Y position in the GEM screen. (should be about from -4
 to 4);
-#X text 59 694 connect them to the masse (link and masses as to be
+#X text 59 694 connect them to the mass (link and masss as to be
 connected in 2 way : mass to link and link to mass).;
 #X text 61 846 now \, you are ready for toggle the metro on...;
 #X text 30 887 If the line does not display corectly \, you sould upgrade

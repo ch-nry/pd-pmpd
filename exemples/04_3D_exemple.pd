@@ -53,8 +53,8 @@
 #X text 112 160 <- start here;
 #X text 62 296 <- gem simulation;
 #X text 347 205 <- send X \, Y \, Z forces;
-#X obj 82 264 masse3D 0 10;
-#X obj 189 264 lia3D 0 1 1 1 0.03;
+#X obj 82 264 mass3D 0 10;
+#X obj 189 264 link3D 0 1 1 1 0.03;
 #X text 73 12 simulation of a 3D model. The small sphere is link in
 the center of the big one with a 3D link. This link has the same diametter
 than the big sphere.;

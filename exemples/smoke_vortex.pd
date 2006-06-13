@@ -15,7 +15,7 @@
 #X obj 73 75 delay;
 #X obj 71 28 t b b;
 #X obj 99 54 random 8000;
-#X obj 25 389 iCircle2D masse 0 0 0.1 50 0 0 0 0 0 \$1;
+#X obj 25 389 iCircle2D mass 0 0 0.1 50 0 0 0 0 0 \$1;
 #X obj 144 8 r reset_all;
 #X msg 67 257 \$1 \, \$2 500000;
 #X connect 0 0 2 0;

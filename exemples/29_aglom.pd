@@ -5,8 +5,8 @@
 #X msg 145 149 0 \, destroy;
 #X obj 111 177 gemwin;
 #X msg 111 124 reset \, create \, 1;
-#X obj 18 390 s masse;
-#X obj 266 150 s reset_masse;
+#X obj 18 390 s mass;
+#X obj 266 150 s reset_mass;
 #X msg 266 128 bang;
 #X text 359 281 <- right border;
 #X text 360 303 <- left border;
@@ -75,19 +75,19 @@
 #X restore 398 158 pd creation pool;
 #X obj 61 214 s link;
 #X obj 18 154 metro 5;
-#X obj 53 280 iLine2D masse 3.5 -3.5 3.5 3.5 1000 0 0 10;
-#X obj 63 304 iLine2D masse -3.5 3.5 -3.5 -3.5 1000 0 0 10;
-#X obj 78 327 iLine2D masse 3.5 3.5 -3.5 3.5 1000 0 0 10;
-#X obj 89 350 iLine2D masse -3.5 -3.5 3.5 -3.5 1000 0 0 10;
+#X obj 53 280 iLine2D mass 3.5 -3.5 3.5 3.5 1000 0 0 10;
+#X obj 63 304 iLine2D mass -3.5 3.5 -3.5 -3.5 1000 0 0 10;
+#X obj 78 327 iLine2D mass 3.5 3.5 -3.5 3.5 1000 0 0 10;
+#X obj 89 350 iLine2D mass -3.5 -3.5 3.5 -3.5 1000 0 0 10;
 #X text 50 100 <- begin (change the metro speed for slow computer)
 ;
 #X floatatom 55 123 5 0 0 0 - - -;
-#X obj 43 260 iAmbient2D masse 0 0 0.01 0.01 1;
+#X obj 43 260 iAmbient2D mass 0 0 0.01 0.01 1;
 #X text 359 257 <- give random speed and ambient viscosity;
-#X text 174 35 All masses got 2 circular interactors around them. This
+#X text 174 35 All masss got 2 circular interactors around them. This
 create a non linear interactor. this make them to atract / repuls depending
 on ther distances....;
-#X text 177 6 All masses interact each other in a way for the creation
+#X text 177 6 All masss interact each other in a way for the creation
 of small structures;
 #X connect 0 0 5 0;
 #X connect 0 1 14 0;

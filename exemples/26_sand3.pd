@@ -5,7 +5,7 @@
 #X obj 137 86 loadbang;
 #X msg 237 138 0 \, destroy;
 #X obj 203 166 gemwin;
-#X obj 19 150 s masse;
+#X obj 19 150 s mass;
 #N canvas 39 357 1226 456 pool 0;
 #X obj 480 120 sand -0.25 5.8;
 #X obj 0 0 sand -1.25 5;
@@ -203,19 +203,19 @@
 #X connect 18 1 11 0;
 #X restore 325 166 pd creation pool;
 #X msg 137 110 reset;
-#X obj 137 134 s masse;
+#X obj 137 134 s mass;
 #X obj 79 172 s link;
 #X obj 19 85 metro 10;
-#X obj 58 247 iCircle2D masse 3 2 0 2.98 0 0 1 0 0 0 0.1;
-#X obj 68 267 iCircle2D masse -3 2 0 2.98 0 0 1 0 0 0 0.1;
-#X obj 83 289 iCircle2D masse 7 6 0 5 0 0 1 0 0 0 0.1;
-#X obj 93 309 iCircle2D masse -7 6 0 5 0 0 1 0 0 0 0.1;
+#X obj 58 247 iCircle2D mass 3 2 0 2.98 0 0 1 0 0 0 0.1;
+#X obj 68 267 iCircle2D mass -3 2 0 2.98 0 0 1 0 0 0 0.1;
+#X obj 83 289 iCircle2D mass 7 6 0 5 0 0 1 0 0 0 0.1;
+#X obj 93 309 iCircle2D mass -7 6 0 5 0 0 1 0 0 0 0.1;
 #X floatatom 62 65 5 0 0 0 - - -;
 #X text 99 19 some physical parameters change from the previus exemples...
 ;
 #X msg 203 115 reset \, view 0 0 -6 0 0 0 0 1 0 \, create \, 1;
 #X text 161 5 small balls;
-#X obj 45 210 iAmbient2D masse 0 -0.001 0 0 0.005;
+#X obj 45 210 iAmbient2D mass 0 -0.001 0 0 0.005;
 #X text 464 115 <- 1;
 #X text 39 33 <- 2;
 #X connect 0 0 5 0;

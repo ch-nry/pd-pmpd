@@ -42,7 +42,7 @@ a number. others files are abstractions used by this examples.;
 #X connect 1 0 0 0;
 #X connect 3 0 1 0;
 #X restore 25 236 pd open;
-#X text 17 102 gem v0.90 is neaded. it's the only dependency of the
+#X text 17 106 gem v0.90 is neaded. it's the only dependency of the
 exemples;
 #X connect 3 0 4 0;
 #X connect 7 0 8 0;

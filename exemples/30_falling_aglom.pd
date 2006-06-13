@@ -4,7 +4,7 @@
 ;
 #X msg 146 95 0 \, destroy;
 #X obj 111 123 gemwin;
-#X obj 18 337 s masse;
+#X obj 18 337 s mass;
 #X text 359 227 <- right border;
 #X text 360 249 <- left border;
 #X text 357 307 <- top border;
@@ -116,13 +116,13 @@
 #X restore 398 104 pd creation pool;
 #X obj 61 160 s link;
 #X obj 18 100 metro 5;
-#X obj 53 226 iLine2D masse 3.5 -3.5 3.5 3.5 1000 0 0 10;
-#X obj 63 250 iLine2D masse -3.5 3.5 -3.5 -3.5 1000 0 0 10;
+#X obj 53 226 iLine2D mass 3.5 -3.5 3.5 3.5 1000 0 0 10;
+#X obj 63 250 iLine2D mass -3.5 3.5 -3.5 -3.5 1000 0 0 10;
 #X text 50 45 <- begin (change the metro speed for slow computer);
 #X floatatom 55 69 5 0 0 0 - - -;
 #X text 359 203 <- give random speed and ambient viscosity;
 #X msg 243 98 reset;
-#X obj 244 120 s masse;
+#X obj 244 120 s mass;
 #N canvas 828 304 454 304 line 0;
 #X obj 62 28 gemhead;
 #X obj 60 82 curve 2;
@@ -144,10 +144,10 @@
 #X connect 7 0 1 1;
 #X connect 8 0 4 1;
 #X restore 398 131 pd line gem;
-#X obj 77 272 iLine2D masse -3.5 -7.5 3.5 -7.5 1000 0 0 10;
-#X obj 90 195 iAmbient2D masse 0 -0.0015 0 0 0.4;
-#X obj 160 317 iSeg2D masse -5 8 -0.2 3 1 0.5;
-#X obj 165 298 iSeg2D masse 0.2 3 5 8 1 0.5;
+#X obj 77 272 iLine2D mass -3.5 -7.5 3.5 -7.5 1000 0 0 10;
+#X obj 90 195 iAmbient2D mass 0 -0.0015 0 0 0.4;
+#X obj 160 317 iSeg2D mass -5 8 -0.2 3 1 0.5;
+#X obj 165 298 iSeg2D mass 0.2 3 5 8 1 0.5;
 #X msg 111 70 reset \, view 0 0 -8 0 0 0 0 1 0 \, create \, 1;
 #X text 145 10 It's the same as previus exemple \, but in a gravity
 field.;

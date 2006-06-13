@@ -30,24 +30,24 @@
 general computation speed;
 #X text 135 409 all the slider are "link" together with a link. slider
 got a mass so they have inertial.;
-#X obj 3 196 lia \$0-link 0 1 1;
-#X obj 151 196 lia \$0-link 0 1 1;
-#X obj 300 196 lia \$0-link 0 1 1;
-#X obj 449 196 lia \$0-link 0 1 1;
-#X obj 599 196 lia \$0-link 0 1 1;
-#X obj 747 196 lia \$0-link 0 1 1;
-#X obj 896 196 lia \$0-link 0 1 1;
-#X obj 1045 196 lia \$0-link 0 1 1;
-#X obj 146 172 masse \$0-mass 30;
-#X obj 294 171 masse \$0-mass 30;
-#X obj 444 172 masse \$0-mass 30;
-#X obj 595 172 masse \$0-mass 30;
-#X obj 743 171 masse \$0-mass 30;
-#X obj 894 171 masse \$0-mass 30;
-#X obj 1041 171 masse \$0-mass 30;
+#X obj 3 196 link \$0-link 0 1 1;
+#X obj 151 196 link \$0-link 0 1 1;
+#X obj 300 196 link \$0-link 0 1 1;
+#X obj 449 196 link \$0-link 0 1 1;
+#X obj 599 196 link \$0-link 0 1 1;
+#X obj 747 196 link \$0-link 0 1 1;
+#X obj 896 196 link \$0-link 0 1 1;
+#X obj 1045 196 link \$0-link 0 1 1;
+#X obj 146 172 mass \$0-mass 30;
+#X obj 294 171 mass \$0-mass 30;
+#X obj 444 172 mass \$0-mass 30;
+#X obj 595 172 mass \$0-mass 30;
+#X obj 743 171 mass \$0-mass 30;
+#X obj 894 171 mass \$0-mass 30;
+#X obj 1041 171 mass \$0-mass 30;
 #X text 135 451 You can see the propagation of a wave \, and physical
 properties of a kind of elastic string.;
-#X text 160 132 masses and link has to be compute one after the other.
+#X text 160 132 masss and link has to be compute one after the other.
 ;
 #X obj 749 384 mtof;
 #X obj 749 433 line;

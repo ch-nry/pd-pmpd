@@ -4,21 +4,21 @@
 #X obj 9 62 t b b;
 #X obj 44 87 s \$0-link;
 #X obj 9 113 s \$0-mass;
-#X obj 28 154 lia \$0-link 0 1 1;
-#X obj 28 202 lia \$0-link 0 1 1;
-#X obj 29 253 lia \$0-link 0 1 1;
-#X obj 30 304 lia \$0-link 0 1 1;
-#X obj 31 353 lia \$0-link 0 1 1;
-#X obj 31 403 lia \$0-link 0 1 1;
-#X obj 31 453 lia \$0-link 0 1 1;
-#X obj 31 502 lia \$0-link 0 1 1;
-#X obj 28 178 masse \$0-mass 30;
-#X obj 29 228 masse \$0-mass 30;
-#X obj 30 279 masse \$0-mass 30;
-#X obj 30 329 masse \$0-mass 30;
-#X obj 31 378 masse \$0-mass 30;
-#X obj 31 428 masse \$0-mass 30;
-#X obj 31 477 masse \$0-mass 30;
+#X obj 28 154 link \$0-link 0 1 1;
+#X obj 28 202 link \$0-link 0 1 1;
+#X obj 29 253 link \$0-link 0 1 1;
+#X obj 30 304 link \$0-link 0 1 1;
+#X obj 31 353 link \$0-link 0 1 1;
+#X obj 31 403 link \$0-link 0 1 1;
+#X obj 31 453 link \$0-link 0 1 1;
+#X obj 31 502 link \$0-link 0 1 1;
+#X obj 28 178 mass \$0-mass 30;
+#X obj 29 228 mass \$0-mass 30;
+#X obj 30 279 mass \$0-mass 30;
+#X obj 30 329 mass \$0-mass 30;
+#X obj 31 378 mass \$0-mass 30;
+#X obj 31 428 mass \$0-mass 30;
+#X obj 31 477 mass \$0-mass 30;
 #X obj 269 181 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
 -1 -1 0 1;
 #X obj 269 196 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144

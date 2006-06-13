@@ -10,7 +10,7 @@
 #X obj 88 167 sin;
 #X obj 63 317 pack f f;
 #X msg 64 343 setXY \$1 \$2;
-#X obj 132 29 r masse2;
+#X obj 132 29 r mass2;
 #X obj 64 59 random 360;
 #X obj 64 85 / 180;
 #X obj 135 176 random 100;
@@ -21,8 +21,8 @@
 #X obj 85 471 sphere 0.05;
 #X obj 271 190 / 50;
 #X obj 137 202 / 100;
-#X obj 64 373 masse2D masse 0;
-#X obj 64 559 iCircle2D masse 0 0 1e-006 10 0 0 0 0 0 0 0 0 0 0.0001
+#X obj 64 373 mass2D mass 0;
+#X obj 64 559 iCircle2D mass 0 0 1e-006 10 0 0 0 0 0 0 0 0 0 0.0001
 ;
 #X connect 0 0 1 0;
 #X connect 1 0 19 0;

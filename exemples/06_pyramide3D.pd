@@ -44,17 +44,17 @@
 #X msg 738 811 \$1 \$2 \$3;
 #X obj 718 842 curve 2;
 #X obj 475 843 curve 2;
-#X obj 27 283 masse3D masse 10 -1 0 0;
-#X obj 107 123 lia3D lia 1 3 1 0.1;
-#X obj 322 63 masse3D masse 10 1 0 0;
-#X obj 422 138 lia3D lia 1 3 1 0.1;
-#X obj 289 246 lia3D lia 1 3 1 0.1;
-#X obj 276 306 lia3D lia 1 3 1 0.1;
-#X obj 91 403 lia3D lia 1 3 1 0.1;
-#X obj 287 486 masse3D masse 10 0 1 0;
-#X obj 458 375 lia3D lia 1 3 1 0.1;
-#X obj 570 273 masse3D masse 10 0 0;
-#X obj 758 271 lia3D lia2 1 0.6 0 0;
+#X obj 27 283 mass3D mass 10 -1 0 0;
+#X obj 107 123 link3D link 1 3 1 0.1;
+#X obj 322 63 mass3D mass 10 1 0 0;
+#X obj 422 138 link3D link 1 3 1 0.1;
+#X obj 289 246 link3D link 1 3 1 0.1;
+#X obj 276 306 link3D link 1 3 1 0.1;
+#X obj 91 403 link3D link 1 3 1 0.1;
+#X obj 287 486 mass3D mass 10 0 1 0;
+#X obj 458 375 link3D link 1 3 1 0.1;
+#X obj 570 273 mass3D mass 10 0 0;
+#X obj 758 271 link3D link2 1 0.6 0 0;
 #X connect 0 0 2 0;
 #X connect 1 1 0 1;
 #X connect 1 2 0 2;
@@ -142,15 +142,15 @@
 #X restore 39 472 pd forme;
 #X obj 10 26 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 78 105 s lia;
-#X obj 10 104 s masse;
-#X obj 36 343 s masse;
+#X obj 78 105 s link;
+#X obj 10 104 s mass;
+#X obj 36 343 s mass;
 #X obj 10 47 metro 50;
 #X msg 193 73 destroy;
 #X msg 166 48 reset \, create \, 1 \, lighting 1;
 #X obj 166 106 gemwin;
 #X obj 458 107 world_light;
-#X obj 78 129 s lia2;
+#X obj 78 129 s link2;
 #X msg 36 242 force3D 0 0 1;
 #X msg 44 266 force3D 0 1 0;
 #X msg 53 290 force3D 1 0 0;
@@ -167,11 +167,11 @@
 #X floatatom 102 162 5 0 0 0 - - -;
 #X floatatom 170 162 5 0 0 0 - - -;
 #X floatatom 33 50 5 5 100 0 - - -;
-#X obj 33 216 s lia;
-#X obj 33 99 s masse;
+#X obj 33 216 s link;
+#X obj 33 99 s mass;
 #X floatatom 33 163 5 0 0 0 - - -;
 #X msg 33 189 setL \$1;
-#X obj 36 380 s lia2;
+#X obj 36 380 s link2;
 #X floatatom 36 297 5 0 0 0 - - -;
 #X msg 36 319 setL \$1;
 #X msg 33 140 1;
@@ -183,11 +183,11 @@
 #X floatatom 102 293 5 0 0 0 - - -;
 #X floatatom 170 293 5 0 0 0 - - -;
 #X text 106 27 <- default value;
-#X text 109 100 weight of the masse;
+#X text 109 100 weight of the mass;
 #X text 317 137 <- default values;
-#X text 315 189 pyramide liaison properties;
+#X text 315 189 pyramide linkison properties;
 #X text 257 270 <- default values;
-#X text 258 318 liaison beetween the pyramide and a fixed point (0
+#X text 258 318 linkison beetween the pyramide and a fixed point (0
 \, 0 \, 0);
 #X msg 36 273 1;
 #X msg 102 270 0.6;
@@ -221,10 +221,10 @@
 #X connect 31 0 6 0;
 #X connect 32 0 30 0;
 #X restore 459 44 pd change physical properties;
-#X text 215 262 <- send forces to the 4 masses;
-#X text 225 378 <- send forces to a masses;
+#X text 215 262 <- send forces to the 4 masss;
+#X text 225 378 <- send forces to a masss;
 #X text 227 474 <- structure and gem stuff;
-#X text 76 168 4 masses are all link together \, with the same kind
+#X text 76 168 4 masss are all link together \, with the same kind
 of link.;
 #X text 73 193 A link is add to a mass \, for the structure to stay
 in the screen.;

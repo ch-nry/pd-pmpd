@@ -184,7 +184,7 @@
 #X msg 113 455 2 3 0 3;
 #X msg 81 390 0.1 0 0 0.1;
 #X text 301 6 morfing;
-#X text 128 21 each masses are link to 4 diferents point \, among diferents
+#X text 128 21 each masss are link to 4 diferents point \, among diferents
 shapes. depending of the rigidity of the link \, the diferents shapes
 an be show;
 #X text 220 379 <- select diferents rigidity (and diferents shape)

@@ -4,7 +4,7 @@
 ;
 #X obj 116 152 loadbang;
 #X msg 179 224 0 \, destroy;
-#X obj 22 238 s masse;
+#X obj 22 238 s mass;
 #N canvas 39 357 765 474 pool 0;
 #X obj 180 180 rain;
 #X obj 491 103 rain;
@@ -711,7 +711,7 @@
 #X obj 1335 372 rain;
 #X obj 1345 382 rain;
 #X restore 469 479 pd pool;
-#X obj 116 200 s masse;
+#X obj 116 200 s mass;
 #X obj 84 327 s link;
 #X text 43 132 <- begin (change metro speed for slow computer);
 #X obj 472 300 alpha;
@@ -735,8 +735,8 @@
 #X obj 267 517 world_light;
 #X text 210 175 <- reset the simulation;
 #X text 194 6 infinit small particules on an elipse.;
-#X obj 46 374 iSphere3D masse 0 -2 0 0 2 0 0.1 0 0.1;
-#X obj 66 351 iAmbient3D masse 0 -0.001 0 1e-006 1e-007 1e-006 O.OOO1
+#X obj 46 374 iSphere3D mass 0 -2 0 0 2 0 0.1 0 0.1;
+#X obj 66 351 iAmbient3D mass 0 -0.001 0 1e-006 1e-007 1e-006 O.OOO1
 ;
 #X msg 116 176 reset \, setT 1;
 #X obj 170 324 ch_gemwin;

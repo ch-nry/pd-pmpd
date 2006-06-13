@@ -2,7 +2,7 @@
 #X obj 18 139 t b b;
 #X obj 18 62 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 18 183 s masse;
+#X obj 18 183 s mass;
 #X msg 242 122 0 \, destroy;
 #X obj 209 148 gemwin;
 #X obj 100 171 s reset_smoke;
@@ -32,12 +32,12 @@
 -1 -1 0 1;
 #X obj 377 549 / 127;
 #X msg 377 570 reset \, setY \$1;
-#X obj 152 419 masse2D masse 1 0.1 0.9;
+#X obj 152 419 mass2D mass 1 0.1 0.9;
 #X text 139 15 1 earth and 2 suns .;
 #X text 139 31 The earth is attacted by the 2 suns. you can change
 the initial position of the earth \, to test the ensitivity of initial
 position of surch chaotic system.;
-#X text 286 598 change initial position of the masse;
+#X text 286 598 change initial position of the mass;
 #X msg 330 260 setG -1e-006;
 #X msg 152 260 setG -1e-006;
 #X connect 0 0 2 0;

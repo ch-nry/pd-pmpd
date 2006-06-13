@@ -12,7 +12,7 @@
 #X obj 196 74 t b b b;
 #X obj 136 224 / 10;
 #X obj 102 224 / 10;
-#X obj 61 173 masse2D masse 1 0 -35;
+#X obj 61 173 mass2D mass 1 0 -35;
 #X msg 157 130 on \, reset \, setXY 0 -35;
 #X connect 0 0 1 0;
 #X connect 1 0 3 0;

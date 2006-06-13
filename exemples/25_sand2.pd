@@ -1,11 +1,15 @@
-#N canvas 210 246 510 339 10;
-#X obj 23 122 t b b;
+#N canvas 751 247 796 519 10;
+#X obj 28 130 t b b;
 #X obj 23 50 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
 ;
-#X msg 222 144 0 \, destroy;
-#X obj 199 172 gemwin;
-#X obj 23 160 s masse;
-#N canvas 61 550 1250 480 pool 0;
+#X msg 196 149 0 \, destroy;
+#X obj 173 177 gemwin;
+#X obj 23 160 s mass;
+#N canvas 58 556 1250 480 pool 0;
+#X obj 960 210 sand 1 10.6;
+#X obj 240 60 sand -1.5 9.4;
+#X obj 480 30 sand -2 9.8;
+#X obj 480 60 sand -1.5 9.8;
 #X obj 480 90 sand -1 9.8;
 #X obj 720 60 sand -1.5 10.2;
 #X obj 480 180 sand 0.5 9.8;
@@ -28,7 +32,6 @@
 #X obj 3360 0 sand -2.5 14.6;
 #X obj 0 30 sand -2 9;
 #X obj 240 30 sand -2 9.4;
-#X obj 480 30 sand -2 9.8;
 #X obj 720 30 sand -2 10.2;
 #X obj 960 30 sand -2 10.6;
 #X obj 1200 30 sand -2 11;
@@ -42,8 +45,6 @@
 #X obj 3120 30 sand -2 14.2;
 #X obj 3360 30 sand -2 14.6;
 #X obj 0 60 sand -1.5 9;
-#X obj 240 60 sand -1.5 9.4;
-#X obj 480 60 sand -1.5 9.8;
 #X obj 960 60 sand -1.5 10.6;
 #X obj 1200 60 sand -1.5 11;
 #X obj 1440 60 sand -1.5 11.4;
@@ -116,7 +117,6 @@
 #X obj 240 210 sand 1 9.4;
 #X obj 480 210 sand 1 9.8;
 #X obj 720 210 sand 1 10.2;
-#X obj 960 210 sand 1 10.6;
 #X obj 1200 210 sand 1 11;
 #X obj 1440 210 sand 1 11.4;
 #X obj 1680 210 sand 1 11.8;
@@ -201,31 +201,32 @@
 #X connect 17 1 7 0;
 #X connect 18 1 14 0;
 #X restore 317 147 pd creation pool;
-#X obj 83 287 s link;
+#X obj 86 343 s link;
 #X text 212 4 sand;
 #X floatatom 66 72 5 0 0 0 - - -;
-#X obj 23 95 metro 10;
-#X msg 199 94 reset \, view 0 0 -8 0 0 0 0 1 0 \, create \, 1;
+#X msg 168 95 reset \, view 0 0 -8 0 0 0 0 1 0 \, create \, 1;
 #X text 125 18 it's the same than previus exemple \, but with more
-masses \, and diferents physical properties so that the global shape
+masss \, and diferents physical properties so that the global shape
 is diferent.;
-#X obj 83 143 s masse;
-#X msg 83 120 reset \, setT 0.9;
-#X obj 49 221 iAmbient2D masse 0 -0.00051 0 0 0.031 -1000 1000 -1000
-1000;
-#X obj 59 245 iCircle2D masse 3.1 2 0 3 0 0 1 0 0 0 0.1;
-#X obj 69 264 iCircle2D masse -3.1 2 0 3 0 0 1 0 0 0 0.1;
+#X obj 61 296 iCircle2D mass 3.1 2 0 3 0 0 1 0 0 0 0.1;
+#X obj 72 320 iCircle2D mass -3.1 2 0 3 0 0 1 0 0 0 0.1;
 #X text 461 94 <- 1;
 #X text 49 47 <- 2;
 #X text 204 62 houagalss;
+#X obj 23 95 metro 3;
+#X obj 110 130 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X obj 108 156 s reset;
+#X obj 43 270 iAmbient2D mass 0 -0.00051 0 0 0.031 -1000 1000 -1000
+1000;
 #X connect 0 0 4 0;
 #X connect 0 1 7 0;
-#X connect 0 1 15 0;
-#X connect 0 1 16 0;
-#X connect 0 1 17 0;
-#X connect 1 0 10 0;
+#X connect 0 1 12 0;
+#X connect 0 1 13 0;
+#X connect 0 1 20 0;
+#X connect 1 0 17 0;
 #X connect 2 0 3 0;
-#X connect 9 0 10 1;
-#X connect 10 0 0 0;
-#X connect 11 0 3 0;
-#X connect 14 0 13 0;
+#X connect 9 0 17 1;
+#X connect 10 0 3 0;
+#X connect 17 0 0 0;
+#X connect 18 0 19 0;

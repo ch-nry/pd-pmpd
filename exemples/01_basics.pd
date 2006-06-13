@@ -1,9 +1,8 @@
-#N canvas 517 121 515 653 12;
+#N canvas 207 120 515 653 12;
 #X text 66 243 physical modeling for pure data using a collection of
 physical ojects.;
 #X obj 8 250 pmpd;
 #N canvas 0 0 623 384 read 0;
-#X text 123 207 cyrille.henry@la-kitchen.fr;
 #X text 412 312 ch20031213;
 #X text 30 25 The aim of this collection of objects is to create physical
 behavior with pure data. It's not audio synthesis. But it can be used
@@ -16,6 +15,7 @@ of the "physical" geometry \, but you don't need it to use this collection.
 be highly apreciated :;
 #X text 28 240 informations can be find :;
 #X text 122 263 http://drpichon.free.fr/pmpd/;
+#X text 123 207 ch@chdh.net;
 #X restore 69 296 pd read me first;
 #N canvas 0 0 663 567 basics 0;
 #X text 34 30 Object in this collection can be mass \, link and interactor
@@ -24,24 +24,17 @@ be highly apreciated :;
 got a weight \, and know their position. They can move when they receive
 a force \, acording to physical rules.;
 #X text 47 126 Link (link \, link2D \, link3D) are the basic interaction
-beetween 2 masses. It is a visco-elastic link. The link object receive
-the position of 2 masses \, compute the force beetween the 2 masses
-and output a force for each mass.;
+beetween 2 masss. It is a visco-elastic link. The link object receive
+the position of 2 masss \, compute the force beetween the 2 masss and
+output a force for each mass.;
 #X text 47 202 Interactors are a kind of link \, but influence a group
-of masses at once. They can be used for global interaction. We will
+of masss at once. They can be used for global interaction. We will
 look further into it later.;
 #X text 32 272 This collection of objects can be interconnected for
 the creation of "physical" structures. Such structures can then move
 \, and distord themselves \, according to forces applied to them.;
 #X text 29 350 The resulting movements are very natural \, due to the
 physical equations used to define the objects.;
-#X text 30 418 all objects can be created using pmpd.name \, instead
-of name in order to avoid name conflict between libraries.;
-#X text 29 466 ex :;
-#X text 219 466 are the same objects.;
-#X obj 183 466 lia;
-#X obj 65 466 pmpd.link;
-#X obj 145 466 link;
 #X restore 69 324 pd basics;
 #N canvas 434 60 645 737 global_description 0;
 #X obj 34 169 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
@@ -51,34 +44,34 @@ of name in order to avoid name conflict between libraries.;
 -1;
 #X text 57 165 1;
 #X text 58 216 2;
-#X text 36 452 Here is the basic connection beetween 2 masses :;
-#X obj 40 591 lia;
+#X text 36 452 Here is the basic connection beetween 2 masss :;
+#X obj 40 591 link;
 #X text 36 529 You can also create things like this :;
 #X text 32 23 For patching simplification \, objects in this collection
 only have "cold" inlets. The computation speed depends on an external
 metronome. This metronome should bang alternatively all links in the
-model and then masses of the model.;
+model and then masss of the model.;
 #X text 33 103 mass and link have a name corresponding to their class
 name. They will receive everything sent to this name.;
 #X text 159 236 clicking on bang 1 or 2 is equivalent;
 #X text 32 304 As you sould send a bang alternatively to links and
-masses \, you sould give diferent names to the links group and masses
+masss \, you sould give diferent names to the links group and masss
 group.;
 #X text 36 361 Masses output their position when you bang them. This
 position depends on the forces applied to the mass.;
 #X text 36 401 Links output a force according to the position of the
-masses when you bang them. This force sould be applied to the same
-mass.;
-#X text 40 626 The masse1 will never receive forces \, so it will never
+masss when you bang them. This force sould be applied to the same mass.
+;
+#X text 40 626 The mass1 will never receive forces \, so it will never
 move. It is useful for creating a structure attached to a fixed point.
 ;
-#X obj 40 558 mass masse1;
-#X obj 76 591 mass masse2;
-#X obj 110 489 masse;
-#X obj 156 489 lia;
-#X obj 195 489 masse;
+#X obj 40 558 mass mass1;
+#X obj 76 591 mass mass2;
+#X obj 110 489 mass;
+#X obj 156 489 link;
+#X obj 195 489 mass;
 #X obj 34 188 s foo1;
-#X obj 34 237 masse2D foo1;
+#X obj 34 237 mass2D foo1;
 #X connect 0 0 20 0;
 #X connect 2 0 21 0;
 #X connect 6 1 16 0;
@@ -108,7 +101,7 @@ move. It is useful for creating a structure attached to a fixed point.
 #X msg 39 508 -1;
 #X msg 139 508 2;
 #X floatatom 39 579 5 0 0 0 - - -;
-#X text 247 61 A force to a masse make it to move at a constant speed.
+#X text 247 61 A force to a mass make it to move at a constant speed.
 You can accelerate it or decelerate it using message box. a nul force
 as no effect.;
 #X floatatom 172 267 5 0 0 0 - - -;
@@ -181,16 +174,16 @@ value : 0.) Lengh of the link is null.;
 #X restore 74 119 pd preset;
 #X obj 336 237 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
 -1 -1 0 0;
-#X text 80 415 the masse is link to the cursor with diferents kinf
-of liaison (see the preset);
-#X text 71 18 comportement of a single masse link to a fixed point
-with a visco elastic link.;
+#X text 80 415 the mass is link to the cursor with diferents kinf of
+linkison (see the preset);
+#X text 71 18 comportement of a single mass link to a fixed point with
+a visco elastic link.;
 #X text 173 95 <- diferents comportement of the link;
 #N canvas 0 0 268 186 stuff 0;
 #X obj 13 20 loadbang;
-#X obj 48 97 s \$0-lia;
+#X obj 48 97 s \$0-link;
 #X obj 13 72 t b b;
-#X obj 13 123 s \$0-masse;
+#X obj 13 123 s \$0-mass;
 #X obj 13 45 metro 5;
 #X obj 89 20 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
@@ -208,12 +201,12 @@ with a visco elastic link.;
 #X connect 8 1 6 0;
 #X restore 75 65 pd stuff;
 #X text 98 346 click or move the slider ->;
-#X text 396 346 look at the mouvement of the masse (the right slider)
+#X text 396 346 look at the mouvement of the mass (the right slider)
 ;
 #X text 80 481 surch system can be usefull for replacing the line object
 of pd when more natural evolution is neaded...;
-#X obj 169 167 lia \$0-lia 0 1 0 200;
-#X obj 356 167 masse \$0-masse 10000 0;
+#X obj 169 167 link \$0-link 0 1 0 200;
+#X obj 356 167 mass \$0-mass 10000 0;
 #X connect 1 0 2 0;
 #X connect 2 0 11 0;
 #X connect 3 0 11 0;
@@ -224,7 +217,7 @@ of pd when more natural evolution is neaded...;
 #X text 95 389 look at mass and link help file :;
 #X obj 96 407 mass;
 #X obj 96 437 link;
-#N canvas 108 97 450 541 list 0;
+#N canvas 108 97 450 634 list 0;
 #X obj 190 135 iAmbient2D;
 #X obj 305 137 iAmbient3D;
 #X obj 190 166 iCircle2D;
@@ -234,9 +227,9 @@ of pd when more natural evolution is neaded...;
 #X obj 305 197 iPlane3D;
 #X obj 190 225 iSeg2D;
 #X obj 305 168 iSphere3D;
-#X obj 192 75 lia2D;
-#X obj 306 75 lia3D;
-#X obj 79 76 lia;
+#X obj 192 75 link2D;
+#X obj 306 75 link3D;
+#X obj 79 76 link;
 #X obj 79 48 mass;
 #X obj 192 48 mass2D;
 #X obj 306 48 mass3D;
@@ -246,8 +239,8 @@ of pd when more natural evolution is neaded...;
 #X text 21 46 basic;
 #X text 19 136 interactors;
 #X text 24 328 test;
-#X obj 192 327 tLia2D;
-#X obj 307 327 tLia3D;
+#X obj 192 327 tLink2D;
+#X obj 307 327 tLink3D;
 #X obj 192 389 tCircle2D;
 #X obj 192 419 tLine2D;
 #X obj 192 448 tSeg2D;
@@ -257,147 +250,140 @@ of pd when more natural evolution is neaded...;
 #X obj 306 390 tSphere3D;
 #X obj 192 358 tSquare2D;
 #X obj 307 359 tCube3D;
+#X text 21 579 other;
+#X obj 190 579 pmpd;
+#X obj 308 578 pmpd~;
 #X restore 71 531 pd list of pmpd's object;
-#X obj 10 200 cnv 15 15 15 Ma1 M1 empty 2 10 192 14 -1 -66577 0;
-#X obj 24 185 cnv 15 15 15 Ma3 M3 empty 2 10 192 14 -1 -66577 0;
-#X obj 39 172 cnv 15 15 15 Ma5 M5 empty 2 10 192 14 -1 -66577 0;
-#X obj 79 200 cnv 15 15 15 Ma9 M9 empty 2 10 192 14 -1 -66577 0;
-#X obj 183 200 cnv 15 15 15 empty M29 empty 2 10 64 14 -1 -66577 0
-;
-#X obj 120 200 cnv 15 15 15 Ma2 M2 empty 2 10 192 14 -1 -66577 0;
-#X obj 119 160 cnv 15 15 15 Ma4 M4 empty 2 10 192 14 -1 -66577 0;
-#X obj 100 170 cnv 15 15 15 Ma6 M6 empty 2 10 192 14 -1 -66577 0;
-#X obj 80 160 cnv 15 15 15 Ma8 M8 empty 2 10 192 14 -1 -66577 0;
-#X obj 120 180 cnv 15 15 15 Ma11 M11 empty 2 10 192 14 -1 -66577 0
-;
-#X obj 79 180 cnv 15 15 15 Ma12 M12 empty 2 10 192 14 -1 -66577 0;
-#X obj 184 172 cnv 15 15 15 Ma14 M14 empty 2 10 192 14 -1 -66577 0
-;
-#X obj 198 187 cnv 15 15 15 Ma13 M13 empty 2 10 192 14 -1 -66577 0
-;
-#X obj 169 185 cnv 15 15 15 Ma15 M15 empty 2 10 192 14 -1 -66577 0
-;
-#X obj 239 180 cnv 15 15 15 empty M30 empty 2 10 64 14 -1 -66577 0
-;
-#X obj 260 160 cnv 15 15 15 Ma20 M20 empty 2 10 192 14 -1 -66577 0
-;
-#X obj 259 180 cnv 15 15 15 Ma17 M17 empty 2 10 192 14 -1 -66577 0
-;
-#X obj 239 200 cnv 15 15 15 Ma19 M19 empty 2 10 192 14 -1 -66577 0
-;
-#X obj 259 200 cnv 15 15 15 Ma18 M18 empty 2 10 192 14 -1 -66577 0
-;
+#X obj 10 200 cnv 15 15 15 Ma1 M1 empty 2 10 0 14 -1 -66577 0;
+#X obj 24 185 cnv 15 15 15 Ma3 M3 empty 2 10 0 14 -1 -66577 0;
+#X obj 39 172 cnv 15 15 15 Ma5 M5 empty 2 10 0 14 -1 -66577 0;
+#X obj 79 200 cnv 15 15 15 Ma9 M9 empty 2 10 0 14 -1 -66577 0;
+#X obj 183 200 cnv 15 15 15 empty M29 empty 2 10 0 14 -1 -66577 0;
+#X obj 120 200 cnv 15 15 15 Ma2 M2 empty 2 10 0 14 -1 -66577 0;
+#X obj 120 160 cnv 15 15 15 Ma4 M4 empty 2 10 0 14 -1 -66577 0;
+#X obj 99 170 cnv 15 15 15 Ma6 M6 empty 2 10 0 14 -1 -66577 0;
+#X obj 79 160 cnv 15 15 15 Ma8 M8 empty 2 10 0 14 -1 -66577 0;
+#X obj 119 180 cnv 15 15 15 Ma11 M11 empty 2 10 0 14 -1 -66577 0;
+#X obj 79 180 cnv 15 15 15 Ma12 M12 empty 2 10 0 14 -1 -66577 0;
+#X obj 184 172 cnv 15 15 15 Ma14 M14 empty 2 10 0 14 -1 -66577 0;
+#X obj 198 187 cnv 15 15 15 Ma13 M13 empty 2 10 0 14 -1 -66577 0;
+#X obj 169 185 cnv 15 15 15 Ma15 M15 empty 2 10 0 14 -1 -66577 0;
+#X obj 239 180 cnv 15 15 15 empty M30 empty 2 10 0 14 -1 -66577 0;
+#X obj 260 160 cnv 15 15 15 Ma20 M20 empty 2 10 0 14 -1 -66577 0;
+#X obj 259 180 cnv 15 15 15 Ma17 M17 empty 2 10 0 14 -1 -66577 0;
+#X obj 239 200 cnv 15 15 15 Ma19 M19 empty 2 10 0 14 -1 -66577 0;
+#X obj 259 200 cnv 15 15 15 Ma18 M18 empty 2 10 0 14 -1 -66577 0;
 #N canvas 0 0 470 320 pmpd 0;
-#X obj 7 196 s masse;
+#X obj 7 196 s mass;
 #X obj 32 168 s link;
 #X msg 143 132 reset;
 #X obj 7 70 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1;
 #X obj 7 88 metro 50;
 #N canvas 154 59 1126 757 structure 0;
-#N canvas 0 0 478 328 masse1 0;
+#N canvas 0 0 478 328 mass1 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M1 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 10 50 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 10 50 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 14 253 pd masse1;
-#N canvas 0 0 470 320 masse3 0;
+#X restore 14 253 pd mass1;
+#N canvas 0 0 470 320 mass3 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M3 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 10 30 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 10 30 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 23 143 pd masse3;
-#N canvas 0 0 474 324 masse5 0;
+#X restore 23 143 pd mass3;
+#N canvas 0 0 474 324 mass5 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M5 pos \$1 \$2 \;;
-#X obj 78 84 mass2D masse 1 10 10 0 1000 0 200;
+#X obj 78 84 mass2D mass 1 10 10 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 26 58 pd masse5;
-#N canvas 0 0 472 322 masse7 0;
+#X restore 26 58 pd mass5;
+#N canvas 0 0 472 322 mass7 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M7 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 30 10 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 30 10 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 324 62 pd masse7;
+#X restore 324 62 pd mass7;
 #X obj 132 -19 r G;
 #X obj 17 215 link2D link 10 0.8;
 #X obj 20 180 link2D link 10 0.8 0 0.1;
 #X obj 163 213 link2D link 12 0.8;
 #X obj 18 96 link2D link 10 0.8 0 0.1;
-#N canvas 0 0 494 344 masse2 0;
+#N canvas 0 0 494 344 mass2 0;
 #X obj 79 57 inlet;
 #X obj 100 154 outlet;
 #X msg 79 110 \; M2 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 120 50 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 120 50 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 486 317 pd masse2;
-#N canvas 0 0 486 336 masse4 0;
+#X restore 486 317 pd mass2;
+#N canvas 0 0 486 336 mass4 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M4 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 120 10 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 120 10 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 503 33 pd masse4;
-#N canvas 0 0 484 334 masse6 0;
+#X restore 503 33 pd mass4;
+#N canvas 0 0 484 334 mass6 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M6 pos \$1 \$2 \;;
-#X obj 78 84 mass2D masse 1 100 20 0 1000 0 200;
+#X obj 78 84 mass2D mass 1 100 20 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 640 109 pd masse6;
-#N canvas 0 0 482 332 masse8 0;
+#X restore 640 109 pd mass6;
+#N canvas 0 0 482 332 mass8 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 80 110 \; M8 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 80 10 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 80 10 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 767 36 pd masse8;
-#N canvas 0 0 484 334 masse9 0;
+#X restore 767 36 pd mass8;
+#N canvas 0 0 484 334 mass9 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M9 pos \$1 \$2 \;;
-#X obj 78 84 mass2D masse 1 80 50 0 1000 0 200;
+#X obj 78 84 mass2D mass 1 80 50 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 722 335 pd masse9;
-#N canvas 0 0 484 334 masse11 0;
+#X restore 722 335 pd mass9;
+#N canvas 0 0 484 334 mass11 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M11 pos \$1 \$2 \;;
-#X obj 78 84 mass2D masse 1 120 30 0 1000 0 200;
+#X obj 78 84 mass2D mass 1 120 30 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 490 216 pd masse11;
-#N canvas 0 0 484 334 masse12 0;
+#X restore 490 216 pd mass11;
+#N canvas 0 0 484 334 mass12 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M12 pos \$1 \$2 \;;
-#X obj 78 84 mass2D masse 1 80 30 0 1000 0 200;
+#X obj 78 84 mass2D mass 1 80 30 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 821 226 pd masse12;
+#X restore 821 226 pd mass12;
 #X obj 497 -9 r G;
 #X msg 499 9 force2D 0 0.1;
 #X obj 486 266 link2D link 12 0.3 0.1;
@@ -412,84 +398,84 @@ of pd when more natural evolution is neaded...;
 #X obj 570 315 link2D link 12 0.3;
 #X msg 132 7 force2D 0 0.3;
 #X obj 636 214 link2D link 12 0.3;
-#N canvas 0 0 488 338 masse1 0;
+#N canvas 0 0 488 338 mass1 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M16 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 170 50 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 170 50 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 18 610 pd masse1;
-#N canvas 0 0 476 326 masse3 0;
+#X restore 18 610 pd mass1;
+#N canvas 0 0 476 326 mass3 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M15 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 170 30 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 170 30 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 27 500 pd masse3;
-#N canvas 0 0 482 332 masse5 0;
+#X restore 27 500 pd mass3;
+#N canvas 0 0 482 332 mass5 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M14 pos \$1 \$2 \;;
-#X obj 78 84 mass2D masse 1 170 10 0 1000 0 200;
+#X obj 78 84 mass2D mass 1 170 10 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 30 415 pd masse5;
-#N canvas 0 0 480 330 masse7 0;
+#X restore 30 415 pd mass5;
+#N canvas 0 0 480 330 mass7 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 109 \; M13 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 190 10 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 190 10 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 363 409 pd masse7;
+#X restore 363 409 pd mass7;
 #X obj 46 316 r G;
 #X obj 21 572 link2D link 10 0.8;
 #X obj 24 537 link2D link 10 0.8 0 0.1;
 #X obj 160 570 link2D link 12 0.8;
 #X obj 29 458 link2D link 10 0.8 0 0.1;
 #X msg 46 342 force2D 0 0.3;
-#N canvas 0 0 500 350 masse1 0;
+#N canvas 0 0 500 350 mass1 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 98 115 \; M20 pos \$1 \$2 \;;
-#X obj 79 83 mass2D masse 1 260 10 0 1000 0 200;
+#X obj 79 83 mass2D mass 1 260 10 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 533 628 pd masse1;
-#N canvas 0 0 482 332 masse3 0;
+#X restore 533 628 pd mass1;
+#N canvas 0 0 482 332 mass3 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M17 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 260 30 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 260 30 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 542 518 pd masse3;
-#N canvas 0 0 484 334 masse5 0;
+#X restore 542 518 pd mass3;
+#N canvas 0 0 484 334 mass5 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 110 \; M18 pos \$1 \$2 \;;
-#X obj 78 84 mass2D masse 1 260 50 0 1000 0 200;
+#X obj 78 84 mass2D mass 1 260 50 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 545 433 pd masse5;
-#N canvas 217 191 484 334 masse7 0;
+#X restore 545 433 pd mass5;
+#N canvas 217 191 484 334 mass7 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 109 \; M19 pos \$1 \$2 \;;
-#X obj 79 84 mass2D masse 1 240 50 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 240 50 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 856 420 pd masse7;
+#X restore 856 420 pd mass7;
 #X obj 561 376 r G;
 #X obj 536 590 link2D link 10 0.8;
 #X obj 539 555 link2D link 10 0.8 0 0.1;
@@ -500,15 +486,15 @@ of pd when more natural evolution is neaded...;
 #X obj 494 242 link2D link 12 0.5;
 #X obj 665 237 link2D link 12 0.5;
 #X obj 485 74 link2D link 12 0.5 0.1;
-#N canvas 0 0 476 326 masse8 0;
+#N canvas 0 0 476 326 mass8 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
-#X obj 79 84 mass2D masse 1 30 30 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 30 30 0 1000 0 200;
 #X msg 103 110 \; M28 pos \$1 \$2 \;;
 #X connect 0 0 2 0;
 #X connect 2 0 3 0;
 #X connect 2 0 1 0;
-#X restore 347 153 pd masse8;
+#X restore 347 153 pd mass8;
 #X obj 251 101 link2D link 10 0.8 0 0.1;
 #X obj 139 47 link2D link 10 0.8;
 #X obj 143 73 link2D link 14 0.6;
@@ -518,25 +504,25 @@ of pd when more natural evolution is neaded...;
 #X obj 144 433 link2D link 14 0.6;
 #X obj 141 504 link2D link 10 0.8;
 #X obj 144 480 link2D link 14 0.6;
-#N canvas 0 0 484 334 masse7 0;
+#N canvas 0 0 484 334 mass7 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
 #X msg 79 109 \; M29 pos \$1 \$2 \;;
-#X obj 79 86 mass2D masse 1 190 30 0 1000 0 200;
+#X obj 79 86 mass2D mass 1 190 30 0 1000 0 200;
 #X connect 0 0 3 0;
 #X connect 3 0 2 0;
 #X connect 3 0 1 0;
-#X restore 341 492 pd masse7;
+#X restore 341 492 pd mass7;
 #X obj 251 453 link2D link 10 0.8 0 0.1;
-#N canvas 217 191 486 336 masse7 0;
+#N canvas 217 191 486 336 mass7 0;
 #X obj 79 57 inlet;
 #X obj 79 195 outlet;
-#X obj 79 84 mass2D masse 1 240 30 0 1000 0 200;
+#X obj 79 84 mass2D mass 1 240 30 0 1000 0 200;
 #X msg 77 109 \; M30 pos \$1 \$2 \;;
 #X connect 0 0 2 0;
 #X connect 2 0 3 0;
 #X connect 2 0 1 0;
-#X restore 840 522 pd masse7;
+#X restore 840 522 pd mass7;
 #X obj 690 430 link2D link 10 0.8;
 #X obj 678 519 link2D link 10 0.8;
 #X obj 683 493 link2D link 14 0.6;
@@ -762,8 +748,7 @@ of pd when more natural evolution is neaded...;
 -1;
 #X obj 1 216 cnv 10 500 10 empty empty empty 20 12 0 14 -99865 -66577
 0;
-#X obj 53 187 cnv 15 15 15 Ma7 M7 empty 2 10 192 14 -1 -66577 0;
-#X obj 38 200 cnv 15 15 15 empty M28 empty 2 10 64 14 -1 -66577 0;
-#X obj 155 200 cnv 15 15 15 Ma16 M16 empty 2 10 192 14 -1 -66577 0
-;
+#X obj 53 187 cnv 15 15 15 Ma7 M7 empty 2 10 0 14 -1 -66577 0;
+#X obj 38 200 cnv 15 15 15 empty M28 empty 2 10 0 14 -1 -66577 0;
+#X obj 155 200 cnv 15 15 15 Ma16 M16 empty 2 10 0 14 -1 -66577 0;
 #X connect 31 0 30 0;

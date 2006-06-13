@@ -4,7 +4,7 @@
 ;
 #X msg 215 187 0 \, destroy;
 #X obj 181 215 gemwin;
-#X obj 20 202 s masse;
+#X obj 20 202 s mass;
 #N canvas 815 340 1100 365 pool 0;
 #X obj 594 157 loadbang;
 #X obj 240 240 sand 1.5 5.4;
@@ -104,12 +104,12 @@
 #X connect 18 1 11 0;
 #X restore 359 268 pd creation pool;
 #X obj 83 342 s link;
-#X obj 59 299 iCircle2D masse 3 2 0 2.95 0 0 1 0 0 0 0.1;
-#X obj 69 319 iCircle2D masse -3 2 0 2.95 0 0 1 0 0 0 0.1;
+#X obj 59 299 iCircle2D mass 3 2 0 2.95 0 0 1 0 0 0 0.1;
+#X obj 69 319 iCircle2D mass -3 2 0 2.95 0 0 1 0 0 0 0.1;
 #X text 184 3 sand simulation;
-#X text 69 27 all masse interact each other. They are in a viscuce
+#X text 69 27 all mass interact each other. They are in a viscuce
 place \, with vertical force (gravity);
-#X text 70 59 2 big circles (invisible) made the masses to go down
+#X text 70 59 2 big circles (invisible) made the masss to go down
 like in a sand glass.;
 #X text 83 369 Masses are not very stable \, due to internal forces
 of the structure.;
@@ -121,7 +121,7 @@ of the structure.;
 #X msg 75 201 \; reset bang \;;
 #X obj 116 122 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
-#X obj 45 263 iAmbient2D masse 0 -0.0005 0 0 0.03;
+#X obj 45 263 iAmbient2D mass 0 -0.0005 0 0 0.03;
 #X obj 20 137 metro 5;
 #X text 366 158 <- 1;
 #X connect 0 0 4 0;

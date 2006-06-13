@@ -137,7 +137,7 @@
 #X obj 18 139 t b b;
 #X obj 18 62 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 18 183 s masse;
+#X obj 18 183 s mass;
 #X obj 43 164 s link;
 #X text 50 59 <- begin (change the metro speed for slow computer);
 #X floatatom 61 82 5 0 0 0 - - -;
@@ -146,7 +146,7 @@
 #X obj 121 156 gemwin;
 #X msg 253 131 reset;
 #X msg 121 103 reset \, view 0 0 -8 0 0 0 0 1 0 \, create \, 1;
-#X obj 253 153 s masse2;
+#X obj 253 153 s mass2;
 #X text 136 -2 Simulation of a continus line of vorticity (no damping
 fluid \, 2D mouvement);
 #X text 137 25 This create a Kevin-Helmoltz instability.;

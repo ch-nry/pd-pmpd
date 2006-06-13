@@ -287,7 +287,7 @@
 #X obj 18 146 t b b;
 #X obj 17 69 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 18 190 s masse;
+#X obj 18 190 s mass;
 #X obj 43 171 s link;
 #X text 50 66 <- begin (change the metro speed for slow computer);
 #X floatatom 60 89 5 0 0 0 - - -;
@@ -301,7 +301,7 @@
 #X msg 209 109 reset \, create \, 1;
 #X obj 100 154 counter 0 249;
 #X obj 100 129 metro 50;
-#X obj 90 249 iAmbient2D masse 0 0.0007 0.0002 0.0002;
+#X obj 90 249 iAmbient2D mass 0 0.0007 0.0002 0.0002;
 #X obj 93 277 smoke_vortex 0.003;
 #X obj 92 297 smoke_vortex 0.003;
 #X obj 91 317 smoke_vortex 0.003;

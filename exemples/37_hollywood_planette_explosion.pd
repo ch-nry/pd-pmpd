@@ -4,7 +4,7 @@
 ;
 #X obj 177 289 loadbang;
 #X msg 323 137 0 \, destroy;
-#X obj 19 146 s masse;
+#X obj 19 146 s mass;
 #N canvas 39 357 1063 565 pool 0;
 #X obj 294 191 explose2;
 #X obj 104 1 explose2;
@@ -428,7 +428,7 @@
 #X obj 1060 618 explose1;
 #X restore 26 330 pd pool;
 #X msg 177 313 reset;
-#X obj 177 337 s masse;
+#X obj 177 337 s mass;
 #X obj 65 146 s link;
 #X text 42 39 <- begin (change metro speed for slow computer);
 #X obj 27 245 gemhead 1;
@@ -437,11 +437,11 @@
 #X obj 154 77 bng 15 250 50 0 empty empty empty 0 -6 0 8 -258699 -1
 -1;
 #X obj 154 106 t b b b b;
-#X obj 32 170 s masse2;
-#X obj 192 355 s masse2;
+#X obj 32 170 s mass2;
+#X obj 192 355 s mass2;
 #X obj 305 231 delay 200;
-#X obj 303 297 iCylinder3D masse2 0 1 0 0 0 0 0 1 0 0.05;
-#X obj 305 252 iSphere3D masse 0 3 0 0 1 0 0.03;
+#X obj 303 297 iCylinder3D mass2 0 1 0 0 0 0 0 1 0 0.05;
+#X obj 305 252 iSphere3D mass 0 3 0 0 1 0 0.03;
 #X msg 292 114 reset \, view -3 4 6 0 0 0 2 4 0 \, lighting 1 \, create
 \, 1;
 #X obj 19 82 metro 25;
@@ -451,8 +451,8 @@
 #X obj 277 78 bng 15 250 50 0 empty empty empty 0 -6 0 8 -24198 -1
 -1;
 #X text 296 77 <- reset;
-#X obj 304 274 iAmbient3D masse2 0 0 0 0.01 0 0.01;
-#X obj 305 208 iAmbient3D masse 0 0 0 0.001 0.001 0.001 O.OOO1;
+#X obj 304 274 iAmbient3D mass2 0 0 0 0.01 0 0.01;
+#X obj 305 208 iAmbient3D mass 0 0 0 0.001 0.001 0.001 O.OOO1;
 #X text 625 115 <- 1;
 #X obj 292 166 gemwin;
 #X connect 0 0 4 0;

@@ -12,7 +12,7 @@
 #X msg 58 110 Xmax 3.8;
 #X msg 81 131 Ymin -3.8;
 #X msg 95 157 Ymax 3.8;
-#X obj 47 201 s \$0-masse;
+#X obj 47 201 s \$0-mass;
 #X connect 0 0 1 0;
 #X connect 0 0 2 0;
 #X connect 0 0 3 0;
@@ -51,24 +51,24 @@
 #X obj 648 525 unpack s f f;
 #X obj 647 552 translateXYZ 0 0 0;
 #X obj 647 584 sphere 0.3;
-#X obj 44 465 masse2D foo 1 -2 3;
-#X obj 193 465 masse2D foo2 1 -1 3;
-#X obj 350 465 masse2D foo3 1 0 3;
-#X obj 499 465 masse2D foo4 1 1 3;
-#X obj 648 465 masse2D foo 1 2 3;
-#X obj 9 123 s masse;
-#X obj 55 437 r masse;
-#X obj 193 438 r masse;
-#X obj 350 436 r masse;
-#X obj 499 436 r masse;
-#X obj 648 437 r masse;
+#X obj 44 465 mass2D foo 1 -2 3;
+#X obj 193 465 mass2D foo2 1 -1 3;
+#X obj 350 465 mass2D foo3 1 0 3;
+#X obj 499 465 mass2D foo4 1 1 3;
+#X obj 648 465 mass2D foo 1 2 3;
+#X obj 9 123 s mass;
+#X obj 55 437 r mass;
+#X obj 193 438 r mass;
+#X obj 350 436 r mass;
+#X obj 499 436 r mass;
+#X obj 648 437 r mass;
 #X obj 52 174 iAmbient2D foo 0 -0.1;
 #X obj 63 201 iAmbient2D foo2 0 -0.1;
 #X obj 76 227 iAmbient2D foo3 0 -0.1;
-#X text 268 173 force is apply to masse named foo \, foo2 and foo3
+#X text 268 173 force is apply to mass named foo \, foo2 and foo3
 ;
 #X text 344 287 a positive forece is apply to foo2 \, and to foo3 (according
-to pd link). this force allows masse 2 and 3 to stay at Y=0.;
+to pd link). this force allows mass 2 and 3 to stay at Y=0.;
 #X obj 529 657 iAmbient2D;
 #X obj 530 684 iLine2D;
 #X obj 530 710 iSeg2D;
@@ -76,7 +76,7 @@ to pd link). this force allows masse 2 and 3 to stay at Y=0.;
 #X msg 17 406 reset;
 #X obj 17 379 sel 1;
 #X obj 17 351 tSquare2D -4 4 -10000 -4;
-#X text 260 345 tSquare is a test : test if the position of the masse
+#X text 260 345 tSquare is a test : test if the position of the mass
 is in a specific square. This test is used to reset the mass to it's
 initial state if the mass go out of the screen.;
 #X obj 44 292 iSeg2D foo2 -3 0 3 0 3 0 0 0.5 1;
@@ -84,8 +84,8 @@ initial state if the mass go out of the screen.;
 #X text 283 195 but not to foo4 \, so it will not move.;
 #X text 201 -10 <- reset;
 #X text 348 50 interactor are design to be a kind of link beetween
-masses and a simple object.;
-#X text 347 85 interactors can be a link to all masse with the same
+masss and a simple object.;
+#X text 347 85 interactors can be a link to all mass with the same
 name. It's easier to patch than putting a link object for all link.
 ;
 #X text 41 655 for more informations about interactors or test \, see

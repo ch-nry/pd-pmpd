@@ -2,7 +2,7 @@
 #X obj 33 161 gemhead;
 #X obj 33 187 translateXYZ;
 #X obj 25 39 loadbang;
-#X obj 25 85 masse3D masse 1 0 3;
+#X obj 25 85 mass3D mass 1 0 3;
 #X obj 25 108 unpack s f f f;
 #X obj 33 211 sphere 0.05;
 #X msg 25 62 setYmin -3 \, setT 1;

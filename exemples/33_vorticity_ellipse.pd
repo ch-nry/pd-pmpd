@@ -31,7 +31,7 @@
 #X obj 41 131 t b b;
 #X obj 41 54 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 41 175 s masse;
+#X obj 41 175 s mass;
 #X obj 66 156 s link;
 #X text 73 51 <- begin (change the metro speed for slow computer);
 #X floatatom 90 70 5 0 0 0 - - -;
@@ -351,13 +351,13 @@
 #X obj 1364 400 vortex2;
 #X obj 1374 410 vortex2;
 #X restore 428 135 pd pool;
-#X obj 276 145 s masse2;
+#X obj 276 145 s mass2;
 #X msg 277 124 bang;
 #X msg 144 95 reset \, view 0 0 -10 0 0 0 0 1 0 \, create \, 1;
 #X obj 41 105 metro 100;
 #X text 120 -3 simulation of a continus elipse of vorticity field.
 ;
-#X text 119 14 This simulation nead lot's a masses \, and lot's of
+#X text 119 14 This simulation nead lot's a masss \, and lot's of
 CPU.;
 #X connect 1 0 3 0;
 #X connect 1 1 4 0;

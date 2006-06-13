@@ -40,7 +40,7 @@
 #X obj 108 223 + 1;
 #X msg 205 360 in 1 0 3 1;
 #X msg 206 332 out 1 0 7 1;
-#X text 254 75 number of masses on the string;
+#X text 254 75 number of masss on the string;
 #X obj 144 220 + 1;
 #X obj 104 112 + 1;
 #N canvas 0 0 454 304 uzi 0;
