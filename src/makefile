@@ -5,7 +5,7 @@ clean: ; rm -f *.pd_linux *.o
 
 # ----------------------- NT -----------------------
 
-pd_nt: pmpd.dll
+pd_nt: pmpd.dll mass.dll link.dll mass2D.dll link2D.dll mass3D.dll link3D.dll iAmbient2D.dll iLine2D.dll iSeg2D.dll iCircle2D.dll tSquare2D.dll tLine2D.dll tSeg2D.dll tCircle2D.dll tLink2D.dll iAmbient3D.dll iSphere3D.dll iPlane3D.dll iCircle3D.dll iCylinder3D.dll tCube3D.dll tSphere3D.dll tPlane3D.dll tCircle3D.dll tCylinder3D.dll tLink3D.dll pmpd~.dll
 
 .SUFFIXES: .dll
 
@@ -57,7 +57,7 @@ SGICFLAGS6 = -n32 -DPD -DUNIX -DIRIX -DN32 -woff 1080,1064,1185 \
 
 # ----------------------- LINUX i386 -----------------------
 
-pd_linux: pmpd.pd_linux 
+pd_linux: pmpd.pd_linux mass.pd_linux link.pd_linux mass2D.pd_linux link2D.pd_linux mass3D.pd_linux link3D.pd_linux iAmbient2D.pd_linux iLine2D.pd_linux iSeg2D.pd_linux iCircle2D.pd_linux tSquare2D.pd_linux tLine2D.pd_linux tSeg2D.pd_linux tCircle2D.pd_linux tLink2D.pd_linux iAmbient3D.pd_linux iSphere3D.pd_linux iPlane3D.pd_linux iCircle3D.pd_linux iCylinder3D.pd_linux tCube3D.pd_linux tSphere3D.pd_linux tPlane3D.pd_linux tCircle3D.pd_linux tCylinder3D.pd_linux tLink3D.pd_linux pmpd~.pd_linux
 
 .SUFFIXES: .pd_linux
 
@@ -75,7 +75,7 @@ LINUXINCLUDE =  -I../../src
 
 # ----------------------- Mac OS X (Darwin) -----------------------
 
-pd_darwin:  pmpd.pd_darwin
+pd_darwin:  pmpd.pd_darwin mass.pd_darwin link.pd_darwin mass2D.pd_darwin link2D.pd_darwin mass3D.pd_darwin link3D.pd_darwin iAmbient2D.pd_darwin iLine2D.pd_darwin iSeg2D.pd_darwin iCircle2D.pd_darwin tSquare2D.pd_darwin tLine2D.pd_darwin tSeg2D.pd_darwin tCircle2D.pd_darwin tLink2D.pd_darwin iAmbient3D.pd_darwin iSphere3D.pd_darwin iPlane3D.pd_darwin iCircle3D.pd_darwin iCylinder3D.pd_darwin tCube3D.pd_darwin tSphere3D.pd_darwin tPlane3D.pd_darwin tCircle3D.pd_darwin tCylinder3D.pd_darwin tLink3D.pd_darwin pmpd~.pd_darwin
 
 .SUFFIXES: .pd_darwin
 
