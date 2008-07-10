@@ -61,7 +61,7 @@ pd_linux: pmpd.pd_linux mass.pd_linux link.pd_linux mass2D.pd_linux link2D.pd_li
 
 .SUFFIXES: .pd_linux
 
-LINUXCFLAGS = -DPD -O2 -funroll-loops -fomit-frame-pointer \
+LINUXCFLAGS = -fPIC -DPD -O2 -funroll-loops -fomit-frame-pointer \
     -Wall -W -Wshadow -Wstrict-prototypes -Werror \
     -Wno-unused -Wno-parentheses -Wno-switch
 
