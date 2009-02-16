@@ -11,7 +11,7 @@
 #X obj 364 275 *~;
 #X msg 364 209 \$1 50;
 #X obj 364 234 line~;
-#X obj 364 305 dac~;
+#X obj 363 336 dac~;
 #X obj 438 183 + 30;
 #X obj 438 159 random 60;
 #X obj 442 29 inlet;
@@ -20,6 +20,7 @@
 #X obj 364 130 * 0.03;
 #X obj 59 206 translateXYZ 0 0 0;
 #X obj 56 248 sphere 0.1;
+#X obj 364 301 *~ 0.3;
 #X connect 0 0 4 0;
 #X connect 2 1 19 1;
 #X connect 2 2 19 2;
@@ -31,8 +32,7 @@
 #X connect 6 0 9 1;
 #X connect 7 0 6 0;
 #X connect 8 0 14 0;
-#X connect 9 0 12 0;
-#X connect 9 0 12 1;
+#X connect 9 0 21 0;
 #X connect 10 0 11 0;
 #X connect 11 0 9 0;
 #X connect 13 0 7 0;
@@ -42,3 +42,5 @@
 #X connect 17 0 10 0;
 #X connect 18 0 17 0;
 #X connect 19 0 20 0;
+#X connect 21 0 12 1;
+#X connect 21 0 12 0;
