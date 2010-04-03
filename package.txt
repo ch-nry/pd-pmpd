@@ -1,3 +1,0 @@
-NAME=pmpd
-SRCDIR=src
-SRCS=pmpd.c
