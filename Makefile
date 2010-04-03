@@ -21,10 +21,16 @@ SOURCES_windows =
 # be included automatically
 PDOBJECTS = 
 
+# example patches and related files
+EXAMPLES = 00_pmpd.pd 01_basics.pd 02_string.pd 03_chaos2D.pd 04_3D_exemple.pd 05_corde2D.pd 06_pyramide3D.pd 07_corde3D.pd 08_ball2D.pd 09_tutorial2D.pd 10_game.pd 11_comportement.pd 12_exitation.pd 13_plane3D.pd 14_MP_curve3d.pd 15_constant_force_field.pd 16_name_and_interactors.pd 17_rnd_mouvmnt_and_obstacles.pd 18_flipper.pd 19_vertex.pd 20_moving_vertex.pd 21_fluid_circulation_cylinder.pd 22_gaz_molecules.pd 23_test.pd 24_sand.pd 25_sand2.pd 26_sand3.pd 27_tLia.pd 28_Lia.pd 29_aglom.pd 30_falling_aglom.pd 31_paste.pd 32_Kelvin_Helmoltz_instability.pd 33_vorticity_ellipse.pd 34_cigarette_smoke.pd 35_gravitation.pd 36_3D_interactors.pd 37_hollywood_planette_explosion.pd 38_elastique_membrane_on_a_sphere.pd 39_blob.pd 40_i3D.pd 41_morfing.pd 42_tentacule.pd 43_game.pd 44_flag.pd 45_newWave.pd 46_non_linear.pd 47_scann_synth.pd 48_pmpd.pd 49_pmpd~.pd 50-simple_oscilator~.pd 51_string~.pd aglom.pd aglom2.pd aglom3.pd aglom4.pd blob.pd ch_gemwin.pd ch_uzi.pd constructor.pd explose1.pd explose2.pd fluide_mass.pd fluide_mass2.pd fluide_mass3.pd fluide_mass4.pd fluide_mass5.pd fluide_mass6.pd fluide_masse.pd fluide_masse2.pd fluide_masse3.pd fluide_masse4.pd fluide_masse5.pd fluide_masse6.pd game_line.pd gemLia.pd gemLia2.pd gemMasse.pd gemMasse2.pd gemMasse3.pd i3D.pd i3D2.pd mass_link.pd mass_link2.pd mass_link3.pd mountain.pd pd_lia.pd pd_lia2.pd pd_link.pd pd_link2.pd pd_mass.pd pd_mass2.pd pd_masse.pd pd_masse2.pd rain.pd rain1.pd sand.pd smoke.pd smoke1.pd smoke_vortex.pd tut_link.pd tut_mass.pd tut_masse.pd vortex.pd vortex2.pd 
+
+# manuals and related files
+MANUAL = pmpd.pdf pmpd.sxw
+
 # if you want to include any other files in the source and binary tarballs,
 # list them here.  This can be anything from header files, READMEs, example
 # patches, documentation, etc.
-EXTRA_DIST = pmpd.c pmpd.pdf pmpd.sxw README.txt LICENSE.txt
+EXTRA_DIST = pmpd.c README.txt LICENSE.txt
 
 
 
@@ -132,7 +138,7 @@ endif
 CFLAGS += $(OPT_CFLAGS)
 
 
-.PHONY = install libdir_install single_install install-doc install-exec install-examples clean dist etags
+.PHONY = install libdir_install single_install install-doc install-exec install-examples install-manual clean dist etags
 
 all: $(SOURCES:.c=.$(EXTENSION))
 
@@ -153,7 +159,7 @@ install: libdir_install
 
 # The meta and help files are explicitly installed to make sure they are
 # actually there.  Those files are not optional, then need to be there.
-libdir_install: $(SOURCES:.c=.$(EXTENSION)) install-doc install-examples
+libdir_install: $(SOURCES:.c=.$(EXTENSION)) install-doc install-examples install-manual
 	$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
 	$(INSTALL_FILE) $(LIBRARY_NAME)-meta.pd \
 		$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
@@ -183,9 +189,18 @@ install-doc:
 	$(INSTALL_FILE) LICENSE.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/LICENSE.txt
 
 install-examples:
-	test ! -d examples || (\
+	test -z "$(strip $(EXAMPLES))" || \
 		$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/examples && \
-		$(INSTALL_FILE) examples/*.* $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/examples)
+		for file in $(EXAMPLES); do \
+			$(INSTALL_FILE) examples/$$file $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/examples; \
+		done
+
+install-manual:
+	test -z "$(strip $(MANUAL))" || \
+		$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/manual && \
+		for file in $(MANUAL); do \
+			$(INSTALL_FILE) manual/$$file $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/manual; \
+		done
 
 
 clean:
@@ -227,6 +242,16 @@ dist: $(DISTDIR)
 		$(INSTALL_FILE) $(PDOBJECTS:.pd=-help.pd) $(DISTDIR)
 	test -z "$(strip $(EXTRA_DIST))" || \
 		$(INSTALL_FILE) $(EXTRA_DIST)    $(DISTDIR)
+	test -z "$(strip $(EXAMPLES))" || \
+		$(INSTALL_DIR) $(DISTDIR)/examples && \
+		for file in $(EXAMPLES); do \
+			$(INSTALL_FILE) examples/$$file $(DISTDIR)/examples; \
+		done
+	test -z "$(strip $(MANUAL))" || \
+		$(INSTALL_DIR) $(DISTDIR)/manual && \
+		for file in $(MANUAL); do \
+			$(INSTALL_FILE) manual/$$file $(DISTDIR)/manual; \
+		done
 	tar --exclude-vcs -czpf $(DISTDIR).tar.gz $(DISTDIR)
 
 
@@ -241,4 +266,3 @@ showpaths:
 	@echo "ALLSOURCES: $(ALLSOURCES)"
 	@echo "UNAME: $(UNAME)"
 	@echo "CPU: $(CPU)"
-
