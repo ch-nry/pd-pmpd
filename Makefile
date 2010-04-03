@@ -24,7 +24,7 @@ PDOBJECTS =
 # if you want to include any other files in the source and binary tarballs,
 # list them here.  This can be anything from header files, READMEs, example
 # patches, documentation, etc.
-EXTRA_DIST = pmpd.c pmpd.pdf pmpd.sxw
+EXTRA_DIST = pmpd.c pmpd.pdf pmpd.sxw README.txt LICENSE.txt
 
 
 
@@ -179,9 +179,8 @@ install-doc:
 		$(INSTALL_FILE) $(PDOBJECTS:.pd=-help.pd) \
 			$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
 # this is the only bit not really handled well...
-	$(INSTALL_FILE) README $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/README.txt
-	$(INSTALL_FILE) VERSION $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/VERSION.txt
-	$(INSTALL_FILE) CHANGES $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/CHANGES.txt
+	$(INSTALL_FILE) README.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/README.txt
+	$(INSTALL_FILE) LICENSE.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/LICENSE.txt
 
 install-examples:
 	test ! -d examples || (\
