@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-LIBRARY_NAME = ext13
+LIBRARY_NAME = pmpd
 PACKAGE = pd-$(LIBRARY_NAME)
 pkglibdir = /usr/lib/pd/extra
 

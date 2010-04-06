@@ -1,11 +1,10 @@
-# To use this Makefile for your project, first put the name of your library in
-# LIBRARY_NAME variable. The folder for your project should have the same name
-# as your library.
+## Pd library template version 1.0
+# For instructions on how to use this template, see:
+#  http://puredata.info/docs/developer/MakefileTemplate
 LIBRARY_NAME = pmpd
-LIBRARY_VERSION = 0.09
 
-# Next, add your .c source files to the SOURCES variable.  The help files will
-# be included automatically
+# add your .c source files to the SOURCES variable, help files will be
+# included automatically
 SOURCES = iAmbient2D.c iAmbient3D.c iCircle2D.c iCircle3D.c iCylinder3D.c iLine2D.c iPlane3D.c iSeg2D.c iSphere3D.c link.c link2D.c link3D.c mass.c mass2D.c mass3D.c pmpd~.c tCircle2D.c tCircle3D.c tCube3D.c tCylinder3D.c tLine2D.c tLink2D.c tLink3D.c tPlane3D.c tSeg2D.c tSphere3D.c tSquare2D.c
 
 # For objects that only build on certain platforms, add those to the SOURCES
@@ -21,16 +20,17 @@ SOURCES_windows =
 # be included automatically
 PDOBJECTS = 
 
-# example patches and related files
-EXAMPLES = 00_pmpd.pd 01_basics.pd 02_string.pd 03_chaos2D.pd 04_3D_exemple.pd 05_corde2D.pd 06_pyramide3D.pd 07_corde3D.pd 08_ball2D.pd 09_tutorial2D.pd 10_game.pd 11_comportement.pd 12_exitation.pd 13_plane3D.pd 14_MP_curve3d.pd 15_constant_force_field.pd 16_name_and_interactors.pd 17_rnd_mouvmnt_and_obstacles.pd 18_flipper.pd 19_vertex.pd 20_moving_vertex.pd 21_fluid_circulation_cylinder.pd 22_gaz_molecules.pd 23_test.pd 24_sand.pd 25_sand2.pd 26_sand3.pd 27_tLia.pd 28_Lia.pd 29_aglom.pd 30_falling_aglom.pd 31_paste.pd 32_Kelvin_Helmoltz_instability.pd 33_vorticity_ellipse.pd 34_cigarette_smoke.pd 35_gravitation.pd 36_3D_interactors.pd 37_hollywood_planette_explosion.pd 38_elastique_membrane_on_a_sphere.pd 39_blob.pd 40_i3D.pd 41_morfing.pd 42_tentacule.pd 43_game.pd 44_flag.pd 45_newWave.pd 46_non_linear.pd 47_scann_synth.pd 48_pmpd.pd 49_pmpd~.pd 50-simple_oscilator~.pd 51_string~.pd aglom.pd aglom2.pd aglom3.pd aglom4.pd blob.pd ch_gemwin.pd ch_uzi.pd constructor.pd explose1.pd explose2.pd fluide_mass.pd fluide_mass2.pd fluide_mass3.pd fluide_mass4.pd fluide_mass5.pd fluide_mass6.pd fluide_masse.pd fluide_masse2.pd fluide_masse3.pd fluide_masse4.pd fluide_masse5.pd fluide_masse6.pd game_line.pd gemLia.pd gemLia2.pd gemMasse.pd gemMasse2.pd gemMasse3.pd i3D.pd i3D2.pd mass_link.pd mass_link2.pd mass_link3.pd mountain.pd pd_lia.pd pd_lia2.pd pd_link.pd pd_link2.pd pd_mass.pd pd_mass2.pd pd_masse.pd pd_masse2.pd rain.pd rain1.pd sand.pd smoke.pd smoke1.pd smoke_vortex.pd tut_link.pd tut_mass.pd tut_masse.pd vortex.pd vortex2.pd 
+# example patches and related files, in the 'examples' subfolder
+EXAMPLES = 00_pmpd.pd 01_basics.pd 02_string.pd 03_chaos2D.pd 04_3D_exemple.pd 05_corde2D.pd 06_pyramide3D.pd 07_corde3D.pd 08_ball2D.pd 09_tutorial2D.pd 10_game.pd 11_comportement.pd 12_exitation.pd 13_plane3D.pd 14_MP_curve3d.pd 15_constant_force_field.pd 16_name_and_interactors.pd 17_rnd_mouvmnt_and_obstacles.pd 18_flipper.pd 19_vertex.pd 20_moving_vertex.pd 21_fluid_circulation_cylinder.pd 22_gaz_molecules.pd 23_test.pd 24_sand.pd 25_sand2.pd 26_sand3.pd 27_tLia.pd 28_Lia.pd 29_aglom.pd 30_falling_aglom.pd 31_paste.pd 32_Kelvin_Helmoltz_instability.pd 33_vorticity_ellipse.pd 34_cigarette_smoke.pd 35_gravitation.pd 36_3D_interactors.pd 37_hollywood_planette_explosion.pd 38_elastique_membrane_on_a_sphere.pd 39_blob.pd 40_i3D.pd 41_morfing.pd 42_tentacule.pd 43_game.pd 44_flag.pd 45_newWave.pd 46_non_linear.pd 47_scann_synth.pd 48_pmpd.pd 49_pmpd~.pd 50-simple_oscilator~.pd 51_string~.pd aglom.pd aglom2.pd aglom3.pd aglom4.pd blob.pd ch_gemwin.pd ch_uzi.pd constructor.pd explose1.pd explose2.pd fluide_mass.pd fluide_mass2.pd fluide_mass3.pd fluide_mass4.pd fluide_mass5.pd fluide_mass6.pd fluide_masse.pd fluide_masse2.pd fluide_masse3.pd fluide_masse4.pd fluide_masse5.pd fluide_masse6.pd game_line.pd gemLia.pd gemLia2.pd gemMasse.pd gemMasse2.pd gemMasse3.pd i3D.pd i3D2.pd mass_link.pd mass_link2.pd mass_link3.pd mountain.pd pd_lia.pd pd_lia2.pd pd_link.pd pd_link2.pd pd_mass.pd pd_mass2.pd pd_masse.pd pd_masse2.pd rain.pd rain1.pd sand.pd smoke.pd smoke1.pd smoke_vortex.pd tut_link.pd tut_mass.pd tut_masse.pd vortex.pd vortex2.pd
 
-# manuals and related files
+# manuals and related files, in the 'manual' subfolder
 MANUAL = pmpd.pdf pmpd.sxw
 
 # if you want to include any other files in the source and binary tarballs,
-# list them here.  This can be anything from header files, READMEs, example
-# patches, documentation, etc.
-EXTRA_DIST = pmpd.c README.txt LICENSE.txt
+# list them here.  This can be anything from header files, example patches,
+# documentation, etc.  README.txt and LICENSE.txt are required and therefore
+# automatically included
+EXTRA_DIST = pmpd.c
 
 
 
@@ -39,6 +39,9 @@ EXTRA_DIST = pmpd.c README.txt LICENSE.txt
 # you shouldn't need to edit anything below here, if we did it right :)
 #
 #------------------------------------------------------------------------------#
+
+# get library version from meta file
+LIBRARY_VERSION = $(shell sed -n 's|^\#X text [0-9][0-9]* [0-9][0-9]* VERSION \(.*\);|\1|p' $(LIBRARY_NAME)-meta.pd)
 
 # where Pd lives
 PD_PATH = ../../pd
@@ -126,8 +129,7 @@ ifeq (MINGW,$(findstring MINGW,$(UNAME)))
   EXTENSION = dll
   OS = windows
   OPT_CFLAGS = -O3 -funroll-loops -fomit-frame-pointer -march=i686 -mtune=pentium4
-  WINDOWS_HACKS = -D'O_NONBLOCK=1'
-  CFLAGS += -mms-bitfields $(WINDOWS_HACKS)
+  CFLAGS += -mms-bitfields
   LDFLAGS += -s -shared -Wl,--enable-auto-import
   LIBS += -L$(PD_PATH)/src -L$(PD_PATH)/bin -L$(PD_PATH)/obj -lpd -lwsock32 -lkernel32 -luser32 -lgdi32
   STRIP = strip --strip-unneeded -R .note -R .comment
@@ -184,7 +186,6 @@ install-doc:
 	test -z "$(strip $(PDOBJECTS))" || \
 		$(INSTALL_FILE) $(PDOBJECTS:.pd=-help.pd) \
 			$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-# this is the only bit not really handled well...
 	$(INSTALL_FILE) README.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/README.txt
 	$(INSTALL_FILE) LICENSE.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/LICENSE.txt
 
@@ -231,6 +232,8 @@ $(DISTDIR):
 
 dist: $(DISTDIR)
 	$(INSTALL_FILE) Makefile  $(DISTDIR)
+	$(INSTALL_FILE) README.txt $(DISTDIR)
+	$(INSTALL_FILE) LICENSE.txt $(DISTDIR)
 	$(INSTALL_FILE) $(LIBRARY_NAME)-meta.pd  $(DISTDIR)
 	test -z "$(strip $(ALLSOURCES))" || \
 		$(INSTALL_FILE) $(ALLSOURCES)  $(DISTDIR)
@@ -258,11 +261,13 @@ dist: $(DISTDIR)
 etags:
 	etags *.h $(SOURCES) ../../pd/src/*.[ch] /usr/include/*.h /usr/include/*/*.h
 
-showpaths:
+showsetup:
 	@echo "PD_PATH: $(PD_PATH)"
 	@echo "objectsdir: $(objectsdir)"
 	@echo "LIBRARY_NAME: $(LIBRARY_NAME)"
+	@echo "LIBRARY_VERSION: $(LIBRARY_VERSION)"
 	@echo "SOURCES: $(SOURCES)"
+	@echo "PDOBJECTS: $(PDOBJECTS)"
 	@echo "ALLSOURCES: $(ALLSOURCES)"
 	@echo "UNAME: $(UNAME)"
 	@echo "CPU: $(CPU)"
