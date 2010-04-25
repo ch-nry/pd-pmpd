@@ -66,7 +66,7 @@ UNAME := $(shell uname -s)
 ifeq ($(UNAME),Darwin)
   CPU := $(shell uname -p)
   ifeq ($(CPU),arm) # iPhone/iPod Touch
-    SOURCES += $(SOURCES_macosx)
+    SOURCES += $(SOURCES_iphoneos)
     EXTENSION = pd_darwin
     OS = iphoneos
     IPHONE_BASE=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin
@@ -88,7 +88,13 @@ ifeq ($(UNAME),Darwin)
     EXTENSION = pd_darwin
     OS = macosx
     OPT_CFLAGS = -ftree-vectorize -ftree-vectorizer-verbose=2 -fast
-    FAT_FLAGS = -arch i386 -arch ppc -mmacosx-version-min=10.4
+# build universal 32-bit on 10.4 and 32/64 on newer
+    ifeq ($(shell uname -r | sed 's|\([0-9][0-9]*\)\.[0-9][0-9]*\.[0-9][0-9]*|\1|'), 8)
+      FAT_FLAGS = -arch ppc -arch i386 -mmacosx-version-min=10.4
+    else
+      FAT_FLAGS = -arch ppc -arch i386 -arch x86_64 -mmacosx-version-min=10.4
+      SOURCES += $(SOURCES_iphoneos)
+    endif
     CFLAGS += $(FAT_FLAGS) -fPIC -I/sw/include \
       -I/Applications/Pd-extended.app/Contents/Resources/include
     LDFLAGS += $(FAT_FLAGS) -bundle -undefined dynamic_lookup -L/sw/lib
