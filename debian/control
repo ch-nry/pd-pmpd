@@ -2,7 +2,7 @@ Source: pd-pmpd
 Section: sound
 Priority: optional
 Maintainer: Paul Brossier <piem@debian.org>
-Build-Depends: debhelper (>= 7.0.50~), puredata (>= 0.42.5-3.1~)
+Build-Depends: debhelper (>= 7.0.50~), puredata
 Standards-Version: 3.8.3
 Homepage: http://puredata.info
 
