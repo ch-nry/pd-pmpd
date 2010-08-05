@@ -1,7 +1,7 @@
 cSource: pd-pmpd
 Section: sound
 Priority: optional
-Maintainer: Paul Brossier <piem@debian.org>
+Maintainer: Hans-Christoph Steiner <hans@eds.org>
 Build-Depends: debhelper (>= 7.0.50~), puredata
 Standards-Version: 3.8.3
 Homepage: http://drpichon.free.fr/pmpd/
