@@ -1,9 +1,10 @@
-cSource: pd-pmpd
+Source: pd-pmpd
 Section: sound
 Priority: optional
-Maintainer: Hans-Christoph Steiner <hans@eds.org>
+Maintainer: Debian Multimedia Maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Uploaders: Hans-Christoph Steiner <hans@eds.org>
 Build-Depends: debhelper (>= 7.0.50~), puredata
-Standards-Version: 3.8.3
+Standards-Version: 3.9.1
 Homepage: http://drpichon.free.fr/pmpd/
 
 Package: pd-pmpd
