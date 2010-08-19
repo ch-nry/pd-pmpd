@@ -9,6 +9,8 @@ pkglibdir = /usr/lib/pd/extra
 
 override_dh_auto_install:
 	make DESTDIR=$(CURDIR)/debian/$(PACKAGE) pkglibdir=$(pkglibdir) install
+# replace license file with link to the Debian license file
+	rm -f -- $(CURDIR)/debian/$(PACKAGE)/$(pkglibdir)/$(LIBRARY_NAME)/LICENSE.txt
 
 override_dh_shlibdeps:
 	dpkg-shlibdeps $(CURDIR)/debian/$(PACKAGE)$(pkglibdir)/$(LIBRARY_NAME)/*.pd_linux \
