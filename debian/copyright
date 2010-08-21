@@ -1,7 +1,9 @@
+Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?rev=135
+Name: pmpd
 Debianized-By: Hans-Christoph Steiner <hans@eds.org> 
-Debianized-Date: Sat, 3 Apr 2010 17:14:25 -0400
+Debianized-Date: Fri, 20 Aug 2010 17:14:25 -0400
 Files: *
-Copyright: 2001-2003, Cyrille Henry
+Copyright: 2001-2006, 2009, 2010, Cyrille Henry
 
 License: GPL-2+
  This package is free software; you can redistribute it and/or modify
