@@ -1,6 +1,8 @@
 Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?rev=135
 Name: pmpd
-Debianized-By: Hans-Christoph Steiner <hans@eds.org> 
+Source: http://sourceforge.net/projects/pure-data/files/libraries/pmpd-0.9.tar.gz
+Maintainer: Hans-Christoph Steiner <hans@eds.org>
+Debianized-By: Hans-Christoph Steiner <hans@eds.org>
 Debianized-Date: Fri, 20 Aug 2010 17:14:25 -0400
 Files: *
 Copyright: 2001-2006, 2009, 2010, Cyrille Henry
