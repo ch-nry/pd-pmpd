@@ -30,7 +30,7 @@ MANUAL = pmpd.pdf pmpd.sxw
 # list them here.  This can be anything from header files, example patches,
 # documentation, etc.  README.txt and LICENSE.txt are required and therefore
 # automatically included
-EXTRA_DIST = pmpd.c
+EXTRA_DIST = pmpd.c pmpd-help.pd
 
 
 
