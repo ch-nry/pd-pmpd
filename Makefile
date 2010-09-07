@@ -1,4 +1,4 @@
-## Pd library template version 1.0.2
+## Pd library template version 1.0.3
 # For instructions on how to use this template, see:
 #  http://puredata.info/docs/developer/MakefileTemplate
 LIBRARY_NAME = pmpd
@@ -31,7 +31,7 @@ EXTRA_DIST = pmpd.c pmpd-help.pd
 #
 #------------------------------------------------------------------------------#
 
-CFLAGS = -DPD -I$(PD_PATH)/src -Wall -W -g
+CFLAGS = -DPD -I"$(PD_INCLUDE)" -Wall -W -g
 LDFLAGS =  
 LIBS = 
 
@@ -44,16 +44,18 @@ LIBS =
 # get library version from meta file
 LIBRARY_VERSION = $(shell sed -n 's|^\#X text [0-9][0-9]* [0-9][0-9]* VERSION \(.*\);|\1|p' $(LIBRARY_NAME)-meta.pd)
 
-# where Pd lives
-PD_PATH = ../../pd
-# where to install the library
+CFLAGS += -DVERSION='"$(LIBRARY_VERSION)"'
+
+PD_INCLUDE = $(PD_PATH)/include
+# where to install the library, overridden below depending on platform
 prefix = /usr/local
 libdir = $(prefix)/lib
 pkglibdir = $(libdir)/pd-externals
 objectsdir = $(pkglibdir)
 
 INSTALL = install
-INSTALL_FILE    = $(INSTALL) -p -m 644
+INSTALL_PROGRAM = $(INSTALL) -p -m 644
+INSTALL_DATA = $(INSTALL) -p -m 644
 INSTALL_DIR     = $(INSTALL) -p -m 755 -d
 
 ALLSOURCES := $(SOURCES) $(SOURCES_android) $(SOURCES_cygwin) $(SOURCES_macosx) \
@@ -69,6 +71,7 @@ ifeq ($(UNAME),Darwin)
     SOURCES += $(SOURCES_iphoneos)
     EXTENSION = pd_darwin
     OS = iphoneos
+    PD_PATH = /Applications/Pd-extended.app/Contents/Resources
     IPHONE_BASE=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin
     CC=$(IPHONE_BASE)/gcc
     CPP=$(IPHONE_BASE)/cpp
@@ -76,8 +79,7 @@ ifeq ($(UNAME),Darwin)
     ISYSROOT = -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.0.sdk
     IPHONE_CFLAGS = -miphoneos-version-min=3.0 $(ISYSROOT) -arch armv6
     OPT_CFLAGS = -fast -funroll-loops -fomit-frame-pointer
-	CFLAGS := $(IPHONE_CFLAGS) $(OPT_CFLAGS) $(CFLAGS) \
-      -I/Applications/Pd-extended.app/Contents/Resources/include
+	CFLAGS := $(IPHONE_CFLAGS) $(OPT_CFLAGS) $(CFLAGS)
     LDFLAGS += -arch armv6 -bundle -undefined dynamic_lookup $(ISYSROOT)
     LIBS += -lc 
     STRIP = strip -x
@@ -86,6 +88,7 @@ ifeq ($(UNAME),Darwin)
     SOURCES += $(SOURCES_macosx)
     EXTENSION = pd_darwin
     OS = macosx
+    PD_PATH = /Applications/Pd-extended.app/Contents/Resources
     OPT_CFLAGS = -ftree-vectorize -ftree-vectorizer-verbose=2 -fast
 # build universal 32-bit on 10.4 and 32/64 on newer
     ifeq ($(shell uname -r | sed 's|\([0-9][0-9]*\)\.[0-9][0-9]*\.[0-9][0-9]*|\1|'), 8)
@@ -94,8 +97,7 @@ ifeq ($(UNAME),Darwin)
       FAT_FLAGS = -arch ppc -arch i386 -arch x86_64 -mmacosx-version-min=10.4
       SOURCES += $(SOURCES_iphoneos)
     endif
-    CFLAGS += $(FAT_FLAGS) -fPIC -I/sw/include \
-      -I/Applications/Pd-extended.app/Contents/Resources/include
+    CFLAGS += $(FAT_FLAGS) -fPIC -I/sw/include
     LDFLAGS += $(FAT_FLAGS) -bundle -undefined dynamic_lookup -L/sw/lib
     # if the 'pd' binary exists, check the linking against it to aid with stripping
     LDFLAGS += $(shell test -e $(PD_PATH)/bin/pd && echo -bundle_loader $(PD_PATH)/bin/pd)
@@ -111,6 +113,7 @@ ifeq ($(UNAME),Linux)
   SOURCES += $(SOURCES_linux)
   EXTENSION = pd_linux
   OS = linux
+  PD_PATH = /usr
   OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
   CFLAGS += -fPIC
   LDFLAGS += -Wl,--export-dynamic  -shared -fPIC
@@ -123,9 +126,10 @@ ifeq (CYGWIN,$(findstring CYGWIN,$(UNAME)))
   SOURCES += $(SOURCES_cygwin)
   EXTENSION = dll
   OS = cygwin
+  PD_PATH = $(cygpath $(PROGRAMFILES))/pd
   OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
   CFLAGS += 
-  LDFLAGS += -Wl,--export-dynamic -shared -L$(PD_PATH)/src
+  LDFLAGS += -Wl,--export-dynamic -shared -L"$(PD_PATH)/src" -L"$(PD_PATH)/bin"
   LIBS += -lc -lpd
   STRIP = strip --strip-unneeded -R .note -R .comment
   DISTBINDIR=$(DISTDIR)-$(OS)
@@ -135,10 +139,11 @@ ifeq (MINGW,$(findstring MINGW,$(UNAME)))
   SOURCES += $(SOURCES_windows)
   EXTENSION = dll
   OS = windows
+  PD_PATH = $(shell cd "$(PROGRAMFILES)"/pd && pwd)
   OPT_CFLAGS = -O3 -funroll-loops -fomit-frame-pointer -march=i686 -mtune=pentium4
   CFLAGS += -mms-bitfields
   LDFLAGS += -s -shared -Wl,--enable-auto-import
-  LIBS += -L$(PD_PATH)/src -L$(PD_PATH)/bin -L$(PD_PATH)/obj -lpd -lwsock32 -lkernel32 -luser32 -lgdi32
+  LIBS += -L"$(PD_PATH)/src" -L"$(PD_PATH)/bin" -L"$(PD_PATH)/obj" -lpd -lwsock32 -lkernel32 -luser32 -lgdi32
   STRIP = strip --strip-unneeded -R .note -R .comment
   DISTBINDIR=$(DISTDIR)-$(OS)
 endif
@@ -171,41 +176,41 @@ install: libdir_install
 # actually there.  Those files are not optional, then need to be there.
 libdir_install: $(SOURCES:.c=.$(EXTENSION)) install-doc install-examples install-manual
 	$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	$(INSTALL_FILE) $(LIBRARY_NAME)-meta.pd \
+	$(INSTALL_DATA) $(LIBRARY_NAME)-meta.pd \
 		$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
 	test -z "$(strip $(SOURCES))" || (\
-		$(INSTALL_FILE) $(SOURCES:.c=.$(EXTENSION)) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME) && \
+		$(INSTALL_PROGRAM) $(SOURCES:.c=.$(EXTENSION)) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME) && \
 		$(STRIP) $(addprefix $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/,$(SOURCES:.c=.$(EXTENSION))))
 	test -z "$(strip $(PDOBJECTS))" || \
-		$(INSTALL_FILE) $(PDOBJECTS) \
+		$(INSTALL_DATA) $(PDOBJECTS) \
 			$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
 
 # install library linked as single binary
 single_install: $(LIBRARY_NAME) install-doc install-exec
 	$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	$(INSTALL_FILE) $(LIBRARY_NAME).$(EXTENSION) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
+	$(INSTALL_PROGRAM) $(LIBRARY_NAME).$(EXTENSION) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
 	$(STRIP) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/$(LIBRARY_NAME).$(EXTENSION)
 
 install-doc:
 	$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
 	test -z "$(strip $(SOURCES) $(PDOBJECTS))" || \
-		$(INSTALL_FILE) $(HELPPATCHES) \
+		$(INSTALL_DATA) $(HELPPATCHES) \
 			$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	$(INSTALL_FILE) README.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/README.txt
-	$(INSTALL_FILE) LICENSE.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/LICENSE.txt
+	$(INSTALL_DATA) README.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/README.txt
+	$(INSTALL_DATA) LICENSE.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/LICENSE.txt
 
 install-examples:
 	test -z "$(strip $(EXAMPLES))" || \
 		$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/examples && \
 		for file in $(EXAMPLES); do \
-			$(INSTALL_FILE) examples/$$file $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/examples; \
+			$(INSTALL_DATA) examples/$$file $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/examples; \
 		done
 
 install-manual:
 	test -z "$(strip $(MANUAL))" || \
 		$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/manual && \
 		for file in $(MANUAL); do \
-			$(INSTALL_FILE) manual/$$file $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/manual; \
+			$(INSTALL_DATA) manual/$$file $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/manual; \
 		done
 
 
@@ -228,11 +233,11 @@ $(DISTBINDIR):
 	$(INSTALL_DIR) $(DISTBINDIR)
 
 libdir: all $(DISTBINDIR)
-	$(INSTALL_FILE) $(LIBRARY_NAME)-meta.pd  $(DISTBINDIR)
-	$(INSTALL_FILE) $(SOURCES)  $(DISTBINDIR)
-	$(INSTALL_FILE) $(HELPPATCHES) $(DISTBINDIR)
+	$(INSTALL_DATA) $(LIBRARY_NAME)-meta.pd  $(DISTBINDIR)
+	$(INSTALL_DATA) $(SOURCES)  $(DISTBINDIR)
+	$(INSTALL_DATA) $(HELPPATCHES) $(DISTBINDIR)
 	test -z "$(strip $(EXTRA_DIST))" || \
-		$(INSTALL_FILE) $(EXTRA_DIST)    $(DISTBINDIR)
+		$(INSTALL_DATA) $(EXTRA_DIST)    $(DISTBINDIR)
 #	tar --exclude-vcs -czpf $(DISTBINDIR).tar.gz $(DISTBINDIR)
 
 $(DISTDIR):
@@ -242,27 +247,27 @@ $(ORIGDIR):
 	$(INSTALL_DIR) $(ORIGDIR)
 
 dist: $(DISTDIR)
-	$(INSTALL_FILE) Makefile  $(DISTDIR)
-	$(INSTALL_FILE) README.txt $(DISTDIR)
-	$(INSTALL_FILE) LICENSE.txt $(DISTDIR)
-	$(INSTALL_FILE) $(LIBRARY_NAME)-meta.pd  $(DISTDIR)
+	$(INSTALL_DATA) Makefile  $(DISTDIR)
+	$(INSTALL_DATA) README.txt $(DISTDIR)
+	$(INSTALL_DATA) LICENSE.txt $(DISTDIR)
+	$(INSTALL_DATA) $(LIBRARY_NAME)-meta.pd  $(DISTDIR)
 	test -z "$(strip $(ALLSOURCES))" || \
-		$(INSTALL_FILE) $(ALLSOURCES)  $(DISTDIR)
+		$(INSTALL_DATA) $(ALLSOURCES)  $(DISTDIR)
 	test -z "$(strip $(PDOBJECTS))" || \
-		$(INSTALL_FILE) $(PDOBJECTS)  $(DISTDIR)
+		$(INSTALL_DATA) $(PDOBJECTS)  $(DISTDIR)
 	test -z "$(strip $(HELPPATCHES))" || \
-		$(INSTALL_FILE) $(HELPPATCHES) $(DISTDIR)
+		$(INSTALL_DATA) $(HELPPATCHES) $(DISTDIR)
 	test -z "$(strip $(EXTRA_DIST))" || \
-		$(INSTALL_FILE) $(EXTRA_DIST)    $(DISTDIR)
+		$(INSTALL_DATA) $(EXTRA_DIST)    $(DISTDIR)
 	test -z "$(strip $(EXAMPLES))" || \
 		$(INSTALL_DIR) $(DISTDIR)/examples && \
 		for file in $(EXAMPLES); do \
-			$(INSTALL_FILE) examples/$$file $(DISTDIR)/examples; \
+			$(INSTALL_DATA) examples/$$file $(DISTDIR)/examples; \
 		done
 	test -z "$(strip $(MANUAL))" || \
 		$(INSTALL_DIR) $(DISTDIR)/manual && \
 		for file in $(MANUAL); do \
-			$(INSTALL_FILE) manual/$$file $(DISTDIR)/manual; \
+			$(INSTALL_DATA) manual/$$file $(DISTDIR)/manual; \
 		done
 	tar --exclude-vcs -czpf $(DISTDIR).tar.gz $(DISTDIR)
 
@@ -280,6 +285,10 @@ etags:
 	etags *.h $(SOURCES) ../../pd/src/*.[ch] /usr/include/*.h /usr/include/*/*.h
 
 showsetup:
+	@echo "CFLAGS: $(CFLAGS)"
+	@echo "LDFLAGS: $(LDFLAGS)"
+	@echo "LIBS: $(LIBS)"
+	@echo "PD_INCLUDE: $(PD_INCLUDE)"
 	@echo "PD_PATH: $(PD_PATH)"
 	@echo "objectsdir: $(objectsdir)"
 	@echo "LIBRARY_NAME: $(LIBRARY_NAME)"
