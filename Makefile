@@ -140,7 +140,7 @@ ifeq (MINGW,$(findstring MINGW,$(UNAME)))
   EXTENSION = dll
   OS = windows
   PD_PATH = $(shell cd "$(PROGRAMFILES)"/pd && pwd)
-  OPT_CFLAGS = -O3 -funroll-loops -fomit-frame-pointer -march=i686 -mtune=pentium4
+  OPT_CFLAGS = -O3 -funroll-loops -fomit-frame-pointer
   CFLAGS += -mms-bitfields
   LDFLAGS += -s -shared -Wl,--enable-auto-import
   LIBS += -L"$(PD_PATH)/src" -L"$(PD_PATH)/bin" -L"$(PD_PATH)/obj" -lpd -lwsock32 -lkernel32 -luser32 -lgdi32
