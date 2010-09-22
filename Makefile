@@ -149,7 +149,7 @@ ifeq (MINGW,$(findstring MINGW,$(UNAME)))
 endif
 
 # in case somebody manually set the HELPPATCHES above
-HELPPATCHES ?= $(SOURCES:.c=-help.pd) $(PDOBJECTS:.c=-help.pd)
+HELPPATCHES ?= $(SOURCES:.c=-help.pd) $(PDOBJECTS:.pd=-help.pd)
 
 CFLAGS += $(OPT_CFLAGS)
 
