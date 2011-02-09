@@ -43,7 +43,21 @@
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
-#define sign(a) ( ((a) < 0) ? -1 : 1 )
+
+t_float sign_ch(t_float v)
+{
+    return v > 0 ? 1 : -1;
+}
+
+t_float abs_ch(t_float v)
+{
+    return v > 0 ? v : -v;
+}
+
+t_float pow_ch(t_float a, t_float x)
+{
+    return a > 0 ? pow(a,x) : -pow(-a,x);
+}
 
 static t_class *pmpd_class;
 
@@ -83,11 +97,11 @@ typedef struct _pmpd
 } t_pmpd;
 
 void pmpd_bang(t_pmpd *x)
-///////////////////////////////////////////////////////////////////////////////////
-// this part is doing all the PM
 {
-	t_float F, L;
+// this part is doing all the PM
+	t_float F, L, absL;
 	t_int i;
+    post("bang");
 
 	for (i=1; i<x->nb_mass; i++)
 	// compute new masses position
@@ -103,16 +117,13 @@ void pmpd_bang(t_pmpd *x)
 	// comput link forces
 	{
         L = x->link[i].mass1->posX - x->link[i].mass2->posX;
-        L -= x->link[i].L;
-        if ( (L > x->link[i].Lmin) & (L < x->link[i].Lmax)  & (L!=0))
+        absL = abs_ch(L);
+        if ( (absL >= x->link[i].Lmin) & (absL < x->link[i].Lmax)  & (L!=0))
         {
    	    	F = x->link[i].D * (L - x->link[i].distance) ;
             x->link[i].distance=L;
-
-            if (L-x->link[i].L >= 0)
-                L = pow(L, x->link[i].Pow);
-            else
-                L = -pow(-L, x->link[i].Pow);
+                
+            L =  sign_ch(L) * pow_ch( absL - x->link[i].L, x->link[i].Pow);
 
     		F  += x->link[i].K *  L;
 		    x->link[i].mass1->forceX -= F;
@@ -155,6 +166,8 @@ void pmpd_posX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         tmp = max(0, min( x->nb_mass-1, tmp));
 	    x->mass[tmp].posX = atom_getfloatarg(1, argc, argv);
    	    x->mass[tmp].speedX = 0; // ??? TODO : esce la bonne chose a faire?
+        x->mass[tmp].forceX = 0; // ??? TODO : esce la bonne chose a faire?
+        
     }
     if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
     {
@@ -164,6 +177,8 @@ void pmpd_posX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             {
 	            x->mass[i].posX = atom_getfloatarg(1, argc, argv);
         	    x->mass[i].speedX = 0; // ??? TODO : esce la bonne chose a faire?
+                x->mass[i].forceX = 0; // ??? TODO : esce la bonne chose a faire?
+
             }
         }
     }
