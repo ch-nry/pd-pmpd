@@ -49,16 +49,6 @@ t_float sign_ch(t_float v)
     return v > 0 ? 1 : -1;
 }
 
-t_float abs_ch(t_float v)
-{
-    return v > 0 ? v : -v;
-}
-
-t_float pow_ch(t_float a, t_float x)
-{
-    return a > 0 ? pow(a,x) : -pow(-a,x);
-}
-
 static t_class *pmpd_class;
 
 typedef struct _mass {
@@ -101,7 +91,7 @@ void pmpd_bang(t_pmpd *x)
 // this part is doing all the PM
 	t_float F, L, absL;
 	t_int i;
-    post("bang");
+    // post("bang");
 
 	for (i=1; i<x->nb_mass; i++)
 	// compute new masses position
@@ -117,13 +107,13 @@ void pmpd_bang(t_pmpd *x)
 	// comput link forces
 	{
         L = x->link[i].mass1->posX - x->link[i].mass2->posX;
-        absL = abs_ch(L);
+        absL = fabs(L);
         if ( (absL >= x->link[i].Lmin) & (absL < x->link[i].Lmax)  & (L!=0))
         {
    	    	F = x->link[i].D * (L - x->link[i].distance) ;
             x->link[i].distance=L;
                 
-            L =  sign_ch(L) * pow_ch( absL - x->link[i].L, x->link[i].Pow);
+            L =  sign_ch(L) * pow( absL - x->link[i].L, x->link[i].Pow);
 
     		F  += x->link[i].K *  L;
 		    x->link[i].mass1->forceX -= F;
