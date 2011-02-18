@@ -27,18 +27,11 @@
 ----------------------------------------------------------------------------
 */
 
-#ifndef VERSION
-#define VERSION "0.10"
-#endif
-
 #include "m_pd.h"
 #include "stdio.h"
+#include "math.h"
 
-#ifndef __DATE__ 
-#define __DATE__ ""
-#endif
-
-#define nb_max_link   1000000
+#define nb_max_link   100000
 #define nb_max_mass   100000
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
@@ -47,6 +40,11 @@
 t_float sign_ch(t_float v)
 {
     return v > 0 ? 1 : -1;
+}
+
+t_float pow_ch(t_float x, t_float y)
+{
+	return x > 0 ? pow(x,y) : -pow(-x,y);
 }
 
 static t_class *pmpd_class;
@@ -58,11 +56,13 @@ typedef struct _mass {
 	t_float speedX;
 	t_float posX;
 	t_float forceX;
+	t_float D2;
     int num;
 } foo;
 
 typedef struct _link {
     t_symbol *Id;
+    int type;
 	struct _mass *mass1;
 	struct _mass *mass2;
 	t_float K;
@@ -98,27 +98,36 @@ void pmpd_bang(t_pmpd *x)
 		if (x->mass[i].mobile > 0) // only if mobile
 		{
 			x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
-			x->mass[i].forceX = 0;
+			// x->mass[i].forceX = 0;
 			x->mass[i].posX += x->mass[i].speedX ;
             x->mass[i].posX = min(x->maxX,max(x->minX,x->mass[i].posX));
+			x->mass[i].forceX = -x->mass[i].D2 * x->mass[i].speedX;
 		}
 
 	for (i=0; i<x->nb_link; i++)
-	// comput link forces
+	// compute link forces
 	{
-        L = x->link[i].mass1->posX - x->link[i].mass2->posX;
-        absL = fabs(L);
-        if ( (absL >= x->link[i].Lmin) & (absL < x->link[i].Lmax)  & (L!=0))
-        {
-   	    	F = x->link[i].D * (L - x->link[i].distance) ;
-            x->link[i].distance=L;
-                
-            L =  sign_ch(L) * pow( absL - x->link[i].L, x->link[i].Pow);
+		switch (x->link[i].type)
+		{
+		case 0: // standard link
+		
+			L = x->link[i].mass1->posX - x->link[i].mass2->posX;
+			absL = fabs(L);
+			if ( (absL >= x->link[i].Lmin) & (absL < x->link[i].Lmax)  & (absL - x->link[i].L !=0))
+			{
+				F = x->link[i].D * (L - x->link[i].distance) ;
+				x->link[i].distance=L;
+					
+				L =  sign_ch(L) * pow_ch( absL - x->link[i].L, x->link[i].Pow);
 
-    		F  += x->link[i].K *  L;
-		    x->link[i].mass1->forceX -= F;
-		    x->link[i].mass2->forceX += F;
-        }
+				F  += x->link[i].K *  L;
+				x->link[i].mass1->forceX -= F;
+				x->link[i].mass2->forceX += F;
+			}
+			break;
+		case 1: // link with rigidity from a table
+			break;
+		}
 	}
 }
 
@@ -175,9 +184,8 @@ void pmpd_posX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 }
 
 void pmpd_mass(t_pmpd *x, t_symbol *Id, t_float mobile, t_float M, t_float posX )
-// add a mass
-// Id, invM speedX posX forceX
-{
+{ // add a mass : Id, invM speedX posX forceX
+
 	if (M<=0) M=1;
 	x->mass[x->nb_mass].Id = Id;
 	x->mass[x->nb_mass].mobile = (int)mobile;
@@ -196,6 +204,7 @@ void pmpd_create_link(t_pmpd *x, t_symbol *Id, int mass1, int mass2, t_float K, 
 
     if ((x->nb_mass>0) & (mass1 != mass2) & (mass1 >= 0) & (mass2 >= 0) & (mass1 < x->nb_mass) & (mass2 < x->nb_mass) )
     {
+	    x->link[x->nb_link].type = 0;
 	    x->link[x->nb_link].Id = Id;
 	    x->link[x->nb_link].mass1 = &x->mass[mass1]; 
 	    x->link[x->nb_link].mass2 = &x->mass[mass2];
@@ -205,7 +214,7 @@ void pmpd_create_link(t_pmpd *x, t_symbol *Id, int mass1, int mass2, t_float K, 
 	    x->link[x->nb_link].Pow = Pow;
 	    x->link[x->nb_link].Lmin = Lmin;
 	    x->link[x->nb_link].Lmax = Lmax;
-	    x->link[x->nb_link].distance = 0;
+	    x->link[x->nb_link].distance =  x->link[x->nb_link].L;
 
 	    x->nb_link++ ;
 	    x->nb_link = min ( nb_max_link -1, x->nb_link );
@@ -213,9 +222,8 @@ void pmpd_create_link(t_pmpd *x, t_symbol *Id, int mass1, int mass2, t_float K, 
 }
 
 void pmpd_link(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
-// add a link
-// Id, *mass1, *mass2, K, D, Pow, Lmin, Lmax;
-{
+{ // add a link : Id, *mass1, *mass2, K, D, Pow, Lmin, Lmax;
+
     int i, j;
 
     t_symbol *Id = atom_getsymbolarg(0,argc,argv);
@@ -397,6 +405,94 @@ void pmpd_setD(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
+void pmpd_setD2(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int tmp, i;
+
+    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_mass-1, tmp));
+	    x->mass[tmp].D2 = atom_getfloatarg(1, argc, argv);
+    }
+    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_mass; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+            {
+	            x->mass[i].D2 = atom_getfloatarg(1, argc, argv);
+            }
+        }
+    }
+}
+
+void pmpd_setSpeedX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int tmp, i;
+
+    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_mass-1, tmp));
+	    x->mass[tmp].speedX = atom_getfloatarg(1, argc, argv);
+    }
+    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_mass; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+            {
+	            x->mass[i].speedX = atom_getfloatarg(1, argc, argv);
+            }
+        }
+    }
+}
+
+void pmpd_addPosX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int tmp, i;
+
+    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_mass-1, tmp));
+	    x->mass[tmp].posX += atom_getfloatarg(1, argc, argv);
+    }
+    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_mass; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+            {
+	            x->mass[i].posX += atom_getfloatarg(1, argc, argv);
+            }
+        }
+    }
+}
+
+void pmpd_setForceX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int tmp, i;
+
+    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_mass-1, tmp));
+	    x->mass[tmp].forceX = atom_getfloatarg(1, argc, argv);
+    }
+    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_mass; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+            {
+	            x->mass[i].forceX = atom_getfloatarg(1, argc, argv);
+            }
+        }
+    }
+}
+
 void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
@@ -417,12 +513,27 @@ void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
+	if ( ( argv[0].a_type == A_FLOAT ) & ( argc == 1 ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_link-1, tmp));
+        x->link[tmp].L = x->link[tmp].mass2->posX - x->link[tmp].mass1->posX;
+    }
+    if ( ( argv[0].a_type == A_SYMBOL ) & ( argc == 1 ) )
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+            {
+                x->link[i].L = x->link[i].mass2->posX - x->link[i].mass1->posX;
+            }
+        }
+    }
 }
 
 void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i;
-    t_float X;
+    int i;
     t_symbol *toget; 
     t_atom  toout[2];
     toget = atom_getsymbolarg(0, argc, argv);
@@ -713,7 +824,7 @@ void pmpd_massesPosL(t_pmpd *x)
     int i;
     t_atom pos_list[nb_max_link];
 
-    for (i=0; i< x->nb_mass; i++)
+    for (i=0; i < x->nb_mass; i++)
     {
         SETFLOAT(&(pos_list[i]),x->mass[i].posX);
     }
@@ -732,6 +843,84 @@ void pmpd_massesForcesL(t_pmpd *x)
     outlet_anything(x->main_outlet, gensym("massesForcesL"),x->nb_mass , pos_list);
 }
 
+void pmpd_massesSpeedsL(t_pmpd *x)
+{
+    int i;
+    t_atom pos_list[nb_max_link];
+
+    for (i=0; i< x->nb_mass; i++)
+    {
+        SETFLOAT(&(pos_list[i]),x->mass[i].speedX);
+    }
+    outlet_anything(x->main_outlet, gensym("massesSpeedsL"),x->nb_mass , pos_list);
+}
+
+void pmpd_massesPosT(t_pmpd *x, t_symbol *tab_name)
+{
+    int i, vecsize;
+    t_garray *a;
+     t_word *vec;
+     
+     if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+        pd_error(x, "%s: no such array", tab_name->s_name);
+    else if (!garray_getfloatwords(a, &vecsize, &vec))
+        pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+    else
+    {
+		int taille_max = x->nb_mass;
+		taille_max = min(taille_max, vecsize);
+		for (i=0; i < taille_max ; i++)
+		{
+			        vec[i].w_float = x->mass[i].posX;
+		}
+        garray_redraw(a);
+    }
+}
+
+void pmpd_massesSpeedsT(t_pmpd *x, t_symbol *tab_name)
+{
+    int i, vecsize;
+    t_garray *a;
+     t_word *vec;
+     
+     if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+        pd_error(x, "%s: no such array", tab_name->s_name);
+    else if (!garray_getfloatwords(a, &vecsize, &vec))
+        pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+    else
+    {
+		int taille_max = x->nb_mass;
+		taille_max = min(taille_max, vecsize);
+		for (i=0; i < taille_max ; i++)
+		{
+			        vec[i].w_float = x->mass[i].speedX;
+		}
+        garray_redraw(a);
+    }
+}
+
+void pmpd_massesForcesT(t_pmpd *x, t_symbol *tab_name)
+{
+    int i, vecsize;
+    t_garray *a;
+     t_word *vec;
+     
+     if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+        pd_error(x, "%s: no such array", tab_name->s_name);
+    else if (!garray_getfloatwords(a, &vecsize, &vec))
+        pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+    else
+    {
+		int taille_max = x->nb_mass;
+		taille_max = min(taille_max, vecsize);
+		for (i=0; i < taille_max ; i++)
+		{
+			        vec[i].w_float = x->mass[i].forceX;
+		}
+        garray_redraw(a);
+    }
+}
+
 void *pmpd_new()
 {
 	t_pmpd *x = (t_pmpd *)pd_new(pmpd_class);
@@ -739,7 +928,7 @@ void *pmpd_new()
 	pmpd_reset(x);
 	
 	x->main_outlet=outlet_new(&x->x_obj, 0);
-	x->info_outlet=outlet_new(&x->x_obj, 0); // TODO
+	// x->info_outlet=outlet_new(&x->x_obj, 0); // TODO
 
 	return (void *)x;
 }
@@ -751,21 +940,45 @@ void pmpd_setup(void)
         0, sizeof(t_pmpd),CLASS_DEFAULT, 0);
 
 	class_addbang(pmpd_class, pmpd_bang);
-	class_addmethod(pmpd_class, (t_method)pmpd_mass,            gensym("mass"), A_DEFSYMBOL, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_link,            gensym("link"), A_GIMME, 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_posX,            gensym("posX"), A_GIMME, 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_forceX,          gensym("forceX"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_reset,           gensym("reset"), 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_infosL,          gensym("infosL"), 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_mass,            gensym("mass"), A_DEFSYMBOL, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_link,            gensym("link"), A_GIMME, 0);
+//	class_addmethod(pmpd_class, (t_method)pmpd_link,            gensym("tabLink"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_posX,            gensym("pos"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_posX,            gensym("posX"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_forceX,          gensym("force"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_forceX,          gensym("forceX"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_minX,            gensym("Xmin"), A_DEFFLOAT, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_maxX,            gensym("Xmax"), A_DEFFLOAT, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_setFixed,        gensym("setFixed"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_setMobile,       gensym("setMobile"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_setK,            gensym("setK"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_setD,            gensym("setD"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_setD2,           gensym("setD2"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_setSpeedX,        gensym("setSpeed"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_setSpeedX,        gensym("setSpeedX"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_setForceX,        gensym("setForce"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_setForceX,        gensym("setForceX"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_addPosX,          gensym("addPos"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_addPosX,          gensym("addPosX"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_setL,            gensym("setL"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_get,             gensym("get"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_massesPosL,      gensym("massesPosL"), 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsL,   gensym("massesSpeedsL"), 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_massesForcesL,   gensym("massesForcesL"), 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,      gensym("massesPosT"), A_DEFSYMBOL, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,   gensym("massesSpeedsT"),A_DEFSYMBOL, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,   gensym("massesForcesT"),A_DEFSYMBOL, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesPosL,      gensym("massesPosXL"), 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsL,   gensym("massesSpeedsXL"), 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesForcesL,   gensym("massesForcesXL"), 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,      gensym("massesPosXT"), A_DEFSYMBOL, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,   gensym("massesSpeedsXT"),A_DEFSYMBOL, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,   gensym("massesForcesXT"),A_DEFSYMBOL, 0);
+	// class_addmethod(pmpd_class, (t_method)pmpd_massesPosL,      gensym("massesPosMean"), 0);
+	// class_addmethod(pmpd_class, (t_method)pmpd_massesPosL,      gensym("massesPosStd"), 0);
+	// setMassId, setLinkId
+
 }
 

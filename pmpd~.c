@@ -123,7 +123,7 @@ t_int *pmpd_tilde_perform(t_int *w)
 
 	t_float F,L;
 	t_int i;
-	struct _mass mass_1, mass_2;
+//	struct _mass mass_1, mass_2;
 
 	t_sample *out[nb_max_outlet]; 
 	t_sample *in[nb_max_inlet];
@@ -140,7 +140,8 @@ t_int *pmpd_tilde_perform(t_int *w)
 		while (x->loop++ < x->nb_loop)
 		{
 			for (i=0; i<x->nb_inPos; i++)
-				// get inlet value and make it a position to the specified mass				x->inPos[i].mass1->posX = x->inPos[i].influence * *in[x->inPos[i].nbr_inlet];
+				// get inlet value and make it a position to the specified mass
+				x->inPos[i].mass1->posX = x->inPos[i].influence * *in[x->inPos[i].nbr_inlet];
 			for (i=0; i<x->nb_inForce; i++)
 				// get inlet value and make it a force to the specified mass
 				x->inForce[i].mass1->forceX += x->inForce[i].influence * *in[x->inForce[i].nbr_inlet];
