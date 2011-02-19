@@ -1075,7 +1075,7 @@ void pmpd_massesPosMean(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	sommeX = 0;
 	j = 0;
 	
-    if ( argv[0].a_type == A_SYMBOL ) 
+    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
     {
 		for (i=0; i< x->nb_mass; i++)
         {
@@ -1113,7 +1113,7 @@ void pmpd_massesPosStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	stdX = 0;
 	j = 0;
 	
-    if ( argv[0].a_type == A_SYMBOL ) 
+    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
     {
 		for (i=0; i< x->nb_mass; i++)
         {

@@ -242,26 +242,29 @@ void pmpd3d_bang(t_pmpd3d *x)
 	}
 }
 
-void pmpd3d_mass(t_pmpd3d *x, t_symbol *Id, t_float mobile, t_float M, t_float posX, t_float posY, t_float posZ )
+void pmpd3d_mass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)//, t_symbol *Id, t_float mobile, t_float M, t_float posX, t_float posY, t_float posZ )
 { // add a mass : Id, invM speedX posX
+	if(argv[0].a_type == A_SYMBOL)
+	{
+		x->mass[x->nb_mass].Id = atom_getsymbolarg(0,argc,argv);
+		x->mass[x->nb_mass].mobile = (int) atom_getfloatarg(1, argc, argv);
+		t_float M = atom_getfloatarg(2, argc, argv);
+		if (M<=0) M=1;
+		x->mass[x->nb_mass].invM = 1/M;
+		x->mass[x->nb_mass].speedX = 0;
+		x->mass[x->nb_mass].speedY = 0;
+		x->mass[x->nb_mass].speedZ = 0;
+		x->mass[x->nb_mass].posX = atom_getfloatarg(3, argc, argv);
+		x->mass[x->nb_mass].posY = atom_getfloatarg(4, argc, argv);
+		x->mass[x->nb_mass].posZ = atom_getfloatarg(5, argc, argv);
+		x->mass[x->nb_mass].forceX = 0;
+		x->mass[x->nb_mass].forceY = 0;
+		x->mass[x->nb_mass].forceZ = 0;
+		x->mass[x->nb_mass].num = x->nb_mass;
 
-	if (M<=0) M=1;
-	x->mass[x->nb_mass].Id = Id;
-	x->mass[x->nb_mass].mobile = (int)mobile;
-	x->mass[x->nb_mass].invM = 1/M;
-	x->mass[x->nb_mass].speedX = 0;
-	x->mass[x->nb_mass].speedY = 0;
-	x->mass[x->nb_mass].speedZ = 0;
-	x->mass[x->nb_mass].posX = posX;
-	x->mass[x->nb_mass].posY = posY;
-	x->mass[x->nb_mass].posZ = posZ;
-	x->mass[x->nb_mass].forceX = 0;
-	x->mass[x->nb_mass].forceY = 0;
-	x->mass[x->nb_mass].forceZ = 0;
-	x->mass[x->nb_mass].num = x->nb_mass;
-
-	x->nb_mass++ ;
-	x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
+		x->nb_mass++ ;
+		x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
+	}
 }
 
 void pmpd3d_create_link(t_pmpd3d *x, t_symbol *Id, int mass1, int mass2, t_float K, t_float D, t_float Pow, t_float Lmin, t_float Lmax, t_int type)
@@ -1981,7 +1984,7 @@ void pmpd3d_massesPosMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	somme = 0;
 	j = 0;
 	
-    if ( argv[0].a_type == A_SYMBOL ) 
+    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
     {
 		for (i=0; i< x->nb_mass; i++)
         {
@@ -2001,6 +2004,7 @@ void pmpd3d_massesPosMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
 				sommeX += x->mass[i].posX;
 				sommeY += x->mass[i].posY;
+				sommeZ += x->mass[i].posZ;
 				somme +=  sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY) + sqr(x->mass[i].posZ)); // distance au centre
 				j++;
 		}
@@ -2036,7 +2040,7 @@ void pmpd3d_massesPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	std  = 0;
 	j = 0;
 	
-    if ( argv[0].a_type == A_SYMBOL ) 
+    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
     {
 		for (i=0; i< x->nb_mass; i++)
         {
@@ -2151,7 +2155,8 @@ void pmpd3d_setup(void)
 	class_addbang(pmpd3d_class, pmpd3d_bang);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_reset,           gensym("reset"), 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_infosL,          gensym("infosL"), 0);
-	class_addmethod(pmpd3d_class, (t_method)pmpd3d_mass,            gensym("mass"), A_DEFSYMBOL, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+//	class_addmethod(pmpd3d_class, (t_method)pmpd3d_mass,            gensym("mass"), A_DEFSYMBOL, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_class, (t_method)pmpd3d_mass,            gensym("mass"), A_GIMME, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_link,            gensym("link"), A_GIMME, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_tabLink,         gensym("tabLink"), A_GIMME, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_tLink,           gensym("tLink"), A_GIMME, 0);
