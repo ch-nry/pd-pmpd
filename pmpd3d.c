@@ -90,8 +90,7 @@ typedef struct _link {
     t_symbol *arrayD;
 } foo1 ;
 
-typedef struct _pmpd3d2d 
-{
+typedef struct _pmpd3d2d {
  	t_object  x_obj;
 	struct _link link[nb_max_link];
 	struct _mass mass[nb_max_mass];
