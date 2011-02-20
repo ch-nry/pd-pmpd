@@ -158,7 +158,7 @@ void pmpd2d_bang(t_pmpd2d *x)
 	t_int i;
     // post("bang");
 
-	for (i=1; i<x->nb_mass; i++)
+	for (i=0; i<x->nb_mass; i++)
 	// compute new masses position
 		if (x->mass[i].mobile > 0) // only if mobile
 		{
@@ -210,9 +210,9 @@ void pmpd2d_bang(t_pmpd2d *x)
 				
 			if (x->link[i].lType == 1)
 			{ // on projette selon 1 axe
-				F = Fx*x->link[i].VX + Fy*x->link[i].VY; // produit scalaire de la force sur le vecteur qui la porte
-				Fx = F*x->link[i].VX; // V est unitaire, dc on projete sans pb
-				Fy = F*x->link[i].VY;				
+				// F = Fx*x->link[i].VX + Fy*x->link[i].VY; // produit scalaire de la force sur le vecteur qui la porte
+				Fx = Fx*x->link[i].VX; // V est unitaire, dc on projete sans pb
+				Fy = Fy*x->link[i].VY;				
 			}
 			
 			x->link[i].mass1->forceX -= Fx;
@@ -318,7 +318,8 @@ void pmpd2d_link(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
                 {
-                    pmpd2d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) // si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
+						pmpd2d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
                 }
             }   
         }
@@ -360,8 +361,8 @@ void pmpd2d_tLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
             {
-                pmpd2d_create_link(x, Id, i, mass2, K, D, Pow, Lmin, Lmax, 0);
-            	x->link[x->nb_link-1].VX = vecteurX;
+				pmpd2d_create_link(x, Id, i, mass2, K, D, Pow, Lmin, Lmax, 0);
+				x->link[x->nb_link-1].VX = vecteurX;
 				x->link[x->nb_link-1].VY = vecteurY;
             }
         }
@@ -388,9 +389,13 @@ void pmpd2d_tLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
                 {
-                    pmpd2d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
-                	x->link[x->nb_link-1].VX = vecteurX;
-					x->link[x->nb_link-1].VY = vecteurY;
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) // si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
+					{
+						pmpd2d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
+						x->link[x->nb_link-1].VX = vecteurX;
+						x->link[x->nb_link-1].VY = vecteurY;
+					}
+
 				}
             }   
         }
@@ -450,9 +455,12 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
                 {
-                    pmpd2d_create_link(x, Id, i, j, K, D, 1, 0, 1000000, 2);
-					x->link[x->nb_link-1].arrayK = arrayK;
-					x->link[x->nb_link-1].arrayD = arrayD;
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) // si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
+					{
+						pmpd2d_create_link(x, Id, i, j, K, D, 1, 0, 1000000, 2);
+						x->link[x->nb_link-1].arrayK = arrayK;
+						x->link[x->nb_link-1].arrayD = arrayD;
+					}
 				}
             }   
         }
@@ -1837,6 +1845,7 @@ void pmpd2d_setup(void)
 	class_addbang(pmpd2d_class, pmpd2d_bang);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_reset,           gensym("reset"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_infosL,          gensym("infosL"), 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_infosL,          gensym("infos"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_mass,            gensym("mass"), A_DEFSYMBOL, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_link,            gensym("link"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_tabLink,         gensym("tabLink"), A_GIMME, 0);

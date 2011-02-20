@@ -164,7 +164,7 @@ void pmpd3d_bang(t_pmpd3d *x)
 	t_int i;
     // post("bang");
 
-	for (i=1; i<x->nb_mass; i++)
+	for (i=0; i<x->nb_mass; i++)
 	// compute new masses position
 		if (x->mass[i].mobile > 0) // only if mobile
 		{
@@ -225,10 +225,10 @@ void pmpd3d_bang(t_pmpd3d *x)
 				
 			if (x->link[i].lType == 1)
 			{ // on projette selon 1 axe
-				F = Fx*x->link[i].VX + Fy*x->link[i].VY + Fz*x->link[i].VZ; // produit scalaire de la force sur le vecteur qui la porte
-				Fx = F*x->link[i].VX; // V est unitaire, dc on projete sans pb
-				Fy = F*x->link[i].VY;				
-				Fz = F*x->link[i].VZ;				
+				// F = Fx*x->link[i].VX + Fy*x->link[i].VY + Fz*x->link[i].VZ; // produit scalaire de la force sur le vecteur qui la porte
+				Fx = Fx*x->link[i].VX; // V est unitaire, dc on projete sans pb
+				Fy = Fy*x->link[i].VY;				
+				Fz = Fz*x->link[i].VZ;				
 			}
 			
 			x->link[i].mass1->forceX -= Fx;
@@ -342,7 +342,8 @@ void pmpd3d_link(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
                 {
-                    pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) // si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
+						pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
                 }
             }   
         }
@@ -412,9 +413,12 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
                 {
-                    pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
-                	x->link[x->nb_link-1].VX = vecteurX;
-					x->link[x->nb_link-1].VY = vecteurY;
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) // si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
+					{
+						pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
+						x->link[x->nb_link-1].VX = vecteurX;
+						x->link[x->nb_link-1].VY = vecteurY;
+					}
 				}
             }   
         }
@@ -474,9 +478,12 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
                 {
-                    pmpd3d_create_link(x, Id, i, j, K, D, 1, 0, 1000000, 2);
-					x->link[x->nb_link-1].arrayK = arrayK;
-					x->link[x->nb_link-1].arrayD = arrayD;
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) // si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
+					{
+						pmpd3d_create_link(x, Id, i, j, K, D, 1, 0, 1000000, 2);
+						x->link[x->nb_link-1].arrayK = arrayK;
+						x->link[x->nb_link-1].arrayD = arrayD;
+					}
 				}
             }   
         }
@@ -2155,6 +2162,7 @@ void pmpd3d_setup(void)
 	class_addbang(pmpd3d_class, pmpd3d_bang);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_reset,           gensym("reset"), 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_infosL,          gensym("infosL"), 0);
+	class_addmethod(pmpd3d_class, (t_method)pmpd3d_infosL,          gensym("infos"), 0);
 //	class_addmethod(pmpd3d_class, (t_method)pmpd3d_mass,            gensym("mass"), A_DEFSYMBOL, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_mass,            gensym("mass"), A_GIMME, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_link,            gensym("link"), A_GIMME, 0);

@@ -149,7 +149,7 @@ void pmpd_bang(t_pmpd *x)
 	t_int i;
     // post("bang");
 
-	for (i=1; i<x->nb_mass; i++)
+	for (i=0; i<x->nb_mass; i++)
 	// compute new masses position
 		if (x->mass[i].mobile > 0) // only if mobile
 		{
@@ -286,7 +286,8 @@ void pmpd_link(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
                 {
-                    pmpd_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) // si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
+						pmpd_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
                 }
             }   
         }
@@ -346,9 +347,12 @@ void pmpd_tabLink(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
                 {
-                    pmpd_create_link(x, Id, i, j, K, D, 1, -1000000, 1000000, 2);
-					x->link[x->nb_link-1].arrayK = arrayK;
-					x->link[x->nb_link-1].arrayD = arrayD;
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) // si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
+                    {
+						pmpd_create_link(x, Id, i, j, K, D, 1, -1000000, 1000000, 2);
+						x->link[x->nb_link-1].arrayK = arrayK;
+						x->link[x->nb_link-1].arrayD = arrayD;
+					}
 				}
             }   
         }
@@ -1202,6 +1206,7 @@ void pmpd_setup(void)
 	class_addbang(pmpd_class, pmpd_bang);
 	class_addmethod(pmpd_class, (t_method)pmpd_reset,           gensym("reset"), 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_infosL,          gensym("infosL"), 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_infosL,          gensym("infos"), 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_mass,            gensym("mass"), A_DEFSYMBOL, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_link,            gensym("link"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_link,            gensym("tabLink"), A_GIMME, 0);
