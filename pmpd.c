@@ -129,10 +129,10 @@ void pmpd_infosL(t_pmpd *x)
 {
     int i;
     post("list of mass");
-    post("number, Id, mobile, mass, position, speed, forces");
+    post("number, Id, mobile, mass, Damping, position, speed, forces");
 	for(i=0; i < x->nb_mass; i++)
     {
-        post("masse %i: %s, %d, %f, %f, %f, %f",i, x->mass[i].Id->s_name, x->mass[i].mobile, 1/x->mass[i].invM, x->mass[i].posX, x->mass[i].speedX, x->mass[i].forceX );
+        post("masse %i: %s, %d, %f, %f, %f, %f, %f",i, x->mass[i].Id->s_name, x->mass[i].mobile, 1/x->mass[i].invM, x->mass[i].D2, x->mass[i].posX, x->mass[i].speedX, x->mass[i].forceX );
     }
 
     post("list of link");
@@ -610,6 +610,13 @@ void pmpd_setD2(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             {
 	            x->mass[i].D2 = atom_getfloatarg(1, argc, argv);
             }
+        }
+    }
+    if ( ( argv[0].a_type == A_FLOAT ) & ( argc == 1 ) )
+    {
+        for (i=0; i< x->nb_mass; i++)
+        {
+			x->mass[i].D2 = atom_getfloatarg(0, argc, argv);
         }
     }
 }
@@ -1206,7 +1213,7 @@ void pmpd_setup(void)
 	class_addbang(pmpd_class, pmpd_bang);
 	class_addmethod(pmpd_class, (t_method)pmpd_reset,           gensym("reset"), 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_infosL,          gensym("infosL"), 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_infosL,          gensym("infos"), 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_infosL,          gensym("print"), 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_mass,            gensym("mass"), A_DEFSYMBOL, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_link,            gensym("link"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_link,            gensym("tabLink"), A_GIMME, 0);
@@ -1226,7 +1233,7 @@ void pmpd_setup(void)
 	class_addmethod(pmpd_class, (t_method)pmpd_maxX,            gensym("max"), A_DEFFLOAT, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_setFixed,        gensym("setFixed"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_setMobile,       gensym("setMobile"), A_GIMME, 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_setD2,           gensym("setD2"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_setD2,           gensym("setDEnv"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_setSpeedX,       gensym("setSpeed"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_setSpeedX,       gensym("setSpeedX"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_setForceX,       gensym("setForce"), A_GIMME, 0);

@@ -84,6 +84,8 @@ typedef struct _link {
     t_float VY;
     t_symbol *arrayK;
     t_symbol *arrayD;
+    t_float K_L; // longeur du tabeau K
+	t_float D_L; // longeur du tabeau D
 } foo1 ;
 
 typedef struct _pmpd2d2d {
@@ -137,10 +139,10 @@ void pmpd2d_infosL(t_pmpd2d *x)
 {
     int i;
     post("list of mass");
-    post("number, Id, mobile, mass, positionX Y, speedX Y, forcesX Y");
+    post("number, Id, mobile, mass, damping, positionX Y, speedX Y, forcesX Y");
 	for(i=0; i < x->nb_mass; i++)
     {
-        post("masse %i: %s, %d, %f, %f, %f, %f, %f, %f, %f",i, x->mass[i].Id->s_name, x->mass[i].mobile, 1/x->mass[i].invM, x->mass[i].posX, x->mass[i].posY, x->mass[i].speedX, x->mass[i].speedY, x->mass[i].forceX, x->mass[i].forceY );
+        post("masse %i: %s, %d, %f, %f, %f, %f, %f, %f, %f, %f",i, x->mass[i].Id->s_name, x->mass[i].mobile, 1/x->mass[i].invM, x->mass[i].D2, x->mass[i].posX, x->mass[i].posY, x->mass[i].speedX, x->mass[i].speedY, x->mass[i].forceX, x->mass[i].forceY );
     }
 
     post("list of link");
@@ -192,12 +194,8 @@ void pmpd2d_bang(t_pmpd2d *x)
 		{
 			if (x->link[i].lType == 2)
 			{ // K et D viennent d'une table
-				if (x->link[i].D == 0)
-					F = 0;
-				else
-					F  = tabread2(x, (L - x->link[i].distance) / x->link[i].D, x->link[i].arrayD);
-				if (x->link[i].K != 0)
-					F += tabread2(x, L / x->link[i].K, x->link[i].arrayK);
+				F  = x->link[i].D * tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
+				F += x->link[i].K * tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
 			}
 			else
 			{			
@@ -410,15 +408,19 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     int mass1 = atom_getfloatarg(1, argc, argv);
     int mass2 = atom_getfloatarg(2, argc, argv);
     t_symbol *arrayK = atom_getsymbolarg(3,argc,argv);
-    t_float K = atom_getfloatarg(4, argc, argv);
+    t_float Kl = atom_getfloatarg(4, argc, argv);
+   	if (Kl <= 0) Kl = 1;
     t_symbol *arrayD = atom_getsymbolarg(5,argc,argv);    
-    t_float D = atom_getfloatarg(6, argc, argv);
+    t_float Dl = atom_getfloatarg(6, argc, argv);
+	if (Dl <= 0) Dl = 1;
 
     if ( ( argv[1].a_type == A_FLOAT ) & ( argv[2].a_type == A_FLOAT ) )
     {
-        pmpd2d_create_link(x, Id, mass1, mass2, K, D, 1, 0, 1000000, 2);
+        pmpd2d_create_link(x, Id, mass1, mass2, 1, 1, 1, 0, 1000000, 2);
 		x->link[x->nb_link-1].arrayK = arrayK;
 		x->link[x->nb_link-1].arrayD = arrayD;
+		x->link[x->nb_link-1].K_L = Kl;
+		x->link[x->nb_link-1].D_L = Kl;	
     }
     else
     if ( ( argv[1].a_type == A_SYMBOL ) & ( argv[2].a_type == A_FLOAT ) )
@@ -427,9 +429,11 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
             {
-                pmpd2d_create_link(x, Id, i, mass2, K, D, 1, 0, 1000000, 2);
+                pmpd2d_create_link(x, Id, i, mass2, 1, 1, 1, 0, 1000000, 2);
 				x->link[x->nb_link-1].arrayK = arrayK;
 				x->link[x->nb_link-1].arrayD = arrayD;
+				x->link[x->nb_link-1].K_L = Kl;
+				x->link[x->nb_link-1].D_L = Kl;	
             }
         }
     }
@@ -440,9 +444,11 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if ( atom_getsymbolarg(2,argc,argv) == x->mass[i].Id)
             {
-                pmpd2d_create_link(x, Id, mass1, i, K, D, 1, 0, 1000000, 2);
+                pmpd2d_create_link(x, Id, mass1, i, 1, 1, 1, 0, 1000000, 2);
 				x->link[x->nb_link-1].arrayK = arrayK;
 				x->link[x->nb_link-1].arrayD = arrayD;
+				x->link[x->nb_link-1].K_L = Kl;
+				x->link[x->nb_link-1].D_L = Kl;	
 			}
         }
     }
@@ -457,9 +463,11 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
                 {
 					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) // si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
 					{
-						pmpd2d_create_link(x, Id, i, j, K, D, 1, 0, 1000000, 2);
+						pmpd2d_create_link(x, Id, i, j, 1, 1, 1, 0, 1000000, 2);
 						x->link[x->nb_link-1].arrayK = arrayK;
 						x->link[x->nb_link-1].arrayD = arrayD;
+						x->link[x->nb_link-1].K_L = Kl;
+						x->link[x->nb_link-1].D_L = Kl;	
 					}
 				}
             }   
@@ -545,6 +553,52 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
                 x->link[i].L = x->link[i].mass2->posX - x->link[i].mass1->posX;
+            }
+        }
+    }
+}
+
+void pmpd2d_setLKTab(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int tmp, i;
+	t_float K_l = atom_getfloatarg(1, argc, argv);
+	if (K_l <=  0) K_l = 1;
+    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_link-1, tmp));
+	    x->link[tmp].K_L = K_l;
+    }
+    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+            {
+	            x->link[i].K_L = K_l;
+            }
+        }
+    }
+}
+
+void pmpd2d_setLDTab(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int tmp, i;
+	t_float D_l = atom_getfloatarg(1, argc, argv);
+	if (D_l <=  0) D_l = 1;
+    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_link-1, tmp));
+	    x->link[tmp].D_L = D_l;
+    }
+    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+            {
+	            x->link[i].D_L = D_l;
             }
         }
     }
@@ -840,6 +894,13 @@ void pmpd2d_setD2(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             {
 	            x->mass[i].D2 = atom_getfloatarg(1, argc, argv);
             }
+        }
+    }
+    if ( ( argv[0].a_type == A_FLOAT ) & ( argc == 1 ) )
+    {
+        for (i=0; i< x->nb_mass; i++)
+        {
+			x->mass[i].D2 = atom_getfloatarg(0, argc, argv);
         }
     }
 }
@@ -1845,7 +1906,7 @@ void pmpd2d_setup(void)
 	class_addbang(pmpd2d_class, pmpd2d_bang);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_reset,           gensym("reset"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_infosL,          gensym("infosL"), 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_infosL,          gensym("infos"), 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_infosL,          gensym("print"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_mass,            gensym("mass"), A_DEFSYMBOL, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_link,            gensym("link"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_tabLink,         gensym("tabLink"), A_GIMME, 0);
@@ -1853,6 +1914,8 @@ void pmpd2d_setup(void)
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setK,            gensym("setK"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setD,            gensym("setD"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setL,            gensym("setL"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setLKTab,        gensym("setLKTab"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setLDTab,        gensym("setLDTab"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setLinkId,       gensym("setLinkId"), A_GIMME, 0);
 
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setMassId,       gensym("setMassId"), A_GIMME, 0);
@@ -1868,7 +1931,7 @@ void pmpd2d_setup(void)
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_maxY,            gensym("Ymax"), A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setFixed,        gensym("setFixed"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setMobile,       gensym("setMobile"), A_GIMME, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setD2,           gensym("setD2"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setD2,           gensym("setDEnv"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setSpeed,        gensym("setSpeed"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setSpeedX,       gensym("setSpeedX"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setSpeedY,       gensym("setSpeedY"), A_GIMME, 0);
