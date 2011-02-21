@@ -154,8 +154,19 @@ void pmpd3d_infosL(t_pmpd3d *x)
     post("list of link");
     post("number, Id, mass1, mass2, K, D, Pow, L, Lmin, Lmax");
 	for(i=0; i < x->nb_link; i++)
-    {
-        post("link %i: %s, %i, %i, %f, %f, %f, %f, %f, %f", i, x->link[i].Id->s_name, x->link[i].mass1->num, x->link[i].mass2->num, x->link[i].K, x->link[i].D, x->link[i].Pow, x->link[i].L, x->link[i].Lmin, x->link[i].Lmax);
+    {	
+		switch (x->link[i].lType)
+		{
+		case 0:
+			post("link %i: %s, %i, %i, %f, %f, %f, %f, %f, %f", i, x->link[i].Id->s_name, x->link[i].mass1->num, x->link[i].mass2->num, x->link[i].K, x->link[i].D, x->link[i].Pow, x->link[i].L, x->link[i].Lmin, x->link[i].Lmax);
+			break;
+		case 1:
+			post("tLink %i: %s, %i, %i, %f, %f, %f, %f, %f, %f, %f, %f, %f", i, x->link[i].Id->s_name, x->link[i].mass1->num, x->link[i].mass2->num, x->link[i].K, x->link[i].D, x->link[i].Pow, x->link[i].L, x->link[i].Lmin, x->link[i].Lmax, x->link[i].VX, x->link[i].VY, x->link[i].VZ);
+			break;
+		case 2:
+			post("tabLink %i: %s, %i, %i, %f, %f, %s, %f, %s, %f", i, x->link[i].Id->s_name, x->link[i].mass1->num, x->link[i].mass2->num, x->link[i].K, x->link[i].D, x->link[i].arrayK->s_name, x->link[i].K_L, x->link[i].arrayD->s_name, x->link[i].D_L);
+			break;		
+		}
     }
 }
 
@@ -371,7 +382,7 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
     if ( ( argv[1].a_type == A_FLOAT ) & ( argv[2].a_type == A_FLOAT ) )
     {
-        pmpd3d_create_link(x, Id, mass1, mass2, K, D, Pow, Lmin, Lmax, 0);
+        pmpd3d_create_link(x, Id, mass1, mass2, K, D, Pow, Lmin, Lmax, 1);
 		x->link[x->nb_link-1].VX = vecteurX;
 		x->link[x->nb_link-1].VY = vecteurY;
     }
@@ -382,7 +393,7 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
             {
-                pmpd3d_create_link(x, Id, i, mass2, K, D, Pow, Lmin, Lmax, 0);
+                pmpd3d_create_link(x, Id, i, mass2, K, D, Pow, Lmin, Lmax, 1);
             	x->link[x->nb_link-1].VX = vecteurX;
 				x->link[x->nb_link-1].VY = vecteurY;
             }
@@ -395,7 +406,7 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if ( atom_getsymbolarg(2,argc,argv) == x->mass[i].Id)
             {
-                pmpd3d_create_link(x, Id, mass1, i, K, D, Pow, Lmin, Lmax, 0);
+                pmpd3d_create_link(x, Id, mass1, i, K, D, Pow, Lmin, Lmax, 1);
             	x->link[x->nb_link-1].VX = vecteurX;
 				x->link[x->nb_link-1].VY = vecteurY;
 			}
@@ -412,7 +423,7 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                 {
 					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) // si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
 					{
-						pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
+						pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 1);
 						x->link[x->nb_link-1].VX = vecteurX;
 						x->link[x->nb_link-1].VY = vecteurY;
 					}
@@ -442,7 +453,7 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		x->link[x->nb_link-1].arrayK = arrayK;
 		x->link[x->nb_link-1].arrayD = arrayD;
 		x->link[x->nb_link-1].K_L = Kl;
-		x->link[x->nb_link-1].D_L = Kl;		
+		x->link[x->nb_link-1].D_L = Dl;		
     }
     else
     if ( ( argv[1].a_type == A_SYMBOL ) & ( argv[2].a_type == A_FLOAT ) )
@@ -455,7 +466,7 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				x->link[x->nb_link-1].arrayK = arrayK;
 				x->link[x->nb_link-1].arrayD = arrayD;
 				x->link[x->nb_link-1].K_L = Kl;
-				x->link[x->nb_link-1].D_L = Kl;	
+				x->link[x->nb_link-1].D_L = Dl;	
             }
         }
     }
@@ -470,7 +481,7 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				x->link[x->nb_link-1].arrayK = arrayK;
 				x->link[x->nb_link-1].arrayD = arrayD;
 				x->link[x->nb_link-1].K_L = Kl;
-				x->link[x->nb_link-1].D_L = Kl;	
+				x->link[x->nb_link-1].D_L = Dl;	
 			}
         }
     }
@@ -489,7 +500,7 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 						x->link[x->nb_link-1].arrayK = arrayK;
 						x->link[x->nb_link-1].arrayD = arrayD;
 						x->link[x->nb_link-1].K_L = Kl;
-						x->link[x->nb_link-1].D_L = Kl;	
+						x->link[x->nb_link-1].D_L = Dl;	
 					}
 				}
             }   
@@ -650,7 +661,6 @@ void pmpd3d_setLinkId(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_setMassId(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-// add a force to a specific mass
     int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_SYMBOL ) )
@@ -919,6 +929,20 @@ void pmpd3d_minZ(t_pmpd3d *x, t_float min)
 void pmpd3d_maxZ(t_pmpd3d *x, t_float max)
 {
 	x->maxZ = max;
+}
+
+void pmpd3d_min(t_pmpd3d *x, t_float minX, t_float minY, t_float minZ)
+{
+	x->minX = minX;
+	x->minY = minY;
+	x->minZ = minZ;
+}
+
+void pmpd3d_max(t_pmpd3d *x, t_float maxX, t_float maxY, t_float maxZ)
+{
+	x->maxX = maxX;
+	x->maxY = maxY;
+	x->maxZ = maxZ;
 }
 
 void pmpd3d_setFixed(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
@@ -1621,7 +1645,7 @@ void pmpd3d_get(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_massesPosXL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[nb_max_link];
+    t_atom pos_list[x->nb_mass];
 
     for (i=0; i < x->nb_mass; i++)
     {
@@ -1633,7 +1657,7 @@ void pmpd3d_massesPosXL(t_pmpd3d *x)
 void pmpd3d_massesForcesXL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[nb_max_link];
+    t_atom pos_list[x->nb_mass];
 
     for (i=0; i< x->nb_mass; i++)
     {
@@ -1645,7 +1669,7 @@ void pmpd3d_massesForcesXL(t_pmpd3d *x)
 void pmpd3d_massesSpeedsXL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[nb_max_link];
+    t_atom pos_list[x->nb_mass];
 
     for (i=0; i< x->nb_mass; i++)
     {
@@ -1723,7 +1747,7 @@ void pmpd3d_massesForcesXT(t_pmpd3d *x, t_symbol *tab_name)
 void pmpd3d_massesPosYL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[nb_max_link];
+    t_atom pos_list[x->nb_mass];
 
     for (i=0; i < x->nb_mass; i++)
     {
@@ -1735,7 +1759,7 @@ void pmpd3d_massesPosYL(t_pmpd3d *x)
 void pmpd3d_massesForcesYL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[nb_max_link];
+    t_atom pos_list[x->nb_mass];
 
     for (i=0; i< x->nb_mass; i++)
     {
@@ -1747,7 +1771,7 @@ void pmpd3d_massesForcesYL(t_pmpd3d *x)
 void pmpd3d_massesSpeedsYL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[nb_max_link];
+    t_atom pos_list[x->nb_mass];
 
     for (i=0; i< x->nb_mass; i++)
     {
@@ -1825,7 +1849,7 @@ void pmpd3d_massesForcesYT(t_pmpd3d *x, t_symbol *tab_name)
 void pmpd3d_massesPosZL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[nb_max_link];
+    t_atom pos_list[x->nb_mass];
 
     for (i=0; i < x->nb_mass; i++)
     {
@@ -1837,7 +1861,7 @@ void pmpd3d_massesPosZL(t_pmpd3d *x)
 void pmpd3d_massesForcesZL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[nb_max_link];
+    t_atom pos_list[x->nb_mass];
 
     for (i=0; i< x->nb_mass; i++)
     {
@@ -1849,7 +1873,7 @@ void pmpd3d_massesForcesZL(t_pmpd3d *x)
 void pmpd3d_massesSpeedsZL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[nb_max_link];
+    t_atom pos_list[x->nb_mass];
 
     for (i=0; i< x->nb_mass; i++)
     {
@@ -1927,7 +1951,7 @@ void pmpd3d_massesForcesZT(t_pmpd3d *x, t_symbol *tab_name)
 void pmpd3d_massesPosL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[3*nb_max_link];
+    t_atom pos_list[3*x->nb_mass];
 
     for (i=0; i < x->nb_mass; i++)
     {
@@ -1941,7 +1965,7 @@ void pmpd3d_massesPosL(t_pmpd3d *x)
 void pmpd3d_massesForcesL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[3*nb_max_link];
+    t_atom pos_list[3*x->nb_mass];
 
     for (i=0; i< x->nb_mass; i++)
     {
@@ -1955,7 +1979,7 @@ void pmpd3d_massesForcesL(t_pmpd3d *x)
 void pmpd3d_massesSpeedsL(t_pmpd3d *x)
 {
     int i;
-    t_atom pos_list[3*nb_max_link];
+    t_atom pos_list[3*x->nb_mass];
 
     for (i=0; i< x->nb_mass; i++)
     {
@@ -2170,6 +2194,270 @@ void pmpd3d_massesPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     outlet_anything(x->main_outlet, gensym("massesPosStd"),4 , std_out);
 }
 
+void pmpd3d_massesForcesMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    t_float sommeX, sommeY, sommeZ, somme;
+    t_int i,j;
+    t_atom mean[4];
+
+	sommeX = 0;
+	sommeY = 0;
+	sommeZ = 0;
+	somme = 0;
+	j = 0;
+	
+    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
+    {
+		for (i=0; i< x->nb_mass; i++)
+        {
+			if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{ 
+				sommeX += x->mass[i].forceX;
+				sommeY += x->mass[i].forceY;
+				sommeZ += x->mass[i].forceZ;
+				somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ)); // force total
+				j++;
+			}
+		}
+    }
+	else
+	{
+		for (i=0; i< x->nb_mass; i++)
+        {
+				sommeX += x->mass[i].forceX;
+				sommeY += x->mass[i].forceY;
+				sommeZ += x->mass[i].forceZ;
+				somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ)); // force
+				j++;
+		}
+	}	
+	
+	sommeX /= j;
+	sommeY /= j;
+	sommeZ /= j;
+	somme  /= j;
+
+    SETFLOAT(&(mean[0]),sommeX);
+    SETFLOAT(&(mean[1]),sommeY);
+    SETFLOAT(&(mean[2]),sommeZ);
+    SETFLOAT(&(mean[3]),somme);
+    
+    outlet_anything(x->main_outlet, gensym("massesForcesMean"),4 , mean);
+}
+
+void pmpd3d_massesForcesStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    t_float sommeX, sommeY, sommeZ, somme;
+    t_int i,j;
+    t_float stdX, stdY, stdZ, std;
+    t_atom std_out[4];
+
+	sommeX = 0;
+	sommeY = 0;
+	sommeZ = 0;
+	somme  = 0;
+	stdX = 0;
+	stdY = 0;
+	stdZ = 0;
+	std  = 0;
+	j = 0;
+	
+    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
+    {
+		for (i=0; i< x->nb_mass; i++)
+        {
+			if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{ 
+				sommeX += x->mass[i].forceX;
+				sommeY += x->mass[i].forceY;
+				sommeZ += x->mass[i].forceZ;
+				somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ)); // force
+				j++;
+			}
+		}
+		sommeX /= j;
+		sommeY /= j;
+		sommeZ /= j;
+		somme /= j;
+		for (i=0; i< x->nb_mass; i++)
+        {
+			if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{ 
+				stdX += sqr(x->mass[i].forceX-sommeX);
+				stdY += sqr(x->mass[i].forceY-sommeY);
+				stdZ += sqr(x->mass[i].forceZ-sommeZ);
+				std  +=  sqr(sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ))-somme);
+			}
+		}		
+    }
+	else
+	{
+		for (i=0; i< x->nb_mass; i++)
+        {
+			sommeX += x->mass[i].forceX;
+			sommeY += x->mass[i].forceY;
+			sommeZ += x->mass[i].forceZ;
+			somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ)); 
+			j++;
+		}
+		sommeX /= j;
+		sommeY /= j;
+		sommeZ /= j;
+		somme /= j;
+		for (i=0; i< x->nb_mass; i++)
+        {
+			stdX += sqr(x->mass[i].forceX-sommeX);
+			stdY += sqr(x->mass[i].forceY-sommeY);
+			stdZ += sqr(x->mass[i].forceZ-sommeZ);
+			std  += sqr(sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ))-somme);
+		}
+	}	
+	
+	stdX = sqrt(stdX/j);
+	stdY = sqrt(stdY/j);
+	stdZ = sqrt(stdZ/j);
+	std  = sqrt(std /j);	
+
+    SETFLOAT(&(std_out[0]),stdX);
+    SETFLOAT(&(std_out[1]),stdY);
+    SETFLOAT(&(std_out[2]),stdZ);
+    SETFLOAT(&(std_out[3]),std);
+    
+    outlet_anything(x->main_outlet, gensym("massesForcesStd"),4 , std_out);
+}
+
+void pmpd3d_massesSpeedsMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    t_float sommeX, sommeY, sommeZ, somme;
+    t_int i,j;
+    t_atom mean[4];
+
+	sommeX = 0;
+	sommeY = 0;
+	sommeZ = 0;
+	somme = 0;
+	j = 0;
+	
+    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
+    {
+		for (i=0; i< x->nb_mass; i++)
+        {
+			if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{ 
+				sommeX += x->mass[i].speedX;
+				sommeY += x->mass[i].speedY;
+				sommeZ += x->mass[i].speedZ;
+				somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ)); // speed total
+				j++;
+			}
+		}
+    }
+	else
+	{
+		for (i=0; i< x->nb_mass; i++)
+        {
+				sommeX += x->mass[i].speedX;
+				sommeY += x->mass[i].speedY;
+				sommeZ += x->mass[i].speedZ;
+				somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ)); // speed
+				j++;
+		}
+	}	
+	
+	sommeX /= j;
+	sommeY /= j;
+	sommeZ /= j;
+	somme  /= j;
+
+    SETFLOAT(&(mean[0]),sommeX);
+    SETFLOAT(&(mean[1]),sommeY);
+    SETFLOAT(&(mean[2]),sommeZ);
+    SETFLOAT(&(mean[3]),somme);
+    
+    outlet_anything(x->main_outlet, gensym("massesFpeedsMean"),4 , mean);
+}
+
+void pmpd3d_massesSpeedsStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    t_float sommeX, sommeY, sommeZ, somme;
+    t_int i,j;
+    t_float stdX, stdY, stdZ, std;
+    t_atom std_out[4];
+
+	sommeX = 0;
+	sommeY = 0;
+	sommeZ = 0;
+	somme  = 0;
+	stdX = 0;
+	stdY = 0;
+	stdZ = 0;
+	std  = 0;
+	j = 0;
+	
+    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
+    {
+		for (i=0; i< x->nb_mass; i++)
+        {
+			if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{ 
+				sommeX += x->mass[i].speedX;
+				sommeY += x->mass[i].speedY;
+				sommeZ += x->mass[i].speedZ;
+				somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ)); // speed
+				j++;
+			}
+		}
+		sommeX /= j;
+		sommeY /= j;
+		sommeZ /= j;
+		somme /= j;
+		for (i=0; i< x->nb_mass; i++)
+        {
+			if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{ 
+				stdX += sqr(x->mass[i].speedX-sommeX);
+				stdY += sqr(x->mass[i].speedY-sommeY);
+				stdZ += sqr(x->mass[i].speedZ-sommeZ);
+				std  +=  sqr(sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ))-somme);
+			}
+		}		
+    }
+	else
+	{
+		for (i=0; i< x->nb_mass; i++)
+        {
+			sommeX += x->mass[i].speedX;
+			sommeY += x->mass[i].speedY;
+			sommeZ += x->mass[i].speedZ;
+			somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ)); 
+			j++;
+		}
+		sommeX /= j;
+		sommeY /= j;
+		sommeZ /= j;
+		somme /= j;
+		for (i=0; i< x->nb_mass; i++)
+        {
+			stdX += sqr(x->mass[i].speedX-sommeX);
+			stdY += sqr(x->mass[i].speedY-sommeY);
+			stdZ += sqr(x->mass[i].speedZ-sommeZ);
+			std  += sqr(sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ))-somme);
+		}
+	}	
+	
+	stdX = sqrt(stdX/j);
+	stdY = sqrt(stdY/j);
+	stdZ = sqrt(stdZ/j);
+	std  = sqrt(std /j);	
+
+    SETFLOAT(&(std_out[0]),stdX);
+    SETFLOAT(&(std_out[1]),stdY);
+    SETFLOAT(&(std_out[2]),stdZ);
+    SETFLOAT(&(std_out[3]),std);
+    
+    outlet_anything(x->main_outlet, gensym("massesSpeedsStd"),4 , std_out);
+}
+
 void pmpd3d_grabMass(t_pmpd3d *x, t_float posX, t_float posY, t_float posZ, t_float grab)
 {
 	t_float dist, tmp;
@@ -2249,6 +2537,8 @@ void pmpd3d_setup(void)
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_maxY,            gensym("Ymax"), A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_minZ,            gensym("Zmin"), A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_maxZ,            gensym("Zmax"), A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_class, (t_method)pmpd3d_min,             gensym("min"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_class, (t_method)pmpd3d_max,             gensym("max"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_setFixed,        gensym("setFixed"), A_GIMME, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_setMobile,       gensym("setMobile"), A_GIMME, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_setD2,           gensym("setDEnv"), A_GIMME, 0);
@@ -2297,6 +2587,10 @@ void pmpd3d_setup(void)
 	
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosMean,   gensym("massesPosMean"), A_GIMME, 0);
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosStd,    gensym("massesPosStd"),A_GIMME, 0);
+	class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesMean,gensym("massesForecesMean"), A_GIMME, 0);
+	class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesStd, gensym("massesForcesStd"),A_GIMME, 0);	
+	class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsMean,gensym("massesSpeedsMean"), A_GIMME, 0);
+	class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsStd, gensym("massesSpeedsStd"),A_GIMME, 0);
 	// class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkLMean,       gensym("linkLMean"),A_GIMME, 0);
 	// class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkLStd,        gensym("linkLStd"),A_GIMME, 0);
 	
