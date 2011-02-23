@@ -1073,70 +1073,154 @@ void pmpd_massesSpeedsL(t_pmpd *x)
     outlet_anything(x->main_outlet, gensym("massesSpeedsL"),x->nb_mass , pos_list);
 }
 
-void pmpd_massesPosT(t_pmpd *x, t_symbol *tab_name)
+void pmpd_massesPosT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int i, vecsize;
+    int i, j, vecsize;
     t_garray *a;
-     t_word *vec;
-     
-     if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
-        pd_error(x, "%s: no such array", tab_name->s_name);
-    else if (!garray_getfloatwords(a, &vecsize, &vec))
-        pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
-    else
+    t_word *vec;
+    
+    if ( (argc==1) & (argv[0].a_type == A_SYMBOL) )
     {
-		int taille_max = x->nb_mass;
-		taille_max = min(taille_max, vecsize);
-		for (i=0; i < taille_max ; i++)
+		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+			pd_error(x, "%s: no such array", tab_name->s_name);
+		else if (!garray_getfloatwords(a, &vecsize, &vec))
+			pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+		else
 		{
-			        vec[i].w_float = x->mass[i].posX;
+			int taille_max = x->nb_mass;
+			taille_max = min(taille_max, vecsize);
+			for (i=0; i < taille_max ; i++)
+			{
+				vec[i].w_float = x->mass[i].posX;
+			}
+			garray_redraw(a);
 		}
-        garray_redraw(a);
-    }
+	}
+	else 
+	if ( (argc==2) & (argv[0].a_type == A_SYMBOL) & (argv[1].a_type == A_SYMBOL) )
+	{
+		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+			pd_error(x, "%s: no such array", tab_name->s_name);
+		else if (!garray_getfloatwords(a, &vecsize, &vec))
+			pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+		else
+		{	
+			i = 0;
+			j = 0;
+			while ((i < vecsize) & (j < x->nb_mass))
+			{
+				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				{
+					vec[i].w_float = x->mass[j].posX;
+					i++;
+				}
+				j++;
+			}
+			garray_redraw(a);
+		}
+	}
 }
 
-void pmpd_massesSpeedsT(t_pmpd *x, t_symbol *tab_name)
+void pmpd_massesSpeedsT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int i, vecsize;
+    int i, j, vecsize;
     t_garray *a;
-     t_word *vec;
-     
-     if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
-        pd_error(x, "%s: no such array", tab_name->s_name);
-    else if (!garray_getfloatwords(a, &vecsize, &vec))
-        pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
-    else
-    {
-		int taille_max = x->nb_mass;
-		taille_max = min(taille_max, vecsize);
-		for (i=0; i < taille_max ; i++)
+    t_word *vec;
+    
+    if ( (argc==1) & (argv[0].a_type == A_SYMBOL) )
+    {		
+		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+			pd_error(x, "%s: no such array", tab_name->s_name);
+		else if (!garray_getfloatwords(a, &vecsize, &vec))
+			pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+		else
 		{
-			        vec[i].w_float = x->mass[i].speedX;
+			int taille_max = x->nb_mass;
+			taille_max = min(taille_max, vecsize);
+			for (i=0; i < taille_max ; i++)
+			{
+				vec[i].w_float = x->mass[i].speedX;
+			}
+			garray_redraw(a);
 		}
-        garray_redraw(a);
-    }
+	}
+	else 
+	if ( (argc==2) & (argv[0].a_type == A_SYMBOL) & (argv[1].a_type == A_SYMBOL) )
+	{
+		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+			pd_error(x, "%s: no such array", tab_name->s_name);
+		else if (!garray_getfloatwords(a, &vecsize, &vec))
+			pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+		else
+		{	
+			i = 0;
+			j = 0;
+			while ((i < vecsize) & (j < x->nb_mass))
+			{
+				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				{
+					vec[i].w_float = x->mass[j].speedX;
+					i++;
+				}
+				j++;
+			}
+			garray_redraw(a);
+		}
+	}
 }
 
-void pmpd_massesForcesT(t_pmpd *x, t_symbol *tab_name)
+void pmpd_massesForcesT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int i, vecsize;
+    int i, j, vecsize;
     t_garray *a;
-     t_word *vec;
-     
-     if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
-        pd_error(x, "%s: no such array", tab_name->s_name);
-    else if (!garray_getfloatwords(a, &vecsize, &vec))
-        pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
-    else
+    t_word *vec;
+    
+    if ( (argc==1) & (argv[0].a_type == A_SYMBOL) )
     {
-		int taille_max = x->nb_mass;
-		taille_max = min(taille_max, vecsize);
-		for (i=0; i < taille_max ; i++)
+		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+			pd_error(x, "%s: no such array", tab_name->s_name);
+		else if (!garray_getfloatwords(a, &vecsize, &vec))
+			pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+		else
 		{
-			        vec[i].w_float = x->mass[i].forceX;
+			int taille_max = x->nb_mass;
+			taille_max = min(taille_max, vecsize);
+			for (i=0; i < taille_max ; i++)
+			{
+				vec[i].w_float = x->mass[i].forceX;
+			}
+			garray_redraw(a);
 		}
-        garray_redraw(a);
-    }
+	}
+	else 
+	if ( (argc==2) & (argv[0].a_type == A_SYMBOL) & (argv[1].a_type == A_SYMBOL) )
+	{
+		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+			pd_error(x, "%s: no such array", tab_name->s_name);
+		else if (!garray_getfloatwords(a, &vecsize, &vec))
+			pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+		else
+		{	
+			i = 0;
+			j = 0;
+			while ((i < vecsize) & (j < x->nb_mass))
+			{
+				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				{
+					vec[i].w_float = x->mass[j].forceX;
+					i++;
+				}
+				j++;
+			}
+			garray_redraw(a);
+		}
+	}
 }
 
 void pmpd_massesPosMean(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
@@ -1484,16 +1568,16 @@ void pmpd_setup(void)
 	class_addmethod(pmpd_class, (t_method)pmpd_massesPosL,      gensym("massesPosL"), 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsL,   gensym("massesSpeedsL"), 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_massesForcesL,   gensym("massesForcesL"), 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,      gensym("massesPosT"), A_DEFSYMBOL, 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,   gensym("massesSpeedsT"),A_DEFSYMBOL, 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,   gensym("massesForcesT"),A_DEFSYMBOL, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,      gensym("massesPosT"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,   gensym("massesSpeedsT"),A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,   gensym("massesForcesT"),A_GIMME, 0);
 	
 	class_addmethod(pmpd_class, (t_method)pmpd_massesPosL,      gensym("massesPosXL"), 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsL,   gensym("massesSpeedsXL"), 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_massesForcesL,   gensym("massesForcesXL"), 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,      gensym("massesPosXT"), A_DEFSYMBOL, 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,   gensym("massesSpeedsXT"),A_DEFSYMBOL, 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,   gensym("massesForcesXT"),A_DEFSYMBOL, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,      gensym("massesPosXT"), A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,   gensym("massesSpeedsXT"),A_GIMME, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,   gensym("massesForcesXT"),A_GIMME, 0);
 	
 	class_addmethod(pmpd_class, (t_method)pmpd_massesPosMean,   gensym("massesPosMean"), A_GIMME, 0);
 	class_addmethod(pmpd_class, (t_method)pmpd_massesPosStd,    gensym("massesPosStd"),A_GIMME, 0);

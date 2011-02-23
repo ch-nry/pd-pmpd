@@ -311,7 +311,7 @@ messages.;
 #X text 101 420 Messages - Different messages are used to control the
 msd object. They are of three types :;
 #X text 9 641 CATEGORY: control;
-#N canvas 331 59 1139 731 dynamic 0;
+#N canvas 318 62 1139 731 dynamic 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 10 85 cnv 15 130 580 empty empty empty 20 12 0 14 -233017 -66577
@@ -453,24 +453,15 @@ linksPos / linksPosName );
 0;
 #X obj 602 137 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X msg 630 228 massesSpeedsT \$1;
-#X msg 630 198 massesForcesT \$1;
-#X msg 630 170 massesPosT \$1;
-#X text 769 170 Output all masses positions in a table (\$1 = table
-name);
-#X text 764 199 Output all forces applied on masses in a table (\$1
-= table name);
-#X text 768 229 Output all speeds of the masses in a table (\$1 = table
-name);
 #X obj 608 278 cnv 15 150 270 empty empty empty 20 12 0 14 -233017
 -66577 0;
 #X obj 602 258 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X text 605 258 statistics :;
-#X msg 624 291 massesPosMean;
+#X msg 613 291 massesPosMean;
 #X text 768 307 \$1 : none or Id;
 #X text 605 137 Tables :;
-#X msg 625 329 massesPosStd \$1;
+#X msg 614 329 massesPosStd \$1;
 #X text 770 344 \$1 : none or Id;
 #X text 764 291 output the average position of masses;
 #X text 765 328 output the standard deviation of masses position;
@@ -482,10 +473,19 @@ name);
 #X text 769 516 \$1 : none or Id;
 #X text 764 463 output the average position of masses;
 #X text 764 500 output the standard deviation of masses position;
-#X msg 624 416 massesForcesStd \$1;
-#X msg 624 378 massesForcesMean;
-#X msg 625 465 massesSpeedsMean;
-#X msg 624 501 massesSpeedsStd \$1;
+#X msg 613 416 massesForcesStd \$1;
+#X msg 613 378 massesForcesMean;
+#X msg 614 465 massesSpeedsMean;
+#X msg 613 501 massesSpeedsStd \$1;
+#X msg 610 170 massesPosT \$1 (\$2);
+#X msg 610 198 massesForcesT \$1 (\$2);
+#X msg 611 228 massesSpeedsT \$1 (\$2);
+#X text 769 170 Output all masses positions in a table (\$1 = table
+name \, \$2 (optional): Masses Id);
+#X text 768 198 Output all forces applied on masses in a table (\$1
+= table name \, \$2 (optional): Masses Id);
+#X text 768 229 Output all speeds of the masses in a table (\$1 = table
+name \, \$2 (optional): Masses Id);
 #X restore 12 499 pd attributes______;
 #X text 9 651 KEYWORDS: physical model mass spring damper link;
 #X text 111 619 01_msdtest.pd;
