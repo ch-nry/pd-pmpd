@@ -1,4 +1,4 @@
-#N canvas 619 38 575 730 10;
+#N canvas 553 116 575 730 10;
 #X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 669 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
@@ -253,7 +253,7 @@ state based on previous instant.;
 #X text 158 478 To set the model parameters after creation.;
 #X text 158 456 To create the model masses and links.;
 #X text 158 501 To get the model parameters;
-#N canvas 33 254 561 671 creation________ 0;
+#N canvas 818 245 561 671 creation________ 0;
 #X obj 11 95 cnv 15 100 35 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 75 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -311,7 +311,7 @@ messages.;
 #X text 101 420 Messages - Different messages are used to control the
 msd object. They are of three types :;
 #X text 9 641 CATEGORY: control;
-#N canvas 318 62 1139 731 dynamic 0;
+#N canvas 841 74 1139 731 dynamic 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 10 85 cnv 15 130 580 empty empty empty 20 12 0 14 -233017 -66577
@@ -392,7 +392,7 @@ internal parameters of links and masses.;
 #X text 185 630 \$2 : position;
 #X text 185 646 \$3 : grab or not (0 or 1);
 #X restore 12 478 pd dynamic settings;
-#N canvas 441 24 1230 682 attributes______ 0;
+#N canvas 888 196 1230 682 attributes______ 0;
 #X obj 11 95 cnv 15 100 35 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 75 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -410,8 +410,6 @@ internal parameters of links and masses.;
 #X text 7 74 General :;
 #X text 7 2 ATTRIBUTES Messages;
 #X text 7 137 Lists :;
-#X msg 32 170 massesPosL;
-#X msg 32 198 massesForcesL;
 #X text 142 299 Get specific attribute on specific element;
 #X msg 22 297 get \$1 (\$2);
 #X text 9 259 Specific :;
@@ -423,11 +421,7 @@ is made of the asked parameter and the way you asked for it.;
 #X text 142 457 Examples with 3 masses numbered 0 \, 1 and 2 and named
 mas:;
 #X text 148 566 [get massesPos mas( -----> [massesPosId 0 x0(;
-#X text 337 581 [massesPosId 2 x2(;
-#X text 337 596 [massesPosId 1 x1(;
 #X text 176 495 [get massesPos( -----> [massesPos 0 x0(;
-#X text 337 509 [massesPos 2 x2(;
-#X text 337 523 [massesPos 1 x1(;
 #X text 162 545 [get massesPos 1( -----> [massesPosNo 1 x1(;
 #X text 15 30 The attributes messages ask the object to output some
 of his internal parameters. They can be output by lists for positions
@@ -437,7 +431,6 @@ for all the elements. - Ids or/and creations No;
 #X msg 33 104 print;
 #X text 136 104 print infos on all masses and links on right outlet
 ;
-#X msg 32 228 massesSpeedsL;
 #X text 171 170 Output all masses positions in a list on outlet;
 #X text 169 199 Output all forces applied on masses in a list on outlet
 ;
@@ -447,8 +440,6 @@ for all the elements. - Ids or/and creations No;
 massesSpeeds / massesSpeedsName / massesForces / massesForcesName /
 linksPos / linksPosName );
 #X text 148 615 [get massesPosName( -----> [massesPosName mas x0(;
-#X text 338 630 [massesPosName mas x2(;
-#X text 338 645 [massesPosName mas x1(;
 #X obj 608 157 cnv 15 150 95 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 602 137 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -480,12 +471,24 @@ linksPos / linksPosName );
 #X msg 610 170 massesPosT \$1 (\$2);
 #X msg 610 198 massesForcesT \$1 (\$2);
 #X msg 611 228 massesSpeedsT \$1 (\$2);
-#X text 769 170 Output all masses positions in a table (\$1 = table
+#X text 770 169 Output all masses positions in a table (\$1 = table
 name \, \$2 (optional): Masses Id);
 #X text 768 198 Output all forces applied on masses in a table (\$1
 = table name \, \$2 (optional): Masses Id);
 #X text 768 229 Output all speeds of the masses in a table (\$1 = table
 name \, \$2 (optional): Masses Id);
+#X msg 16 170 massesPosL (\$1);
+#X msg 16 198 massesForcesL (\$1);
+#X msg 16 228 massesSpeedsL (\$1);
+#X text 170 183 \$1 (optional): Masses Id;
+#X text 170 213 \$1 (optional): Masses Id;
+#X text 171 242 \$1 (optional): Masses Id;
+#X text 337 509 [massesPos 1 x1(;
+#X text 337 523 [massesPos 2 x2(;
+#X text 338 630 [massesPosName mas x1(;
+#X text 339 645 [massesPosName mas x2(;
+#X text 337 581 [massesPosId 1 x1(;
+#X text 337 596 [massesPosId 2 x2(;
 #X restore 12 499 pd attributes______;
 #X text 9 651 KEYWORDS: physical model mass spring damper link;
 #X text 111 619 01_msdtest.pd;
