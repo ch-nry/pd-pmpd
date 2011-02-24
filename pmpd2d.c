@@ -1490,7 +1490,6 @@ void pmpd2d_massesPosXT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     int i, j, vecsize;
     t_garray *a;
     t_word *vec;
-    
     if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
     {
 		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
@@ -2107,6 +2106,7 @@ void pmpd2d_massesPosNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd2d_massesSpeedsNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
+
     int i, j, vecsize;
     t_garray *a;
     t_word *vec;
@@ -2649,23 +2649,23 @@ void pmpd2d_setup(void)
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosL,      gensym("massesPosL"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsL,   gensym("massesSpeedsL"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesL,   gensym("massesForcesL"), 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosT,      gensym("massesPosT"), A_DEFSYMBOL, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsT,   gensym("massesSpeedsT"),A_DEFSYMBOL, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesT,   gensym("massesForcesT"),A_DEFSYMBOL, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosT,      gensym("massesPosT"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsT,   gensym("massesSpeedsT"),A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesT,   gensym("massesForcesT"),A_GIMME, 0);
 	
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosXL,     gensym("massesPosXL"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsXL,  gensym("massesSpeedsXL"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesXL,  gensym("massesForcesXL"), 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosXT,     gensym("massesPosXT"), A_DEFSYMBOL, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsXT,  gensym("massesSpeedsXT"),A_DEFSYMBOL, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesXT,  gensym("massesForcesXT"),A_DEFSYMBOL, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosXT,     gensym("massesPosXT"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsXT,  gensym("massesSpeedsXT"),A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesXT,  gensym("massesForcesXT"),A_GIMME, 0);
 	
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosYL,     gensym("massesPosYL"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsYL,  gensym("massesSpeedsYL"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesYL,  gensym("massesForcesYL"), 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosYT,     gensym("massesPosYT"), A_DEFSYMBOL, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsYT,  gensym("massesSpeedsYT"),A_DEFSYMBOL, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesYT,  gensym("massesForcesYT"),A_DEFSYMBOL, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosYT,     gensym("massesPosYT"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsYT,  gensym("massesSpeedsYT"),A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesYT,  gensym("massesForcesYT"),A_GIMME, 0);
 	
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosNormL,      gensym("massesPosNormL"), 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsNormL,   gensym("massesSpeedsNormL"), 0);
