@@ -182,7 +182,7 @@ void pmpd_bang(t_pmpd *x)
 	{
 		L = x->link[i].mass1->posX - x->link[i].mass2->posX;
 		absL = fabs(L);
-		if ( (absL >= x->link[i].Lmin) & (absL < x->link[i].Lmax)  & (L !=0))
+		if ( (absL >= x->link[i].Lmin) && (absL < x->link[i].Lmax)  && (L !=0))
 		{
 			if (x->link[i].lType == 2)
 			{ // K et D viennent d'une table
@@ -221,7 +221,7 @@ void pmpd_mass(t_pmpd *x, t_symbol *Id, t_float mobile, t_float M, t_float posX 
 void pmpd_create_link(t_pmpd *x, t_symbol *Id, int mass1, int mass2, t_float K, t_float D, t_float Pow, t_float Lmin, t_float Lmax, t_int type)
 { // create a link based on mass number
 
-    if ((x->nb_mass>0) & (mass1 != mass2) & (mass1 >= 0) & (mass2 >= 0) & (mass1 < x->nb_mass) & (mass2 < x->nb_mass) )
+    if ((x->nb_mass>0) && (mass1 != mass2) && (mass1 >= 0) && (mass2 >= 0) && (mass1 < x->nb_mass) && (mass2 < x->nb_mass) )
     {
 	    x->link[x->nb_link].lType = type;
 	    x->link[x->nb_link].Id = Id;
@@ -258,12 +258,12 @@ void pmpd_link(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     if (argc > 7) Lmax = atom_getfloatarg(7, argc, argv);
 //    post("%d,%d, %f,%f", mass1, mass2, K, D);
 
-    if ( ( argv[1].a_type == A_FLOAT ) & ( argv[2].a_type == A_FLOAT ) )
+    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         pmpd_create_link(x, Id, mass1, mass2, K, D, Pow, Lmin, Lmax, 0);
     }
     else
-    if ( ( argv[1].a_type == A_SYMBOL ) & ( argv[2].a_type == A_FLOAT ) )
+    if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -274,7 +274,7 @@ void pmpd_link(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else
-    if ( ( argv[1].a_type == A_FLOAT ) & ( argv[2].a_type == A_SYMBOL ) )
+    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -285,7 +285,7 @@ void pmpd_link(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else
-    if ( ( argv[1].a_type == A_SYMBOL ) & ( argv[2].a_type == A_SYMBOL ) )
+    if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -315,7 +315,7 @@ void pmpd_tabLink(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     t_float Dl = atom_getfloatarg(6, argc, argv);
 	if (Dl <= 0) Dl = 1;
 	
-    if ( ( argv[1].a_type == A_FLOAT ) & ( argv[2].a_type == A_FLOAT ) )
+    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         pmpd_create_link(x, Id, mass1, mass2, 1, 1, 1, -1000000, 1000000, 2);
 		x->link[x->nb_link-1].arrayK = arrayK;
@@ -324,7 +324,7 @@ void pmpd_tabLink(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 		x->link[x->nb_link-1].D_L = Dl;	
     }
     else
-    if ( ( argv[1].a_type == A_SYMBOL ) & ( argv[2].a_type == A_FLOAT ) )
+    if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -339,7 +339,7 @@ void pmpd_tabLink(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else
-    if ( ( argv[1].a_type == A_FLOAT ) & ( argv[2].a_type == A_SYMBOL ) )
+    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -354,7 +354,7 @@ void pmpd_tabLink(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else
-    if ( ( argv[1].a_type == A_SYMBOL ) & ( argv[2].a_type == A_SYMBOL ) )
+    if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -380,13 +380,13 @@ void pmpd_setK(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
 	    x->link[tmp].K = atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -402,13 +402,13 @@ void pmpd_setD(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
 	    x->link[tmp].D = atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -424,13 +424,13 @@ void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
 	    x->link[tmp].L = atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -440,13 +440,13 @@ void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-	if ( ( argv[0].a_type == A_FLOAT ) & ( argc == 1 ) )
+	if ( ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
         x->link[tmp].L = x->link[tmp].mass2->posX - x->link[tmp].mass1->posX;
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argc == 1 ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argc == 1 ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -463,13 +463,13 @@ void pmpd_setLKTab(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     int tmp, i;
 	t_float K_l = atom_getfloatarg(1, argc, argv);
 	if (K_l <=  0) K_l = 1;
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
 	    x->link[tmp].K_L = K_l;
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -486,13 +486,13 @@ void pmpd_setLDTab(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     int tmp, i;
 	t_float D_l = atom_getfloatarg(1, argc, argv);
 	if (D_l <=  0) D_l = 1;
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
 	    x->link[tmp].D_L = D_l;
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -508,13 +508,13 @@ void pmpd_setLinkId(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_SYMBOL ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
 	    x->link[tmp].Id = atom_getsymbolarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_SYMBOL ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -530,13 +530,13 @@ void pmpd_setMassId(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_SYMBOL ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
 	    x->mass[tmp].Id = atom_getsymbolarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_SYMBOL ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -607,13 +607,13 @@ void pmpd_forceX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 // add a force to a specific mass
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
 	    x->mass[tmp].forceX += atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -630,7 +630,7 @@ void pmpd_posX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 // displace a mass to a certain position
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
@@ -639,7 +639,7 @@ void pmpd_posX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         x->mass[tmp].forceX = 0; // ??? TODO : esce la bonne chose a faire?
         
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -658,13 +658,13 @@ void pmpd_setD2(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
 	    x->mass[tmp].D2 = atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -674,7 +674,7 @@ void pmpd_setD2(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argc == 1 ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -687,13 +687,13 @@ void pmpd_setSpeedX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
 	    x->mass[tmp].speedX = atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -709,13 +709,13 @@ void pmpd_addPosX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
 	    x->mass[tmp].posX += atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -731,13 +731,13 @@ void pmpd_setForceX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
 	    x->mass[tmp].forceX = atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) & ( argv[1].a_type == A_FLOAT ) )
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -756,10 +756,10 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     t_atom  toout[2];
     toget = atom_getsymbolarg(0, argc, argv);
 
-    if ( (toget == gensym("massesPos")) & (argv[1].a_type == A_FLOAT) )
+    if ( (toget == gensym("massesPos")) && (argv[1].a_type == A_FLOAT) )
     {
         i = atom_getfloatarg(1, argc, argv);
-        if ( (i>=0) & (i<x->nb_mass) )
+        if ( (i>=0) && (i<x->nb_mass) )
         {
             SETFLOAT(&(toout[0]), i);
             SETFLOAT(&(toout[1]), x->mass[i].posX);
@@ -767,7 +767,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }  
     }
     else
-    if ( (toget == gensym("massesPos")) & (argv[1].a_type == A_SYMBOL) )
+    if ( (toget == gensym("massesPos")) && (argv[1].a_type == A_SYMBOL) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -780,7 +780,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesPos")) & (argc == 1) )
+    if ( (toget == gensym("massesPos")) && (argc == 1) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -790,10 +790,10 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesPosName")) & (argv[1].a_type == A_FLOAT) )
+    if ( (toget == gensym("massesPosName")) && (argv[1].a_type == A_FLOAT) )
     {
         i = atom_getfloatarg(1, argc, argv);
-        if ( (i>=0) & (i<x->nb_mass) )
+        if ( (i>=0) && (i<x->nb_mass) )
         {
             SETSYMBOL(&(toout[0]), x->mass[i].Id);
             SETFLOAT(&(toout[1]), x->mass[i].posX);
@@ -801,7 +801,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }  
     }
     else
-    if ( (toget == gensym("massesPosName")) & (argv[1].a_type == A_SYMBOL) )
+    if ( (toget == gensym("massesPosName")) && (argv[1].a_type == A_SYMBOL) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -814,7 +814,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesPosName")) & (argc == 1) )
+    if ( (toget == gensym("massesPosName")) && (argc == 1) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -824,10 +824,10 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesSpeeds")) & (argv[1].a_type == A_FLOAT) )
+    if ( (toget == gensym("massesSpeeds")) && (argv[1].a_type == A_FLOAT) )
     {
         i = atom_getfloatarg(1, argc, argv);
-        if ( (i>=0) & (i<x->nb_mass) )
+        if ( (i>=0) && (i<x->nb_mass) )
         {
             SETFLOAT(&(toout[0]), i);
             SETFLOAT(&(toout[1]), x->mass[i].speedX);
@@ -835,7 +835,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }  
     }
     else
-    if ( (toget == gensym("massesSpeeds")) & (argv[1].a_type == A_SYMBOL) )
+    if ( (toget == gensym("massesSpeeds")) && (argv[1].a_type == A_SYMBOL) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -848,7 +848,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesSpeeds")) & (argc == 1) )
+    if ( (toget == gensym("massesSpeeds")) && (argc == 1) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -858,10 +858,10 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesSpeedsName")) & (argv[1].a_type == A_FLOAT) )
+    if ( (toget == gensym("massesSpeedsName")) && (argv[1].a_type == A_FLOAT) )
     {
         i = atom_getfloatarg(1, argc, argv);
-        if ( (i>=0) & (i<x->nb_mass) )
+        if ( (i>=0) && (i<x->nb_mass) )
         {
             SETSYMBOL(&(toout[0]), x->mass[i].Id);
             SETFLOAT(&(toout[1]), x->mass[i].speedX);
@@ -869,7 +869,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }  
     }
     else
-    if ( (toget == gensym("massesSpeedsName")) & (argv[1].a_type == A_SYMBOL) )
+    if ( (toget == gensym("massesSpeedsName")) && (argv[1].a_type == A_SYMBOL) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -882,7 +882,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesSpeedsName")) & (argc == 1) )
+    if ( (toget == gensym("massesSpeedsName")) && (argc == 1) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -892,10 +892,10 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesForces")) & (argv[1].a_type == A_FLOAT) )
+    if ( (toget == gensym("massesForces")) && (argv[1].a_type == A_FLOAT) )
     {
         i = atom_getfloatarg(1, argc, argv);
-        if ( (i>=0) & (i<x->nb_mass) )
+        if ( (i>=0) && (i<x->nb_mass) )
         {
             SETFLOAT(&(toout[0]), i);
             SETFLOAT(&(toout[1]), x->mass[i].forceX);
@@ -903,7 +903,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }  
     }
     else
-    if ( (toget == gensym("massesForces")) & (argv[1].a_type == A_SYMBOL) )
+    if ( (toget == gensym("massesForces")) && (argv[1].a_type == A_SYMBOL) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -916,7 +916,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesForces")) & (argc == 1) )
+    if ( (toget == gensym("massesForces")) && (argc == 1) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -926,10 +926,10 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesForcesName")) & (argv[1].a_type == A_FLOAT) )
+    if ( (toget == gensym("massesForcesName")) && (argv[1].a_type == A_FLOAT) )
     {
         i = atom_getfloatarg(1, argc, argv);
-        if ( (i>=0) & (i<x->nb_mass) )
+        if ( (i>=0) && (i<x->nb_mass) )
         {
             SETSYMBOL(&(toout[0]), x->mass[i].Id);
             SETFLOAT(&(toout[1]), x->mass[i].forceX);
@@ -937,7 +937,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else
-    if ( (toget == gensym("massesForcesName")) & (argv[1].a_type == A_SYMBOL) )
+    if ( (toget == gensym("massesForcesName")) && (argv[1].a_type == A_SYMBOL) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -950,7 +950,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("massesForcesName")) & (argc == 1) )
+    if ( (toget == gensym("massesForcesName")) && (argc == 1) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -960,10 +960,10 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("linksPos")) & (argv[1].a_type == A_FLOAT) )
+    if ( (toget == gensym("linksPos")) && (argv[1].a_type == A_FLOAT) )
     {
         i = atom_getfloatarg(1, argc, argv);
-        if ( (i>=0) & (i<x->nb_mass) )
+        if ( (i>=0) && (i<x->nb_mass) )
         {
             SETFLOAT(&(toout[0]), i);
             SETFLOAT(&(toout[1]), x->link[i].mass1->posX);
@@ -972,7 +972,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else
-    if ( (toget == gensym("linksPos")) & (argv[1].a_type == A_SYMBOL) )
+    if ( (toget == gensym("linksPos")) && (argv[1].a_type == A_SYMBOL) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -986,7 +986,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("linksPos")) & (argc == 1) )
+    if ( (toget == gensym("linksPos")) && (argc == 1) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -997,10 +997,10 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("linksPosName")) & (argv[1].a_type == A_FLOAT) )
+    if ( (toget == gensym("linksPosName")) && (argv[1].a_type == A_FLOAT) )
     {
         i = atom_getfloatarg(1, argc, argv);
-        if ( (i>=0) & (i<x->nb_mass) )
+        if ( (i>=0) && (i<x->nb_mass) )
         {
             SETSYMBOL(&(toout[0]), x->link[i].Id);
             SETFLOAT(&(toout[1]), x->link[i].mass1->posX);
@@ -1009,7 +1009,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else
-    if ( (toget == gensym("linksPosName")) & (argv[1].a_type == A_SYMBOL) )
+    if ( (toget == gensym("linksPosName")) && (argv[1].a_type == A_SYMBOL) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -1023,7 +1023,7 @@ void pmpd_get(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-    if ( (toget == gensym("linksPosName")) & (argc == 1) )
+    if ( (toget == gensym("linksPosName")) && (argc == 1) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -1079,7 +1079,7 @@ void pmpd_massesPosT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     t_word *vec;
     
-    if ( (argc==1) & (argv[0].a_type == A_SYMBOL) )
+    if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
     {
 		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
@@ -1098,7 +1098,7 @@ void pmpd_massesPosT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 		}
 	}
 	else 
-	if ( (argc==2) & (argv[0].a_type == A_SYMBOL) & (argv[1].a_type == A_SYMBOL) )
+	if ( (argc==2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_SYMBOL) )
 	{
 		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
@@ -1109,7 +1109,7 @@ void pmpd_massesPosT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 		{	
 			i = 0;
 			j = 0;
-			while ((i < vecsize) & (j < x->nb_mass))
+			while ((i < vecsize) && (j < x->nb_mass))
 			{
 				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
 				{
@@ -1129,7 +1129,7 @@ void pmpd_massesSpeedsT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     t_word *vec;
     
-    if ( (argc==1) & (argv[0].a_type == A_SYMBOL) )
+    if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
     {		
 		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
@@ -1148,7 +1148,7 @@ void pmpd_massesSpeedsT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 		}
 	}
 	else 
-	if ( (argc==2) & (argv[0].a_type == A_SYMBOL) & (argv[1].a_type == A_SYMBOL) )
+	if ( (argc==2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_SYMBOL) )
 	{
 		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
@@ -1159,7 +1159,7 @@ void pmpd_massesSpeedsT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 		{	
 			i = 0;
 			j = 0;
-			while ((i < vecsize) & (j < x->nb_mass))
+			while ((i < vecsize) && (j < x->nb_mass))
 			{
 				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
 				{
@@ -1179,7 +1179,7 @@ void pmpd_massesForcesT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     t_word *vec;
     
-    if ( (argc==1) & (argv[0].a_type == A_SYMBOL) )
+    if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
     {
 		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
@@ -1198,7 +1198,7 @@ void pmpd_massesForcesT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 		}
 	}
 	else 
-	if ( (argc==2) & (argv[0].a_type == A_SYMBOL) & (argv[1].a_type == A_SYMBOL) )
+	if ( (argc==2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_SYMBOL) )
 	{
 		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
@@ -1209,7 +1209,7 @@ void pmpd_massesForcesT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 		{	
 			i = 0;
 			j = 0;
-			while ((i < vecsize) & (j < x->nb_mass))
+			while ((i < vecsize) && (j < x->nb_mass))
 			{
 				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
 				{
@@ -1232,7 +1232,7 @@ void pmpd_massesPosMean(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	sommeX = 0;
 	j = 0;
 	
-    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
+    if ( (argc >= 1) && (argv[0].a_type == A_SYMBOL) ) 
     {
 		for (i=0; i< x->nb_mass; i++)
         {
@@ -1270,7 +1270,7 @@ void pmpd_massesPosStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	stdX = 0;
 	j = 0;
 	
-    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
+    if ( (argc >= 1) && (argv[0].a_type == A_SYMBOL) ) 
     {
 		for (i=0; i< x->nb_mass; i++)
         {
@@ -1319,7 +1319,7 @@ void pmpd_massesForcesMean(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	sommeX = 0;
 	j = 0;
 	
-    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
+    if ( (argc >= 1) && (argv[0].a_type == A_SYMBOL) ) 
     {
 		for (i=0; i< x->nb_mass; i++)
         {
@@ -1357,7 +1357,7 @@ void pmpd_massesForcesStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	stdX = 0;
 	j = 0;
 	
-    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
+    if ( (argc >= 1) && (argv[0].a_type == A_SYMBOL) ) 
     {
 		for (i=0; i< x->nb_mass; i++)
         {
@@ -1406,7 +1406,7 @@ void pmpd_massesSpeedsMean(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	sommeX = 0;
 	j = 0;
 	
-    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
+    if ( (argc >= 1) && (argv[0].a_type == A_SYMBOL) ) 
     {
 		for (i=0; i< x->nb_mass; i++)
         {
@@ -1444,7 +1444,7 @@ void pmpd_massesSpeedsStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	stdX = 0;
 	j = 0;
 	
-    if ( (argc >= 1) & (argv[0].a_type == A_SYMBOL) ) 
+    if ( (argc >= 1) && (argv[0].a_type == A_SYMBOL) ) 
     {
 		for (i=0; i< x->nb_mass; i++)
         {
