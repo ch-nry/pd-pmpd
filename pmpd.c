@@ -192,7 +192,7 @@ void pmpd_bang(t_pmpd *x)
 			else
 			{			
 				F  = x->link[i].D * (L - x->link[i].distance) ;
-				F += x->link[i].K *  pow_ch( L - x->link[i].L, x->link[i].Pow);
+				F += x->link[i].K *  sign_ch(L) * pow_ch( absL - x->link[i].L, x->link[i].Pow);
 			}
 			
 			x->link[i].mass1->forceX -= F;
