@@ -1717,6 +1717,7 @@ void pmpd3d_massesPosXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			while ((i < vecsize) && (j < x->nb_mass))
 			{
 				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+
 				{
 					vec[i].w_float = x->mass[j].posX;
 					i++;

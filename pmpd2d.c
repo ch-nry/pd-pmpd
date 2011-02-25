@@ -109,9 +109,9 @@ t_float tabread2(t_pmpd2d *x, t_float pos, t_symbol *array)
 	t_float posx;
 	
     if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
-        pd_error(x, "%s: no such array", array);
+        pd_error(x, "%s: no such array", array->s_name);
     else if (!garray_getfloatwords(a, &npoints, &vec))
-        pd_error(x, "%s: bad template for tabLink", array);
+        pd_error(x, "%s: bad template for tabLink", array->s_name);
 	else
     {
 		posx = fabs(pos)*npoints;
