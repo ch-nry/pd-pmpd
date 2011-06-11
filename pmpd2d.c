@@ -65,6 +65,7 @@ typedef struct _mass {
 	t_float forceX;
 	t_float forceY;
 	t_float D2;
+	t_float D2offset;
     int num;
 } foo;
 
@@ -167,7 +168,7 @@ void pmpd2d_infosL(t_pmpd2d *x)
 void pmpd2d_bang(t_pmpd2d *x)
 {
 // this part is doing all the PM
-	t_float F, L, Lx,Ly, Fx, Fy, tmpX, tmpY;
+	t_float F, L, Lx,Ly, Fx, Fy, tmpX, tmpY,speed;
 	t_int i;
     // post("bang");
 
@@ -192,6 +193,11 @@ void pmpd2d_bang(t_pmpd2d *x)
 			}
 			x->mass[i].forceX = -x->mass[i].D2 * x->mass[i].speedX;
 			x->mass[i].forceY = -x->mass[i].D2 * x->mass[i].speedY;
+            speed = sqrt(x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY);
+            if (speed != 0) {
+                x->mass[i].forceX += x->mass[i].D2offset * (x->mass[i].speedX/speed);
+                x->mass[i].forceY += x->mass[i].D2offset * (x->mass[i].speedY/speed);
+            }
 		}
 
 	for (i=0; i<x->nb_link; i++)
@@ -247,6 +253,8 @@ void pmpd2d_mass(t_pmpd2d *x, t_symbol *Id, t_float mobile, t_float M, t_float p
 	x->mass[x->nb_mass].forceX = 0;
 	x->mass[x->nb_mass].forceY = 0;
 	x->mass[x->nb_mass].num = x->nb_mass;
+	x->mass[x->nb_mass].D2 = 0;
+	x->mass[x->nb_mass].D2offset = 0;
 
 	x->nb_mass++ ;
 	x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
@@ -923,6 +931,35 @@ void pmpd2d_setD2(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         for (i=0; i< x->nb_mass; i++)
         {
 			x->mass[i].D2 = atom_getfloatarg(0, argc, argv);
+        }
+    }
+}
+
+void pmpd2d_setD2offset(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int tmp, i;
+
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_mass-1, tmp));
+	    x->mass[tmp].D2offset = atom_getfloatarg(1, argc, argv);
+    }
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_mass; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+            {
+	            x->mass[i].D2offset = atom_getfloatarg(1, argc, argv);
+            }
+        }
+    }
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
+    {
+        for (i=0; i< x->nb_mass; i++)
+        {
+			x->mass[i].D2offset = atom_getfloatarg(0, argc, argv);
         }
     }
 }
@@ -2634,6 +2671,7 @@ void pmpd2d_setup(void)
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setFixed,        gensym("setFixed"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setMobile,       gensym("setMobile"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setD2,           gensym("setDEnv"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setD2offset,     gensym("setDEnvOffset"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setSpeed,        gensym("setSpeed"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setSpeedX,       gensym("setSpeedX"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_setSpeedY,       gensym("setSpeedY"), A_GIMME, 0);
