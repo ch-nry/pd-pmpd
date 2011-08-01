@@ -3769,7 +3769,7 @@ void pmpd2d_setup(void)
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosXL,	   		gensym("linksPosXL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthXL,	   	gensym("linksLengthXL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosSpeedXL,		gensym("linksPosSpeedXL"), A_GIMME, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthSpeedXL,	gensym("linksLengthXL"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthSpeedXL,	gensym("linksLengthSpeedXL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosXT,	   		gensym("linksPosXT"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthXT,	   	gensym("linksLengthXT"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosSpeedXT,		gensym("linksPosSpeedXT"), A_GIMME, 0);
@@ -3778,7 +3778,7 @@ void pmpd2d_setup(void)
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosYL,	   		gensym("linksPosYL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthYL,	   	gensym("linksLengthYL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosSpeedYL,		gensym("linksPosSpeedYL"), A_GIMME, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthSpeedYL,	gensym("linksLengthYL"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthSpeedYL,	gensym("linksLengthSpeedYL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosYT,	   		gensym("linksPosYT"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthYT,	   	gensym("linksLengthYT"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosSpeedYT,		gensym("linksPosSpeedYT"), A_GIMME, 0);
@@ -3787,7 +3787,7 @@ void pmpd2d_setup(void)
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosL,	   		gensym("linksPosL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthL,	   	gensym("linksLengthL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosSpeedL,		gensym("linksPosSpeedL"), A_GIMME, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthSpeedL,	gensym("linksLengthL"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthSpeedL,	gensym("linksLengthSpeedL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosT,	   		gensym("linksPosT"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthT,	   	gensym("linksLengthT"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosSpeedT,		gensym("linksPosSpeedT"), A_GIMME, 0);
@@ -3796,7 +3796,7 @@ void pmpd2d_setup(void)
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosNormL,	   		gensym("linksPosNormL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthNormL,	   	gensym("linksLengthNormL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosSpeedNormL,		gensym("linksPosSpeedNormL"), A_GIMME, 0);
-	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthSpeedNormL,	gensym("linksLengthNormL"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthSpeedNormL,	gensym("linksLengthSpeedNormL"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosNormT,	   		gensym("linksPosNormT"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthNormT,	   	gensym("linksLengthNormT"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosSpeedNormT,		gensym("linksPosSpeedNormT"), A_GIMME, 0);
