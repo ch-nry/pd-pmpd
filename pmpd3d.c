@@ -394,21 +394,24 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     t_float D = atom_getfloatarg(4, argc, argv);
     t_float vecteurX = atom_getfloatarg(5, argc, argv);
     t_float vecteurY = atom_getfloatarg(6, argc, argv);
-    t_float vecteur = sqrt( sqr(vecteurX) + sqr(vecteurY) );
+    t_float vecteurZ = atom_getfloatarg(7, argc, argv);
+    t_float vecteur = sqrt( sqr(vecteurX) + sqr(vecteurY) + sqr(vecteurZ) );
     vecteurX /= vecteur;
     vecteurY /= vecteur;
+    vecteurZ /= vecteur;
     t_float Pow = 1; 
-    if (argc > 7) Pow = atom_getfloatarg(5, argc, argv);
+    if (argc > 8) Pow = atom_getfloatarg(8, argc, argv);
     t_float Lmin = 0;
-    if (argc > 8) Lmin = atom_getfloatarg(6, argc, argv);
+    if (argc > 9) Lmin = atom_getfloatarg(9, argc, argv);
     t_float Lmax =  1000000;
-    if (argc > 9) Lmax = atom_getfloatarg(7, argc, argv);
+    if (argc > 10) Lmax = atom_getfloatarg(10, argc, argv);
 
     if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         pmpd3d_create_link(x, Id, mass1, mass2, K, D, Pow, Lmin, Lmax, 1);
 		x->link[x->nb_link-1].VX = vecteurX;
 		x->link[x->nb_link-1].VY = vecteurY;
+		x->link[x->nb_link-1].VZ = vecteurZ;
     }
     else
     if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
@@ -419,7 +422,8 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 pmpd3d_create_link(x, Id, i, mass2, K, D, Pow, Lmin, Lmax, 1);
             	x->link[x->nb_link-1].VX = vecteurX;
-				x->link[x->nb_link-1].VY = vecteurY;
+		x->link[x->nb_link-1].VY = vecteurY;
+		x->link[x->nb_link-1].VZ = vecteurZ;
             }
         }
     }
@@ -432,8 +436,9 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 pmpd3d_create_link(x, Id, mass1, i, K, D, Pow, Lmin, Lmax, 1);
             	x->link[x->nb_link-1].VX = vecteurX;
-				x->link[x->nb_link-1].VY = vecteurY;
-			}
+		x->link[x->nb_link-1].VY = vecteurY;
+		x->link[x->nb_link-1].VZ = vecteurZ;
+	    }
         }
     }
     else
@@ -445,14 +450,15 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
                 {
-					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
-					// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
-					{
-						pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 1);
-						x->link[x->nb_link-1].VX = vecteurX;
-						x->link[x->nb_link-1].VY = vecteurY;
-					}
-				}
+			if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
+			// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
+			{
+				pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 1);
+				x->link[x->nb_link-1].VX = vecteurX;
+				x->link[x->nb_link-1].VY = vecteurY;
+				x->link[x->nb_link-1].VZ = vecteurZ;
+			}
+		}
             }   
         }
     }

@@ -368,11 +368,11 @@ void pmpd2d_tLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     vecteurX /= vecteur;
     vecteurY /= vecteur;
     t_float Pow = 1; 
-    if (argc > 7) Pow = atom_getfloatarg(5, argc, argv);
+    if (argc > 7) Pow = atom_getfloatarg(7, argc, argv);
     t_float Lmin = 0;
-    if (argc > 8) Lmin = atom_getfloatarg(6, argc, argv);
+    if (argc > 8) Lmin = atom_getfloatarg(8, argc, argv);
     t_float Lmax =  1000000;
-    if (argc > 9) Lmax = atom_getfloatarg(7, argc, argv);
+    if (argc > 9) Lmax = atom_getfloatarg(9, argc, argv);
 
     if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {

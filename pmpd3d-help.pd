@@ -403,16 +403,11 @@ the model. Messages create links and masses or destroy them.;
 #X text 527 198 \$2 : creation No/Id of mass1;
 #X text 527 216 \$3 : creation No/Id of mass2;
 #X text 527 251 \$5 : damping;
-#X text 790 152 Add tangential link(s);
-#X text 524 289 (\$8) : Power of the rigidity distance;
-#X text 524 308 (\$9) : minimum lenght of link;
-#X text 524 325 (\$10) : maximum lenght of link;
+#X text 812 154 Add tangential link(s);
 #X text 506 102 In 2D (and 3D) there are two specials links : oriented
 links. They works as general links excepts their calculation is made
 following a vector.;
-#X text 526 270 \$6 \, \$7 : tangential vector (x \, y);
 #X text 504 75 Oriented links :;
-#X msg 507 153 tLink \$1 \$2 \$3 \$4 \$5 \$6 \$7 (\$8 \$9 \$10);
 #X msg 502 406 tabLink \$1 \$2 \$3 \$4 \$5 \$6 \$7;
 #X text 532 453 \$1 : Id (symbol);
 #X text 532 453 \$1 : Id (symbol);
@@ -428,6 +423,12 @@ following a vector.;
 #X text 497 351 Table links :;
 #X msg 32 167 mass \$1 \$2 \$3 \$4 \$5 \$6;
 #X text 58 247 \$4 \, \$5 \, \$6 : initial position;
+#X msg 507 153 tLink \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8 (\$9 \$10 \$11)
+;
+#X text 526 270 \$6 \, \$7 \, \$8 : tangential vector (x \, y);
+#X text 524 289 (\$9) : Power of the rigidity distance;
+#X text 524 308 (\$10) : minimum lenght of link;
+#X text 524 325 (\$11) : maximum lenght of link;
 #X connect 27 0 29 0;
 #X restore 12 457 pd creation____________;
 #N canvas 541 24 1078 872 dynamic 0;
