@@ -31,8 +31,8 @@
 #include "stdio.h"
 #include "math.h"
 
-#define nb_max_link   10000000
-#define nb_max_mass   1000000
+#define nb_max_link   100000
+#define nb_max_mass   100000
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 

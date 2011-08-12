@@ -469,12 +469,6 @@ in a list on outlet No 1;
 #X msg 616 210 linksLengthNormT \$1 (\$2);
 #X obj 612 369 cnv 15 150 110 empty empty empty 20 12 0 14 -233017
 -66577 0;
-#X text 808 377 Output all link lenght deformation speed in a list
-on outlet No 1;
-#X text 806 401 Output all link lenght deformation speed in x or y
-in a list on outlet No 1;
-#X text 839 430 Output all norm of link lenght deformation speed vector
-(sqrt(x*x+y*y)) in a list on outlet No 1;
 #X msg 614 376 linksLengthSpeedT \$1 (\$2);
 #X msg 613 395 linksLengthSpeedXT \$1 (\$2);
 #X msg 614 414 linksLengthSpeedYT \$1 (\$2);
@@ -495,27 +489,32 @@ in a list on outlet No 1;
 outlet No 1;
 #X text 192 393 Output all norm of link center speed vector (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 797 154 Output all link length in a list on outlet No 1;
-#X text 796 181 Output all link length in x or y in a list on outlet
-No 1;
-#X text 799 201 Output all norm of link length vector (sqrt(x*x+y*y))
-in a list on outlet No 1;
 #X msg 16 342 linksPosSpeedL (\$1);
 #X msg 16 361 linksPosSpeedXL (\$1);
 #X msg 15 380 linksPosSpeedYL (\$1);
 #X msg 15 399 linksPosSpeedNormL (\$1);
 #X msg 616 259 linksPosSpeedT \$1 (\$2);
 #X msg 616 316 linksPosSpeedNormT \$1 (\$2);
-#X text 795 264 Output all link center speed in a list on outlet No
-1;
-#X text 798 282 Output all link center speed in x or y in a list on
-outlet No 1;
-#X text 813 313 Output all norm of link center speed vector (sqrt(x*x+y*y))
-in a list on outlet No 1;
 #X msg 616 171 linksLengthXT \$1 (\$2);
 #X msg 616 190 linksLengthYT \$1 (\$2);
 #X msg 616 278 linksPosSpeedXT \$1 (\$2);
 #X msg 616 297 linksPosSpeedYT \$1 (\$2);
+#X text 797 154 Output all link length in a list on a table;
+#X text 796 181 Output all link length in x or y in a list on a table
+;
+#X text 799 201 Output all norm of link length vector (sqrt(x*x+y*y))
+in a table;
+#X text 795 264 Output all link center speed in a table;
+#X text 798 282 Output all link center speed in x or y in a list on
+a table;
+#X text 812 313 Output all norm of link center speed vector (sqrt(x*x+y*y))
+in a list on a table;
+#X text 808 377 Output all link lenght deformation speed in aa table
+;
+#X text 806 401 Output all link lenght deformation speed in x or y
+in a table;
+#X text 839 430 Output all norm of link lenght deformation speed vector
+(sqrt(x*x+y*y)) in a list on a table;
 #X restore 12 519 pd links_attributes ___;
 #N canvas 41 48 967 626 creation____________ 0;
 #X obj 5 75 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -590,7 +589,7 @@ following a vector.;
 #X text 497 351 Table links :;
 #X connect 29 0 31 0;
 #X restore 12 457 pd creation____________;
-#N canvas 30 26 1236 814 attributes__________ 0;
+#N canvas 360 56 1236 814 attributes__________ 0;
 #X obj 11 95 cnv 15 100 35 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 75 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -657,21 +656,10 @@ linksPos / linksPosName );
 0;
 #X obj 605 5 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 796 264 Output all forces applied on masses in a list on outlet
-No 1;
 #X obj 612 140 cnv 15 150 110 empty empty empty 20 12 0 14 -233017
 -66577 0;
-#X text 795 149 Output all masses speeds in a list on outlet No 1;
-#X text 796 181 Output all masses speeds in x or y in a list on outlet
-No 1;
-#X text 801 209 Output all norm of speed vector (sqrt(x*x+y*y)) in
-a list on outlet No 1;
 #X obj 612 253 cnv 15 150 110 empty empty empty 20 12 0 14 -233017
 -66577 0;
-#X text 799 294 Output all masses forces in x or y in a list on outlet
-No 1;
-#X text 804 322 Output all norm of forces vector (sqrt(x*x+y*y)) in
-a list on outlet No 1;
 #X msg 12 170 massesPosL (\$1);
 #X msg 12 190 massesPosXL (\$1);
 #X msg 12 210 massesPosYL (\$1);
@@ -734,6 +722,14 @@ a table (\$1);
 #X text 941 729 [massesPosId 2 x1 y2(;
 #X text 942 765 [massesPosName mas x1 y1(;
 #X text 942 780 [massesPosName mas x2 y2(;
+#X text 799 263 Output all forces applied on masses in a table;
+#X text 798 294 Output all masses forces in x or y in a table;
+#X text 795 149 Output all masses speeds in a table;
+#X text 796 181 Output all masses speeds in x or y in a table;
+#X text 801 209 Output all norm of speed vector (sqrt(x*x+y*y)) in
+a table;
+#X text 804 322 Output all norm of forces vector (sqrt(x*x+y*y)) in
+a table;
 #X restore 12 499 pd attributes__________;
 #N canvas 100 72 1078 872 dynamic 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
