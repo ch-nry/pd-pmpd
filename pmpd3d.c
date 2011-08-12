@@ -1359,7 +1359,7 @@ void pmpd3d_get(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i;
     t_symbol *toget; 
-    t_atom  toout[4];
+    t_atom  toout[7];
     toget = atom_getsymbolarg(0, argc, argv);
 
     if ( (toget == gensym("massesPos")) && (argv[1].a_type == A_FLOAT) )
