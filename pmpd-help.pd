@@ -1,4 +1,4 @@
-#N canvas 37 61 575 730 10;
+#N canvas 37 22 575 730 10;
 #X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 689 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
@@ -19,164 +19,6 @@
 0;
 #X obj 5 659 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#N canvas 76 31 777 741 More_Info 0;
-#X text 25 65 It is designed to implement particules physical model
-in PD.The model is based on two elements type : mass and link. The
-msd masses are the principals objects of the model. They got only one
-physical parameter \, the value of their mass. They can be mobile or
-fixed \, in this case forces applied on them automatically \, by links
-\, or manually \, by messages \, don't do anything.;
-#X text 21 250 Links can be created between mutiples masses \, instead
-of creation number \, the masses linked are defined with their Id.
-;
-#X obj 449 23 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#X obj 449 277 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#N canvas 0 22 450 300 (subpatch) 0;
-#X array rigidity1 4 float 1;
-#A 0 -1 0 1 2;
-#X array zero 4 float 1;
-#A 0 0 0 0 0;
-#X coords 0 3 3 -3 200 150 1;
-#X restore 117 339 graph;
-#X text 175 496 L0;
-#N canvas 331 182 956 727 figure 0;
-#X obj 182 108 loadbang;
-#X msg 191 180 \; rigidity1 resize 1 \; rigidity1 resize 4 \; rigidity1
-bounds 0 3 3 -3 \; rigidity1 0 -1 0 1 2 \; rigidity1 ylabel -0.5 \;
-rigidity1 xlabel -3.5 \; rigidity1 xticks 0 1 1 \; rigidity1 yticks
-0 0.1 5;
-#X obj 399 574 sqrt;
-#X obj 316 651 tabwrite rigidity3;
-#X obj 343 464 - 20;
-#X obj 316 609 f;
-#X obj 316 579 t b f;
-#X obj 343 494 moses 0;
-#X obj 343 517 * -1;
-#X obj 343 538 sqrt;
-#X obj 343 559 * -1;
-#X obj 481 479 - 20;
-#X obj 453 662 f;
-#X obj 453 632 t b f;
-#X obj 481 509 moses 0;
-#X obj 481 532 * -1;
-#X obj 480 612 * -1;
-#X obj 536 627 *;
-#X obj 480 591 *;
-#X obj 533 595 t f f;
-#X obj 480 564 t f f;
-#X obj 453 704 tabwrite rigidity4;
-#X msg 55 419 \; rigidity3 resize 51 \; rigidity3 xticks 0 1 5 \; rigidity3
-yticks 0 1 5 \; rigidity4 resize 51 \; rigidity4 xticks 0 1 5 \; rigidity4
-yticks 0 100 5;
-#X obj 255 350 t b b;
-#X msg 404 183 \; rigidity2 resize 1 \; rigidity2 resize 23 \; rigidity2
-bounds 0 3 22 -3 \; rigidity2 0 0 0 -2.5 -2.34 -2.167 -2 -1.833 -1.667
--1.5 0 0 0 0 0 1.5 1.667 1.833 2 2.167 2.34 2.5 0 0 0 \; rigidity2
-ylabel -0.5 \; rigidity2 xlabel -3.5 \; rigidity2 xticks 1 1 5 \; rigidity2
-yticks 0 0.2 5;
-#X obj 402 359 f;
-#X obj 418 409 + 1;
-#X obj 402 382 moses 50.5;
-#X obj 384 417 f;
-#X obj 395 328 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X connect 0 0 1 0;
-#X connect 0 0 24 0;
-#X connect 0 0 23 0;
-#X connect 2 0 5 1;
-#X connect 4 0 7 0;
-#X connect 5 0 3 0;
-#X connect 6 0 5 0;
-#X connect 6 1 3 1;
-#X connect 7 0 8 0;
-#X connect 7 1 2 0;
-#X connect 8 0 9 0;
-#X connect 9 0 10 0;
-#X connect 10 0 5 1;
-#X connect 11 0 14 0;
-#X connect 12 0 21 0;
-#X connect 13 0 12 0;
-#X connect 13 1 21 1;
-#X connect 14 0 15 0;
-#X connect 14 1 19 0;
-#X connect 15 0 20 0;
-#X connect 16 0 12 1;
-#X connect 17 0 12 1;
-#X connect 18 0 16 0;
-#X connect 19 0 17 0;
-#X connect 19 1 17 1;
-#X connect 20 0 18 0;
-#X connect 20 1 18 1;
-#X connect 23 0 25 0;
-#X connect 23 1 22 0;
-#X connect 25 0 27 0;
-#X connect 26 0 25 0;
-#X connect 27 0 26 0;
-#X connect 27 0 28 0;
-#X connect 28 0 4 0;
-#X connect 28 0 6 0;
-#X connect 28 0 11 0;
-#X connect 28 0 13 0;
-#X connect 29 0 25 0;
-#X restore 430 703 pd figure;
-#X text 121 318 Rigidity;
-#N canvas 0 22 450 300 (subpatch) 0;
-#X array rigidity2 23 float 1;
-#A 0 0 0 -2.5 -2.34 -2.167 -2 -1.833 -1.667 -1.5 0 0 0 0 0 1.5 1.667
-1.833 2 2.167 2.34 2.5 0 0;
-#X array zero 23 float 1;
-#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
-#X coords 0 3 22 -3 200 150 1;
-#X restore 112 555 graph;
-#X text 204 710 L0;
-#X text 117 532 Rigidity with Lmin and Lmax;
-#X text 220 710 Lmin;
-#X text 282 711 Lmax;
-#N canvas 0 22 450 300 (subpatch) 0;
-#X array rigidity3 51 float 1;
-#A 0 -4.47214 -4.3589 -4.24264 -4.12311 -4 -3.87298 -3.74166 -3.60555
--3.4641 -3.31662 -3.16228 -3 -2.82843 -2.64575 -2.44949 -2.23607 -2
--1.73205 -1.41421 -1 0 1 1.41421 1.73205 2 2.23607 2.44949 2.64575
-2.82843 3 3.16228 3.31662 3.4641 3.60555 3.74166 3.87298 4 4.12311
-4.24264 4.3589 4.47214 4.58258 4.69042 4.79583 4.89898 5 5.09902 5.19615
-5.2915 5.38516 5.47723;
-#X array zero 51 float 1;
-#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
-#X coords 0 6 50 -6 200 150 1;
-#X restore 557 346 graph;
-#X text 630 499 L0;
-#X text 562 325 Rigidity with power = 1/2;
-#N canvas 0 22 450 300 (subpatch) 0;
-#X array rigidity4 51 float 1;
-#A 0 -400 -361 -324 -289 -256 -225 -196 -169 -144 -121 -100 -81 -64
--49 -36 -25 -16 -9 -4 -1 0 1 4 9 16 25 36 49 64 81 100 121 144 169
-196 225 256 289 324 361 400 441 484 529 576 625 676 729 784 841 900
-;
-#X array zero 51 float 1;
-#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
-#X coords 0 1000 50 -1000 200 150 1;
-#X restore 554 561 graph;
-#X text 627 715 L0;
-#X text 557 539 Rigidity with power = 2;
-#X text 548 21 The equations are :;
-#X text 474 45 if Lmin<|L[n]-L[0]|<Lmax;
-#X text 473 84 else;
-#X text 473 104 F[n] = D(L[n]-L[n-1]);
-#X text 473 63 F[n] = K(L[n] - L[0])^P + D(L[n] - L[n-1]);
-#X text 24 170 Links connect masses two by two. They got 4 physicals
-parameters : length \, rigidity \, damping and power.;
-#X text 22 205 Rigidity \, damping and power are defined by the creation
-message. The lenght is initialised to the distance between the two
-masses at the creation.;
-#X text 95 17 pmpd;
-#X text 26 46 pmpd is the 1D object of the msd objects collection.
-;
-#X connect 2 0 3 0;
-#X restore 16 695 pd More_Info;
 #X text 12 76 Examples:;
 #X text 9 369 Inlets:;
 #X text 19 388 - Left:;
@@ -585,16 +427,224 @@ the model. Messages create links and masses or destroy them.;
 #X text 264 624 \$6 : table name for the damping;
 #X text 263 643 \$7 : length of the table;
 #X restore 12 457 pd creation____________;
-#X connect 21 0 48 0;
-#X connect 22 0 25 0;
-#X connect 25 0 24 0;
-#X connect 27 0 26 0;
-#X connect 28 0 30 0;
-#X connect 29 0 19 0;
-#X connect 30 0 33 0;
-#X connect 33 0 22 0;
-#X connect 33 1 23 0;
-#X connect 33 2 31 0;
-#X connect 33 3 32 0;
-#X connect 48 0 20 0;
-#X connect 51 0 27 0;
+#N canvas 0 22 901 640 More_Info 0;
+#X text 96 12 pmpd : mass - spring - damper model;
+#X text 27 155 Be careful : if masses are deleted \, lists messages
+won't work;
+#X text 27 60 It is designed to implement particules physical model
+in PD.The model is based on two elements type : mass and link. The
+pmpd masses are the principals objects of the model. They got only
+one physical parameter \, the value of their mass. They can be mobile
+or fixed \, in this case forces applied on them automatically \, by
+links \, or manually \, by messages \, don't do anything.;
+#X obj 426 -5 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X obj 426 294 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array rigidity1 4 float 1;
+#A 0 -1 0 1 2;
+#X array - 4 float 1;
+#A 0 0 0 0 0;
+#X coords 0 3 3 -3 200 150 1;
+#X restore 31 428 graph;
+#X text 89 585 L0;
+#N canvas 324 73 956 727 figure 0;
+#X obj 284 53 loadbang;
+#X msg 293 125 \; rigidity1 resize 1 \; rigidity1 resize 4 \; rigidity1
+bounds 0 3 3 -3 \; rigidity1 0 -1 0 1 2 \; rigidity1 ylabel -0.5 \;
+rigidity1 xlabel -3.5 \; rigidity1 xticks 0 1 1 \; rigidity1 yticks
+0 0.1 5;
+#X obj 388 574 sqrt;
+#X obj 316 651 tabwrite rigidity3;
+#X obj 343 464 - 20;
+#X obj 316 609 f;
+#X obj 316 579 t b f;
+#X obj 343 494 moses 0;
+#X obj 343 517 * -1;
+#X obj 343 538 sqrt;
+#X obj 343 559 * -1;
+#X obj 481 479 - 20;
+#X obj 453 662 f;
+#X obj 453 632 t b f;
+#X obj 481 509 moses 0;
+#X obj 481 532 * -1;
+#X obj 480 612 * -1;
+#X obj 528 622 *;
+#X obj 480 591 *;
+#X obj 525 590 t f f;
+#X obj 480 564 t f f;
+#X obj 453 683 tabwrite rigidity4;
+#X obj 181 235 t b b;
+#X obj 620 552 f;
+#X obj 620 522 t b f;
+#X obj 620 623 tabwrite rigidity2;
+#X msg 763 574 0;
+#X obj 679 437 - 50;
+#X obj 751 491 moses 40;
+#X obj 681 510 moses -40;
+#X obj 620 586 * 1.5;
+#X obj 680 462 moses 10;
+#X obj 680 488 moses -10;
+#X msg 55 419 \; rigidity2 resize 101 \; rigidity2 xticks 1 10 5 \;
+rigidity2 yticks 0 5 5 \; rigidity3 resize 51 \; rigidity3 xticks 0
+1 5 \; rigidity3 yticks 0 1 5 \; rigidity4 resize 51 \; rigidity4 xticks
+0 1 5 \; rigidity4 yticks 0 100 5;
+#X obj 631 315 f;
+#X obj 648 394 + 1;
+#X obj 632 367 t f f;
+#X obj 375 333 f;
+#X obj 375 360 moses 50.5;
+#X obj 392 411 + 1;
+#X obj 376 384 t f f;
+#X obj 176 141 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 371 310 0;
+#X msg 627 286 0;
+#X obj 631 343 moses 100.5;
+#X connect 0 0 1 0;
+#X connect 0 0 22 0;
+#X connect 2 0 5 1;
+#X connect 4 0 7 0;
+#X connect 5 0 3 0;
+#X connect 6 0 5 0;
+#X connect 6 1 3 1;
+#X connect 7 0 8 0;
+#X connect 7 1 2 0;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 10 0 5 1;
+#X connect 11 0 14 0;
+#X connect 12 0 21 0;
+#X connect 13 0 12 0;
+#X connect 13 1 21 1;
+#X connect 14 0 15 0;
+#X connect 14 1 19 0;
+#X connect 15 0 20 0;
+#X connect 16 0 12 1;
+#X connect 17 0 12 1;
+#X connect 18 0 16 0;
+#X connect 19 0 17 0;
+#X connect 19 1 17 1;
+#X connect 20 0 18 0;
+#X connect 20 1 18 1;
+#X connect 22 0 42 0;
+#X connect 22 1 33 0;
+#X connect 22 1 43 0;
+#X connect 23 0 30 0;
+#X connect 24 0 23 0;
+#X connect 24 1 25 1;
+#X connect 26 0 23 1;
+#X connect 27 0 31 0;
+#X connect 28 0 23 1;
+#X connect 28 1 26 0;
+#X connect 29 0 26 0;
+#X connect 29 1 23 1;
+#X connect 30 0 25 0;
+#X connect 31 0 32 0;
+#X connect 31 1 28 0;
+#X connect 32 0 29 0;
+#X connect 32 1 26 0;
+#X connect 34 0 44 0;
+#X connect 35 0 34 0;
+#X connect 36 0 35 0;
+#X connect 36 1 27 0;
+#X connect 36 1 24 0;
+#X connect 37 0 38 0;
+#X connect 38 0 40 0;
+#X connect 39 0 37 0;
+#X connect 40 0 39 0;
+#X connect 40 1 4 0;
+#X connect 40 1 6 0;
+#X connect 40 1 13 0;
+#X connect 40 1 11 0;
+#X connect 41 0 22 0;
+#X connect 42 0 37 0;
+#X connect 43 0 34 0;
+#X connect 44 0 36 0;
+#X restore 27 304 pd figure;
+#X text 105 375 Rigidity;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array rigidity2 101 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 -60 -58.5 -57 -55.5 -54 -52.5 -51 -49.5 -48
+-46.5 -45 -43.5 -42 -40.5 -39 -37.5 -36 -34.5 -33 -31.5 -30 -28.5 -27
+-25.5 -24 -22.5 -21 -19.5 -18 -16.5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 15 16.5 18 19.5 21 22.5 24 25.5 27 28.5 30 31.5 33 34.5 36
+37.5 39 40.5 42 43.5 45 46.5 48 49.5 51 52.5 54 55.5 57 58.5 0 0 0
+0 0 0 0 0 0 0 0;
+#X array - 101 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0;
+#X coords 0 100 100 -100 200 150 1;
+#X restore 449 428 graph;
+#X text 547 583 L0;
+#X text 466 374 Rigidity with Lmin and Lmax;
+#X text 563 583 Lmin;
+#X text 625 582 Lmax;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array rigidity3 51 float 1;
+#A 0 -4.47214 -4.3589 -4.24264 -4.12311 -4 -3.87298 -3.74166 -3.60555
+-3.4641 -3.31662 -3.16228 -3 -2.82843 -2.64575 -2.44949 -2.23607 -2
+-1.73205 -1.41421 -1 0 1 1.41421 1.73205 2 2.23607 2.44949 2.64575
+2.82843 3 3.16228 3.31662 3.4641 3.60555 3.74166 3.87298 4 4.12311
+4.24264 4.3589 4.47214 4.58258 4.69042 4.79583 4.89898 5 5.09902 5.19615
+5.2915 5.38516 5.47723;
+#X array - 51 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+#X coords 0 6 50 -6 200 150 1;
+#X restore 241 428 graph;
+#X text 314 581 L0;
+#X text 257 375 Rigidity with power = 1/2;
+#N canvas 0 22 450 300 (subpatch) 0;
+#X array rigidity4 51 float 1;
+#A 0 0 -400 -361 -324 -289 -256 -225 -196 -169 -144 -121 -100 -81 -64
+-49 -36 -25 -16 -9 -4 -1 0 1 4 9 16 25 36 49 64 81 100 121 144 169
+196 225 256 289 324 361 400 441 484 529 576 625 676 729 784 841;
+#X array - 51 float 1;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+#X coords 0 1000 50 -1000 200 150 1;
+#X restore 657 428 graph;
+#X text 730 582 L0;
+#X text 688 373 Rigidity with power = 2;
+#X text 571 12 The equations are :;
+#X text 497 36 if Lmin<|L[n]-L[0]|<Lmax;
+#X text 496 75 else;
+#X text 496 95 F[n] = D(L[n]-L[n-1]);
+#X text 496 54 F[n] = K(L[n] - L[0])^P + D(L[n] - L[n-1]);
+#X text 28 187 Links connect masses two by two. They got 4 physicals
+parameters : length \, rigidity \, damping and power.;
+#X text 27 216 Rigidity \, damping and power are defined by the creation
+message. The lenght is initialised to the distance between the two
+masses at the creation.;
+#X text 495 124 For oriented links \, the force F[n] is projected onto
+a vector which is given during the creation of the link using x1y1
+coordinates.;
+#X text 495 169 For normal vector \, the direction is calculated using
+the scalar product :;
+#X text 495 248 You can build specific links using different links
+messages defining the characteristic step by step.;
+#X text 496 206 x1x2 + y1y2 = 0;
+#X text 27 257 Links can be created in one shot between mutiples masses
+\, instead of creation number \, the masses linked are defined with
+their Id.;
+#X text 28 41 pmpd is the 2D object of the pmpd objects collection.
+;
+#X connect 3 0 4 0;
+#X restore 18 695 pd More_Info;
+#X connect 20 0 47 0;
+#X connect 21 0 24 0;
+#X connect 24 0 23 0;
+#X connect 26 0 25 0;
+#X connect 27 0 29 0;
+#X connect 28 0 18 0;
+#X connect 29 0 32 0;
+#X connect 32 0 21 0;
+#X connect 32 1 22 0;
+#X connect 32 2 30 0;
+#X connect 32 3 31 0;
+#X connect 47 0 19 0;
+#X connect 50 0 26 0;

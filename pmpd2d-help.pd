@@ -1,4 +1,4 @@
-#N canvas 150 72 571 767 10;
+#N canvas 288 22 571 767 10;
 #X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 685 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
@@ -19,7 +19,7 @@
 0;
 #X obj 5 655 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#N canvas 76 31 921 714 More_Info 0;
+#N canvas -1204 4 901 640 More_Info 0;
 #X text 96 12 pmpd : mass - spring - damper model;
 #X text 27 155 Be careful : if masses are deleted \, lists messages
 won't work;
@@ -29,19 +29,19 @@ pmpd masses are the principals objects of the model. They got only
 one physical parameter \, the value of their mass. They can be mobile
 or fixed \, in this case forces applied on them automatically \, by
 links \, or manually \, by messages \, don't do anything.;
-#X obj 456 -5 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+#X obj 426 -5 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
-#X obj 456 294 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+#X obj 426 294 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
 #N canvas 0 22 450 300 (subpatch) 0;
 #X array rigidity1 4 float 1;
 #A 0 -1 0 1 2;
-#X array zero 4 float 1;
+#X array - 4 float 1;
 #A 0 0 0 0 0;
 #X coords 0 3 3 -3 200 150 1;
-#X restore 121 328 graph;
-#X text 179 485 L0;
-#N canvas 438 87 956 727 figure 0;
+#X restore 31 428 graph;
+#X text 89 585 L0;
+#N canvas 324 73 956 727 figure 0;
 #X obj 284 53 loadbang;
 #X msg 293 125 \; rigidity1 resize 1 \; rigidity1 resize 4 \; rigidity1
 bounds 0 3 3 -3 \; rigidity1 0 -1 0 1 2 \; rigidity1 ylabel -0.5 \;
@@ -154,8 +154,8 @@ rigidity2 yticks 0 5 5 \; rigidity3 resize 51 \; rigidity3 xticks 0
 #X connect 42 0 37 0;
 #X connect 43 0 34 0;
 #X connect 44 0 36 0;
-#X restore 403 659 pd figure;
-#X text 125 307 Rigidity;
+#X restore 27 304 pd figure;
+#X text 105 375 Rigidity;
 #N canvas 0 22 450 300 (subpatch) 0;
 #X array rigidity2 101 float 1;
 #A 0 0 0 0 0 0 0 0 0 0 0 -60 -58.5 -57 -55.5 -54 -52.5 -51 -49.5 -48
@@ -164,17 +164,17 @@ rigidity2 yticks 0 5 5 \; rigidity3 resize 51 \; rigidity3 xticks 0
 0 0 0 0 15 16.5 18 19.5 21 22.5 24 25.5 27 28.5 30 31.5 33 34.5 36
 37.5 39 40.5 42 43.5 45 46.5 48 49.5 51 52.5 54 55.5 57 58.5 0 0 0
 0 0 0 0 0 0 0 0;
-#X array zero 101 float 1;
+#X array - 101 float 1;
 #A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0;
-#X coords 0 3 22 -3 200 150 1;
-#X restore 565 327 graph;
-#X text 657 482 L0;
-#X text 569 304 Rigidity with Lmin and Lmax;
-#X text 673 482 Lmin;
-#X text 735 481 Lmax;
+#X coords 0 100 100 -100 200 150 1;
+#X restore 449 428 graph;
+#X text 547 583 L0;
+#X text 466 374 Rigidity with Lmin and Lmax;
+#X text 563 583 Lmin;
+#X text 625 582 Lmax;
 #N canvas 0 22 450 300 (subpatch) 0;
 #X array rigidity3 51 float 1;
 #A 0 -4.47214 -4.3589 -4.24264 -4.12311 -4 -3.87298 -3.74166 -3.60555
@@ -183,25 +183,25 @@ rigidity2 yticks 0 5 5 \; rigidity3 resize 51 \; rigidity3 xticks 0
 2.82843 3 3.16228 3.31662 3.4641 3.60555 3.74166 3.87298 4 4.12311
 4.24264 4.3589 4.47214 4.58258 4.69042 4.79583 4.89898 5 5.09902 5.19615
 5.2915 5.38516 5.47723;
-#X array zero 51 float 1;
+#X array - 51 float 1;
 #A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
 #X coords 0 6 50 -6 200 150 1;
-#X restore 119 526 graph;
-#X text 192 679 L0;
-#X text 126 505 Rigidity with power = 1/2;
+#X restore 241 428 graph;
+#X text 314 581 L0;
+#X text 257 375 Rigidity with power = 1/2;
 #N canvas 0 22 450 300 (subpatch) 0;
 #X array rigidity4 51 float 1;
 #A 0 0 -400 -361 -324 -289 -256 -225 -196 -169 -144 -121 -100 -81 -64
 -49 -36 -25 -16 -9 -4 -1 0 1 4 9 16 25 36 49 64 81 100 121 144 169
 196 225 256 289 324 361 400 441 484 529 576 625 676 729 784 841;
-#X array zero 51 float 1;
+#X array - 51 float 1;
 #A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
 #X coords 0 1000 50 -1000 200 150 1;
-#X restore 566 530 graph;
-#X text 639 684 L0;
-#X text 571 508 Rigidity with power = 2;
+#X restore 657 428 graph;
+#X text 730 582 L0;
+#X text 688 373 Rigidity with power = 2;
 #X text 571 12 The equations are :;
 #X text 497 36 if Lmin<|L[n]-L[0]|<Lmax;
 #X text 496 75 else;
@@ -305,7 +305,6 @@ pmpd object. They are of three types :;
 #X text 9 669 KEYWORDS: physical model mass spring damper link;
 #X text 12 8 HELP: pmpd2d;
 #X obj 157 48 pmpd2d;
-#X text 112 638 01_pmpd2dtest.pd;
 #X obj 18 296 pmpd2d;
 #N canvas 731 296 450 300 gemmouse 0;
 #X obj 189 77 gemmouse;
@@ -837,14 +836,15 @@ used this argument as the value applayed to all masses (or link);
 #X text 185 764 \$2 : damping;
 #X text 184 749 \$1 : Id (symbol) or No;
 #X restore 12 478 pd dynamic settings ___;
-#X connect 21 0 40 0;
+#X text 112 638 54_pmpd2dtest.pd;
+#X connect 21 0 39 0;
 #X connect 24 0 23 0;
-#X connect 25 0 51 0;
+#X connect 25 0 50 0;
 #X connect 26 0 19 0;
-#X connect 40 0 20 0;
-#X connect 41 0 22 0;
-#X connect 42 0 41 0;
-#X connect 44 0 43 0;
-#X connect 46 0 43 0;
-#X connect 51 0 45 0;
-#X connect 51 1 45 1;
+#X connect 39 0 20 0;
+#X connect 40 0 22 0;
+#X connect 41 0 40 0;
+#X connect 43 0 42 0;
+#X connect 45 0 42 0;
+#X connect 50 0 44 0;
+#X connect 50 1 44 1;
