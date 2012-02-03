@@ -1,4 +1,5 @@
-#N canvas 168 22 627 556 10;
+#N canvas 164 91 627 556 10;
+#X declare -lib Gem;
 #X obj 22 200 t b b;
 #X obj 22 134 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -734,10 +735,9 @@
 #X obj 267 489 rotateXYZ -80 0 0;
 #X obj 267 517 world_light;
 #X text 210 175 <- reset the simulation;
-#X text 194 6 infinit small particules on an elipse.;
+#X text 205 1 infinit small particules on an elipse.;
 #X obj 46 374 iSphere3D mass 0 -2 0 0 2 0 0.1 0 0.1;
-#X obj 66 351 iAmbient3D mass 0 -0.001 0 1e-006 1e-007 1e-006 O.OOO1
-;
+#X obj 66 351 iAmbient3D mass 0 -0.001 0 1e-06 1e-07 1e-06 O.OOO1;
 #X msg 116 176 reset \, setT 1;
 #X obj 170 324 ch_gemwin;
 #X obj 189 255 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
@@ -753,6 +753,7 @@ of the camera with slider if mouse does not work;
 #X text 79 30 Masses don't interact each other. They interact with
 the sphere \, and the gravity field.;
 #X text 513 199 <- 1;
+#X obj 10 2 declare -lib Gem;
 #X connect 0 0 4 0;
 #X connect 0 1 7 0;
 #X connect 0 1 29 0;

@@ -1,6 +1,7 @@
-#N canvas 266 27 837 614 12;
+#N canvas 262 91 837 614 12;
+#X declare -lib Gem;
 #X obj 212 146 t b b;
-#X obj 212 98 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
+#X obj 212 98 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
 #X obj 36 384 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
@@ -273,6 +274,7 @@ upgrade GEM;
 #X restore 39 319 pd gemmouse;
 #X obj 212 199 s \$0-mass;
 #X obj 274 226 iAmbient2D \$0-mass 0 -0.2;
+#X obj 553 7 declare -lib Gem;
 #X connect 0 0 56 0;
 #X connect 0 1 13 0;
 #X connect 0 1 57 0;

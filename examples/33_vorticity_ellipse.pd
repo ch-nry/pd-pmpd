@@ -1,4 +1,5 @@
-#N canvas 71 37 562 212 10;
+#N canvas 67 91 579 244 10;
+#X declare -lib Gem;
 #N canvas 860 482 333 427 creation 0;
 #X obj 46 380 s pd-new;
 #X msg 86 95 \; pd filename new ./ \; #N canvas \; #X pop 1 \;;
@@ -27,16 +28,16 @@
 #X connect 9 0 10 0;
 #X connect 10 0 0 0;
 #X connect 11 1 8 0;
-#X restore 426 161 pd creation pool;
-#X obj 41 131 t b b;
-#X obj 41 54 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
+#X restore 427 187 pd creation pool;
+#X obj 42 157 t b b;
+#X obj 42 80 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 41 175 s mass;
-#X obj 66 156 s link;
-#X text 73 51 <- begin (change the metro speed for slow computer);
-#X floatatom 90 70 5 0 0 0 - - -;
-#X msg 179 120 0 \, destroy;
-#X obj 144 148 gemwin;
+#X obj 42 201 s mass;
+#X obj 67 182 s link;
+#X text 74 77 <- begin (change the metro speed for slow computer);
+#X floatatom 91 96 5 0 0 0 - - -;
+#X msg 180 146 0 \, destroy;
+#X obj 145 174 gemwin;
 #N canvas 790 67 586 510 pool 0;
 #X obj 380 380 vortex2;
 #X obj 287 210 vortex2;
@@ -350,15 +351,16 @@
 #X obj 1354 390 vortex2;
 #X obj 1364 400 vortex2;
 #X obj 1374 410 vortex2;
-#X restore 428 135 pd pool;
-#X obj 276 145 s mass2;
-#X msg 277 124 bang;
-#X msg 144 95 reset \, view 0 0 -10 0 0 0 0 1 0 \, create \, 1;
-#X obj 41 105 metro 100;
-#X text 120 -3 simulation of a continus elipse of vorticity field.
+#X restore 429 161 pd pool;
+#X obj 277 171 s mass2;
+#X msg 278 150 bang;
+#X msg 145 121 reset \, view 0 0 -10 0 0 0 0 1 0 \, create \, 1;
+#X obj 42 131 metro 100;
+#X text 121 23 simulation of a continus elipse of vorticity field.
 ;
-#X text 119 14 This simulation nead lot's a masss \, and lot's of
-CPU.;
+#X text 120 40 This simulation nead lot's a masss \, and lot's of CPU.
+;
+#X obj 10 2 declare -lib Gem;
 #X connect 1 0 3 0;
 #X connect 1 1 4 0;
 #X connect 2 0 13 0;

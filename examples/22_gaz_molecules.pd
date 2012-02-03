@@ -1,4 +1,5 @@
-#N canvas 131 77 652 468 10;
+#N canvas 127 91 652 468 10;
+#X declare -lib Gem;
 #X obj 27 199 t b b;
 #X obj 27 121 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -186,6 +187,7 @@ to the mass). so \, it's a simple additive synthesis.;
 #X msg 426 234 \; pd dsp 1 \;;
 #X msg 492 234 \; pd dsp 0 \;;
 #X text 324 192 <- 1;
+#X obj 10 2 declare -lib Gem;
 #X connect 0 0 6 0;
 #X connect 0 1 16 0;
 #X connect 0 1 19 0;

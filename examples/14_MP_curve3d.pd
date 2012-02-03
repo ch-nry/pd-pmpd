@@ -1,4 +1,5 @@
-#N canvas 613 241 763 458 12;
+#N canvas 609 255 763 458 12;
+#X declare -lib Gem;
 #X obj 23 83 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
 #X msg 801 142 setK \$1;
@@ -420,6 +421,7 @@ visualisation.;
 #X obj 23 154 s masse;
 #X obj 156 203 s lia;
 #X obj 48 321 s masse;
+#X obj 283 36 declare -lib Gem;
 #X connect 0 0 12 0;
 #X connect 1 0 3 0;
 #X connect 2 0 4 0;

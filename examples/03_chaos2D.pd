@@ -1,4 +1,4 @@
-#N canvas 1 4 843 542 12;
+#N canvas 1 91 864 550 12;
 #X obj 16 98 t b b;
 #X obj 16 50 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -119,8 +119,8 @@
 #X text 359 135 you can change physical properties of the system. take
 care of numerical instability (especially with fast movement);
 #X text 276 388 The mass is connected to the 4 borders of the screen
-with 4 link (without damping). The movement of the masss (should)
-follow a chaotic equation.;
+with 4 link (without damping). The movement of the masss (should) follow
+a chaotic equation.;
 #X obj 40 445 osc~;
 #X obj 40 420 mtof;
 #X obj 40 395 line;

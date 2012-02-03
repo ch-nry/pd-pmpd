@@ -1,4 +1,5 @@
-#N canvas 520 143 745 681 10;
+#N canvas 518 150 745 681 10;
+#X declare -lib Gem;
 #X obj 30 174 until;
 #X obj 30 244 - 100;
 #X obj 30 198 f;
@@ -95,6 +96,7 @@ it's elongation;
 #X msg 30 304 posX M2 0 \, bang \, posX M2 \$1 \, bang \, get massesForces
 M2;
 #X msg 191 474 print;
+#X obj 333 52 declare -lib Gem;
 #X connect 0 0 2 0;
 #X connect 1 0 12 0;
 #X connect 2 0 3 0;

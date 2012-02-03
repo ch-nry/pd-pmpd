@@ -1,4 +1,5 @@
-#N canvas 106 59 736 538 10;
+#N canvas 102 91 736 538 10;
+#X declare -lib Gem;
 #X obj 11 91 t b b;
 #X obj 11 43 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -222,6 +223,7 @@
 #X text 284 82 <- 1;
 #X text 36 42 <- 2;
 #X obj 173 151 gemwin 50;
+#X obj 9 16 declare -lib Gem;
 #X connect 0 0 5 0;
 #X connect 0 1 12 0;
 #X connect 0 1 13 0;

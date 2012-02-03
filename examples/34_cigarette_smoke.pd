@@ -1,4 +1,5 @@
-#N canvas 1090 190 646 480 10;
+#N canvas 1086 204 646 480 10;
+#X declare -lib Gem;
 #N canvas 860 482 349 443 creation 0;
 #X obj 46 380 s pd-new;
 #X msg 86 95 \; pd filename new ./ \; #N canvas \; #X pop 1 \;;
@@ -31,7 +32,7 @@
 #X connect 11 0 10 0;
 #X connect 12 0 0 0;
 #X connect 13 1 8 0;
-#X restore 405 176 pd creation pool;
+#X restore 428 222 pd creation pool;
 #N canvas 626 84 618 542 pool 0;
 #X obj 0 0 smoke1 0;
 #X obj 20 20 smoke1 1;
@@ -283,37 +284,39 @@
 #X obj 4940 4940 smoke1 247;
 #X obj 4960 4960 smoke1 248;
 #X obj 4980 4980 smoke1 249;
-#X restore 405 150 pd pool;
-#X obj 18 146 t b b;
-#X obj 17 69 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
+#X restore 428 196 pd pool;
+#X obj 41 192 t b b;
+#X obj 40 115 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 18 190 s mass;
-#X obj 43 171 s link;
-#X text 50 66 <- begin (change the metro speed for slow computer);
-#X floatatom 60 89 5 0 0 0 - - -;
-#X msg 242 129 0 \, destroy;
-#X obj 209 155 gemwin;
-#X obj 117 224 s reset_smoke;
-#X obj 301 189 s reset_all;
-#X obj 301 164 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+#X obj 41 236 s mass;
+#X obj 66 217 s link;
+#X text 73 112 <- begin (change the metro speed for slow computer)
+;
+#X floatatom 83 135 5 0 0 0 - - -;
+#X msg 265 175 0 \, destroy;
+#X obj 232 201 gemwin;
+#X obj 140 270 s reset_smoke;
+#X obj 324 235 s reset_all;
+#X obj 324 210 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
-#X obj 17 121 metro 20;
-#X msg 209 109 reset \, create \, 1;
-#X obj 100 129 metro 50;
-#X obj 90 309 iAmbient2D mass 0 0.0007 0.0002 0.0002;
-#X obj 93 337 smoke_vortex 0.003;
-#X text 150 7 Cigarettes smoke simulation;
-#X text 92 29 Each particules are in some kind of turbulent wind (vertical
+#X obj 40 167 metro 20;
+#X msg 232 155 reset \, create \, 1;
+#X obj 123 175 metro 50;
+#X obj 113 355 iAmbient2D mass 0 0.0007 0.0002 0.0002;
+#X obj 116 383 smoke_vortex 0.003;
+#X text 173 53 Cigarettes smoke simulation;
+#X text 115 75 Each particules are in some kind of turbulent wind (vertical
 force + some random mouving vortex);
-#X text 322 108 <- create;
-#X obj 100 152 f;
-#X obj 100 174 + 1;
-#X obj 117 199 % 250;
-#X obj 92 357 smoke_vortex 0.003;
-#X obj 91 377 smoke_vortex 0.003;
-#X obj 225 337 smoke_vortex -0.003;
-#X obj 224 357 smoke_vortex -0.003;
-#X obj 224 377 smoke_vortex -0.003;
+#X text 345 154 <- create;
+#X obj 123 198 f;
+#X obj 123 220 + 1;
+#X obj 140 245 % 250;
+#X obj 115 403 smoke_vortex 0.003;
+#X obj 114 423 smoke_vortex 0.003;
+#X obj 248 383 smoke_vortex -0.003;
+#X obj 247 403 smoke_vortex -0.003;
+#X obj 247 423 smoke_vortex -0.003;
+#X obj 10 2 declare -lib Gem;
 #X connect 2 0 4 0;
 #X connect 2 1 5 0;
 #X connect 2 1 16 0;

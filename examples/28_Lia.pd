@@ -1,4 +1,5 @@
-#N canvas 43 52 799 551 12;
+#N canvas 39 91 799 551 12;
+#X declare -lib Gem;
 #X obj 9 35 metro 10;
 #X obj 9 10 loadbang;
 #X obj 9 62 t b b;
@@ -22,19 +23,19 @@
 #X obj 269 181 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
 -1 -1 0 1;
 #X obj 269 196 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
--1 -1 800 1;
+-1 -1 807 1;
 #X obj 269 211 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
--1 -1 1600 1;
+-1 -1 1613 1;
 #X obj 269 226 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
--1 -1 2400 1;
+-1 -1 2417 1;
 #X obj 269 241 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
--1 -1 3200 1;
+-1 -1 3218 1;
 #X obj 269 256 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
--1 -1 4000 1;
+-1 -1 4017 1;
 #X obj 269 271 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
--1 -1 4800 1;
+-1 -1 4813 1;
 #X obj 269 286 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
--1 -1 5600 1;
+-1 -1 5607 1;
 #X obj 269 301 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
 -1 -1 6400 1;
 #X obj 192 130 loadbang;
@@ -58,6 +59,7 @@
 #X text 622 374 <- link can break if deformation is to big;
 #X text 319 12 This is an exemple of diferents comportement of a link
 ;
+#X obj 94 11 declare -lib Gem;
 #X connect 0 0 2 0;
 #X connect 1 0 0 0;
 #X connect 2 0 4 0;

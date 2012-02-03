@@ -1,4 +1,5 @@
-#N canvas 915 160 636 696 10;
+#N canvas 913 167 636 696 10;
+#X declare -lib Gem;
 #X obj 363 187 gemhead;
 #X obj 363 234 world_light;
 #X msg 364 141 \; pd dsp 1;
@@ -260,6 +261,7 @@
 #X obj 364 120 loadbang;
 #X obj 213 462 gemmouse 80 80;
 #X text 124 661 moove the mouse on the screen to simulate gravity;
+#X obj 362 47 declare -lib Gem;
 #X connect 0 0 20 0;
 #X connect 3 0 27 0;
 #X connect 5 0 7 0;

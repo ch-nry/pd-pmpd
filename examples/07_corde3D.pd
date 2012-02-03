@@ -1,4 +1,5 @@
-#N canvas 102 60 816 578 12;
+#N canvas 98 91 816 578 12;
+#X declare -lib Gem;
 #N canvas 663 236 288 320 mass 0;
 #X obj 25 38 inlet;
 #X obj 25 99 outlet;
@@ -35,7 +36,7 @@
 #X connect 4 0 3 0;
 #X connect 4 1 1 0;
 #X restore 47 593 pd link;
-#X obj 23 83 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
+#X obj 23 83 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
 #X obj 94 188 s link;
 #X obj 23 187 s mass;
@@ -511,6 +512,7 @@ to all masss.;
 #X text 710 252 <- rotate the model in 3D;
 #X text 55 78 <- 1;
 #X text 289 255 <- 2;
+#X obj 74 21 declare -lib Gem;
 #X connect 0 0 1 1;
 #X connect 0 0 48 0;
 #X connect 1 1 0 0;

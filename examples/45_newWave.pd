@@ -1,4 +1,5 @@
-#N canvas 362 77 770 697 10;
+#N canvas 358 91 770 697 10;
+#X declare -lib Gem;
 #N canvas 150 74 837 606 array 0;
 #X obj 1893 163 outlet;
 #X obj 121 835 outlet;
@@ -667,7 +668,7 @@
 #X connect 122 2 111 0;
 #X restore 15 366 pd array;
 #X obj 16 122 t b b;
-#X obj 16 48 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
+#X obj 16 48 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
 #X msg 160 112 0 \, destroy;
 #X floatatom 59 74 5 0 0 0 - - -;
@@ -714,7 +715,7 @@
 #X restore 490 181 pd constructor;
 #X obj 444 535 dac~;
 #X obj 445 459 line~;
-#N canvas 0 0 456 306 graph1 0;
+#N canvas 0 0 456 306 (subpatch) 0;
 #X array fooL 50000 float 0;
 #X coords 0 1 49999 -1 200 140 1;
 #X restore 198 321 graph;
@@ -737,7 +738,7 @@ you \, to accelerate the computing of the array.;
 #X obj 445 343 loadbang;
 #X obj 15 463 tabwrite fooL;
 #X obj 58 437 tabwrite fooR;
-#N canvas 0 0 456 306 graph1 0;
+#N canvas 0 0 456 306 (subpatch) 0;
 #X array fooR 50000 float 0;
 #X coords 0 1 49999 -1 200 140 1;
 #X restore 198 469 graph;
@@ -746,6 +747,7 @@ you \, to accelerate the computing of the array.;
 #X msg 388 164 setD2 0.001;
 #X obj 16 144 s L;
 #X obj 41 144 s M;
+#X obj 10 2 declare -lib Gem;
 #X connect 0 0 44 0;
 #X connect 0 1 45 0;
 #X connect 1 0 50 0;

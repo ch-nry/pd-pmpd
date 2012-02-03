@@ -1,4 +1,5 @@
-#N canvas 67 33 711 552 10;
+#N canvas 63 91 711 552 10;
+#X declare -lib Gem;
 #X obj 31 35 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
 #X obj 68 188 s masse;
@@ -1350,6 +1351,7 @@
 #X connect 21 0 22 3;
 #X connect 22 0 17 0;
 #X restore 608 428 pd spheres;
+#X obj 10 2 declare -lib Gem;
 #X connect 0 0 44 0;
 #X connect 2 0 28 0;
 #X connect 3 0 4 0;

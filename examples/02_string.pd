@@ -1,18 +1,18 @@
-#N canvas 45 79 1309 802 12;
+#N canvas 41 93 1309 802 12;
 #X obj 379 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 4141 1;
+-1 -1 0 1;
 #X obj 397 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 4972 1;
+-1 -1 0 1;
 #X obj 415 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 5574 1;
+-1 -1 0 1;
 #X obj 433 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 5821 1;
+-1 -1 0 1;
 #X obj 451 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 5596 1;
+-1 -1 0 1;
 #X obj 469 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 4879 1;
+-1 -1 0 1;
 #X obj 361 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 3200 1;
+-1 -1 0 1;
 #X obj 9 35 metro 10;
 #X obj 9 10 loadbang;
 #X text 138 362 move the first slider ->;
@@ -20,9 +20,9 @@
 #X text 268 11 This is the first exemple of physical modeling;
 #X text 268 33 this is an elastic string;
 #X obj 487 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 3757 1;
+-1 -1 0 1;
 #X obj 505 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 2400 1;
+-1 -1 0 1;
 #X obj 9 62 t b b;
 #X obj 44 87 s \$0-link;
 #X obj 9 113 s \$0-mass;

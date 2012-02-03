@@ -1,4 +1,5 @@
-#N canvas 516 258 695 581 12;
+#N canvas 512 272 695 581 12;
+#X declare -lib Gem;
 #N canvas 381 0 941 947 forme 0;
 #X obj 22 676 translateXYZ;
 #X obj 16 646 unpack s f f f;
@@ -232,6 +233,7 @@ in the screen.;
 GEM;
 #X text 44 22 <- 1;
 #X text 399 48 <- 2;
+#X obj 161 14 declare -lib Gem;
 #X connect 1 0 5 0;
 #X connect 5 0 19 0;
 #X connect 6 0 8 0;

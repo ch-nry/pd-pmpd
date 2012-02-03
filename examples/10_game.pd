@@ -1,4 +1,5 @@
-#N canvas 507 158 593 464 12;
+#N canvas 503 172 593 464 12;
+#X declare -lib Gem;
 #N canvas 623 135 500 289 init 0;
 #X msg 200 169 setK \$1;
 #X msg 274 143 setD \$1;
@@ -50,9 +51,9 @@
 #X connect 23 0 18 0;
 #X restore 429 282 pd init;
 #X obj 30 69 t b b;
-#X obj 30 21 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
+#X obj 30 21 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 343 10 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+#X obj 356 32 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
 #X msg 64 218 0 \, destroy;
 #X obj 30 246 gemwin;
@@ -867,25 +868,26 @@
 #X connect 36 0 16 1;
 #X connect 36 0 17 1;
 #X restore 429 310 pd structure;
-#X obj 341 31 loadbang;
+#X obj 377 52 loadbang;
 #X msg 256 256 force2D 0 2;
 #X msg 202 281 force2D -2 0;
 #X msg 259 308 force2D 0 -2;
 #X msg 313 280 force2D 2 0;
 #X obj 65 94 s \$0-link;
 #X obj 30 155 s \$0-mass;
-#X obj 341 60 t b b b;
-#X msg 392 85 reset;
-#X msg 367 110 resetL;
-#X msg 341 138 resetF;
+#X obj 354 82 t b b b;
+#X msg 405 107 reset;
+#X msg 380 132 resetL;
+#X msg 354 160 resetF;
 #X obj 257 340 s \$0-mass;
 #X msg 42 127 force2D 0 -0.1;
 #X text 54 402 small game : try to put the structure horizontally on
 the floor \, and then back to vertical.;
-#X text 383 8 <- reset;
+#X text 396 30 <- reset;
 #X text 93 17 <- 1;
 #X text 180 194 <- 2;
 #X obj 30 42 metro 10;
+#X obj 158 12 declare -lib Gem;
 #X connect 1 0 14 0;
 #X connect 1 1 20 0;
 #X connect 1 1 13 0;

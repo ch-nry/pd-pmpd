@@ -1,10 +1,11 @@
-#N canvas 457 291 671 403 10;
-#X obj 19 108 t b b;
-#X obj 19 42 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
+#N canvas 453 305 697 427 10;
+#X declare -lib Gem;
+#X obj 22 129 t b b;
+#X obj 22 63 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 177 289 loadbang;
-#X msg 323 137 0 \, destroy;
-#X obj 19 146 s mass;
+#X obj 180 310 loadbang;
+#X msg 326 158 0 \, destroy;
+#X obj 22 167 s mass;
 #N canvas 39 357 1063 565 pool 0;
 #X obj 294 191 explose2;
 #X obj 104 1 explose2;
@@ -426,35 +427,36 @@
 #X obj 1040 598 explose1;
 #X obj 1050 608 explose1;
 #X obj 1060 618 explose1;
-#X restore 26 330 pd pool;
-#X msg 177 313 reset;
-#X obj 177 337 s mass;
-#X obj 65 146 s link;
-#X text 42 39 <- begin (change metro speed for slow computer);
-#X obj 27 245 gemhead 1;
-#X obj 27 270 rotateXYZ -80 0 0;
-#X obj 27 298 world_light;
-#X obj 154 77 bng 15 250 50 0 empty empty empty 0 -6 0 8 -258699 -1
+#X restore 29 351 pd pool;
+#X msg 180 334 reset;
+#X obj 180 358 s mass;
+#X obj 68 167 s link;
+#X text 45 60 <- begin (change metro speed for slow computer);
+#X obj 30 266 gemhead 1;
+#X obj 30 291 rotateXYZ -80 0 0;
+#X obj 30 319 world_light;
+#X obj 157 98 bng 15 250 50 0 empty empty empty 0 -6 0 8 -258699 -1
 -1;
-#X obj 154 106 t b b b b;
-#X obj 32 170 s mass2;
-#X obj 192 355 s mass2;
-#X obj 305 231 delay 200;
-#X obj 303 297 iCylinder3D mass2 0 1 0 0 0 0 0 1 0 0.05;
-#X obj 305 252 iSphere3D mass 0 3 0 0 1 0 0.03;
-#X msg 292 114 reset \, view -3 4 6 0 0 0 2 4 0 \, lighting 1 \, create
+#X obj 157 127 t b b b b;
+#X obj 35 191 s mass2;
+#X obj 195 376 s mass2;
+#X obj 308 252 delay 200;
+#X obj 306 318 iCylinder3D mass2 0 1 0 0 0 0 0 1 0 0.05;
+#X obj 308 273 iSphere3D mass 0 3 0 0 1 0 0.03;
+#X msg 295 135 reset \, view -3 4 6 0 0 0 2 4 0 \, lighting 1 \, create
 \, 1;
-#X obj 19 82 metro 25;
-#X floatatom 62 65 5 0 0 0 - - -;
-#X text 179 76 <- explosion;
-#X text 184 7 planette explosion \, hollywood style!;
-#X obj 277 78 bng 15 250 50 0 empty empty empty 0 -6 0 8 -24198 -1
+#X obj 22 103 metro 25;
+#X floatatom 65 86 5 0 0 0 - - -;
+#X text 182 97 <- explosion;
+#X text 194 44 planette explosion \, hollywood style!;
+#X obj 280 99 bng 15 250 50 0 empty empty empty 0 -6 0 8 -24198 -1
 -1;
-#X text 296 77 <- reset;
-#X obj 304 274 iAmbient3D mass2 0 0 0 0.01 0 0.01;
-#X obj 305 208 iAmbient3D mass 0 0 0 0.001 0.001 0.001 O.OOO1;
-#X text 625 115 <- 1;
-#X obj 292 166 gemwin;
+#X text 299 98 <- reset;
+#X obj 307 295 iAmbient3D mass2 0 0 0 0.01 0 0.01;
+#X obj 308 229 iAmbient3D mass 0 0 0 0.001 0.001 0.001 O.OOO1;
+#X text 628 136 <- 1;
+#X obj 295 187 gemwin;
+#X obj 11 11 declare -lib Gem;
 #X connect 0 0 4 0;
 #X connect 0 0 15 0;
 #X connect 0 1 8 0;

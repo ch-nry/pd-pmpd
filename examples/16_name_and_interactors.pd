@@ -1,4 +1,5 @@
-#N canvas 34 14 669 578 12;
+#N canvas 30 91 877 678 12;
+#X declare -lib Gem;
 #X obj 9 18 t b b;
 #X obj 9 -30 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -65,8 +66,7 @@
 #X obj 52 174 iAmbient2D foo 0 -0.1;
 #X obj 63 201 iAmbient2D foo2 0 -0.1;
 #X obj 76 227 iAmbient2D foo3 0 -0.1;
-#X text 268 173 force is apply to mass named foo \, foo2 and foo3
-;
+#X text 268 173 force is apply to mass named foo \, foo2 and foo3;
 #X text 344 287 a positive forece is apply to foo2 \, and to foo3 (according
 to pd link). this force allows mass 2 and 3 to stay at Y=0.;
 #X obj 529 657 iAmbient2D;
@@ -96,6 +96,7 @@ the help file :;
 #X obj 622 656 tSquare2D;
 #X text 356 20 <- 1 GEM window;
 #X text 34 -37 <- 2 begin simulation;
+#X obj 466 -8 declare -lib Gem;
 #X connect 0 0 40 0;
 #X connect 0 1 46 0;
 #X connect 0 1 47 0;

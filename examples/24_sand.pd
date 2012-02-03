@@ -1,4 +1,5 @@
-#N canvas 167 110 527 418 10;
+#N canvas 163 124 527 418 10;
+#X declare -lib Gem;
 #X obj 20 164 t b b;
 #X obj 20 98 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -106,11 +107,11 @@
 #X obj 83 342 s link;
 #X obj 59 299 iCircle2D mass 3 2 0 2.95 0 0 1 0 0 0 0.1;
 #X obj 69 319 iCircle2D mass -3 2 0 2.95 0 0 1 0 0 0 0.1;
-#X text 184 3 sand simulation;
-#X text 69 27 all mass interact each other. They are in a viscuce
-place \, with vertical force (gravity);
-#X text 70 59 2 big circles (invisible) made the masss to go down
-like in a sand glass.;
+#X text 230 3 sand simulation;
+#X text 69 27 all mass interact each other. They are in a viscuce place
+\, with vertical force (gravity);
+#X text 70 59 2 big circles (invisible) made the masss to go down like
+in a sand glass.;
 #X text 83 369 Masses are not very stable \, due to internal forces
 of the structure.;
 #X text 41 96 <- begin (change metro speed for slow computer);
@@ -124,6 +125,7 @@ of the structure.;
 #X obj 45 263 iAmbient2D mass 0 -0.0005 0 0 0.03;
 #X obj 20 137 metro 5;
 #X text 366 158 <- 1;
+#X obj 10 2 declare -lib Gem;
 #X connect 0 0 4 0;
 #X connect 0 1 9 0;
 #X connect 0 1 8 0;

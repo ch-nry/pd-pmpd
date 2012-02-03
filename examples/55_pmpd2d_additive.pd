@@ -1,4 +1,5 @@
-#N canvas 572 22 686 162 10;
+#N canvas 570 84 686 162 10;
+#X declare -lib Gem;
 #X obj 22 16 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
 #N canvas 596 150 954 737 synthese 0;
@@ -437,7 +438,7 @@
 #X connect 12 0 9 0;
 #X connect 12 1 8 0;
 #X restore 23 86 pd gem_stuff;
-#X obj 23 64 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
+#X obj 23 64 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
 ;
 #X text 43 63 gem on/off;
 #X text 196 54 1 Create window;
@@ -459,5 +460,6 @@
 #X text 196 94 Drag red masses for bass and white ones for high tones...
 ;
 #X text 196 17 Additive synthesis example;
+#X obj 198 122 declare -lib Gem;
 #X connect 0 0 3 0;
 #X connect 5 0 4 0;

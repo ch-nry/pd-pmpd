@@ -1,4 +1,5 @@
-#N canvas 53 34 632 373 10;
+#N canvas 49 91 632 373 10;
+#X declare -lib Gem;
 #X obj 18 137 t b b;
 #X obj 18 48 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -149,8 +150,9 @@
 #X obj 160 317 iSeg2D mass -5 8 -0.2 3 1 0.5;
 #X obj 165 298 iSeg2D mass 0.2 3 5 8 1 0.5;
 #X msg 111 70 reset \, view 0 0 -8 0 0 0 0 1 0 \, create \, 1;
-#X text 145 10 It's the same as previus exemple \, but in a gravity
+#X text 208 25 It's the same as previus exemple \, but in a gravity
 field.;
+#X obj 13 2 declare -lib Gem;
 #X connect 0 0 4 0;
 #X connect 0 1 11 0;
 #X connect 0 1 13 0;

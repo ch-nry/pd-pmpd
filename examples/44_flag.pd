@@ -1,4 +1,5 @@
-#N canvas 178 45 497 616 10;
+#N canvas 174 91 497 616 10;
+#X declare -lib Gem;
 #N canvas 529 347 774 319 array 0;
 #X obj 200 0 mass_link3 1 -3 -4 0;
 #X obj 400 0 mass_link3 2 -2 -4 0;
@@ -769,6 +770,7 @@
 #X text 317 267 random wind speed;
 #X text 253 381 filter to get a smooth wind movment;
 #X text 204 11 flag in the wind;
+#X obj 10 2 declare -lib Gem;
 #X connect 1 0 26 0;
 #X connect 5 0 3 0;
 #X connect 5 0 25 0;

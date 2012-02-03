@@ -1,6 +1,4 @@
-#N canvas 103 346 433 279 10;
-#X obj 17 29 pmpd;
-#X text 64 28 this object load the pmpd lib in memory.;
+#N canvas 99 360 460 300 10;
 #X text 17 54 you are ready to try the exemples patchs. Please do not
 run 2 exemples in the same time (somes use same send and receive name).
 ;
@@ -44,5 +42,5 @@ a number. others files are abstractions used by this examples.;
 #X restore 25 236 pd open;
 #X text 17 106 gem v0.90 is neaded. it's the only dependency of the
 exemples;
-#X connect 3 0 4 0;
-#X connect 7 0 8 0;
+#X connect 1 0 2 0;
+#X connect 5 0 6 0;

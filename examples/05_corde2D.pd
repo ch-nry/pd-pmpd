@@ -1,4 +1,5 @@
-#N canvas 80 32 844 550 12;
+#N canvas 76 91 844 550 12;
+#X declare -lib Gem;
 #N canvas 306 123 261 242 mass 0;
 #X obj 24 23 inlet;
 #X obj 24 83 outlet;
@@ -353,12 +354,12 @@
 #X msg 508 95 reset \, lighting 1 \, create \, 1;
 #X obj 112 15 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
-#X text 325 23 masss are link together like in an elastic string.
-;
+#X text 325 23 masss are link together like in an elastic string.;
 #X text 30 652 The extrem right and extreme left masss are fixed :
 the does not receive a force. they are neaded for the model to be link
 to a special point in the screen.;
 #X text 742 94 <- 1;
+#X obj 443 44 declare -lib Gem;
 #X connect 0 0 44 1;
 #X connect 0 0 45 0;
 #X connect 4 0 6 0;

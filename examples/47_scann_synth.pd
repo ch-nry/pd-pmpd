@@ -1,4 +1,5 @@
-#N canvas 581 245 515 493 12;
+#N canvas 577 259 515 493 12;
+#X declare -lib Gem;
 #N canvas 72 27 1257 926 corde 0;
 #N canvas 306 123 345 326 mass 0;
 #X obj 65 20 inlet;
@@ -1358,6 +1359,7 @@
 #X obj 36 78 gemwin 40;
 #X text 379 158 (damping);
 #X obj 245 405 dac~;
+#X obj 260 6 declare -lib Gem;
 #X connect 0 0 28 0;
 #X connect 0 1 28 1;
 #X connect 1 0 8 0;

@@ -1,4 +1,5 @@
-#N canvas 29 57 762 481 10;
+#N canvas 25 91 762 481 10;
+#X declare -lib Gem;
 #X obj 18 182 t b b;
 #X obj 18 134 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -58,6 +59,7 @@
 #X text 328 25 interactor to a collection of masss;
 #X text 132 40 <- 1;
 #X text 45 131 <- 2;
+#X obj 22 15 declare -lib Gem;
 #X connect 0 0 8 0;
 #X connect 0 1 42 0;
 #X connect 0 1 43 0;

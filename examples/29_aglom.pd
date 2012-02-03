@@ -1,4 +1,5 @@
-#N canvas 51 18 635 423 10;
+#N canvas 47 91 635 423 10;
+#X declare -lib Gem;
 #X obj 18 181 t b b;
 #X obj 18 103 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -84,11 +85,12 @@
 #X floatatom 55 123 5 0 0 0 - - -;
 #X obj 43 260 iAmbient2D mass 0 0 0.01 0.01 1;
 #X text 359 257 <- give random speed and ambient viscosity;
-#X text 174 35 All masss got 2 circular interactors around them. This
+#X text 215 46 All masss got 2 circular interactors around them. This
 create a non linear interactor. this make them to atract / repuls depending
 on ther distances....;
-#X text 177 6 All masss interact each other in a way for the creation
+#X text 218 17 All masss interact each other in a way for the creation
 of small structures;
+#X obj 20 23 declare -lib Gem;
 #X connect 0 0 5 0;
 #X connect 0 1 14 0;
 #X connect 0 1 16 0;

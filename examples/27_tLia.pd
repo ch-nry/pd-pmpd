@@ -1,4 +1,5 @@
-#N canvas 128 41 836 611 12;
+#N canvas 124 91 836 611 12;
+#X declare -lib Gem;
 #N canvas 306 123 269 250 mass 0;
 #X obj 24 23 inlet;
 #X obj 24 83 outlet;
@@ -753,6 +754,7 @@
 to a "tlink" object wich output information about the linkison (position
 \, orientation etc).;
 #X text 727 133 <- 1;
+#X obj 26 11 declare -lib Gem;
 #X connect 0 0 44 1;
 #X connect 0 0 45 0;
 #X connect 0 0 72 0;

@@ -1,4 +1,5 @@
-#N canvas 21 21 607 384 12;
+#N canvas 17 91 607 384 12;
+#X declare -lib Gem;
 #X obj 82 222 t b b;
 #X obj 82 198 metro 10;
 #X obj 82 164 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
@@ -55,9 +56,10 @@
 #X text 347 205 <- send X \, Y \, Z forces;
 #X obj 82 264 mass3D 0 10;
 #X obj 189 264 link3D 0 1 1 1 0.03;
-#X text 73 12 simulation of a 3D model. The small sphere is link in
+#X text 76 61 simulation of a 3D model. The small sphere is link in
 the center of the big one with a 3D link. This link has the same diametter
 than the big sphere.;
+#X obj 74 22 declare -lib Gem;
 #X connect 0 0 11 0;
 #X connect 0 1 12 0;
 #X connect 1 0 0 0;

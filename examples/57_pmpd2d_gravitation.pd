@@ -1,4 +1,5 @@
-#N canvas 676 303 541 161 10;
+#N canvas 674 310 541 161 10;
+#X declare -lib Gem;
 #X obj 18 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
 #X text 39 18 reset;
@@ -19,7 +20,7 @@
 #X connect 7 0 4 0;
 #X connect 7 1 0 0;
 #X restore 18 87 pd gem_stuff;
-#X obj 18 69 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
+#X obj 18 69 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
 ;
 #N canvas 0 22 804 395 creation 0;
 #X obj 42 28 bng 20 250 50 0 empty empty empty 0 -6 0 8 -258699 -1
@@ -209,5 +210,6 @@ in "creation";
 #X connect 8 0 6 0;
 #X restore 18 107 pd compute;
 #X text 120 121 copyright Nicolas Montgermont 2010;
+#X obj 120 20 declare -lib Gem;
 #X connect 0 0 4 0;
 #X connect 3 0 2 0;

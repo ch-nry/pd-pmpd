@@ -1,4 +1,5 @@
-#N canvas 165 113 638 442 10;
+#N canvas 161 127 638 442 10;
+#X declare -lib Gem;
 #N canvas 20 38 1340 956 tentacule 0;
 #X obj 482 749 gemhead;
 #X obj 114 173 mass3D M 1 1 -0.6 0;
@@ -417,6 +418,7 @@ structure;
 #X obj 87 201 hsl 128 15 0 127 0 0 empty empty empty -2 -6 0 8 -262144
 -1 -1 0 1;
 #X text 129 136 camera position;
+#X obj 10 2 declare -lib Gem;
 #X connect 1 0 19 0;
 #X connect 2 0 19 0;
 #X connect 3 0 19 0;

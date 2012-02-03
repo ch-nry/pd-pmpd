@@ -1,4 +1,5 @@
-#N canvas 95 190 751 371 10;
+#N canvas 91 204 751 371 10;
+#X declare -lib Gem;
 #X obj 23 167 t b b;
 #X obj 23 59 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -185,6 +186,7 @@ of the cylinder;
 #X obj 49 247 iAmbient2D mass 0 0 0 0 0 -1000 1000 -1000 1000 0.01
 0;
 #X text 233 108 <-1;
+#X obj 490 33 declare -lib Gem;
 #X connect 0 0 6 0;
 #X connect 0 1 14 0;
 #X connect 0 1 15 0;

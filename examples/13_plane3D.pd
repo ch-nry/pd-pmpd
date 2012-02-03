@@ -1,5 +1,6 @@
-#N canvas 603 32 1102 849 12;
-#X obj 28 79 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
+#N canvas 599 91 1102 849 12;
+#X declare -lib Gem;
+#X obj 28 79 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
 #X msg 397 175 setK \$1;
 #X msg 618 127 setM \$1;
@@ -168,6 +169,7 @@ they will not move.;
 #X obj 49 413 s masse;
 #X obj 28 183 s masse;
 #X obj 99 184 s lia;
+#X obj 158 12 declare -lib Gem;
 #X connect 0 0 12 0;
 #X connect 1 0 3 0;
 #X connect 2 0 4 0;
