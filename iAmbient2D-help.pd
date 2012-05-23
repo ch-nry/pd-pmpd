@@ -1,8 +1,6 @@
-#N canvas 572 117 613 725 10;
+#N canvas 643 132 613 725 10;
 #X obj 16 652 iAmbient2D;
 #X text 272 20 ambient interaction;
-#X text 178 41 This object sould be used for the simulation of interaction
-between a collection of masse and a commun environement;
 #X text 179 143 1 : name;
 #X text 176 71 This object should receive a bang to be active (act
 like the link object);
@@ -11,9 +9,6 @@ object. you can also conect the output of this object to a mass \,
 to allow an interaction with this mass.;
 #X text 201 552 if a mass is outside of this rectangle \, the mass
 will not interact with this object.;
-#X text 196 404 value of the damping forces. this force is oposite
-from the velocity of the mass. It is proportional to the velocity of
-the masse.;
 #X text 195 356 Maximum amplitude of a random force aplyed to masses
 (X and Y amplitude).;
 #X text 196 270 this is constant force apply to all masses interacting
@@ -46,6 +41,13 @@ arg number / description;
 #X text 205 640 X and Y displacement field. displace the mass if it's
 inside the interactor field;
 #X msg 72 202 setFXY 0 0;
+#X text 178 41 This object sould be used for the simulation of interaction
+between a collection of mass and a commun environement;
+#X text 196 404 value of the damping forces. this force is oposite
+from the velocity of the mass. It is proportional to the velocity of
+the mass.;
+#X connect 8 0 0 0;
+#X connect 9 0 0 0;
 #X connect 10 0 0 0;
 #X connect 11 0 0 0;
 #X connect 12 0 0 0;
@@ -53,8 +55,6 @@ inside the interactor field;
 #X connect 14 0 0 0;
 #X connect 15 0 0 0;
 #X connect 16 0 0 0;
-#X connect 17 0 0 0;
-#X connect 18 0 0 0;
-#X connect 24 0 0 0;
-#X connect 25 0 0 0;
-#X connect 35 0 0 0;
+#X connect 22 0 0 0;
+#X connect 23 0 0 0;
+#X connect 33 0 0 0;

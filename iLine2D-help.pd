@@ -1,6 +1,4 @@
-#N canvas 508 171 589 636 10;
-#X text 163 39 This object sould be used for the simulation of interaction
-between a collection of masse and a line.;
+#N canvas 506 175 589 636 10;
 #X text 175 273 6 : maximum depth (1);
 #X text 266 11 interaction with a line;
 #X text 169 513 12 : Normal displacement;
@@ -32,26 +30,28 @@ to allow an interaction with this mass.;
 #X text 174 383 9 : normal rigidity;
 #X text 168 445 10 : Normal damping;
 #X text 168 471 11 : Tengential damping;
-#X text 199 347 normal and tangential (to the line) constant forces
-apply to the masse when it is in interaction with this object.;
 #X msg 109 327 setFT 0;
 #X msg 109 445 setDN 0;
-#X text 199 397 normal rigidity. Forces are proportional to the depth
-between the masse and the line. The force is aply only to one side
-of the line.;
 #X text 199 489 normal and tangential damping for the masse.;
 #X msg 109 472 setDT 0;
 #X msg 107 543 setdT 0;
 #X text 198 564 displace the mass when it is in the interactor field
 ;
-#X connect 8 0 11 0;
-#X connect 9 0 11 0;
-#X connect 10 0 11 0;
-#X connect 12 0 11 0;
-#X connect 13 0 11 0;
-#X connect 14 0 11 0;
-#X connect 15 0 11 0;
-#X connect 20 0 11 0;
-#X connect 30 0 11 0;
-#X connect 33 0 11 0;
-#X connect 34 0 11 0;
+#X text 163 39 This object sould be used for the simulation of interaction
+between a collection of masses and a line.;
+#X text 199 347 normal and tangential (to the line) constant forces
+apply to the mass when it is in interaction with this object.;
+#X text 199 397 normal rigidity. Forces are proportional to the depth
+between the mass and the line. The force is aply only to one side of
+the line.;
+#X connect 7 0 10 0;
+#X connect 8 0 10 0;
+#X connect 9 0 10 0;
+#X connect 11 0 10 0;
+#X connect 12 0 10 0;
+#X connect 13 0 10 0;
+#X connect 14 0 10 0;
+#X connect 19 0 10 0;
+#X connect 28 0 10 0;
+#X connect 30 0 10 0;
+#X connect 31 0 10 0;

@@ -1,4 +1,4 @@
-#N canvas 193 110 644 487 10;
+#N canvas 191 114 644 487 10;
 #X text 228 31 output informations about a tested link;
 #X text 224 332 distance between the 2 masses;
 #X text 224 308 elongation speed of the link;
@@ -10,8 +10,6 @@
 #X msg 65 126 bang;
 #X text 230 123 compute and output forces \, according to the last
 masses positions;
-#X text 256 84 you can use it in pd to send messages / bang / etc to
-the lia. this is for simplifying connection.;
 #X text 229 204 position of mass 2;
 #X msg 65 175 position3D $f1 $f2 $f3;
 #X obj 64 259 unpack s f f f;
@@ -20,7 +18,7 @@ the lia. this is for simplifying connection.;
 #X obj 51 284 unpack s f f f;
 #X floatatom 39 309 5 0 0 0 - - -;
 #X floatatom 27 332 5 0 0 0 - - -;
-#N canvas 430 218 749 537 gem 0;
+#N canvas 428 222 749 537 gem 0;
 #X floatatom -52 158 5 0 0 0 - - -;
 #X floatatom -10 158 5 0 0 0 - - -;
 #X floatatom 32 158 5 0 0 0 - - -;
@@ -133,10 +131,10 @@ the lia. this is for simplifying connection.;
 #X connect 48 0 16 0;
 #X connect 48 1 16 1;
 #X restore 45 403 pd gem;
-#X connect 5 0 15 1;
-#X connect 8 0 15 0;
-#X connect 12 0 15 0;
-#X connect 15 0 18 0;
-#X connect 15 1 17 0;
-#X connect 15 2 16 0;
-#X connect 15 3 13 0;
+#X connect 5 0 14 1;
+#X connect 8 0 14 0;
+#X connect 11 0 14 0;
+#X connect 14 0 17 0;
+#X connect 14 1 16 0;
+#X connect 14 2 15 0;
+#X connect 14 3 12 0;

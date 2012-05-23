@@ -1,4 +1,4 @@
-#N canvas 4 8 610 587 10;
+#N canvas 2 81 610 587 10;
 #X text 174 327 8 : constante Normal Force;
 #X text 175 353 9 : normal rigidity;
 #X text 166 405 10 : normal damping;
@@ -22,8 +22,6 @@ to allow an interaction with this mass.;
 #X msg 93 171 setVX 0;
 #X msg 93 196 setVY 0;
 #X msg 95 218 setVZ 0;
-#X text 196 376 Force is proportional to the distance between the masse
-and the circle plane.;
 #X msg 95 354 setKN 0;
 #X msg 96 400 setD 0;
 #X msg 95 433 setPmax 10000;
@@ -31,8 +29,6 @@ and the circle plane.;
 #X msg 95 493 setdKN 0;
 #X text 283 12 Plane interaction;
 #X obj 21 521 iPlane3D;
-#X text 177 41 This object sould be used for the simulation of interaction
-between a collection of masse and a plane;
 #X text 174 170 2 : X coordonate of the orientation vector of the plane
 ;
 #X text 173 195 3 : Y coordonate of the orientation vector of the plane
@@ -40,15 +36,19 @@ between a collection of masse and a plane;
 #X text 174 219 4 : Z coordonate of the orientation vector of the plane
 ;
 #X text 162 433 11 : maximum profound of the circle interaction;
-#X connect 11 0 26 0;
-#X connect 13 0 26 0;
-#X connect 14 0 26 0;
-#X connect 15 0 26 0;
-#X connect 16 0 26 0;
-#X connect 17 0 26 0;
-#X connect 18 0 26 0;
-#X connect 20 0 26 0;
-#X connect 21 0 26 0;
-#X connect 22 0 26 0;
-#X connect 23 0 26 0;
-#X connect 24 0 26 0;
+#X text 196 376 Force is proportional to the distance between the mass
+and the circle plane.;
+#X text 177 41 This object sould be used for the simulation of interaction
+between a collection of masses and a plane;
+#X connect 11 0 25 0;
+#X connect 13 0 25 0;
+#X connect 14 0 25 0;
+#X connect 15 0 25 0;
+#X connect 16 0 25 0;
+#X connect 17 0 25 0;
+#X connect 18 0 25 0;
+#X connect 19 0 25 0;
+#X connect 20 0 25 0;
+#X connect 21 0 25 0;
+#X connect 22 0 25 0;
+#X connect 23 0 25 0;

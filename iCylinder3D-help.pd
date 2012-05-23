@@ -1,4 +1,4 @@
-#N canvas 338 52 610 896 10;
+#N canvas 758 81 610 896 10;
 #X text 276 10 Cylinder interaction;
 #X text 166 610 15 : minimum height of the cylinder interaction;
 #X text 168 641 16 : minimum height of the cylinder interaction;
@@ -43,14 +43,10 @@ link.;
 #X msg 81 504 setD 0;
 #X msg 78 731 setdN 0;
 #X obj 9 866 iCylinder3D;
-#X text 177 39 This object sould be used for the simulation of interaction
-between a collection of masse and a cylinder;
 #X text 173 266 5 : center X;
 #X text 173 290 6 : center Y;
 #X text 172 315 7 : center Z;
 #X text 197 443 constant force normal to the cylinder.;
-#X text 199 477 Force is proportional to the distance between the masse
-and the cylindre center.;
 #X text 197 520 normal (to the cylinder surface) damping to the masses.
 ;
 #X text 166 536 13 : Normal force proportional to 1/distance to the
@@ -66,6 +62,10 @@ to the center of the cylinder;
 #X msg 83 538 setRN 0;
 #X msg 77 782 setdKN 0;
 #X msg 77 807 setdKT 0;
+#X text 177 39 This object sould be used for the simulation of interaction
+between a collection of masses and a cylinder;
+#X text 199 477 Force is proportional to the distance between the mass
+and the cylindre center.;
 #X connect 12 0 35 0;
 #X connect 13 0 35 0;
 #X connect 15 0 35 0;
@@ -78,12 +78,12 @@ to the center of the cylinder;
 #X connect 31 0 35 0;
 #X connect 33 0 35 0;
 #X connect 34 0 35 0;
+#X connect 42 0 35 0;
+#X connect 43 0 35 0;
 #X connect 44 0 35 0;
-#X connect 45 0 35 0;
 #X connect 46 0 35 0;
+#X connect 47 0 35 0;
 #X connect 48 0 35 0;
 #X connect 49 0 35 0;
 #X connect 50 0 35 0;
 #X connect 51 0 35 0;
-#X connect 52 0 35 0;
-#X connect 53 0 35 0;

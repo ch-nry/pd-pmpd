@@ -1,8 +1,5 @@
-#N canvas 8 15 584 655 10;
+#N canvas 6 81 584 655 10;
 #X text 266 11 Cylinder test;
-#X text 168 39 This object sould be used for testing the relative position
-of a masse depending on a cylinder;
-#X text 166 583 0/1 according to the position of the masse;
 #X text 166 562 distance from the center of the cylinder;
 #X text 167 541 speed from the center of the cylinder;
 #X text 104 81 message to change parametter / default value / creation
@@ -41,17 +38,20 @@ link.;
 #X floatatom 74 543 5 0 0 0 - - -;
 #X text 188 464 position of the tested mass;
 #X msg 78 464 position3D 0 0 0;
-#X connect 6 0 19 0;
-#X connect 7 0 19 0;
-#X connect 10 0 19 0;
-#X connect 11 0 19 0;
-#X connect 12 0 19 0;
-#X connect 13 0 19 0;
-#X connect 14 0 19 0;
-#X connect 15 0 19 0;
-#X connect 17 0 19 0;
-#X connect 18 0 19 0;
-#X connect 19 0 30 0;
-#X connect 19 1 31 0;
-#X connect 19 2 32 0;
-#X connect 34 0 19 0;
+#X text 168 39 This object sould be used for testing the relative position
+of a mass depending on a cylinder;
+#X text 166 583 0/1 according to the position of the mass;
+#X connect 4 0 17 0;
+#X connect 5 0 17 0;
+#X connect 8 0 17 0;
+#X connect 9 0 17 0;
+#X connect 10 0 17 0;
+#X connect 11 0 17 0;
+#X connect 12 0 17 0;
+#X connect 13 0 17 0;
+#X connect 15 0 17 0;
+#X connect 16 0 17 0;
+#X connect 17 0 28 0;
+#X connect 17 1 29 0;
+#X connect 17 2 30 0;
+#X connect 32 0 17 0;

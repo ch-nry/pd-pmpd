@@ -1,14 +1,8 @@
-#N canvas 37 20 614 708 10;
+#N canvas 35 81 614 708 10;
 #X text 247 6 Spherical interaction;
 #X text 181 182 2 : X coordonate of the center of the sphere;
 #X text 170 555 13 : constant displacement normal to the circle. (0)
 ;
-#X text 171 580 14 : normal displacement proportional to 1/distance
-between the masse and the sphere.;
-#X text 172 517 12 : normal force proportional to 1/sqare(distance)
-between the masse and the sphere.;
-#X text 169 615 15 : normal displacement proportional to 1/sqare(distance)
-between the masse and the sphere.;
 #X text 171 486 11 : normal constant displacement;
 #X text 175 118 1 : name;
 #X text 121 76 message to change parametter / default value / creation
@@ -24,8 +18,6 @@ to allow an interaction with this mass.;
 #X msg 79 579 setdRN 0;
 #X msg 78 518 setG 0;
 #X obj 17 659 iSphere3D;
-#X text 177 39 This object sould be used for the simulation of interaction
-between a collection of masse and a Sphere;
 #X msg 80 182 setX 0;
 #X msg 79 207 setY 0;
 #X msg 79 230 setZ 0;
@@ -37,30 +29,38 @@ between a collection of masse and a Sphere;
 is outside or inside this sphere \, it will not interact with this
 link.;
 #X text 204 356 constant force normal to the sphere.;
-#X text 204 396 Force is proportional to the distance between the masse
-and the sphere center.;
 #X text 175 338 7 : constante Normal Force;
 #X text 175 377 8 : normal rigidity;
-#X text 178 423 9 : normal forces proportional to 1/distance between
-the masse and the sphere.;
 #X text 173 456 10 : damping;
 #X msg 78 457 setDN 0;
-#X text 204 471 normal (to the sphere surface) damping to the masses.
-;
 #X msg 79 553 setdKN 0;
 #X msg 78 620 setdGN 0;
 #X msg 79 425 setFRN;
-#X connect 10 0 17 0;
-#X connect 11 0 17 0;
-#X connect 12 0 17 0;
-#X connect 13 0 17 0;
-#X connect 14 0 17 0;
-#X connect 15 0 17 0;
-#X connect 16 0 17 0;
-#X connect 19 0 17 0;
-#X connect 20 0 17 0;
-#X connect 21 0 17 0;
-#X connect 33 0 17 0;
-#X connect 35 0 17 0;
-#X connect 36 0 17 0;
-#X connect 37 0 17 0;
+#X text 171 580 14 : normal displacement proportional to 1/distance
+between the mass and the sphere.;
+#X text 177 39 This object sould be used for the simulation of interaction
+between a collection of masses and a Sphere;
+#X text 169 615 15 : normal displacement proportional to 1/sqare(distance)
+between the mass and the sphere.;
+#X text 172 517 12 : normal force proportional to 1/sqare(distance)
+between the mass and the sphere.;
+#X text 204 396 Force is proportional to the distance between the mass
+and the sphere center.;
+#X text 178 423 9 : normal forces proportional to 1/distance between
+the mass and the sphere.;
+#X text 204 471 normal (to the sphere surface) damping to the mass
+;
+#X connect 7 0 14 0;
+#X connect 8 0 14 0;
+#X connect 9 0 14 0;
+#X connect 10 0 14 0;
+#X connect 11 0 14 0;
+#X connect 12 0 14 0;
+#X connect 13 0 14 0;
+#X connect 15 0 14 0;
+#X connect 16 0 14 0;
+#X connect 17 0 14 0;
+#X connect 27 0 14 0;
+#X connect 28 0 14 0;
+#X connect 29 0 14 0;
+#X connect 30 0 14 0;

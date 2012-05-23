@@ -1,18 +1,10 @@
-#N canvas 281 53 599 822 10;
+#N canvas 442 90 599 822 10;
 #X text 272 20 ambient interaction;
-#X text 172 40 This object sould be used for the simulation of interaction
-between a collection of masse and a commun environement;
 #X text 179 143 1 : name;
 #X text 172 70 This object should receive a bang to be active (act
 like the link object);
-#X text 196 155 this is the name of the mass interacting with this
-object. you can also conect the output of this object to a mass \,
-to allow an interaction with this mass.;
 #X text 200 642 if a mass is outside of this rectangle \, the mass
 will not interact with this object.;
-#X text 197 450 value of the damping forces. this force is oposite
-from the velocity of the mass. It is proportional to the velocity of
-the masse.;
 #X text 198 295 this is constant force apply to all masses interacting
 this this object. Gravity is a constant negative force on Y axes.;
 #X msg 74 225 setFX 0;
@@ -53,23 +45,31 @@ arg number / description;
 #X text 170 675 15 : X displacement field;
 #X text 169 696 16 : Y displacement field;
 #X text 169 719 17 : Z displacement field;
-#X text 200 736 X and Y displacement field. displace the masse if it's
-in the interactor field;
 #X msg 72 202 setFXY 0 0 0;
-#X connect 8 0 21 0;
-#X connect 9 0 21 0;
-#X connect 10 0 21 0;
-#X connect 11 0 21 0;
-#X connect 12 0 21 0;
-#X connect 13 0 21 0;
-#X connect 14 0 21 0;
-#X connect 15 0 21 0;
-#X connect 16 0 21 0;
-#X connect 18 0 21 0;
-#X connect 19 0 21 0;
-#X connect 22 0 21 0;
-#X connect 23 0 21 0;
-#X connect 24 0 21 0;
-#X connect 25 0 21 0;
-#X connect 26 0 21 0;
-#X connect 45 0 21 0;
+#X text 172 40 This object sould be used for the simulation of interaction
+between a collection of masses and a commun environement;
+#X text 196 155 this is the mass name interacting with this object.
+you can also conect the output of this object to a mass \, to allow
+an interaction with this mass.;
+#X text 197 450 value of the damping forces. this force is oposite
+from the velocity of the mass. It is proportional to the velocity of
+the mass.;
+#X text 200 736 X and Y displacement field. displace the mass if it's
+in the interactor field;
+#X connect 5 0 18 0;
+#X connect 6 0 18 0;
+#X connect 7 0 18 0;
+#X connect 8 0 18 0;
+#X connect 9 0 18 0;
+#X connect 10 0 18 0;
+#X connect 11 0 18 0;
+#X connect 12 0 18 0;
+#X connect 13 0 18 0;
+#X connect 15 0 18 0;
+#X connect 16 0 18 0;
+#X connect 19 0 18 0;
+#X connect 20 0 18 0;
+#X connect 21 0 18 0;
+#X connect 22 0 18 0;
+#X connect 23 0 18 0;
+#X connect 41 0 18 0;
