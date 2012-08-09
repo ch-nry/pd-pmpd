@@ -3668,6 +3668,32 @@ void pmpd2d_grabMass(t_pmpd2d *x, t_float posX, t_float posY, t_float grab)
 	}
 }
 
+void pmpd2d_closestMass(t_pmpd2d *x, t_float posX, t_float posY)
+{
+	t_float dist, tmp;
+	t_int i;
+	t_atom std_out[3];
+
+	if ((x->nb_mass > 0))
+	{
+		dist = sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY);
+		for (i=1; i<x->nb_mass; i++)
+		{
+			tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY);
+			if (tmp < dist)
+			{
+				dist = tmp;
+				x->grab_nb= i;
+			}
+		}
+	}
+	SETFLOAT(&(std_out[0]),x->grab_nb);
+	SETFLOAT(&(std_out[1]), x->mass[x->grab_nb].posX);
+	SETFLOAT(&(std_out[2]), x->mass[x->grab_nb].posY);
+	outlet_anything(x->main_outlet, gensym("closestMass"),3,std_out);
+
+}
+
 void *pmpd2d_new()
 {
 	t_pmpd2d *x = (t_pmpd2d *)pd_new(pmpd2d_class);
@@ -3812,6 +3838,7 @@ void pmpd2d_setup(void)
 */
 
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_grabMass,        gensym("grabMass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_closestMass,        gensym("closestMass"), A_DEFFLOAT, A_DEFFLOAT, 0);
 
 }
 
