@@ -1,4 +1,4 @@
-#N canvas 52 39 624 761 10;
+#N canvas 515 28 624 761 10;
 #X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 695 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
@@ -496,8 +496,9 @@ and forces of masses \, or directly send value to a table.;
 #X text 618 807 others :;
 #X text 780 869 \$1 : x -position;
 #X text 780 884 \$2 : y -position;
-#X msg 626 855 closestMass \$1 \$2 \$3;
 #X text 780 899 \$3 : z -position;
+#X text 780 911 \$4 : none or Id;
+#X msg 626 855 closestMass \$1 \$2 \$3 (\$4);
 #X restore 12 499 pd masses_attributes __;
 #N canvas 44 22 1236 814 links_attributes 0;
 #X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -847,6 +848,7 @@ their Id.;
 ;
 #X connect 3 0 4 0;
 #X restore 14 702 pd More_Info;
+#X obj 325 322 print;
 #X connect 35 0 45 0;
 #X connect 38 0 37 0;
 #X connect 39 0 51 0;
@@ -858,3 +860,4 @@ their Id.;
 #X connect 47 0 36 0;
 #X connect 51 0 43 0;
 #X connect 51 1 43 1;
+#X connect 51 2 59 0;

@@ -4395,25 +4395,52 @@ void pmpd3d_grabMass(t_pmpd3d *x, t_float posX, t_float posY, t_float posZ, t_fl
 	}
 }
 
-void pmpd3d_closestMass(t_pmpd3d *x, t_float posX, t_float posY, t_float posZ)
+void pmpd3d_closestMass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_float dist, tmp;
 	t_int i;
 	t_atom std_out[4];
-	
-	if ((x->nb_mass > 0))
-	{
-		dist = sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY) + sqr(x->mass[0].posZ - posZ);
-		for (i=1; i<x->nb_mass; i++)
+
+	t_float posX, posY, posZ;
+	posX = atom_getfloatarg(0, argc, argv);
+	posY = atom_getfloatarg(1, argc, argv);	
+	posZ = atom_getfloatarg(2, argc, argv);	
+    if ( (argc == 4)  && (argv[3].a_type == A_SYMBOL) )
+    {
+		//t_symbol *mass_name = atom_getsymbolarg(2, argc, argv);
+		if ((x->nb_mass > 0))
 		{
-			tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) + sqr(x->mass[i].posZ - posZ);
-			if (tmp < dist)
+			dist = 1000000000;//sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY);
+			for (i=0; i<x->nb_mass; i++)
 			{
-				dist = tmp;
-				x->grab_nb= i;
+				if (atom_getsymbolarg(3,argc,argv) == x->mass[i].Id)
+				{
+					tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) + sqr(x->mass[i].posZ - posZ);
+					if (tmp < dist)
+					{
+						dist = tmp;
+						x->grab_nb= i;
+					}
+				}
 			}
 		}
 	}
+	else {
+		if ((x->nb_mass > 0))
+		{
+			dist = sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY) + sqr(x->mass[0].posZ - posZ);
+			for (i=1; i<x->nb_mass; i++)
+			{
+				tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) + sqr(x->mass[i].posZ - posZ);
+				if (tmp < dist)
+				{
+					dist = tmp;
+					x->grab_nb= i;
+				}
+			}
+		}
+	}
+	
 	SETFLOAT(&(std_out[0]),x->grab_nb);
 	SETFLOAT(&(std_out[1]), x->mass[x->grab_nb].posX);
 	SETFLOAT(&(std_out[2]), x->mass[x->grab_nb].posY);
@@ -4589,7 +4616,7 @@ void pmpd3d_setup(void)
 */
 
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_grabMass,        gensym("grabMass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
-	class_addmethod(pmpd3d_class, (t_method)pmpd3d_closestMass,        gensym("closestMass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_class, (t_method)pmpd3d_closestMass,        gensym("closestMass"), A_GIMME, 0);
 
 }
 

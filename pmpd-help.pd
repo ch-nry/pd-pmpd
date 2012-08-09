@@ -1,4 +1,4 @@
-#N canvas 37 22 575 730 10;
+#N canvas 427 32 575 730 10;
 #X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 689 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
@@ -65,9 +65,9 @@ souple 3 2 1 0.5;
 #X obj 17 344 s \$0-out;
 #X obj 17 295 r \$0-in;
 #X obj 261 184 vsl 15 127 0 127 0 0 empty empty Drag-----> -70 60 1
-10 -262144 -1 -1 0 1;
+10 -262144 -1 -1 3000 1;
 #X obj 292 184 vsl 15 127 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 0 1;
+-1 -1 3004 1;
 #X obj 261 345 s \$0-in;
 #X msg 261 322 posX fix \$1;
 #N canvas 565 515 355 193 compute 0;
@@ -86,9 +86,9 @@ souple 3 2 1 0.5;
 -1 -1;
 #X obj 261 131 route massesPosL;
 #X obj 311 184 vsl 15 127 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 0 1;
+-1 -1 3008 1;
 #X obj 330 184 vsl 15 127 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 0 1;
+-1 -1 3010 1;
 #X obj 261 152 unpack f f f f;
 #X text 101 388 Bang - A bang at the left inlet compute the new model
 state based on previous instant.;
@@ -197,7 +197,7 @@ on outlet No 1;
 #X msg 616 171 linksLengthXT \$1 (\$2);
 #X msg 616 278 linksPosSpeedXT \$1 (\$2);
 #X restore 12 519 pd links_attributes ___;
-#N canvas 61 22 1230 682 attributes__________ 1;
+#N canvas 50 22 1230 682 attributes__________ 0;
 #X obj 11 95 cnv 15 100 35 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 75 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -298,10 +298,11 @@ name \, \$2 (optional): Masses Id);
 0;
 #X obj 601 552 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X msg 612 600 closestMass \$1;
 #X text 767 600 output the closest mass;
 #X text 766 614 \$1 : position;
 #X text 604 552 others :;
+#X msg 612 600 closestMass \$1 (\$2);
+#X text 766 629 \$2 : none or Id;
 #X restore 12 499 pd attributes__________;
 #N canvas 141 69 1139 731 dynamic 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577

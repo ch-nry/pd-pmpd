@@ -1765,25 +1765,50 @@ void pmpd_grabMass(t_pmpd *x, t_float posX, t_float grab)
 	}
 }
 
-void pmpd_closestMass(t_pmpd *x, t_float posX)
+void pmpd_closestMass(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_float dist, tmp;
 	t_int i;
 	t_atom std_out[2];
+	t_float posX;
+	posX = atom_getfloatarg(0, argc, argv);
 	
-	if ((x->nb_mass > 0))
-	{
-		dist = x->mass[0].posX - posX;
-		for (i=1; i<x->nb_mass; i++)
+    if ( (argc == 2)  && (argv[1].a_type == A_SYMBOL) )
+    {
+		//t_symbol *mass_name = atom_getsymbolarg(2, argc, argv);
+		if ((x->nb_mass > 0))
 		{
-			tmp = x->mass[i].posX - posX;
-			if (tmp < dist)
+			dist = 1000000000;//sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY);
+			for (i=0; i<x->nb_mass; i++)
 			{
-				dist = tmp;
-				x->grab_nb= i;
+				if (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
+				{
+					tmp = x->mass[i].posX - posX;
+					if (tmp < dist)
+					{
+						dist = tmp;
+						x->grab_nb= i;
+					}
+				}
 			}
 		}
 	}
+	else {
+		if ((x->nb_mass > 0))
+		{
+			dist = x->mass[0].posX - posX;
+			for (i=1; i<x->nb_mass; i++)
+			{
+				tmp = x->mass[i].posX - posX;
+				if (tmp < dist)
+				{
+					dist = tmp;
+					x->grab_nb= i;
+				}
+			}
+		}
+	}
+
 	SETFLOAT(&(std_out[0]),x->grab_nb);
 	SETFLOAT(&(std_out[1]), x->mass[x->grab_nb].posX);
 	outlet_anything(x->main_outlet, gensym("closestMass"),2,std_out);
@@ -1893,6 +1918,6 @@ void pmpd_setup(void)
 */
 	
 	class_addmethod(pmpd_class, (t_method)pmpd_grabMass,        gensym("grabMass"), A_DEFFLOAT, A_DEFFLOAT, 0);
-	class_addmethod(pmpd_class, (t_method)pmpd_closestMass,        gensym("closestMass"), A_DEFFLOAT, 0);
+	class_addmethod(pmpd_class, (t_method)pmpd_closestMass,        gensym("closestMass"), A_GIMME, 0);
 }
 

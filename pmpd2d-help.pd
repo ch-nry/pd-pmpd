@@ -1,4 +1,4 @@
-#N canvas 288 22 571 767 10;
+#N canvas 622 37 571 767 10;
 #X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 685 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
@@ -735,9 +735,10 @@ a table;
 0;
 #X text 780 845 output the closest mass;
 #X text 617 797 others :;
-#X msg 625 845 closestMass \$1 \$2;
 #X text 779 859 \$1 : x -position;
 #X text 779 874 \$2 : y -position;
+#X msg 625 845 closestMass \$1 \$2 (\$3);
+#X text 779 890 \$3 : none or Id;
 #X restore 12 499 pd attributes__________;
 #N canvas 100 72 1078 872 dynamic 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -846,6 +847,7 @@ used this argument as the value applayed to all masses (or link);
 #X text 184 749 \$1 : Id (symbol) or No;
 #X restore 12 478 pd dynamic settings ___;
 #X text 112 638 54_pmpd2dtest.pd;
+#X obj 307 324 print;
 #X connect 21 0 39 0;
 #X connect 24 0 23 0;
 #X connect 25 0 50 0;
@@ -857,3 +859,4 @@ used this argument as the value applayed to all masses (or link);
 #X connect 45 0 42 0;
 #X connect 50 0 44 0;
 #X connect 50 1 44 1;
+#X connect 50 2 59 0;
