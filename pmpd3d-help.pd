@@ -337,7 +337,7 @@ used this argument as the value applayed to all masses (or link);
 #X text 179 824 Change environement damping offset;
 #X restore 12 478 pd dynamic settings ___;
 #X text 188 478 To set the model parameters after creation.;
-#N canvas 30 26 1241 841 masses_attributes 0;
+#N canvas 0 22 1224 756 masses_attributes 0;
 #X obj 11 115 cnv 15 100 35 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 95 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -488,8 +488,18 @@ z0(;
 #X text 15 30 The attributes messages ask the object to output some
 of his internal parameters. They can be output by lists for positions
 and forces of masses \, or directly send value to a table.;
+#X obj 621 827 cnv 15 150 95 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 615 807 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+0;
+#X text 781 855 output the closest mass;
+#X text 618 807 others :;
+#X text 780 869 \$1 : x -position;
+#X text 780 884 \$2 : y -position;
+#X msg 626 855 closestMass \$1 \$2 \$3;
+#X text 780 899 \$3 : z -position;
 #X restore 12 499 pd masses_attributes __;
-#N canvas 446 66 1236 814 links_attributes 0;
+#N canvas 44 22 1236 814 links_attributes 0;
 #X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 10 108 cnv 15 150 110 empty empty empty 20 12 0 14 -233017 -66577

@@ -197,7 +197,7 @@ on outlet No 1;
 #X msg 616 171 linksLengthXT \$1 (\$2);
 #X msg 616 278 linksPosSpeedXT \$1 (\$2);
 #X restore 12 519 pd links_attributes ___;
-#N canvas 888 196 1230 682 attributes__________ 0;
+#N canvas 61 22 1230 682 attributes__________ 1;
 #X obj 11 95 cnv 15 100 35 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 75 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -294,8 +294,16 @@ name \, \$2 (optional): Masses Id);
 #X text 339 645 [massesPosName mas x2(;
 #X text 337 581 [massesPosId 1 x1(;
 #X text 337 596 [massesPosId 2 x2(;
+#X obj 607 572 cnv 15 150 95 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 601 552 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+0;
+#X msg 612 600 closestMass \$1;
+#X text 767 600 output the closest mass;
+#X text 766 614 \$1 : position;
+#X text 604 552 others :;
 #X restore 12 499 pd attributes__________;
-#N canvas 841 74 1139 731 dynamic 0;
+#N canvas 141 69 1139 731 dynamic 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 10 85 cnv 15 130 580 empty empty empty 20 12 0 14 -233017 -66577
@@ -370,11 +378,10 @@ internal parameters of links and masses.;
 #X text 184 548 \$1 : Id (symbol) or No;
 #X text 184 566 \$2 : Value;
 #X text 181 531 add pos of a mass(es);
-#X msg 26 593 grabMass \$1 \$2 \$3;
 #X text 183 592 grab a mass \, and move it;
-#X text 185 614 \$1 : mass number;
-#X text 185 630 \$2 : position;
-#X text 185 646 \$3 : grab or not (0 or 1);
+#X text 185 610 \$1 : position;
+#X text 185 626 \$2 : grab or not (0 or 1);
+#X msg 26 593 grabMass \$1 \$2;
 #X restore 12 478 pd dynamic settings ___;
 #N canvas 818 245 561 671 creation____________ 0;
 #X obj 11 95 cnv 15 100 35 empty empty empty 20 12 0 14 -233017 -66577

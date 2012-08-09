@@ -19,7 +19,7 @@
 0;
 #X obj 5 655 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#N canvas -1204 4 901 640 More_Info 0;
+#N canvas 0 22 901 640 More_Info 0;
 #X text 96 12 pmpd : mass - spring - damper model;
 #X text 27 155 Be careful : if masses are deleted \, lists messages
 won't work;
@@ -588,7 +588,7 @@ following a vector.;
 #X text 497 351 Table links :;
 #X connect 29 0 31 0;
 #X restore 12 457 pd creation____________;
-#N canvas 360 56 1236 814 attributes__________ 0;
+#N canvas 0 22 1224 756 attributes__________ 0;
 #X obj 11 95 cnv 15 100 35 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 75 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -729,6 +729,15 @@ a table (\$1);
 a table;
 #X text 804 322 Output all norm of forces vector (sqrt(x*x+y*y)) in
 a table;
+#X obj 620 817 cnv 15 150 95 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 614 797 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+0;
+#X text 780 845 output the closest mass;
+#X text 617 797 others :;
+#X msg 625 845 closestMass \$1 \$2;
+#X text 779 859 \$1 : x -position;
+#X text 779 874 \$2 : y -position;
 #X restore 12 499 pd attributes__________;
 #N canvas 100 72 1078 872 dynamic 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
