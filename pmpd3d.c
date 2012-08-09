@@ -4395,6 +4395,33 @@ void pmpd3d_grabMass(t_pmpd3d *x, t_float posX, t_float posY, t_float posZ, t_fl
 	}
 }
 
+void pmpd3d_closestMass(t_pmpd3d *x, t_float posX, t_float posY, t_float posZ)
+{
+	t_float dist, tmp;
+	t_int i;
+	t_atom std_out[4];
+	
+	if ((x->nb_mass > 0))
+	{
+		dist = sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY) + sqr(x->mass[0].posZ - posZ);
+		for (i=1; i<x->nb_mass; i++)
+		{
+			tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) + sqr(x->mass[i].posZ - posZ);
+			if (tmp < dist)
+			{
+				dist = tmp;
+				x->grab_nb= i;
+			}
+		}
+	}
+	SETFLOAT(&(std_out[0]),x->grab_nb);
+	SETFLOAT(&(std_out[1]), x->mass[x->grab_nb].posX);
+	SETFLOAT(&(std_out[2]), x->mass[x->grab_nb].posY);
+	SETFLOAT(&(std_out[3]), x->mass[x->grab_nb].posZ);
+	outlet_anything(x->main_outlet, gensym("closestMass"),4,std_out);
+	
+}
+
 void *pmpd3d_new()
 {
 	t_pmpd3d *x = (t_pmpd3d *)pd_new(pmpd3d_class);
@@ -4562,6 +4589,7 @@ void pmpd3d_setup(void)
 */
 
 	class_addmethod(pmpd3d_class, (t_method)pmpd3d_grabMass,        gensym("grabMass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_class, (t_method)pmpd3d_closestMass,        gensym("closestMass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 
 }
 
