@@ -2969,7 +2969,7 @@ void pmpd3d_massesSpeedsMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     SETFLOAT(&(mean[2]),sommeZ);
     SETFLOAT(&(mean[3]),somme);
     
-    outlet_anything(x->main_outlet, gensym("massesFpeedsMean"),4 , mean);
+    outlet_anything(x->main_outlet, gensym("massesSpeedsMean"),4 , mean);
 }
 
 void pmpd3d_massesSpeedsStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
