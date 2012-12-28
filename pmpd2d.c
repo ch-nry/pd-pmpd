@@ -3637,6 +3637,66 @@ void pmpd2d_linksLengthSpeedNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *ar
 	}
 }
 
+
+void pmpd2d_linksExtremT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int i, j, vecsize;
+    t_garray *a;
+    t_word *vec;
+    
+    if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
+    {
+		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+			pd_error(x, "%s: no such array", tab_name->s_name);
+		else if (!garray_getfloatwords(a, &vecsize, &vec))
+			pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+		else
+		{
+			int taille_max = x->nb_link;
+			taille_max = min(taille_max, (vecsize-2)/4);
+			for (i=0; i < taille_max ; i++)
+			{
+				vec[6*i  ].w_float = x->link[i].mass1->posX;
+				vec[6*i+1].w_float = x->link[i].mass1->posY;
+				vec[6*i+2].w_float = x->link[i].mass2->posX;
+				vec[6*i+3].w_float = x->link[i].mass2->posY;
+			}
+			garray_redraw(a);
+		}
+	}
+	else 
+	if ( (argc==2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_SYMBOL) )
+	{
+		t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+			pd_error(x, "%s: no such array", tab_name->s_name);
+		else if (!garray_getfloatwords(a, &vecsize, &vec))
+			pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+		else
+		{	
+			i = 0;
+			j = 0;
+			while ((i < vecsize-2) && (j < x->nb_link))
+			{
+				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				{
+					vec[i].w_float = x->link[j].mass1->posX;
+					i++;
+					vec[i].w_float = x->link[j].mass1->posY;
+					i++;
+					vec[i].w_float = x->link[j].mass2->posX;
+					i++;
+					vec[i].w_float = x->link[j].mass2->posY;
+					i++;
+				}
+				j++;
+			}
+			garray_redraw(a);
+		}
+	}
+}
+
 //----------------------------------------------
 
 void pmpd2d_grabMass(t_pmpd2d *x, t_float posX, t_float posY, t_float grab)
@@ -3854,6 +3914,20 @@ void pmpd2d_setup(void)
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosSpeedNormT,		gensym("linksPosSpeedNormT"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthSpeedNormT,	gensym("linksLengthSpeedNormT"), A_GIMME, 0);
 	
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtremT,	   		gensym("linksExtremT"),   A_GIMME, 0);
+/*	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtrem1T,	   		gensym("linksExtrem1T"),  A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtrem2T,	   		gensym("linksExtrem2T"),  A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtremXT,	   		gensym("linksExtremXT"),  A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtrem1XT,	   		gensym("linksExtrem1XT"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtrem2XT,	   		gensym("linksExtrem2XT"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtremYT,	   		gensym("linksExtremYT"),  A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtrem1YT,	   		gensym("linksExtrem1YT"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtrem2YT,	   		gensym("linksExtrem2YT"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtremZT,	   		gensym("linksExtremZT"),  A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtrem1ZT,	   		gensym("linksExtrem1ZT"), A_GIMME, 0);
+	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksExtrem2ZT,	   		gensym("linksExtrem2ZT"), A_GIMME, 0);
+*/
+
 /*	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosMean,	   		gensym("linksPosMean"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthMean,	   		gensym("linksLengthMean"), A_GIMME, 0);
 	class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosSpeedMean,		gensym("linksPosSpeedMean"), A_GIMME, 0);
