@@ -3192,7 +3192,7 @@ void pmpd2d_linksPosT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			j = 0;
 			while ((i < vecsize-2) && (j < x->nb_link))
 			{
-				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
 				{
 					vec[i].w_float = (x->link[j].mass2->posX + x->link[j].mass1->posX)/2;
 					i++;
@@ -3245,7 +3245,7 @@ void pmpd2d_linksLengthT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			j = 0;
 			while ((i < vecsize-2) && (j < x->nb_link))
 			{
-				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
 				{
 					vec[i].w_float = x->link[j].mass2->posX + x->link[j].mass1->posX;
 					i++;
@@ -3298,7 +3298,7 @@ void pmpd2d_linksPosSpeedT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			j = 0;
 			while ((i < vecsize-2) && (j < x->nb_link))
 			{
-				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
 				{
 					vec[i].w_float = (x->link[j].mass2->speedX + x->link[j].mass1->speedX)/2;
 					i++;
@@ -3351,7 +3351,7 @@ void pmpd2d_linksLengthSpeedT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			j = 0;
 			while ((i < vecsize-2) && (j < x->nb_link))
 			{
-				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
 				{
 					vec[i].w_float = x->link[j].mass2->speedX + x->link[j].mass1->speedX;
 					i++;
@@ -3654,13 +3654,13 @@ void pmpd2d_linksExtremT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		else
 		{
 			int taille_max = x->nb_link;
-			taille_max = min(taille_max, (vecsize-2)/4);
+			taille_max = min(taille_max, (vecsize-3)/4);
 			for (i=0; i < taille_max ; i++)
 			{
-				vec[6*i  ].w_float = x->link[i].mass1->posX;
-				vec[6*i+1].w_float = x->link[i].mass1->posY;
-				vec[6*i+2].w_float = x->link[i].mass2->posX;
-				vec[6*i+3].w_float = x->link[i].mass2->posY;
+				vec[4*i  ].w_float = x->link[i].mass1->posX;
+				vec[4*i+1].w_float = x->link[i].mass1->posY;
+				vec[4*i+2].w_float = x->link[i].mass2->posX;
+				vec[4*i+3].w_float = x->link[i].mass2->posY;
 			}
 			garray_redraw(a);
 		}
@@ -3677,9 +3677,9 @@ void pmpd2d_linksExtremT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		{	
 			i = 0;
 			j = 0;
-			while ((i < vecsize-2) && (j < x->nb_link))
+			while ((i < vecsize-3) && (j < x->nb_link))
 			{
-				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
 				{
 					vec[i].w_float = x->link[j].mass1->posX;
 					i++;

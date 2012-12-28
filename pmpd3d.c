@@ -3895,7 +3895,7 @@ void pmpd3d_linksPosT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			j = 0;
 			while ((i < vecsize-2) && (j < x->nb_link))
 			{
-				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
 				{
 					vec[i].w_float = (x->link[j].mass2->posX + x->link[j].mass1->posX)/2;
 					i++;
@@ -3951,7 +3951,7 @@ void pmpd3d_linksLengthT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			j = 0;
 			while ((i < vecsize-2) && (j < x->nb_link))
 			{
-				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
 				{
 					vec[i].w_float = x->link[j].mass2->posX + x->link[j].mass1->posX;
 					i++;
@@ -4007,7 +4007,7 @@ void pmpd3d_linksPosSpeedT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			j = 0;
 			while ((i < vecsize-2) && (j < x->nb_link))
 			{
-				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
 				{
 					vec[i].w_float = (x->link[j].mass2->speedX + x->link[j].mass1->speedX)/2;
 					i++;
@@ -4063,7 +4063,7 @@ void pmpd3d_linksLengthSpeedT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			j = 0;
 			while ((i < vecsize-2) && (j < x->nb_link))
 			{
-				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
 				{
 					vec[i].w_float = x->link[j].mass2->speedX + x->link[j].mass1->speedX;
 					i++;
@@ -4379,7 +4379,7 @@ void pmpd3d_linksExtremT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		else
 		{
 			int taille_max = x->nb_link;
-			taille_max = min(taille_max, (vecsize-2)/6);
+			taille_max = min(taille_max, (vecsize-5)/6);
 			for (i=0; i < taille_max ; i++)
 			{
 				vec[6*i  ].w_float = x->link[i].mass1->posX;
@@ -4405,9 +4405,9 @@ void pmpd3d_linksExtremT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{	
 			i = 0;
 			j = 0;
-			while ((i < vecsize-2) && (j < x->nb_link))
+			while ((i < vecsize-6) && (j < x->nb_link))
 			{
-				if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+				if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
 				{
 					vec[i].w_float = x->link[j].mass1->posX;
 					i++;
