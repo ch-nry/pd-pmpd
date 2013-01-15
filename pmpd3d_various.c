@@ -1,7 +1,7 @@
 
 void pmpd3d_infosL(t_pmpd3d *x)
 {
-    int i;
+    t_int i;
     post("list of mass");
     post("number, Id, mobile, mass, Damping, positionX Y Z, speedX Y Z, forcesX Y Z");
     for(i=0; i < x->nb_mass; i++)
@@ -41,7 +41,7 @@ void pmpd3d_infosL(t_pmpd3d *x)
 void pmpd3d_force(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // add a force to a specific mass
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
     {
@@ -68,7 +68,7 @@ void pmpd3d_force(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_forceX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // add a force to a specific mass
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -91,7 +91,7 @@ void pmpd3d_forceX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_forceY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // add a force to a specific mass
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -114,7 +114,7 @@ void pmpd3d_forceY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_forceZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // add a force to a specific mass
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -137,7 +137,7 @@ void pmpd3d_forceZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_pos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // displace a mass to a certain position
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
     {
@@ -176,7 +176,7 @@ void pmpd3d_pos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_posX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // displace a mass to a certain position
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -205,7 +205,7 @@ void pmpd3d_posX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_posY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // displace a mass to a certain position
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -233,7 +233,7 @@ void pmpd3d_posY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_posZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // displace a mass to a certain position
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -304,7 +304,7 @@ void pmpd3d_maxZ(t_pmpd3d *x, t_float max)
 
 void pmpd3d_addPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
     {
@@ -330,7 +330,7 @@ void pmpd3d_addPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_addPosX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -352,7 +352,7 @@ void pmpd3d_addPosX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_addPosY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -374,7 +374,7 @@ void pmpd3d_addPosY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_addPosZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i;
+    t_int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -480,7 +480,7 @@ void pmpd3d_closestMass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_adaptLength(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int i;
+    t_int i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -500,3 +500,68 @@ void pmpd3d_adaptLength(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
+void pmpd3d_massesDistances_f_f(t_pmpd3d *x, t_int i, t_int j)
+{
+	t_float dist, tmp;
+    t_atom to_out[3];
+    
+	tmp = x->mass[i].posX - x->mass[j].posX;
+	dist = tmp*tmp;
+	tmp = x->mass[i].posY - x->mass[j].posY;
+	dist += tmp*tmp;
+	tmp = x->mass[i].posZ - x->mass[j].posZ;
+	dist += tmp*tmp;
+	dist = sqrt(dist);
+	
+	SETFLOAT(&(to_out[0]), i);
+    SETFLOAT(&(to_out[1]), j);
+    SETFLOAT(&(to_out[2]), dist);
+    outlet_anything(x->main_outlet, gensym("distances"), 3, to_out);
+}
+
+void pmpd3d_massesDistances(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{  
+	t_int i,j;
+	
+    if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) )
+    {
+		pmpd3d_massesDistances_f_f(x, atom_getfloatarg(0, argc, argv), atom_getfloatarg(1, argc, argv));
+	}
+	else if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_SYMBOL) )
+	{
+        for (i=0; i < x->nb_mass; i++)
+        {
+            if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
+            {
+				pmpd3d_massesDistances_f_f(x, atom_getfloatarg(0, argc, argv), i);
+			}
+		}
+	}
+	else if ( (argc == 2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_FLOAT) )
+	{
+		for (i=0; i < x->nb_mass; i++)
+        {
+            if ( (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id) )
+            {
+				pmpd3d_massesDistances_f_f(x, atom_getfloatarg(1, argc, argv), i);
+			}
+		}
+	}
+	else if ( (argc == 2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_SYMBOL) )
+	{
+		for (i=0; i < x->nb_mass; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+            {
+				for (j=i+1; j < x->nb_mass; j++)
+				{
+					if ( atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+					{
+						pmpd3d_massesDistances_f_f(x,i, j);
+					}
+				}
+			}
+		}
+	}
+}
+	

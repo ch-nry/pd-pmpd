@@ -687,6 +687,8 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_grabMass,        gensym("grabMass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_closestMass,     gensym("closestMass"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_adaptLength,     gensym("adaptLength"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesDistances,     gensym("massesDistances"), A_GIMME, 0);
+    
 
 // pmpd3d_stat
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosMean,       gensym("massesPosMean"), A_GIMME, 0);
