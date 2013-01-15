@@ -692,9 +692,9 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_enumMasses,      gensym("enumMasses"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_enumLinks,       gensym("enumLinks"), A_GIMME, 0);
 
-//    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesTab,       gensym("forcesXT"), A_GIMME, 0);
-//    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesTab,       gensym("forcesYT"), A_GIMME, 0);
-//    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesTab,       gensym("forcesZT"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesXT,       gensym("forcesXT"), A_GIMME, 0);
+//    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesYT,       gensym("forcesYT"), A_GIMME, 0);
+//    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesZT,       gensym("forcesZT"), A_GIMME, 0);
     
  
  

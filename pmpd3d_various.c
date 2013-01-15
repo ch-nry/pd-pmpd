@@ -1,3 +1,21 @@
+t_float tabread(t_pmpd3d *x, t_int n, t_symbol *array)
+{
+    t_garray *a;
+    int npoints;
+    t_word *vec;
+    
+    if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
+        pd_error(x, "%s: no such array", array->s_name);
+    else if (!garray_getfloatwords(a, &npoints, &vec))
+        pd_error(x, "%s: bad template for tabLink", array->s_name);
+    else
+    {
+        if (n >= npoints - 1) 
+            return (0);
+        return ( vec[n].w_float);
+    }
+    return(0); 
+}
 
 void pmpd3d_infosL(t_pmpd3d *x)
 {
@@ -578,8 +596,12 @@ void pmpd3d_enumMasses(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		while ( (j < argc-1) && (test) )
 		{
 			if ( (argv[j].a_type == A_SYMBOL) && (argv[j+1].a_type == A_FLOAT) )
-			{
-				if (atom_getsymbolarg(j,argc,argv) == gensym("posXSup") )
+			{				
+				if (atom_getsymbolarg(j,argc,argv) == gensym("Id") )
+				{
+					if ( x->mass[i].Id != atom_getsymbolarg(j+1,argc,argv) ) test = 0;
+				}
+				else if (atom_getsymbolarg(j,argc,argv) == gensym("posXSup") )
 				{
 					if ( x->mass[i].posX < atom_getfloatarg(j+1,argc,argv) ) test = 0;
 				}
@@ -666,23 +688,27 @@ void pmpd3d_enumLinks(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     {
 		while ( (j < argc-1) && (test) )
 		{
-			if ( (argv[j].a_type == A_SYMBOL) && (argv[j+1].a_type == A_FLOAT) )
+			if ( (argv[j].a_type == A_SYMBOL) )
 			{
-				if (atom_getsymbolarg(j,argc,argv) == gensym("forcesSup") )
+				if (atom_getsymbolarg(j,argc,argv) == gensym("Id") )
 				{
-					if ( x->mass[i].posX < atom_getfloatarg(j+1,argc,argv) ) test = 0;
+					if ( x->link[i].Id != atom_getsymbolarg(j+1,argc,argv) ) test = 0;
 				}
-				else if ( atom_getsymbolarg(j,argc,argv) == gensym("forcesInf") )
+/*				else if (atom_getsymbolarg(j,argc,argv) == gensym("forcesXSup") )
 				{
-					if ( x->mass[i].posX > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+					if ( x->link[i].forceX < atom_getfloatarg(j+1,argc,argv) ) test = 0;
 				}
-				else if (atom_getsymbolarg(j,argc,argv) == gensym("lengthSup") )
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("forcesXInf") )
 				{
-					if ( x->mass[i].posY < atom_getfloatarg(j+1,argc,argv) ) test = 0;
+					if ( x->link[i].forceX > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+*/				else if (atom_getsymbolarg(j,argc,argv) == gensym("lengthSup") )
+				{
+					if ( x->link[i].distance < atom_getfloatarg(j+1,argc,argv) ) test = 0;
 				}
 				else if ( atom_getsymbolarg(j,argc,argv) == gensym("lengthInf") )
 				{
-					if ( x->mass[i].posY > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+					if ( x->link[i].distance > atom_getfloatarg(j+1,argc,argv) ) test = 0;
 				}		
 				j += 2;
 			}
@@ -693,5 +719,143 @@ void pmpd3d_enumLinks(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			outlet_anything(x->main_outlet, gensym("listLinks"),1,std_out);
 		}
 	}	
+}
+
+void pmpd3d_forcesXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+// add forces to masses. forces comes from a table, masse can be filter on ther Id or not
+ 
+    t_int i, j;
+    t_garray *a;
+    int npoints;
+    t_word *vec;
+    t_symbol *array;
+    
+    if ( argv[0].a_type == A_SYMBOL )
+    {	
+		array = atom_getsymbolarg(0,argc,argv);
+		if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
+			pd_error(x, "%s: no such array", array->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", array->s_name);
+		else
+		{
+			if ( argc == 1 )  // apply forces on all masses
+			{
+				j = max(x->nb_mass, npoints);
+				for (i=0; i< j; i++)
+				{
+					x->mass[i].forceX += vec[i].w_float;
+				}
+			}
+			else if ( argv[1].a_type == A_SYMBOL )
+			{
+				i=0;
+				j=0;
+
+				while ( (i < x->nb_mass) && (j < npoints) )
+				{
+					if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
+					{
+						x->mass[i].forceX += vec[j].w_float;
+						j++;
+					}
+					i++;
+				}
+			}
+		}
+    }
+}
+
+void pmpd3d_forcesYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+// add forces to masses. forces comes from a table, masse can be filter on ther Id or not
+ 
+    t_int i, j;
+    t_garray *a;
+    int npoints;
+    t_word *vec;
+    t_symbol *array;
+    
+    if ( argv[0].a_type == A_SYMBOL )
+    {	
+		array = atom_getsymbolarg(0,argc,argv);
+		if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
+			pd_error(x, "%s: no such array", array->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", array->s_name);
+		else
+		{
+			if ( argc == 1 )  // apply forces on all masses
+			{
+				j = max(x->nb_mass, npoints);
+				for (i=0; i< j; i++)
+				{
+					x->mass[i].forceY += vec[i].w_float;
+				}
+			}
+			else if ( argv[1].a_type == A_SYMBOL )
+			{
+				i=0;
+				j=0;
+
+				while ( (i < x->nb_mass) && (j < npoints) )
+				{
+					if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
+					{
+						x->mass[i].forceY += vec[j].w_float;
+						j++;
+					}
+					i++;
+				}
+			}
+		}
+    }
+}
+
+void pmpd3d_forcesZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+// add forces to masses. forces comes from a table, masse can be filter on ther Id or not
+ 
+    t_int i, j;
+    t_garray *a;
+    int npoints;
+    t_word *vec;
+    t_symbol *array;
+    
+    if ( argv[0].a_type == A_SYMBOL )
+    {	
+		array = atom_getsymbolarg(0,argc,argv);
+		if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
+			pd_error(x, "%s: no such array", array->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", array->s_name);
+		else
+		{
+			if ( argc == 1 )  // apply forces on all masses
+			{
+				j = max(x->nb_mass, npoints);
+				for (i=0; i< j; i++)
+				{
+					x->mass[i].forceZ += vec[i].w_float;
+				}
+			}
+			else if ( argv[1].a_type == A_SYMBOL )
+			{
+				i=0;
+				j=0;
+
+				while ( (i < x->nb_mass) && (j < npoints) )
+				{
+					if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
+					{
+						x->mass[i].forceZ += vec[j].w_float;
+						j++;
+					}
+					i++;
+				}
+			}
+		}
+    }
 }
 
