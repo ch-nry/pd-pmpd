@@ -565,3 +565,133 @@ void pmpd3d_massesDistances(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 	
+void pmpd3d_enumMasses(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_int i, j, test, tmp;
+    t_atom std_out[1];
+
+	j = 0;
+	test = 1;
+	
+    for (i=0; i < x->nb_mass; i++)
+    {
+		while ( (j < argc-1) && (test) )
+		{
+			if ( (argv[j].a_type == A_SYMBOL) && (argv[j+1].a_type == A_FLOAT) )
+			{
+				if (atom_getsymbolarg(j,argc,argv) == gensym("posXSup") )
+				{
+					if ( x->mass[i].posX < atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("posXInf") )
+				{
+					if ( x->mass[i].posX > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if (atom_getsymbolarg(j,argc,argv) == gensym("posYSup") )
+				{
+					if ( x->mass[i].posY < atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("posYInf") )
+				{
+					if ( x->mass[i].posY > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if (atom_getsymbolarg(j,argc,argv) == gensym("posZSup") )
+				{
+					if ( x->mass[i].posZ < atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("posZInf") )
+				{
+					if ( x->mass[i].posZ > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedXSup") )
+				{
+					if ( x->mass[i].speedX < atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedXInf") )
+				{
+					if ( x->mass[i].speedX > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedYSup") )
+				{
+					if ( x->mass[i].speedY < atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedYInf") )
+				{
+					if ( x->mass[i].speedY > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedZSup") )
+				{
+					if ( x->mass[i].speedZ < atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedZInf") )
+				{
+					if ( x->mass[i].speedZ > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedSup") )
+				{
+					tmp  = x->mass[i].speedX * x->mass[i].speedX;
+					tmp += x->mass[i].speedY * x->mass[i].speedY;
+					tmp += x->mass[i].speedZ * x->mass[i].speedZ;
+					
+					if ( ( tmp < atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedInf") )
+				{
+					tmp  = x->mass[i].speedX * x->mass[i].speedX;
+					tmp += x->mass[i].speedY * x->mass[i].speedY;
+					tmp += x->mass[i].speedZ * x->mass[i].speedZ;
+					
+					if ( ( tmp > atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}	
+				j += 2;
+			}
+		}
+		if (test)
+		{
+			SETFLOAT(&(std_out[0]),i);
+			outlet_anything(x->main_outlet, gensym("listMasses"),1,std_out);
+		}
+	}	
+}
+
+void pmpd3d_enumLinks(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_int i, j, test;
+    t_atom std_out[1];
+
+	j = 0;
+	test = 1;
+	
+    for (i=0; i < x->nb_link; i++)
+    {
+		while ( (j < argc-1) && (test) )
+		{
+			if ( (argv[j].a_type == A_SYMBOL) && (argv[j+1].a_type == A_FLOAT) )
+			{
+				if (atom_getsymbolarg(j,argc,argv) == gensym("forcesSup") )
+				{
+					if ( x->mass[i].posX < atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("forcesInf") )
+				{
+					if ( x->mass[i].posX > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if (atom_getsymbolarg(j,argc,argv) == gensym("lengthSup") )
+				{
+					if ( x->mass[i].posY < atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}
+				else if ( atom_getsymbolarg(j,argc,argv) == gensym("lengthInf") )
+				{
+					if ( x->mass[i].posY > atom_getfloatarg(j+1,argc,argv) ) test = 0;
+				}		
+				j += 2;
+			}
+		}
+		if (test)
+		{
+			SETFLOAT(&(std_out[0]),i);
+			outlet_anything(x->main_outlet, gensym("listLinks"),1,std_out);
+		}
+	}	
+}
+

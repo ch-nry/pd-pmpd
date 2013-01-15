@@ -689,7 +689,15 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_adaptLength,     gensym("adaptLength"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesDistances,     gensym("massesDistances"), A_GIMME, 0);
     
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_enumMasses,      gensym("enumMasses"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_enumLinks,       gensym("enumLinks"), A_GIMME, 0);
 
+//    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesTab,       gensym("forcesXT"), A_GIMME, 0);
+//    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesTab,       gensym("forcesYT"), A_GIMME, 0);
+//    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesTab,       gensym("forcesZT"), A_GIMME, 0);
+    
+ 
+ 
 // pmpd3d_stat
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosMean,       gensym("massesPosMean"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosStd,        gensym("massesPosStd"),A_GIMME, 0);
@@ -706,6 +714,6 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedStd,         gensym("linksPosSpeedStd"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedStd0,     gensym("linksLengthSpeedStd"), A_GIMME, 0);
 */
-    
+   
 }
 
