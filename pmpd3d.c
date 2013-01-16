@@ -81,6 +81,7 @@ typedef struct _link {
     int lType;
     struct _mass *mass1;
     struct _mass *mass2;
+    t_int active;
     t_float K;
     t_float D;
     t_float L;
@@ -205,44 +206,47 @@ void pmpd3d_bang(t_pmpd3d *x)
     for (i=0; i<x->nb_link; i++)
     // compute link forces
     {
-        Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
-        Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
-        Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
-        L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
-        
-        if ( (L >= x->link[i].Lmin) && (L < x->link[i].Lmax)  && (L != 0))
+		if (x->link[i].active == 1)
         {
-            if (x->link[i].lType == 2)
-            { // K et D viennent d'une table
-                F  = x->link[i].D * tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
-                F += x->link[i].K * tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
-            }
-            else
-            {            
-                F  = x->link[i].D * (L - x->link[i].distance) ;
-                F += x->link[i].K *  pow_ch( L - x->link[i].L, x->link[i].Pow);
-            }
+			Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
+			Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
+			Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
+			L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
+        
+			if ( (L >= x->link[i].Lmin) && (L < x->link[i].Lmax)  && (L != 0))
+			{
+				if (x->link[i].lType == 2)
+				{ // K et D viennent d'une table
+					F  = x->link[i].D * tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
+					F += x->link[i].K * tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
+				}
+				else
+				{            
+					F  = x->link[i].D * (L - x->link[i].distance) ;
+					F += x->link[i].K *  pow_ch( L - x->link[i].L, x->link[i].Pow);
+				}
 
-            Fx = F * Lx/L;
-            Fy = F * Ly/L;    
-            Fz = F * Lz/L;    
+				Fx = F * Lx/L;
+				Fy = F * Ly/L;    
+				Fz = F * Lz/L;    
                 
-            if (x->link[i].lType == 1)
-            { // on projette selon 1 axe
-                Fx = Fx*x->link[i].VX; // V est unitaire, dc on projete sans pb
-                Fy = Fy*x->link[i].VY;                
-                Fz = Fz*x->link[i].VZ;                
-            }
+				if (x->link[i].lType == 1)
+				{ // on projette selon 1 axe
+					Fx = Fx*x->link[i].VX; // V est unitaire, dc on projete sans pb
+					Fy = Fy*x->link[i].VY;                
+					Fz = Fz*x->link[i].VZ;                
+				}
             
-            x->link[i].mass1->forceX -= Fx;
-            x->link[i].mass1->forceY -= Fy;
-            x->link[i].mass1->forceZ -= Fz;
-            x->link[i].mass2->forceX += Fx;
-            x->link[i].mass2->forceY += Fy;
-            x->link[i].mass2->forceZ += Fz;
-        }
-        x->link[i].distance=L;
-    }
+				x->link[i].mass1->forceX -= Fx;
+				x->link[i].mass1->forceY -= Fy;
+				x->link[i].mass1->forceZ -= Fz;
+				x->link[i].mass2->forceX += Fx;
+				x->link[i].mass2->forceY += Fy;
+				x->link[i].mass2->forceZ += Fz;
+			}
+			x->link[i].distance=L;
+		}
+	}
 }
 
 void pmpd3d_mass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
@@ -268,7 +272,6 @@ void pmpd3d_mass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         x->mass[x->nb_mass].D2 = 0;
         x->mass[x->nb_mass].D2offset = 0;
 
-
         x->nb_mass++ ;
         x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
     }
@@ -281,6 +284,7 @@ void pmpd3d_create_link(t_pmpd3d *x, t_symbol *Id, int mass1, int mass2, t_float
     {
         x->link[x->nb_link].lType = type;
         x->link[x->nb_link].Id = Id;
+        x->link[x->nb_link].active = 1;
         x->link[x->nb_link].mass1 = &x->mass[mass1]; 
         x->link[x->nb_link].mass2 = &x->mass[mass2];
         x->link[x->nb_link].K = K;
@@ -558,6 +562,8 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setForceY,       gensym("setForceY"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setForceZ,       gensym("setForceZ"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setForce,        gensym("setForce"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setFixed,        gensym("setActive"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setMobile,       gensym("setInactive"), A_GIMME, 0);
          
 // pmpd3d_get
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_get,             gensym("get"), A_GIMME, 0);
@@ -692,10 +698,8 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_enumLinks,       gensym("enumLinks"), A_GIMME, 0);
 
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesXT,       gensym("forcesXT"), A_GIMME, 0);
-//    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesYT,       gensym("forcesYT"), A_GIMME, 0);
-//    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesZT,       gensym("forcesZT"), A_GIMME, 0);
-    
- 
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesYT,       gensym("forcesYT"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesZT,       gensym("forcesZT"), A_GIMME, 0);
  
 // pmpd3d_stat
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosMean,       gensym("massesPosMean"), A_GIMME, 0);

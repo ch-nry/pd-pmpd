@@ -471,3 +471,61 @@ void pmpd3d_setForceZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
 }
+
+void pmpd3d_setActive(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int tmp, i;
+
+    if ( argv[0].a_type == A_FLOAT )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_link-1, tmp));
+        x->link[tmp].active = 1;
+    }
+    else if ( argv[0].a_type == A_SYMBOL ) 
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id )
+            {
+                x->link[i].active = 1;
+            }
+        }
+    }
+    else if ( argc == 0 ) 
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+			x->link[i].active = 1;
+        }
+    }
+}
+
+void pmpd3d_setInactive(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int tmp, i;
+
+    if ( argv[0].a_type == A_FLOAT )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_link-1, tmp));
+        x->link[tmp].active = 0;
+    }
+    else if ( argv[0].a_type == A_SYMBOL ) 
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+            {
+                x->link[i].active = 0;
+            }
+        }
+    }
+    else if ( argc == 0 ) 
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+			x->link[i].active = 0;
+        }
+    }
+}
