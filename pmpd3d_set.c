@@ -110,7 +110,7 @@ void pmpd3d_setL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         tmp = max(0, min( x->nb_link-1, tmp));
         x->link[tmp].L = atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    else if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -120,19 +120,35 @@ void pmpd3d_setL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
+    else if ( ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
         x->link[tmp].L = x->link[tmp].mass2->posX - x->link[tmp].mass1->posX;
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argc == 1 ) )
+    else if ( ( argv[0].a_type == A_SYMBOL ) && ( argc == 1 ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
                 x->link[i].L = x->link[i].mass2->posX - x->link[i].mass1->posX;
+            }
+        }
+    }
+    else if ( (argc== 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( atom_getsymbolarg(1,argc,argv) == gensym("current") ) )
+    {
+        i = atom_getfloatarg(0, argc, argv);
+        i = max(0, min( x->nb_link-1, i));
+        x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(2, argc, argv));
+    }
+    else if ( (argc== 3) && ( argv[0].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) && ( atom_getsymbolarg(1,argc,argv) == gensym("current") ) )
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+            {
+                x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(2, argc, argv));
             }
         }
     }

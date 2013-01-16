@@ -1,22 +1,3 @@
-t_float tabread(t_pmpd3d *x, t_int n, t_symbol *array)
-{
-    t_garray *a;
-    int npoints;
-    t_word *vec;
-    
-    if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
-        pd_error(x, "%s: no such array", array->s_name);
-    else if (!garray_getfloatwords(a, &npoints, &vec))
-        pd_error(x, "%s: bad template for tabLink", array->s_name);
-    else
-    {
-        if (n >= npoints - 1) 
-            return (0);
-        return ( vec[n].w_float);
-    }
-    return(0); 
-}
-
 void pmpd3d_infosL(t_pmpd3d *x)
 {
     t_int i;
@@ -494,28 +475,6 @@ void pmpd3d_closestMass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     SETFLOAT(&(std_out[3]), x->mass[x->grab_nb].posZ);
     outlet_anything(x->main_outlet, gensym("closestMass"),4,std_out);
     
-}
-
-void pmpd3d_adaptLength(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
-{
-    t_int i;
-
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
-    {
-        i = atom_getfloatarg(0, argc, argv);
-        i = max(0, min( x->nb_link-1, i));
-        x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
-    }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
-    {
-        for (i=0; i< x->nb_link; i++)
-        {
-            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
-            {
-                x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
-            }
-        }
-    }
 }
 
 void pmpd3d_massesDistances_f_f(t_pmpd3d *x, t_int i, t_int j)
