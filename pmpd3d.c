@@ -96,6 +96,9 @@ typedef struct _link {
     t_symbol *arrayD;
     t_float K_L; // longeur du tabeau K
     t_float D_L; // longeur du tabeau D
+    t_float forceX;
+    t_float forceY;
+    t_float forceZ;
 } foo1 ;
 
 typedef struct _pmpd3d {
@@ -243,6 +246,9 @@ void pmpd3d_bang(t_pmpd3d *x)
 				x->link[i].mass2->forceX += Fx;
 				x->link[i].mass2->forceY += Fy;
 				x->link[i].mass2->forceZ += Fz;
+				x->link[i].forceX = Fx; // save for latter use
+				x->link[i].forceY = Fy;
+				x->link[i].forceZ = Fz;
 			}
 			x->link[i].distance=L;
 		}
@@ -551,7 +557,9 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLKTab,        gensym("setLKTab"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLDTab,        gensym("setLDTab"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLinkId,       gensym("setLinkId"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLinkId,       gensym("setLinksId"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setMassId,       gensym("setMassId"), A_GIMME, 0);    
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setMassId,       gensym("setMassesId"), A_GIMME, 0);    
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setFixed,        gensym("setFixed"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setMobile,       gensym("setMobile"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setSpeedX,       gensym("setSpeedX"), A_GIMME, 0);

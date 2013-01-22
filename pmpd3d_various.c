@@ -667,7 +667,7 @@ void pmpd3d_enumMasses(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_enumLinks(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-	t_int i, j, test;
+	t_int i, j, test, tmp, tmp2;
 	t_atom std_out[1];
 
 	j = 0;
@@ -682,7 +682,7 @@ void pmpd3d_enumLinks(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( x->link[i].Id != atom_getsymbolarg(j+1,argc,argv) ) { test = 0; j+=2;}
 			}
-/*				else if (atom_getsymbolarg(j,argc,argv) == gensym("forcesXSup") )
+				else if (atom_getsymbolarg(j,argc,argv) == gensym("forcesXSup") )
 			{
 				if ( x->link[i].forceX < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
 			}
@@ -690,7 +690,51 @@ void pmpd3d_enumLinks(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( x->link[i].forceX > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
 			}
-*/				else if (atom_getsymbolarg(j,argc,argv) == gensym("lengthSup") )
+				else if (atom_getsymbolarg(j,argc,argv) == gensym("forcesYSup") )
+			{
+				if ( x->link[i].forceY < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+			}
+			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forcesYInf") )
+			{
+				if ( x->link[i].forceY > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+			}
+				else if (atom_getsymbolarg(j,argc,argv) == gensym("forcesZSup") )
+			{
+				if ( x->link[i].forceZ < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+			}
+			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forcesZInf") )
+			{
+				if ( x->link[i].forceZ > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+			}
+				else if (atom_getsymbolarg(j,argc,argv) == gensym("forcesSup") )
+			{
+				tmp = x->link[i].forceX;
+				tmp *= tmp;
+				tmp2 = x->link[i].forceY;
+				tmp = tmp + tmp2*tmp2;				
+				tmp2 = x->link[i].forceZ;
+				tmp = tmp + tmp2*tmp2;
+				
+				tmp2 = atom_getfloatarg(j+1,argc,argv);
+				tmp2 *= tmp2;
+				
+				if ( tmp < tmp2 ) { test = 0; j+=2;}
+			}
+			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forcesInf") )
+			{
+				tmp = x->link[i].forceX;
+				tmp = tmp * tmp;
+				tmp2 = x->link[i].forceY;
+				tmp = tmp + tmp2*tmp2;				
+				tmp2 = x->link[i].forceZ;
+				tmp = tmp + tmp2*tmp2;
+				
+				tmp2 = atom_getfloatarg(j+1,argc,argv);
+				tmp2 *= tmp2;
+				
+				if ( tmp > tmp2 ) { test = 0; j+=2;}
+			}
+				else if (atom_getsymbolarg(j,argc,argv) == gensym("lengthSup") )
 			{
 				if ( x->link[i].distance < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
 			}
