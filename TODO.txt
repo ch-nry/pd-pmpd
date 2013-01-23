@@ -1,0 +1,29 @@
+DONE : 
+- code refactorisation
+- change messages masses*L in order to add filter on masses Id (symbol only)
+- same for links*L messages
+- New messages linksEndT
+- new messages to replace get messages : (should be almost compatible) : massesPos [Id], massesSpeeds [Id], massesForces [Id]
+- new messages to replace get messages : linksPos [Id] gives the center of links, to be consistant with other linksPosL and linksPosT.
+- new messages to replace get : linksEnd [Id] : should be compatible with get linksPos
+- new messages eumMasses and enumLinks to get all masses or links that fit specific conditions
+- new messages massesDistance Id Id : return message : massesDistance float_Id float_Id distance
+- new message : forceXT [Id] table (same in other dimention), to add a force to many masses, value come from the table.
+- new message : setActive, setInactive for links
+- add fonctionality to setL : setL [Id] curent float : to addapt lenght of the link to curentlength
+- add setLinksId and setMassesId to replace setLinkId and setMassId to be more consitant with other messages
+
+TODO : 
+setLCurrent pour remplacer setL Id adapt
+messages that replace get messages : to send both synbol_Id and float_Id
+messages au singulié / pluriel
+enumMassesT enumLinksT, enumMassesL, enumLinksL
+enumMasses : ajout d'un Id de test?
+renomer enum en test
+lenksEndXT, linksEndYT, linksEndZT
+linksEnd1T linksEnd2T (en X/Y/Z)
+add more condition on enumMasses and enumLinks
+statistics on links
+make pmpd* compatible with interactors
+add creation parametter to fix maximum number of link and mass
+linksEndL
