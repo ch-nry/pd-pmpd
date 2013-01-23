@@ -76,8 +76,16 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setForceZ,       gensym("setForceZ"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setForce,        gensym("setForce"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setFixed,        gensym("setActive"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setMobile,       gensym("setInactive"), A_GIMME, 0);
-         
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setMobile,       gensym("setInactive"), A_GIMME, 0);     
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_pos,             gensym("pos"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posX,            gensym("posX"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posY,            gensym("posY"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posZ,            gensym("posZ"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_pos,             gensym("setpos"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posX,            gensym("setposX"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posY,            gensym("setposY"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posZ,            gensym("setposZ"), A_GIMME, 0);
+        
 // pmpd3d_get
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_get,             gensym("get"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPos,       gensym("massesPos"), A_GIMME, 0);
@@ -270,10 +278,6 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_forceX,          gensym("forceX"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_forceY,          gensym("forceY"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_forceZ,          gensym("forceZ"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_pos,             gensym("pos"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posX,            gensym("posX"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posY,            gensym("posY"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posZ,            gensym("posZ"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_min,             gensym("min"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_max,             gensym("max"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_minX,            gensym("Xmin"), A_DEFFLOAT, 0);

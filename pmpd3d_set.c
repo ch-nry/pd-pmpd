@@ -529,3 +529,128 @@ void pmpd3d_setInactive(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
 }
+
+void pmpd3d_pos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+// displace a mass to a certain position
+	t_int tmp, i;
+
+	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
+	{
+		tmp = atom_getfloatarg(0, argc, argv);
+		tmp = max(0, min( x->nb_mass-1, tmp));
+		x->mass[tmp].posX = atom_getfloatarg(1, argc, argv);
+		   x->mass[tmp].speedX = 0;
+		x->mass[tmp].forceX = 0;
+		   x->mass[tmp].posY = atom_getfloatarg(2, argc, argv);
+		   x->mass[tmp].speedY = 0;
+		x->mass[tmp].forceY = 0;
+		   x->mass[tmp].posZ = atom_getfloatarg(3, argc, argv);
+		   x->mass[tmp].speedZ = 0;
+		x->mass[tmp].forceZ = 0;
+	}
+	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{
+				x->mass[i].posX = atom_getfloatarg(1, argc, argv);
+				x->mass[i].speedX = 0;
+				x->mass[i].forceX = 0;
+				x->mass[i].posY = atom_getfloatarg(2, argc, argv);
+				x->mass[i].speedY = 0;
+				x->mass[i].forceY = 0;
+				x->mass[i].posZ = atom_getfloatarg(3, argc, argv);
+				x->mass[i].speedZ = 0;
+				x->mass[i].forceZ = 0;
+			}
+		}
+	}
+}
+
+void pmpd3d_posX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+// displace a mass to a certain position
+	t_int tmp, i;
+
+	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+	{
+		tmp = atom_getfloatarg(0, argc, argv);
+		tmp = max(0, min( x->nb_mass-1, tmp));
+		x->mass[tmp].posX = atom_getfloatarg(1, argc, argv);
+		   x->mass[tmp].speedX = 0;
+		x->mass[tmp].forceX = 0;
+
+	}
+	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{
+				x->mass[i].posX = atom_getfloatarg(1, argc, argv);
+				x->mass[i].speedX = 0;
+				x->mass[i].forceX = 0;
+
+			}
+		}
+	}
+}
+
+void pmpd3d_posY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+// displace a mass to a certain position
+	t_int tmp, i;
+
+	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+	{
+		tmp = atom_getfloatarg(0, argc, argv);
+		tmp = max(0, min( x->nb_mass-1, tmp));
+		x->mass[tmp].posY = atom_getfloatarg(1, argc, argv);
+		   x->mass[tmp].speedY = 0;
+		x->mass[tmp].forceY = 0;
+
+	}
+	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{
+				x->mass[i].posY = atom_getfloatarg(1, argc, argv);
+				x->mass[i].speedY = 0;
+				x->mass[i].forceY = 0;
+			}
+		}
+	}
+}
+
+void pmpd3d_posZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+// displace a mass to a certain position
+	t_int tmp, i;
+
+	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+	{
+		tmp = atom_getfloatarg(0, argc, argv);
+		tmp = max(0, min( x->nb_mass-1, tmp));
+		x->mass[tmp].posZ = atom_getfloatarg(1, argc, argv);
+		   x->mass[tmp].speedZ = 0;
+		x->mass[tmp].forceZ = 0;
+
+	}
+	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{
+				x->mass[i].posZ = atom_getfloatarg(1, argc, argv);
+				x->mass[i].speedZ = 0;
+				x->mass[i].forceZ = 0;
+			}
+		}
+	}
+}
+
