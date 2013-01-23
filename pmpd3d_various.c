@@ -547,64 +547,78 @@ void pmpd3d_enumMasses(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	t_int i, j, test, tmp, tmp2;
 	t_atom std_out[1];
 
-	j = 0;
-	test = 1;
 
 	for (i=0; i < x->nb_mass; i++)
 	{
+		j = 0;
+		test = 1;
+
 		while ( (j < argc-1) && (test) )
 		{
 			if (atom_getsymbolarg(j,argc,argv) == gensym("Id") )
 			{
-				if ( x->mass[i].Id != atom_getsymbolarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].Id != atom_getsymbolarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("posXSup") )
 			{
-				if ( x->mass[i].posX < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].posX < atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("posXInf") )
 			{
-				if ( x->mass[i].posX > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].posX > atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("posYSup") )
 			{
-				if ( x->mass[i].posY < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].posY < atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("posYInf") )
 			{
-				if ( x->mass[i].posY > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].posY > atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("posZSup") )
 			{
-				if ( x->mass[i].posZ < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].posZ < atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("posZInf") )
 			{
-				if ( x->mass[i].posZ > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].posZ > atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedXSup") )
 			{
-				if ( x->mass[i].speedX < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].speedX < atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedXInf") )
 			{
-				if ( x->mass[i].speedX > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].speedX > atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedYSup") )
 			{
-				if ( x->mass[i].speedY < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].speedY < atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedYInf") )
 			{
-				if ( x->mass[i].speedY > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].speedY > atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedZSup") )
 			{
-				if ( x->mass[i].speedZ < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].speedZ < atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedZInf") )
 			{
-				if ( x->mass[i].speedZ > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->mass[i].speedZ > atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedSup") )
 			{
@@ -625,7 +639,7 @@ void pmpd3d_enumMasses(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				if ( ( tmp > atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) test = 0;
 				j+=2;
 			}
-			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCicleInf"))
+			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCircleInf"))
 			{ 
 				tmp = x->mass[i].posX - atom_getfloatarg(j+1,argc,argv);
 				tmp *= tmp;
@@ -638,7 +652,7 @@ void pmpd3d_enumMasses(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				if ( tmp > (tmp2 * tmp2) ) test = 0;
 				j += 5;
 			}
-			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCicleSup"))
+			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCircleSup"))
 			{ 
 				tmp = x->mass[i].posX - atom_getfloatarg(j+1,argc,argv);
 				tmp *= tmp;
@@ -651,6 +665,7 @@ void pmpd3d_enumMasses(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				if ( tmp < (tmp2 * tmp2) ) test = 0;
 				j += 5;
 			}
+			// mass weight
 			else
 			{
 				post("nor reconize %s",atom_getsymbolarg(j,argc,argv));
@@ -670,41 +685,49 @@ void pmpd3d_enumLinks(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	t_int i, j, test, tmp, tmp2;
 	t_atom std_out[1];
 
-	j = 0;
-	test = 1;
 
 	for (i=0; i < x->nb_link; i++)
 	{
+		j = 0;
+		test = 1;
+		
 		while ( (j < argc-1) && (test) )
 		{
 
 			if (atom_getsymbolarg(j,argc,argv) == gensym("Id") )
 			{
-				if ( x->link[i].Id != atom_getsymbolarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->link[i].Id != atom_getsymbolarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 				else if (atom_getsymbolarg(j,argc,argv) == gensym("forcesXSup") )
 			{
-				if ( x->link[i].forceX < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->link[i].forceX < atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forcesXInf") )
 			{
-				if ( x->link[i].forceX > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->link[i].forceX > atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 				else if (atom_getsymbolarg(j,argc,argv) == gensym("forcesYSup") )
 			{
-				if ( x->link[i].forceY < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->link[i].forceY < atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forcesYInf") )
 			{
-				if ( x->link[i].forceY > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->link[i].forceY > atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 				else if (atom_getsymbolarg(j,argc,argv) == gensym("forcesZSup") )
 			{
-				if ( x->link[i].forceZ < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->link[i].forceZ < atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forcesZInf") )
 			{
-				if ( x->link[i].forceZ > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->link[i].forceZ > atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 				else if (atom_getsymbolarg(j,argc,argv) == gensym("forcesSup") )
 			{
@@ -736,11 +759,13 @@ void pmpd3d_enumLinks(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 				else if (atom_getsymbolarg(j,argc,argv) == gensym("lengthSup") )
 			{
-				if ( x->link[i].distance < atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->link[i].distance < atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("lengthInf") )
 			{
-				if ( x->link[i].distance > atom_getfloatarg(j+1,argc,argv) ) { test = 0; j+=2;}
+				if ( x->link[i].distance > atom_getfloatarg(j+1,argc,argv) ) { test = 0; }
+				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("connectedTo") )
 			{
