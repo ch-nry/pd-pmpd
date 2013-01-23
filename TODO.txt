@@ -16,14 +16,16 @@ DONE :
 TODO : 
 setLCurrent pour remplacer setL Id adapt
 messages that replace get messages : to send both synbol_Id and float_Id
-messages au singulié / pluriel
-enumMassesT enumLinksT, enumMassesL, enumLinksL
-enumMasses : ajout d'un Id de test?
-renomer enum en test
-lenksEndXT, linksEndYT, linksEndZT
-linksEnd1T linksEnd2T (en X/Y/Z)
-add more condition on enumMasses and enumLinks
+rename enum en test
+testMasses : ajout d'un Id de test : remplacer testMass en sortie par l'IdTest fournis
+linkEndXT, linkEndYT, linkEndZT
+make interactor for pmpd*
+add more condition on testMass and testLink
+	mass -> force
+	link -> lengthX Y Z 
+testMassT testLinkT, testMassL, testLinkL
 statistics on links
-make pmpd* compatible with interactors
-add creation parametter to fix maximum number of link and mass
+closestNeighbor
+linksEnd1T linksEnd2T (en X/Y/Z)
 linksEndL
+add creation parametter to fix maximum number of link and mass
