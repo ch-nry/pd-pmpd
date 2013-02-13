@@ -503,7 +503,7 @@ void pmpd3d_linksEnds(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         i = atom_getfloatarg(0, argc, argv);
         if ( (i>=0) && (i<x->nb_mass) )
         {
-            SETSYMBOL(&(toout[0]), x->mass[i].Id);
+            SETSYMBOL(&(toout[0]), x->link[i].Id);
             SETFLOAT(&(toout[1]), i);
             SETFLOAT(&(toout[2]), x->link[i].mass1->posX);
             SETFLOAT(&(toout[3]), x->link[i].mass1->posY);
@@ -517,9 +517,9 @@ void pmpd3d_linksEnds(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     else
     if ((argc>0)&&(argv[0].a_type == A_SYMBOL))
     {
+        SETSYMBOL(&(toout[0]), atom_getsymbolarg(0,argc,argv));
         for (i=0; i< x->nb_link; i++)
         {
-            SETSYMBOL(&(toout[0]), atom_getsymbolarg(0,argc,argv));
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
 				SETFLOAT(&(toout[1]), i);
@@ -538,7 +538,7 @@ void pmpd3d_linksEnds(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     {
         for (i=0; i< x->nb_link; i++)
         {
-            SETSYMBOL(&(toout[0]), x->mass[i].Id);
+            SETSYMBOL(&(toout[0]), x->link[i].Id);
             SETFLOAT(&(toout[1]), i);
             SETFLOAT(&(toout[2]), x->link[i].mass1->posX);
             SETFLOAT(&(toout[3]), x->link[i].mass1->posY);
@@ -559,29 +559,29 @@ void pmpd3d_linksPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     if ((argc>0)&&(argv[0].a_type == A_FLOAT)) 
     {
         i = atom_getfloatarg(0, argc, argv);
-        if ( (i>=0) && (i<x->nb_mass) )
+        if ( (i>=0) && (i<x->nb_link) )
         {
-            SETSYMBOL(&(toout[0]), x->mass[i].Id);
+            SETSYMBOL(&(toout[0]), x->link[i].Id);
             SETFLOAT(&(toout[1]), i);
             SETFLOAT(&(toout[2]), (x->link[i].mass1->posX+x->link[i].mass2->posX)/2);
             SETFLOAT(&(toout[3]), (x->link[i].mass1->posY+x->link[i].mass2->posY)/2);
             SETFLOAT(&(toout[4]), (x->link[i].mass1->posZ+x->link[i].mass2->posZ)/2);
-            outlet_anything(x->main_outlet, gensym("linkEnd"), 5, toout);
+            outlet_anything(x->main_outlet, gensym("linkPos"), 5, toout);
         }
     }
     else
     if ((argc>0)&&(argv[0].a_type == A_SYMBOL))
     {
+        SETSYMBOL(&(toout[0]), atom_getsymbolarg(0,argc,argv));
         for (i=0; i< x->nb_link; i++)
         {
-            SETSYMBOL(&(toout[0]), atom_getsymbolarg(0,argc,argv));
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
 				SETFLOAT(&(toout[1]), i);
 				SETFLOAT(&(toout[2]), (x->link[i].mass1->posX+x->link[i].mass2->posX)/2);
 				SETFLOAT(&(toout[3]), (x->link[i].mass1->posY+x->link[i].mass2->posY)/2);
 				SETFLOAT(&(toout[4]), (x->link[i].mass1->posZ+x->link[i].mass2->posZ)/2);
-                outlet_anything(x->main_outlet, gensym("linkEnd"), 5, toout);
+                outlet_anything(x->main_outlet, gensym("linkPos"), 5, toout);
             }
         } 
     }
@@ -590,12 +590,12 @@ void pmpd3d_linksPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     {
         for (i=0; i< x->nb_link; i++)
         {
-            SETSYMBOL(&(toout[0]), x->mass[i].Id);
+            SETSYMBOL(&(toout[0]), x->link[i].Id);
             SETFLOAT(&(toout[1]), i);
 			SETFLOAT(&(toout[2]), (x->link[i].mass1->posX+x->link[i].mass2->posX)/2);
 			SETFLOAT(&(toout[3]), (x->link[i].mass1->posY+x->link[i].mass2->posY)/2);
 			SETFLOAT(&(toout[4]), (x->link[i].mass1->posZ+x->link[i].mass2->posZ)/2);
-            outlet_anything(x->main_outlet, gensym("linkEnd"), 5, toout);
+            outlet_anything(x->main_outlet, gensym("linkPos"), 5, toout);
         } 
     }
 }

@@ -17,36 +17,37 @@ DONE :
 - new statistics messages for links
 - interactors messages
 
+messages mass list : mette la sortie au synguler
+
 TODO : 
-setLFactor [Id] multiplication factor
+setLFactor [Id] multiplication_factor
 closestNeighbor
 linkEndL
 add creation parametter to fix maximum number of link and mass
 
 messages a tester : 
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLCurrent,            	gensym("setLCurrent"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setFixed,        		gensym("setActive"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setMobile,       		gensym("setInactive"), A_GIMME, 0);     
-
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLCurrent,            gensym("setLCurrent"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setActive,        		gensym("setActive"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setInactive,       		gensym("setInactive"), A_GIMME, 0);     
 #    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPos,       		gensym("massPos"), A_GIMME, 0);
 #    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeeds,    		gensym("massSpeed"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForces,    		gensym("massForce"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPos,        		gensym("linkPos"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksEnds,       		gensym("linkEnd"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForces,    		gensym("massForce"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPos,        		gensym("linkPos"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksEnds,       		gensym("linkEnd"), A_GIMME, 0);
 
 //pmpd3d_list
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosL,      		gensym("massPosL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsL,   		gensym("massSpeedL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesL,   		gensym("massForceL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosXL,     		gensym("massPosXL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsXL,  		gensym("massSpeedXL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesXL,  		gensym("massForceXL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosYL,     		gensym("massPosYL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsYL,  		gensym("massSpeedYL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesYL,  		gensym("massForceYL"), A_GIMME, 0);    
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosZL,     		gensym("massPosZL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsZL,  		gensym("massSpeedZL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesZL,  		gensym("massForceZL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosL,      		gensym("massPosL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsL,   		gensym("massSpeedL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesL,   		gensym("massForceL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosXL,     		gensym("massPosXL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsXL,  		gensym("massSpeedXL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesXL,  		gensym("massForceXL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosYL,     		gensym("massPosYL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsYL,  		gensym("massSpeedYL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesYL,  		gensym("massForceYL"), A_GIMME, 0);    
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosZL,     		gensym("massPosZL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsZL,  		gensym("massSpeedZL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesZL,  		gensym("massForceZL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosNormL,      	gensym("massPosNormL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsNormL,   	gensym("massSpeedNormL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesNormL,   	gensym("massForceNormL"), A_GIMME, 0);    
