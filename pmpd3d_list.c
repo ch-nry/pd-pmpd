@@ -1,4 +1,4 @@
-void pmpd3d_massesPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[3*x->nb_mass];
@@ -11,7 +11,7 @@ void pmpd3d_massesPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			SETFLOAT(&(pos_list[3*i+1]),x->mass[i].posY);
 			SETFLOAT(&(pos_list[3*i+2]),x->mass[i].posZ);
 		}
-		outlet_anything(x->main_outlet, gensym("massesPosL"),3*x->nb_mass , pos_list);       
+		outlet_anything(x->main_outlet, gensym("massPosL"),3*x->nb_mass , pos_list);       
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -28,7 +28,7 @@ void pmpd3d_massesPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesPosL"),3*i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massPosL"),3*i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
@@ -36,11 +36,11 @@ void pmpd3d_massesPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		SETFLOAT(&(pos_list[1]),x->mass[(int)atom_getfloatarg(0, argc, argv)].posY);
 		SETFLOAT(&(pos_list[2]),x->mass[(int)atom_getfloatarg(0, argc, argv)].posZ);
 			
-        outlet_anything(x->main_outlet, gensym("massesPosL"),3 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massPosL"),3 , pos_list);        
     }
 }
 
-void pmpd3d_massesForcesL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massForceL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[3*x->nb_mass];
@@ -52,7 +52,7 @@ void pmpd3d_massesForcesL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[3*i+1]),x->mass[i].forceY);
         SETFLOAT(&(pos_list[3*i+2]),x->mass[i].forceZ);
         }
-        outlet_anything(x->main_outlet, gensym("massesForcesL"),3*x->nb_mass , pos_list);          
+        outlet_anything(x->main_outlet, gensym("massForceL"),3*x->nb_mass , pos_list);          
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -69,7 +69,7 @@ void pmpd3d_massesForcesL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesForcesL"),3*i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massForceL"),3*i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
@@ -77,11 +77,11 @@ void pmpd3d_massesForcesL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[1]),x->mass[(int)atom_getfloatarg(0, argc, argv)].forceY);
         SETFLOAT(&(pos_list[2]),x->mass[(int)atom_getfloatarg(0, argc, argv)].forceZ);
         
-        outlet_anything(x->main_outlet, gensym("massesForcesL"),3 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massForceL"),3 , pos_list);        
     }
 }
 
-void pmpd3d_massesSpeedsL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[3*x->nb_mass];
@@ -93,7 +93,7 @@ void pmpd3d_massesSpeedsL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			SETFLOAT(&(pos_list[3*i+1]),x->mass[i].speedY);
 			SETFLOAT(&(pos_list[3*i+2]),x->mass[i].speedZ);
 		}
-		outlet_anything(x->main_outlet, gensym("massesSpeedsL"),3*x->nb_mass , pos_list);         
+		outlet_anything(x->main_outlet, gensym("massSpeedL"),3*x->nb_mass , pos_list);         
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -110,7 +110,7 @@ void pmpd3d_massesSpeedsL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesSpeedsL"),3*i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massSpeedL"),3*i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
@@ -118,11 +118,11 @@ void pmpd3d_massesSpeedsL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[1]),x->mass[(int)atom_getfloatarg(0, argc, argv)].speedY);
         SETFLOAT(&(pos_list[2]),x->mass[(int)atom_getfloatarg(0, argc, argv)].speedZ);
         
-        outlet_anything(x->main_outlet, gensym("massesSpeedsL"),3 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massSpeedL"),3 , pos_list);        
     }
 }
 
-void pmpd3d_massesPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -133,7 +133,7 @@ void pmpd3d_massesPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             SETFLOAT(&(pos_list[i]),x->mass[i].posX);
         }
-        outlet_anything(x->main_outlet, gensym("massesPosXL"),x->nb_mass , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massPosXL"),x->nb_mass , pos_list);        
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -148,16 +148,16 @@ void pmpd3d_massesPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesPosXL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massPosXL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].posX);
-        outlet_anything(x->main_outlet, gensym("massesPosXL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massPosXL"),1 , pos_list);        
     }
 }
 
-void pmpd3d_massesForcesXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massForceXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -168,7 +168,7 @@ void pmpd3d_massesForcesXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             SETFLOAT(&(pos_list[i]),x->mass[i].forceX);
         }
-        outlet_anything(x->main_outlet, gensym("massesForcesXL"),x->nb_mass , pos_list);          
+        outlet_anything(x->main_outlet, gensym("massForceXL"),x->nb_mass , pos_list);          
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -183,16 +183,16 @@ void pmpd3d_massesForcesXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesForcesXL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massForceXL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].forceX);
-        outlet_anything(x->main_outlet, gensym("massesForcesXL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massForceXL"),1 , pos_list);        
     }
 }
 
-void pmpd3d_massesSpeedsXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -203,7 +203,7 @@ void pmpd3d_massesSpeedsXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),x->mass[i].speedX);
 		}
-		outlet_anything(x->main_outlet, gensym("massesSpeedsXL"),x->nb_mass , pos_list);         
+		outlet_anything(x->main_outlet, gensym("massSpeedXL"),x->nb_mass , pos_list);         
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -218,16 +218,16 @@ void pmpd3d_massesSpeedsXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesSpeedsXL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massSpeedXL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].speedX);
-        outlet_anything(x->main_outlet, gensym("massesSpeedsXL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massSpeedXL"),1 , pos_list);        
     }
 }
 
-void pmpd3d_massesPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -238,7 +238,7 @@ void pmpd3d_massesPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             SETFLOAT(&(pos_list[i]),x->mass[i].posY);
         }
-        outlet_anything(x->main_outlet, gensym("massesPosYL"),x->nb_mass , pos_list);         
+        outlet_anything(x->main_outlet, gensym("massPosYL"),x->nb_mass , pos_list);         
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -253,16 +253,16 @@ void pmpd3d_massesPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesPosYL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massPosYL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].posY);
-        outlet_anything(x->main_outlet, gensym("massesPosYL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massPosYL"),1 , pos_list);        
     }
 }
 
-void pmpd3d_massesForcesYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massForceYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -273,7 +273,7 @@ void pmpd3d_massesForcesYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             SETFLOAT(&(pos_list[i]),x->mass[i].forceY);
         }
-        outlet_anything(x->main_outlet, gensym("massesForcesYL"),x->nb_mass , pos_list);          
+        outlet_anything(x->main_outlet, gensym("massForceYL"),x->nb_mass , pos_list);          
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -288,16 +288,16 @@ void pmpd3d_massesForcesYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesForcesYL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massForceYL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].forceY);
-        outlet_anything(x->main_outlet, gensym("massesForcesYL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massForceYL"),1 , pos_list);        
     }
 }
 
-void pmpd3d_massesSpeedsYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -308,7 +308,7 @@ void pmpd3d_massesSpeedsYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),x->mass[i].speedY);
 		}
-		outlet_anything(x->main_outlet, gensym("massesSpeedsYL"),x->nb_mass , pos_list);         
+		outlet_anything(x->main_outlet, gensym("massSpeedYL"),x->nb_mass , pos_list);         
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -323,16 +323,16 @@ void pmpd3d_massesSpeedsYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesSpeedsYL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massSpeedYL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].speedY);
-        outlet_anything(x->main_outlet, gensym("massesSpeedsYL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massSpeedYL"),1 , pos_list);        
     }
 }
 
-void pmpd3d_massesPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -343,7 +343,7 @@ void pmpd3d_massesPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             SETFLOAT(&(pos_list[i]),x->mass[i].posZ);
         }
-        outlet_anything(x->main_outlet, gensym("massesPosZL"),x->nb_mass , pos_list);         
+        outlet_anything(x->main_outlet, gensym("massPosZL"),x->nb_mass , pos_list);         
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -358,16 +358,16 @@ void pmpd3d_massesPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesPosZL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massPosZL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].posZ);
-        outlet_anything(x->main_outlet, gensym("massesPosZL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massPosZL"),1 , pos_list);        
     }
 }
 
-void pmpd3d_massesForcesZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massForceZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -378,7 +378,7 @@ void pmpd3d_massesForcesZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             SETFLOAT(&(pos_list[i]),x->mass[i].forceZ);
         }
-        outlet_anything(x->main_outlet, gensym("massesForcesZL"),x->nb_mass , pos_list);          
+        outlet_anything(x->main_outlet, gensym("massForceZL"),x->nb_mass , pos_list);          
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -393,16 +393,16 @@ void pmpd3d_massesForcesZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesForcesZL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massForceZL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].forceZ);
-        outlet_anything(x->main_outlet, gensym("massesForcesZL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massForceZL"),1 , pos_list);        
     }
 }
 
-void pmpd3d_massesSpeedsZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -413,7 +413,7 @@ void pmpd3d_massesSpeedsZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),x->mass[i].speedZ);
 		}
-		outlet_anything(x->main_outlet, gensym("massesSpeedsZL"),x->nb_mass , pos_list);         
+		outlet_anything(x->main_outlet, gensym("massSpeedZL"),x->nb_mass , pos_list);         
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -428,18 +428,18 @@ void pmpd3d_massesSpeedsZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesSpeedsZL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massSpeedZL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].speedZ);
-        outlet_anything(x->main_outlet, gensym("massesSpeedsZL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massSpeedZL"),1 , pos_list);        
     }
 }
 
 // ---------------------------------------------------------------------
 
-void pmpd3d_massesPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -449,7 +449,7 @@ void pmpd3d_massesPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		for (i=0; i< x->nb_mass; i++) {
 			SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].posX)+sqr(x->mass[i].posY)+sqr(x->mass[i].posZ)));
 		}
-    outlet_anything(x->main_outlet, gensym("massesPosNormL"),x->nb_mass , pos_list);
+    outlet_anything(x->main_outlet, gensym("massPosNormL"),x->nb_mass , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -464,17 +464,17 @@ void pmpd3d_massesPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesPosNormL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massPosNormL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
 		i=(int)atom_getfloatarg(0, argc, argv);
 		SETFLOAT(&(pos_list[0]),sqrt(sqr(x->mass[i].posX)+sqr(x->mass[i].posY)+sqr(x->mass[i].posZ)));
-        outlet_anything(x->main_outlet, gensym("massesPosNormL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massPosNormL"),1 , pos_list);        
     }
 }
 
-void pmpd3d_massesForcesNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massForceNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {   
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -485,7 +485,7 @@ void pmpd3d_massesForcesNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].forceX)+sqr(x->mass[i].forceY)+sqr(x->mass[i].forceZ)));
 		}
-    outlet_anything(x->main_outlet, gensym("massesForcesNormL"),x->nb_mass , pos_list);
+    outlet_anything(x->main_outlet, gensym("massForceNormL"),x->nb_mass , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -500,17 +500,17 @@ void pmpd3d_massesForcesNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesForcesNormL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massForceNormL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
 		i=(int)atom_getfloatarg(0, argc, argv);
         SETFLOAT(&(pos_list[0]),sqrt(sqr(x->mass[i].forceX)+sqr(x->mass[i].forceY)+sqr(x->mass[i].forceZ)));
-        outlet_anything(x->main_outlet, gensym("massesForcesNormL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massForceNormL"),1 , pos_list);        
     }
 }
 
-void pmpd3d_massesSpeedsNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_mass];
@@ -521,7 +521,7 @@ void pmpd3d_massesSpeedsNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)+sqr(x->mass[i].speedZ)));
 		}
-    outlet_anything(x->main_outlet, gensym("massesSpeedsNormL"),x->nb_mass , pos_list);
+    outlet_anything(x->main_outlet, gensym("massSpeedNormL"),x->nb_mass , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
@@ -536,20 +536,20 @@ void pmpd3d_massesSpeedsNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
             j++;
         }
-        outlet_anything(x->main_outlet, gensym("massesSpeedsNormL"),i , pos_list);
+        outlet_anything(x->main_outlet, gensym("massSpeedNormL"),i , pos_list);
     }
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
 		i=(int)atom_getfloatarg(0, argc, argv);
         SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)+sqr(x->mass[i].speedZ)));
-        outlet_anything(x->main_outlet, gensym("massesSpeedsNormL"),1 , pos_list);        
+        outlet_anything(x->main_outlet, gensym("massSpeedNormL"),1 , pos_list);        
     }
     
 }
 
 // ---------------------------------------------------------------------
 
-void pmpd3d_linksPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[3*x->nb_link];
@@ -562,7 +562,7 @@ void pmpd3d_linksPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			SETFLOAT(&(pos_list[3*i+1]),(x->link[i].mass2->posY + x->link[i].mass1->posY)/2);
 			SETFLOAT(&(pos_list[3*i+2]),(x->link[i].mass2->posZ + x->link[i].mass1->posZ)/2);
 		}
-		outlet_anything(x->main_outlet, gensym("linksPosL"),3*x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosL"),3*x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -578,11 +578,11 @@ void pmpd3d_linksPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-  		outlet_anything(x->main_outlet, gensym("linksPosL"), 3*j, pos_list);   
+  		outlet_anything(x->main_outlet, gensym("linkPosL"), 3*j, pos_list);   
     }
 }
 
-void pmpd3d_linksLengthL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[3*x->nb_link];
@@ -595,7 +595,7 @@ void pmpd3d_linksLengthL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			SETFLOAT(&(pos_list[3*i+1]),x->link[i].mass2->posY - x->link[i].mass1->posY);
 			SETFLOAT(&(pos_list[3*i+2]),x->link[i].mass2->posZ - x->link[i].mass1->posZ);
 		}
-		outlet_anything(x->main_outlet, gensym("linksLengthL"),3*x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthL"),3*x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -611,11 +611,11 @@ void pmpd3d_linksLengthL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-  		outlet_anything(x->main_outlet, gensym("linksLengthL"), 3*j, pos_list);   
+  		outlet_anything(x->main_outlet, gensym("linkLengthL"), 3*j, pos_list);   
     }
 }
 
-void pmpd3d_linksPosSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[3*x->nb_link];
@@ -628,7 +628,7 @@ void pmpd3d_linksPosSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			SETFLOAT(&(pos_list[3*i+1]),(x->link[i].mass2->speedY + x->link[i].mass1->speedY)/2);
 			SETFLOAT(&(pos_list[3*i+2]),(x->link[i].mass2->speedZ + x->link[i].mass1->speedZ)/2);
 		}
-		outlet_anything(x->main_outlet, gensym("linksPosSpeedL"),3*x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosSpeedL"),3*x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -644,11 +644,11 @@ void pmpd3d_linksPosSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksPosSpeedL"),3*j , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosSpeedL"),3*j , pos_list);
     }
 }
 
-void pmpd3d_linksLengthSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[3*x->nb_link];
@@ -661,7 +661,7 @@ void pmpd3d_linksLengthSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			SETFLOAT(&(pos_list[3*i+1]),x->link[i].mass2->speedY - x->link[i].mass1->speedY);
 			SETFLOAT(&(pos_list[3*i+2]),x->link[i].mass2->speedZ - x->link[i].mass1->speedZ);
 		}
-		outlet_anything(x->main_outlet, gensym("linksLengthSpeedL"),3*x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthSpeedL"),3*x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -677,11 +677,11 @@ void pmpd3d_linksLengthSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksLengthSpeedL"),3*j , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthSpeedL"),3*j , pos_list);
     }
 }
 
-void pmpd3d_linksPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -692,7 +692,7 @@ void pmpd3d_linksPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),(x->link[i].mass1->posX + x->link[i].mass2->posX)/2);
 		}
-		outlet_anything(x->main_outlet, gensym("linksPosXL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosXL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -706,11 +706,11 @@ void pmpd3d_linksPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksPosXL"),j , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosXL"),j , pos_list);
     }
 }
 
-void pmpd3d_linksLengthXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -721,7 +721,7 @@ void pmpd3d_linksLengthXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),x->link[i].mass2->posX - x->link[i].mass1->posX);
 		}
-		outlet_anything(x->main_outlet, gensym("linksLengthXL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthXL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -735,11 +735,11 @@ void pmpd3d_linksLengthXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksLengthXL"),j , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthXL"),j , pos_list);
     }
 }
 
-void pmpd3d_linksPosSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -750,7 +750,7 @@ void pmpd3d_linksPosSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),(x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2);
 		}
-		outlet_anything(x->main_outlet, gensym("linksPosSpeedXL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosSpeedXL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -764,11 +764,11 @@ void pmpd3d_linksPosSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksPosSpeedXL"),j , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosSpeedXL"),j , pos_list);
     }
 }
 
-void pmpd3d_linksLengthSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -779,7 +779,7 @@ void pmpd3d_linksLengthSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),x->link[i].mass2->speedX - x->link[i].mass1->speedX);
 		}
-		outlet_anything(x->main_outlet, gensym("linksLengthSpeedXL"), x->nb_link, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthSpeedXL"), x->nb_link, pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -793,11 +793,11 @@ void pmpd3d_linksLengthSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksLengthSpeedXL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthSpeedXL"), j, pos_list);
     }
 }
 
-void pmpd3d_linksPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -808,7 +808,7 @@ void pmpd3d_linksPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),(x->link[i].mass1->posY + x->link[i].mass2->posY)/2);
 		}
-		outlet_anything(x->main_outlet, gensym("linksPosYL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosYL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -822,11 +822,11 @@ void pmpd3d_linksPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksPosYL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosYL"), j, pos_list);
     }
 }
 
-void pmpd3d_linksLengthYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -837,7 +837,7 @@ void pmpd3d_linksLengthYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),x->link[i].mass2->posY - x->link[i].mass1->posY);
 		}
-		outlet_anything(x->main_outlet, gensym("linksLengthYL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthYL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -851,11 +851,11 @@ void pmpd3d_linksLengthYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksLengthYL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthYL"), j, pos_list);
     }
 }
 
-void pmpd3d_linksPosSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -866,7 +866,7 @@ void pmpd3d_linksPosSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),(x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2);
 		}
-		outlet_anything(x->main_outlet, gensym("linksPosSpeedYL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosSpeedYL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -880,11 +880,11 @@ void pmpd3d_linksPosSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksPosSpeedYL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosSpeedYL"), j, pos_list);
     }
 }
 
-void pmpd3d_linksLengthSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -895,7 +895,7 @@ void pmpd3d_linksLengthSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),x->link[i].mass2->speedY - x->link[i].mass1->speedY);
 		}
-		outlet_anything(x->main_outlet, gensym("linksLengthSpeedYL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthSpeedYL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -909,11 +909,11 @@ void pmpd3d_linksLengthSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksLengthSpeedYL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthSpeedYL"), j, pos_list);
     }
 }
 
-void pmpd3d_linksPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -924,7 +924,7 @@ void pmpd3d_linksPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),(x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2);
 		}
-		outlet_anything(x->main_outlet, gensym("linksPosZL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosZL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -938,11 +938,11 @@ void pmpd3d_linksPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksPosZL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosZL"), j, pos_list);
     }
 }
 
-void pmpd3d_linksLengthZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -953,7 +953,7 @@ void pmpd3d_linksLengthZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),x->link[i].mass2->posZ - x->link[i].mass1->posZ);
 		}
-		outlet_anything(x->main_outlet, gensym("linksLengthZL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthZL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -967,11 +967,11 @@ void pmpd3d_linksLengthZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksLengthZL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthZL"), j, pos_list);
     }
 }
 
-void pmpd3d_linksPosSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -982,7 +982,7 @@ void pmpd3d_linksPosSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),(x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2);
 		}
-		outlet_anything(x->main_outlet, gensym("linksPosSpeedZL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosSpeedZL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -996,11 +996,11 @@ void pmpd3d_linksPosSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksPosSpeedZL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosSpeedZL"), j, pos_list);
     }
 }
 
-void pmpd3d_linksLengthSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -1011,7 +1011,7 @@ void pmpd3d_linksLengthSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			SETFLOAT(&(pos_list[i]),x->link[i].mass2->speedZ - x->link[i].mass1->speedZ);
 		}
-		outlet_anything(x->main_outlet, gensym("linksLengthSpeedZL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthSpeedZL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -1025,13 +1025,13 @@ void pmpd3d_linksLengthSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksLengthSpeedZL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthSpeedZL"), j, pos_list);
     }
 }
 
 // ---------------------------------------------------------------------
 
-void pmpd3d_linksPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -1045,7 +1045,7 @@ void pmpd3d_linksPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                             sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + \
                             sqr((x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2) ));
 		}
-		outlet_anything(x->main_outlet, gensym("linksPosNormL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosNormL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -1062,11 +1062,11 @@ void pmpd3d_linksPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksPosNormL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosNormL"), j, pos_list);
     }		
 }
 
-void pmpd3d_linksLengthNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -1080,7 +1080,7 @@ void pmpd3d_linksLengthNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                             sqr(x->link[i].mass2->posY - x->link[i].mass1->posY) + \
                             sqr(x->link[i].mass2->posZ - x->link[i].mass1->posZ) ));
 		}
-		outlet_anything(x->main_outlet, gensym("linksLengthNormL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthNormL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -1098,11 +1098,11 @@ void pmpd3d_linksLengthNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				j++;
 			}
         }
-		outlet_anything(x->main_outlet, gensym("linksLengthNormL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthNormL"), j, pos_list);
     }
 }
 
-void pmpd3d_linksPosSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -1116,7 +1116,7 @@ void pmpd3d_linksPosSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                             sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
                             sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
 		}
-		outlet_anything(x->main_outlet, gensym("linksPosSpeedNormL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosSpeedNormL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -1133,11 +1133,11 @@ void pmpd3d_linksPosSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                 j++;
             }
         }
-		outlet_anything(x->main_outlet, gensym("linksPosSpeedNormL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkPosSpeedNormL"), j, pos_list);
     }
 }
 
-void pmpd3d_linksLengthSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
     t_atom pos_list[x->nb_link];
@@ -1151,7 +1151,7 @@ void pmpd3d_linksLengthSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *ar
                             sqr(x->link[i].mass2->speedY - x->link[i].mass1->speedY) + \
                             sqr(x->link[i].mass2->speedZ - x->link[i].mass1->speedZ) ));
 		}
-		outlet_anything(x->main_outlet, gensym("linksLengthSpeedNormL"),x->nb_link , pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthSpeedNormL"),x->nb_link , pos_list);
 	}
 	else 
 	if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
@@ -1168,7 +1168,7 @@ void pmpd3d_linksLengthSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *ar
 				j++;
 			}
         }
-		outlet_anything(x->main_outlet, gensym("linksLengthSpeedNormL"), j, pos_list);
+		outlet_anything(x->main_outlet, gensym("linkLengthSpeedNormL"), j, pos_list);
     }
 }
 

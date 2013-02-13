@@ -346,7 +346,7 @@ void pmpd3d_get(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         error("not get attribute");
 }
 
-void pmpd3d_massesPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i;
     t_atom  toout[5];
@@ -395,7 +395,7 @@ void pmpd3d_massesPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
       
-void pmpd3d_massesSpeeds(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massSpeed(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i;
     t_atom  toout[5];
@@ -444,7 +444,7 @@ void pmpd3d_massesSpeeds(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_massesForces(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massForce(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {	
     int i;
     t_atom  toout[5];
@@ -493,7 +493,7 @@ void pmpd3d_massesForces(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEnds(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEnd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	int i;
     t_atom  toout[8];
@@ -551,7 +551,7 @@ void pmpd3d_linksEnds(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	int i;
     t_atom  toout[5];

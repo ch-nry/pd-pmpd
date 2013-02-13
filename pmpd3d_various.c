@@ -369,7 +369,7 @@ void pmpd3d_massesDistances_f_f(t_pmpd3d *x, t_int i, t_int j)
 	SETFLOAT(&(to_out[0]), i);
 	SETFLOAT(&(to_out[1]), j);
 	SETFLOAT(&(to_out[2]), dist);
-	outlet_anything(x->main_outlet, gensym("distances"), 3, to_out);
+	outlet_anything(x->main_outlet, gensym("distance"), 3, to_out);
 }
 
 void pmpd3d_massesDistances(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)

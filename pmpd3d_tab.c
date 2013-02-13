@@ -771,7 +771,7 @@ void pmpd3d_massesForcesNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 // ---------------------------------------------------------------------
 
-void pmpd3d_linksPosT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -827,7 +827,7 @@ void pmpd3d_linksPosT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksLengthT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -883,7 +883,7 @@ void pmpd3d_linksLengthT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksPosSpeedT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosSpeedT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -939,7 +939,7 @@ void pmpd3d_linksPosSpeedT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksLengthSpeedT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthSpeedT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -995,7 +995,7 @@ void pmpd3d_linksLengthSpeedT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksPosXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1045,7 +1045,7 @@ void pmpd3d_linksPosXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksLengthXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1095,7 +1095,7 @@ void pmpd3d_linksLengthXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksPosSpeedXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosSpeedXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1145,7 +1145,7 @@ void pmpd3d_linksPosSpeedXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksLengthSpeedXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthSpeedXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1195,7 +1195,7 @@ void pmpd3d_linksLengthSpeedXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksPosYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1245,7 +1245,7 @@ void pmpd3d_linksPosYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksLengthYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1295,7 +1295,7 @@ void pmpd3d_linksLengthYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksPosSpeedYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosSpeedYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1345,7 +1345,7 @@ void pmpd3d_linksPosSpeedYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksLengthSpeedYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthSpeedYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1395,7 +1395,7 @@ void pmpd3d_linksLengthSpeedYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksPosZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1445,7 +1445,7 @@ void pmpd3d_linksPosZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksLengthZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1495,7 +1495,7 @@ void pmpd3d_linksLengthZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksPosSpeedZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosSpeedZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1545,7 +1545,7 @@ void pmpd3d_linksPosSpeedZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksLengthSpeedZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthSpeedZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1597,7 +1597,7 @@ void pmpd3d_linksLengthSpeedZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 // ---------------------------------------------------------------------
 
-void pmpd3d_linksPosNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1653,7 +1653,7 @@ void pmpd3d_linksPosNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksLengthNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1709,7 +1709,7 @@ void pmpd3d_linksLengthNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksPosSpeedNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkPosSpeedNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1765,7 +1765,7 @@ void pmpd3d_linksPosSpeedNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksLengthSpeedNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkLengthSpeedNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1823,7 +1823,7 @@ void pmpd3d_linksLengthSpeedNormT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *ar
 
 // ---------------------------------------------------------------------
 
-void pmpd3d_linksEndT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEndT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1889,7 +1889,7 @@ void pmpd3d_linksEndT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEndXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEndXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1942,7 +1942,7 @@ void pmpd3d_linksEndXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEndYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEndYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -1995,7 +1995,7 @@ void pmpd3d_linksEndYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEndZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEndZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -2048,7 +2048,7 @@ void pmpd3d_linksEndZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEnd1T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEnd1T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -2104,7 +2104,7 @@ void pmpd3d_linksEnd1T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEnd1XT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEnd1XT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -2154,7 +2154,7 @@ void pmpd3d_linksEnd1XT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEnd1YT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEnd1YT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -2204,7 +2204,7 @@ void pmpd3d_linksEnd1YT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEnd1ZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEnd1ZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -2254,7 +2254,7 @@ void pmpd3d_linksEnd1ZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEnd2T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEnd2T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -2310,7 +2310,7 @@ void pmpd3d_linksEnd2T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEnd2XT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEnd2XT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -2360,7 +2360,7 @@ void pmpd3d_linksEnd2XT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEnd2YT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEnd2YT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -2410,7 +2410,7 @@ void pmpd3d_linksEnd2YT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linksEnd2ZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_linkEnd2ZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;

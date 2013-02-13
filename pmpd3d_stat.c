@@ -1,4 +1,4 @@
-void pmpd3d_massesPosMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massPosMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     t_float sommeX, sommeY, sommeZ, somme;
     t_int i,j;
@@ -46,10 +46,10 @@ void pmpd3d_massesPosMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     SETFLOAT(&(mean[2]),sommeZ);
     SETFLOAT(&(mean[3]),somme);
     
-    outlet_anything(x->main_outlet, gensym("massesPosMean"),4 , mean);
+    outlet_anything(x->main_outlet, gensym("massPosMean"),4 , mean);
 }
 
-void pmpd3d_massesPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     t_float sommeX, sommeY, sommeZ, somme;
     t_int i,j;
@@ -127,10 +127,10 @@ void pmpd3d_massesPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     SETFLOAT(&(std_out[2]),stdZ);
     SETFLOAT(&(std_out[3]),std);
     
-    outlet_anything(x->main_outlet, gensym("massesPosStd"),4 , std_out);
+    outlet_anything(x->main_outlet, gensym("massPosStd"),4 , std_out);
 }
 
-void pmpd3d_massesForcesMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massForceMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     t_float sommeX, sommeY, sommeZ, somme;
     t_int i,j;
@@ -178,10 +178,10 @@ void pmpd3d_massesForcesMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     SETFLOAT(&(mean[2]),sommeZ);
     SETFLOAT(&(mean[3]),somme);
     
-    outlet_anything(x->main_outlet, gensym("massesForcesMean"),4 , mean);
+    outlet_anything(x->main_outlet, gensym("massForcesMean"),4 , mean);
 }
 
-void pmpd3d_massesForcesStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massForceStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     t_float sommeX, sommeY, sommeZ, somme;
     t_int i,j;
@@ -259,10 +259,10 @@ void pmpd3d_massesForcesStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     SETFLOAT(&(std_out[2]),stdZ);
     SETFLOAT(&(std_out[3]),std);
     
-    outlet_anything(x->main_outlet, gensym("massesForcesStd"),4 , std_out);
+    outlet_anything(x->main_outlet, gensym("massForcesStd"),4 , std_out);
 }
 
-void pmpd3d_massesSpeedsMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massSpeedMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     t_float sommeX, sommeY, sommeZ, somme;
     t_int i,j;
@@ -310,10 +310,10 @@ void pmpd3d_massesSpeedsMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     SETFLOAT(&(mean[2]),sommeZ);
     SETFLOAT(&(mean[3]),somme);
     
-    outlet_anything(x->main_outlet, gensym("massesSpeedsMean"),4 , mean);
+    outlet_anything(x->main_outlet, gensym("massSpeedMean"),4 , mean);
 }
 
-void pmpd3d_massesSpeedsStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massSpeedStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     t_float sommeX, sommeY, sommeZ, somme;
     t_int i,j;
@@ -391,7 +391,7 @@ void pmpd3d_massesSpeedsStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     SETFLOAT(&(std_out[2]),stdZ);
     SETFLOAT(&(std_out[3]),std);
     
-    outlet_anything(x->main_outlet, gensym("massesSpeedsStd"),4 , std_out);
+    outlet_anything(x->main_outlet, gensym("massSpeedStd"),4 , std_out);
 }
 
 void pmpd3d_linkPosMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
