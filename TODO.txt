@@ -17,9 +17,9 @@ DONE :
 - new statistics messages for links
 - interactors messages
 
-messages mass list : mette la sortie au synguler
 
 TODO : 
+messages mass list : mette la sortie au singuler
 setLFactor [Id] multiplication_factor
 closestNeighbor
 linkEndL
@@ -48,30 +48,30 @@ messages a tester :
 #    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosZL,     		gensym("massPosZL"), A_GIMME, 0);
 #    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsZL,  		gensym("massSpeedZL"), A_GIMME, 0);
 #    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesZL,  		gensym("massForceZL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosNormL,      	gensym("massPosNormL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsNormL,   	gensym("massSpeedNormL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesNormL,   	gensym("massForceNormL"), A_GIMME, 0);    
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosNormL,      	gensym("massPosNormL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsNormL,   	gensym("massSpeedNormL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesNormL,   	gensym("massForceNormL"), A_GIMME, 0);    
     
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosL,           	gensym("linkPosL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthL,            gensym("linkLengthL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedL,          gensym("linkPosSpeedL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedL,       gensym("linkLengthSpeedL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosXL,              gensym("linkPosXL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthXL,           gensym("linkLengthXL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedXL,         gensym("linkPosSpeedXL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedXL,      gensym("linkLengthSpeedXL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosYL,              gensym("linkPosYL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthYL,           gensym("linkLengthYL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedYL,         gensym("linkPosSpeedYL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedYL,      gensym("linkLengthSpeedYL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosZL,              gensym("linkPosZL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthZL,           gensym("linkLengthZL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedZL,         gensym("linkPosSpeedZL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedZL,      gensym("linkLengthSpeedZL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosNormL,           gensym("linkPosNormL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthNormL,        gensym("linkLengthNormL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedNormL,      gensym("linkPosSpeedNormL"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedNormL,   gensym("linkLengthSpeedNormL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosL,           	gensym("linkPosL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthL,            gensym("linkLengthL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedL,          gensym("linkPosSpeedL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedL,       gensym("linkLengthSpeedL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosXL,              gensym("linkPosXL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthXL,           gensym("linkLengthXL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedXL,         gensym("linkPosSpeedXL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedXL,      gensym("linkLengthSpeedXL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosYL,              gensym("linkPosYL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthYL,           gensym("linkLengthYL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedYL,         gensym("linkPosSpeedYL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedYL,      gensym("linkLengthSpeedYL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosZL,              gensym("linkPosZL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthZL,           gensym("linkLengthZL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedZL,         gensym("linkPosSpeedZL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedZL,      gensym("linkLengthSpeedZL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosNormL,           gensym("linkPosNormL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthNormL,        gensym("linkLengthNormL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksPosSpeedNormL,      gensym("linkPosSpeedNormL"), A_GIMME, 0);
+#    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksLengthSpeedNormL,   gensym("linkLengthSpeedNormL"), A_GIMME, 0);
     
 // pmpd3d_tab
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linksEndT,               gensym("linkEndT"),   A_GIMME, 0);

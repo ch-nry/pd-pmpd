@@ -1094,8 +1094,9 @@ void pmpd3d_linksLengthNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                             sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
                             sqr(x->link[i].mass2->posY - x->link[i].mass1->posY) + \
                             sqr(x->link[i].mass2->posZ - x->link[i].mass1->posZ) ));
-            }
-            j++;
+
+				j++;
+			}
         }
 		outlet_anything(x->main_outlet, gensym("linksLengthNormL"), j, pos_list);
     }
@@ -1129,8 +1130,8 @@ void pmpd3d_linksPosSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                             sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
                             sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
                             sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
+                j++;
             }
-            j++;
         }
 		outlet_anything(x->main_outlet, gensym("linksPosSpeedNormL"), j, pos_list);
     }
@@ -1164,8 +1165,8 @@ void pmpd3d_linksLengthSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *ar
                             sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
                             sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
                             sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
-            }
-            j++;
+				j++;
+			}
         }
 		outlet_anything(x->main_outlet, gensym("linksLengthSpeedNormL"), j, pos_list);
     }
