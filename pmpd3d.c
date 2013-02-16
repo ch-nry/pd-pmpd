@@ -259,7 +259,8 @@ void pmpd3d_setup(void)
 
 // pmpd3d_interactor
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_iCylinder,				gensym("iCylinder"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_iCylinder,				gensym("iPlane"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_iPlane,					gensym("iPlane"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_iSphere,					gensym("iSphere"), A_GIMME, 0);
 
 // pmpd3d_various
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_infosL,          		gensym("infosL"), 0);

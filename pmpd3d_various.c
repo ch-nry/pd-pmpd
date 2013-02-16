@@ -469,13 +469,13 @@ void pmpd3d_forcesXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			if ( argc == 1 )  // apply forces on all masses
 			{
-				j = max(x->nb_mass, npoints);
+				j = min(x->nb_mass, npoints);
 				for (i=0; i< j; i++)
 				{
 					x->mass[i].forceX += vec[i].w_float;
 				}
 			}
-			else if ( argv[1].a_type == A_SYMBOL )
+			else if (( argc > 1 ) && ( argv[1].a_type == A_SYMBOL ))
 			{
 				i=0;
 				j=0;
@@ -515,13 +515,13 @@ void pmpd3d_forcesYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			if ( argc == 1 )  // apply forces on all masses
 			{
-				j = max(x->nb_mass, npoints);
+				j = min(x->nb_mass, npoints);
 				for (i=0; i< j; i++)
 				{
 					x->mass[i].forceY += vec[i].w_float;
 				}
 			}
-			else if ( argv[1].a_type == A_SYMBOL )
+			else if (( argc > 1 ) && (argv[1].a_type == A_SYMBOL ))
 			{
 				i=0;
 				j=0;
@@ -561,13 +561,13 @@ void pmpd3d_forcesZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			if ( argc == 1 )  // apply forces on all masses
 			{
-				j = max(x->nb_mass, npoints);
+				j = min(x->nb_mass, npoints);
 				for (i=0; i< j; i++)
 				{
 					x->mass[i].forceZ += vec[i].w_float;
 				}
 			}
-			else if ( argv[1].a_type == A_SYMBOL )
+			else if (( argc > 1 ) && ( argv[1].a_type == A_SYMBOL ))
 			{
 				i=0;
 				j=0;
