@@ -501,7 +501,7 @@ void pmpd3d_linkEnd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     if ((argc>0)&&(argv[0].a_type == A_FLOAT)) 
     {
         i = atom_getfloatarg(0, argc, argv);
-        if ( (i>=0) && (i<x->nb_mass) )
+        if ( (i>=0) && (i<x->nb_link) )
         {
             SETSYMBOL(&(toout[0]), x->link[i].Id);
             SETFLOAT(&(toout[1]), i);

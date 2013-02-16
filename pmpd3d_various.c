@@ -359,11 +359,11 @@ void pmpd3d_massesDistances_f_f(t_pmpd3d *x, t_int i, t_int j)
 	t_atom to_out[3];
 
 	tmp = x->mass[i].posX - x->mass[j].posX;
-	dist = tmp*tmp;
+	dist = sqr(tmp);
 	tmp = x->mass[i].posY - x->mass[j].posY;
-	dist += tmp*tmp;
+	dist += sqr(tmp);
 	tmp = x->mass[i].posZ - x->mass[j].posZ;
-	dist += tmp*tmp;
+	dist += sqr(tmp);
 	dist = sqrt(dist);
 
 	SETFLOAT(&(to_out[0]), i);
@@ -414,6 +414,36 @@ void pmpd3d_massesDistances(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 					}
 				}
 			}
+		}
+	}
+	else if (argc == 0)
+	{
+		for (i=0; i < x->nb_mass; i++)
+		{
+			for (j=i+1; j < x->nb_mass; j++)
+			{
+				pmpd3d_massesDistances_f_f(x,i, j);
+			}
+		}
+	}
+	else if ((argc == 1) && (argv[0].a_type == A_SYMBOL) )
+	{
+		for (i=0; i < x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{
+				for (j=i+1; j < x->nb_mass; j++)
+				{
+					pmpd3d_massesDistances_f_f(x,i, j);
+				}
+			}
+		}
+	}
+	else if ( (argc == 1) && (argv[0].a_type == A_FLOAT) )
+	{
+		for (i=0; i < x->nb_mass; i++)
+		{
+			pmpd3d_massesDistances_f_f(x, atom_getfloatarg(0, argc, argv), i);
 		}
 	}
 }
