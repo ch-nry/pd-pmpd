@@ -1,30 +1,30 @@
-#N canvas 515 28 624 761 10;
-#X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#N canvas 515 28 564 659 10;
+#X obj 4 289 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 695 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 5 615 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 8 6 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 14 389 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 14 309 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 14 614 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 14 534 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 4 557 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 477 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 4 592 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 512 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 7 76 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 645 cnv 15 550 20 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 5 565 cnv 15 550 20 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 665 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 5 585 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text 12 76 Examples:;
-#X text 9 369 Inlets:;
-#X text 19 388 - Left:;
-#X text 10 556 Arguments:;
-#X text 11 592 Outlets:;
-#X text 19 647 See Also:;
+#X text 9 289 Inlets:;
+#X text 19 308 - Left:;
+#X text 10 476 Arguments:;
+#X text 11 512 Outlets:;
+#X text 19 567 See Also:;
 #X text 74 48 Full Name:;
 #N canvas 58 22 262 70 Related_Objects 0;
 #X obj 3 10 cnv 15 250 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -34,83 +34,68 @@
 #X text 5 10 Externals and libraries;
 #X obj 44 37 pmpd;
 #X obj 141 39 pmpd3d;
-#X restore 122 703 pd Related_Objects;
-#X text 101 388 Bang - A bang at the left inlet compute the new model
+#X restore 122 623 pd Related_Objects;
+#X text 101 308 Bang - A bang at the left inlet compute the new model
 state based on previous instant.;
-#X text 188 456 To create the model masses and links.;
-#X text 188 510 To get the model parameters;
-#X text 103 572 None;
-#X text 18 613 - Left:;
-#X text 101 614 Outputs the model parameters asked with the attributes
+#X text 188 376 To create the model masses and links.;
+#X text 188 430 To get the model parameters;
+#X text 103 492 None;
+#X text 18 533 - Left:;
+#X text 101 534 Outputs the model parameters asked with the attributes
 messages.;
-#X text 101 420 Messages - Different messages are used to control the
+#X text 101 340 Messages - Different messages are used to control the
 pmpd object. They are of three types :;
-#X text 9 669 CATEGORY: control;
-#X text 9 679 KEYWORDS: physical model mass spring damper link;
+#X text 9 589 CATEGORY: control;
+#X text 9 599 KEYWORDS: physical model mass spring damper link;
 #X text 135 98 Sorry \, you need GEM for this example...;
-#X text 265 699 - Cyrille Henry 2011;
-#X text 265 711 based on MSD by Nicolas Montgermont \, 2005;
+#X text 265 619 - Cyrille Henry 2011;
+#X text 265 631 based on MSD by Nicolas Montgermont \, 2005;
 #X text 12 8 HELP: pmpd3d;
 #X text 11 19 DESCRIPTION: Physical modeling for Pd in 3d;
 #X obj 157 48 pmpd3d;
-#N canvas 257 262 759 345 init 0;
+#N canvas 426 263 759 345 init 0;
 #X obj 89 215 t a;
 #X obj 89 33 loadbang;
 #X obj 89 241 s \$0-in;
 #X obj 89 59 t b b b b b;
 #X msg 161 80 reset;
 #X obj 44 13 inlet;
-#X msg 107 161 link souple fix mob 10 10 \, link souple mob mob 10
-10;
-#X msg 125 120 mass mob 1 100 0 -2 0 \, mass mob 1 100 2 0 0 \, mass
-mob 1 100 0 2 0 \, mass mob 1 100 -2 0 0;
-#X msg 89 187 Xmax 4 \, Xmin -4 \, Ymax 4 \, Ymin -4 \, Zmax 4 \, Zmin
+#X msg 107 161 link souple mob mob 10 10;
+#X msg 89 187 Xmax 4 \, Xmin -4 \, Ymax 4 \, Ymin -4 \, Zmax 1 \, Zmin
 -4;
-#X msg 143 100 mass fix 0 10 0 0 0;
+#X msg 125 110 mass mob 1 100 0 1 0 \, mass mob 1 100 1 0 0 \, mass
+mob 1 100 0 0 0 \, mass mob 1 100 1 1 0 \, mass mob 1 100 0 1 -1 \,
+mass mob 1 100 1 0 -1 \, mass mob 1 100 0 0 -1 \, mass mob 1 100 1
+1 -1;
 #X connect 0 0 2 0;
 #X connect 1 0 3 0;
-#X connect 3 0 8 0;
+#X connect 3 0 7 0;
 #X connect 3 1 6 0;
-#X connect 3 2 7 0;
-#X connect 3 3 9 0;
+#X connect 3 2 8 0;
 #X connect 3 4 4 0;
 #X connect 4 0 0 0;
 #X connect 5 0 3 0;
 #X connect 6 0 0 0;
 #X connect 7 0 0 0;
 #X connect 8 0 0 0;
-#X connect 9 0 0 0;
 #X restore 17 156 pd init;
-#X obj 18 321 s \$0-out;
-#X obj 18 272 r \$0-in;
-#X obj 393 317 s \$0-in;
+#X obj 17 251 s \$0-out;
+#X obj 17 202 r \$0-in;
+#X obj 318 257 s \$0-in;
 #N canvas 565 515 355 193 compute 0;
-#X obj 27 29 inlet;
 #X obj 27 127 s \$0-in;
-#X msg 27 96 bang \, get massesPos \, get linksPos;
 #X obj 27 66 gemhead;
-#X obj 160 36 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#X connect 0 0 3 0;
-#X connect 2 0 1 0;
-#X connect 3 0 2 0;
-#X connect 4 0 2 0;
-#X restore 17 209 pd compute;
-#X obj 17 181 tgl 15 0 empty empty ON/OFF 25 10 1 10 -262144 -1 -1
-0 1;
-#X obj 172 270 r \$0-out;
-#X obj 17 126 bng 15 250 50 0 empty empty reset 25 10 1 10 -262144
--1 -1;
-#X obj 336 216 gemwin;
-#X msg 336 194 0 \, destroy;
+#X msg 27 96 bang \, massPos \, linkEnd;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X restore 17 179 pd compute;
+#X obj 102 205 r \$0-out;
 #N canvas 363 318 550 319 gemrender 0;
 #X obj 48 203 translateXYZ;
 #X obj 48 229 sphere 0.1;
 #X obj 127 24 inlet;
 #X obj 390 13 inlet;
 #X obj 303 213 curve 2;
-#X obj 125 136 t b f;
-#X obj 127 62 unpack f f f f;
 #X msg 390 58 \$2 \$3 \$4;
 #X msg 462 62 \$5 \$6 \$7;
 #X obj 48 167 gemhead;
@@ -120,35 +105,31 @@ mob 1 100 0 2 0 \, mass mob 1 100 -2 0 0;
 #X msg 303 123 0;
 #X obj 303 95 loadbang;
 #X obj 390 86 t b l;
+#X obj 127 62 unpack s f f f f;
+#X obj 119 109 t b;
 #X connect 0 0 1 0;
-#X connect 2 0 6 0;
-#X connect 3 0 8 0;
-#X connect 3 0 7 0;
-#X connect 5 0 9 0;
-#X connect 5 1 0 1;
-#X connect 6 1 5 0;
-#X connect 6 2 0 2;
-#X connect 6 3 0 3;
-#X connect 7 0 15 0;
-#X connect 8 0 4 2;
-#X connect 9 0 0 0;
-#X connect 10 0 9 0;
+#X connect 2 0 14 0;
+#X connect 3 0 6 0;
+#X connect 3 0 5 0;
+#X connect 5 0 13 0;
+#X connect 6 0 4 2;
+#X connect 7 0 0 0;
+#X connect 8 0 7 0;
+#X connect 9 0 8 0;
+#X connect 10 0 4 0;
 #X connect 11 0 10 0;
-#X connect 12 0 4 0;
-#X connect 13 0 12 0;
-#X connect 14 0 13 0;
-#X connect 15 0 12 0;
-#X connect 15 1 4 1;
-#X restore 172 321 pd gemrender;
-#X msg 336 129 reset \, create \, 1;
-#X obj 18 296 pmpd3d;
-#X msg 393 271 forceZ mob -10;
-#X msg 393 293 forceZ mob 10;
-#X text 392 246 2 Send forces;
-#X text 170 132 1 Create window -->;
-#X text 170 195 3 And destroy it -->;
-#X obj 172 294 route massesPos linksPosNo;
-#X text 112 648 01_pmpd3dtest.pd;
+#X connect 12 0 11 0;
+#X connect 13 0 10 0;
+#X connect 13 1 4 1;
+#X connect 14 1 15 0;
+#X connect 14 2 0 1;
+#X connect 14 3 0 2;
+#X connect 14 4 0 3;
+#X connect 15 0 7 0;
+#X restore 102 256 pd gemrender;
+#X obj 17 226 pmpd3d;
+#X text 417 226 2 Send forces;
+#X text 112 568 01_pmpd3dtest.pd;
 #N canvas 556 79 967 626 creation____________ 0;
 #X obj 5 75 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -222,7 +203,7 @@ following a vector.;
 #X text 524 308 (\$10) : minimum lenght of link;
 #X text 524 325 (\$11) : maximum lenght of link;
 #X connect 27 0 29 0;
-#X restore 12 457 pd creation____________;
+#X restore 12 377 pd creation____________;
 #N canvas 541 24 1078 872 dynamic 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -335,8 +316,8 @@ used this argument as the value applayed to all masses (or link);
 #X text 190 840 \$1 : Id (symbol) or No;
 #X msg 30 824 setDEnvOffset \$1 \$2;
 #X text 179 824 Change environement damping offset;
-#X restore 12 478 pd dynamic settings ___;
-#X text 188 478 To set the model parameters after creation.;
+#X restore 12 398 pd dynamic settings ___;
+#X text 188 398 To set the model parameters after creation.;
 #N canvas 0 22 1224 756 masses_attributes 0;
 #X obj 11 115 cnv 15 100 35 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -499,7 +480,7 @@ and forces of masses \, or directly send value to a table.;
 #X text 780 899 \$3 : z -position;
 #X text 780 911 \$4 : none or Id;
 #X msg 626 855 closestMass \$1 \$2 \$3 (\$4);
-#X restore 12 499 pd masses_attributes __;
+#X restore 12 419 pd masses_attributes __;
 #N canvas 44 22 1236 814 links_attributes 0;
 #X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -639,7 +620,7 @@ in a list on outlet No 1;
 #X msg 616 278 linksPosSpeedXT \$1 (\$2);
 #X msg 616 297 linksPosSpeedYT \$1 (\$2);
 #X msg 616 316 linksPosSpeedZT \$1 (\$2);
-#X restore 12 519 pd links_attributes ___;
+#X restore 12 439 pd links_attributes ___;
 #N canvas 0 22 901 640 More_Info 0;
 #X text 96 12 pmpd : mass - spring - damper model;
 #X text 27 155 Be careful : if masses are deleted \, lists messages
@@ -847,17 +828,37 @@ their Id.;
 #X text 28 41 pmpd is the 2D object of the pmpd objects collection.
 ;
 #X connect 3 0 4 0;
-#X restore 14 702 pd More_Info;
-#X obj 325 322 print;
-#X connect 35 0 45 0;
-#X connect 38 0 37 0;
-#X connect 39 0 51 0;
-#X connect 40 0 33 0;
-#X connect 42 0 41 0;
-#X connect 44 0 41 0;
-#X connect 45 0 34 0;
-#X connect 46 0 36 0;
-#X connect 47 0 36 0;
-#X connect 51 0 43 0;
-#X connect 51 1 43 1;
-#X connect 51 2 59 0;
+#X restore 14 622 pd More_Info;
+#X obj 225 254 print;
+#X obj 102 229 route massPos linkEnd;
+#X obj 318 186 loadbang;
+#N canvas 780 280 450 300 gemwin 0;
+#X obj 144 24 inlet;
+#X obj 144 46 sel 1 0;
+#X obj 144 128 gemwin;
+#X msg 164 96 0 \, destroy;
+#X msg 144 71 reset \, create \, 1;
+#X connect 0 0 1 0;
+#X connect 1 0 4 0;
+#X connect 1 1 3 0;
+#X connect 3 0 2 0;
+#X connect 4 0 2 0;
+#X restore 317 157 pd gemwin;
+#X obj 317 134 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 17 133 bng 15 250 50 0 empty empty reset 17 7 0 10 -262144 -1
+-1;
+#X text 416 133 1 Create window;
+#X msg 318 211 forceZ 1 30;
+#X msg 318 233 forceX mob 10;
+#X connect 35 0 40 0;
+#X connect 38 0 50 0;
+#X connect 40 0 34 0;
+#X connect 50 0 39 0;
+#X connect 50 1 39 1;
+#X connect 50 2 49 0;
+#X connect 51 0 56 0;
+#X connect 53 0 52 0;
+#X connect 54 0 33 0;
+#X connect 56 0 36 0;
+#X connect 57 0 36 0;
