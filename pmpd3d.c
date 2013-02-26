@@ -50,16 +50,25 @@ void pmpd3d_setup(void)
  pmpd3d_class = class_new(gensym("pmpd3d"),
         (t_newmethod)pmpd3d_new,
         0, sizeof(t_pmpd3d),CLASS_DEFAULT, 0);
-
-// pmpd3d_core
+/*
+ 
+ pmpd3d_core
+ --
+ Basic functions for creation of the structure
+*/
+	
     class_addbang(pmpd3d_class, pmpd3d_bang);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_reset,           		gensym("reset"), 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_mass,            		gensym("mass"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_link,            		gensym("link"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_tLink,           		gensym("tLink"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_tabLink,         		gensym("tabLink"), A_GIMME, 0);
-    
-// pmpd3d_set
+
+/*    
+ pmpd3d_set
+ --
+ Functions to modify the internal state of the pmpd3d object
+*/
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setK,            		gensym("setK"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setD,            		gensym("setD"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setDEnv,         		gensym("setDEnv"), A_GIMME, 0);
@@ -86,13 +95,18 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_posX,            		gensym("posX"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_posY,            		gensym("posY"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_posZ,            		gensym("posZ"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_pos,             		gensym("setpos"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posX,            		gensym("setposX"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posY,            		gensym("setposY"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posZ,          		  	gensym("setposZ"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_pos,             		gensym("setPos"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posX,            		gensym("setPosX"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posY,            		gensym("setPosY"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posZ,          		  	gensym("setPosZ"), A_GIMME, 0);
       
-        
-// pmpd3d_get
+/*        
+ pmpd3d_get
+ --
+ Basic functions to output internal state of the object
+ Output syntax : 1 line by element (mass/link)
+*/	
+	
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_get,             		gensym("get"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massPos,       			gensym("massPos"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massSpeed,    			gensym("massSpeed"), A_GIMME, 0);
@@ -100,7 +114,13 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkPos,     	   		gensym("linkPos"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkEnd,	       			gensym("linkEnd"), A_GIMME, 0);
 
-//pmpd3d_list    
+/*
+ pmpd3d_list 
+ --
+ Fucntions to output internal state of the object in lists
+ Output Syntax : 1 list with all elements
+*/
+	
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massPosL,      			gensym("massPosL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massSpeedL,   			gensym("massSpeedL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massForceL,   			gensym("massForceL"), A_GIMME, 0);
@@ -140,7 +160,13 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkPosSpeedNormL,      gensym("linkPosSpeedNormL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkLengthSpeedNormL,   gensym("linkLengthSpeedNormL"), A_GIMME, 0);
     
-// pmpd3d_tab
+/*
+ pmpd3d_list 
+ --
+ Functions to copy the internal state of the object in arrays
+ Output Syntax : none
+*/
+	
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosT,      		gensym("massesPosT"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsT,   		gensym("massesSpeedsT"),A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesT,  	 		gensym("massesForcesT"),A_GIMME, 0);
@@ -232,15 +258,25 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkEnd1ZT,              gensym("linkEnd1ZT"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkEnd2ZT,              gensym("linkEnd2ZT"), A_GIMME, 0);
     
-// pmpd3d_test
+/*
+ pmpd3d_test
+ --
+ Functions to list all elements that fit specific conditions
+ Output syntax : depends of the function
+*/
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_testMass,       			gensym("testMass"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_testLink,       			gensym("testLink"), A_GIMME, 0); 
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_testMassT,       		gensym("testMassT"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_testLinkT,       		gensym("testLinkT"), A_GIMME, 0); 
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_testMassL,       		gensym("testMassL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_testLinkL,       		gensym("testLinkL"), A_GIMME, 0); 
-    
-// pmpd3d_stat
+
+/*    
+ pmpd3d_stat
+ --
+ Functions to get global stats
+*/
+	
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massPosMean,       		gensym("massPosMean"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massPosStd,        		gensym("massPosStd"),A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massForceMean,    		gensym("massForecesMean"), A_GIMME, 0);
@@ -257,12 +293,20 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkPosSpeedStd,        	gensym("linkPosSpeedStd"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkLengthSpeedStd,		gensym("linkLengthSpeedStd"), A_GIMME, 0);
 
-// pmpd3d_interactor
+/* 	
+ pmpd3d_interactor
+ --
+ Functions to add a global interaction with a specific shape
+*/ 
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_iCylinder,				gensym("iCylinder"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_iPlane,					gensym("iPlane"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_iSphere,					gensym("iSphere"), A_GIMME, 0);
 
-// pmpd3d_various
+/*
+ pmpd3d_various
+ --
+ Others
+*/
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_infosL,          		gensym("infosL"), 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_infosL,          		gensym("print"), 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_force,           		gensym("force"), A_GIMME, 0);
@@ -271,6 +315,12 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_forceZ,          		gensym("forceZ"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_min,             		gensym("min"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_max,             		gensym("max"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_minX,            		gensym("minX"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_maxX,            		gensym("maxX"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_minY,            		gensym("minY"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_maxY,            		gensym("maxY"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_minZ,            		gensym("minZ"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_maxZ,            		gensym("maxZ"), A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_minX,            		gensym("Xmin"), A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_maxX,            		gensym("Xmax"), A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_minY,            		gensym("Ymin"), A_DEFFLOAT, 0);
@@ -288,8 +338,14 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesXT,       			gensym("forceXT"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesYT,       			gensym("forceYT"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesZT,       			gensym("forceZT"), A_GIMME, 0);
-    
-// pmpd3d_deprecated
+
+/*
+ pmpd3d_deprecated
+ --
+ Functions in which the output selector has been modified
+ It is now the same as the input slector : all singular
+*/
+	
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosL,      		gensym("massesPosL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsL,   		gensym("massesSpeedsL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesL,   		gensym("massesForcesL"), A_GIMME, 0);

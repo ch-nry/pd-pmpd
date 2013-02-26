@@ -16,6 +16,7 @@ DONE :
 - new message : setActive, setInactive for links
 - new statistics messages for links
 - interactors messages
+- [X,Y,Z]min/max -> min/max[X,Y,Z]
 
 
 TODO : 
