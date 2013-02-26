@@ -1171,4 +1171,3 @@ void pmpd3d_linkLengthSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *arg
 		outlet_anything(x->main_outlet, gensym("linkLengthSpeedNormL"), j, pos_list);
     }
 }
-

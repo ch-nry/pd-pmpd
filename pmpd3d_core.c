@@ -309,55 +309,52 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         x->link[x->nb_link-1].VY = vecteurY;
         x->link[x->nb_link-1].VZ = vecteurZ;
     }
-    else
-		if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
+    else if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
 		{
-			for (i=0; i< x->nb_mass; i++)
+			if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
 			{
-				if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
-				{
-					pmpd3d_create_link(x, Id, i, mass2, K, D, Pow, Lmin, Lmax, 1);
-					x->link[x->nb_link-1].VX = vecteurX;
-					x->link[x->nb_link-1].VY = vecteurY;
-					x->link[x->nb_link-1].VZ = vecteurZ;
-				}
+				pmpd3d_create_link(x, Id, i, mass2, K, D, Pow, Lmin, Lmax, 1);
+				x->link[x->nb_link-1].VX = vecteurX;
+				x->link[x->nb_link-1].VY = vecteurY;
+				x->link[x->nb_link-1].VZ = vecteurZ;
 			}
 		}
-		else
-			if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
+	}
+	else if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(2,argc,argv) == x->mass[i].Id)
 			{
-				for (i=0; i< x->nb_mass; i++)
+				pmpd3d_create_link(x, Id, mass1, i, K, D, Pow, Lmin, Lmax, 1);
+				x->link[x->nb_link-1].VX = vecteurX;
+				x->link[x->nb_link-1].VY = vecteurY;
+				x->link[x->nb_link-1].VZ = vecteurZ;
+			}
+		}
+	}
+	else if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			for (j=0; j< x->nb_mass; j++)
+			{
+				if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
 				{
-					if ( atom_getsymbolarg(2,argc,argv) == x->mass[i].Id)
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
+						// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
 					{
-						pmpd3d_create_link(x, Id, mass1, i, K, D, Pow, Lmin, Lmax, 1);
+						pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 1);
 						x->link[x->nb_link-1].VX = vecteurX;
 						x->link[x->nb_link-1].VY = vecteurY;
 						x->link[x->nb_link-1].VZ = vecteurZ;
 					}
 				}
-			}
-			else
-				if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
-				{
-					for (i=0; i< x->nb_mass; i++)
-					{
-						for (j=0; j< x->nb_mass; j++)
-						{
-							if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
-							{
-								if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
-									// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
-								{
-									pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 1);
-									x->link[x->nb_link-1].VX = vecteurX;
-									x->link[x->nb_link-1].VY = vecteurY;
-									x->link[x->nb_link-1].VZ = vecteurZ;
-								}
-							}
-						}   
-					}
-				}
+			}   
+		}
+	}
 }
 
 void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
@@ -382,57 +379,53 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         x->link[x->nb_link-1].K_L = Kl;
         x->link[x->nb_link-1].D_L = Dl;        
     }
-    else
-		if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
+    else if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
 		{
-			for (i=0; i< x->nb_mass; i++)
+			if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
 			{
-				if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
-				{
-					pmpd3d_create_link(x, Id, i, mass2, 1, 1, 1, 0, 1000000, 2);
-					x->link[x->nb_link-1].arrayK = arrayK;
-					x->link[x->nb_link-1].arrayD = arrayD;
-					x->link[x->nb_link-1].K_L = Kl;
-					x->link[x->nb_link-1].D_L = Dl;    
-				}
+				pmpd3d_create_link(x, Id, i, mass2, 1, 1, 1, 0, 1000000, 2);
+				x->link[x->nb_link-1].arrayK = arrayK;
+				x->link[x->nb_link-1].arrayD = arrayD;
+				x->link[x->nb_link-1].K_L = Kl;
+				x->link[x->nb_link-1].D_L = Dl;    
 			}
 		}
-		else
-			if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
+	}
+	else if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(2,argc,argv) == x->mass[i].Id)
 			{
-				for (i=0; i< x->nb_mass; i++)
+				pmpd3d_create_link(x, Id, mass1, i, 1, 1, 1, 0, 1000000, 2);
+				x->link[x->nb_link-1].arrayK = arrayK;
+				x->link[x->nb_link-1].arrayD = arrayD;
+				x->link[x->nb_link-1].K_L = Kl;
+				x->link[x->nb_link-1].D_L = Dl;    
+			}
+		}
+	}
+	else if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			for (j=0; j< x->nb_mass; j++)
+			{
+				if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
 				{
-					if ( atom_getsymbolarg(2,argc,argv) == x->mass[i].Id)
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
+						// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
 					{
-						pmpd3d_create_link(x, Id, mass1, i, 1, 1, 1, 0, 1000000, 2);
+						pmpd3d_create_link(x, Id, i, j, 1, 1, 1, 0, 1000000, 2);
 						x->link[x->nb_link-1].arrayK = arrayK;
 						x->link[x->nb_link-1].arrayD = arrayD;
 						x->link[x->nb_link-1].K_L = Kl;
 						x->link[x->nb_link-1].D_L = Dl;    
 					}
 				}
-			}
-			else
-				if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
-				{
-					for (i=0; i< x->nb_mass; i++)
-					{
-						for (j=0; j< x->nb_mass; j++)
-						{
-							if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
-							{
-								if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
-									// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
-								{
-									pmpd3d_create_link(x, Id, i, j, 1, 1, 1, 0, 1000000, 2);
-									x->link[x->nb_link-1].arrayK = arrayK;
-									x->link[x->nb_link-1].arrayD = arrayD;
-									x->link[x->nb_link-1].K_L = Kl;
-									x->link[x->nb_link-1].D_L = Dl;    
-								}
-							}
-						}   
-					}
-				}
-	
+			}   
+		}
+	}
 }

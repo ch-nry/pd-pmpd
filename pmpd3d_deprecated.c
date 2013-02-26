@@ -843,5 +843,3 @@ void pmpd3d_linksLengthSpeedNormL(t_pmpd3d *x)
     }
     outlet_anything(x->main_outlet, gensym("linksLengthSpeedNormL"),x->nb_link , pos_list);
 }
-
-
