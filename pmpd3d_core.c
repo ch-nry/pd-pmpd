@@ -74,7 +74,7 @@ void *pmpd3d_new()
 void pmpd3d_bang(t_pmpd3d *x)
 {
 	// this part is doing all the PM
-    t_float F, L, Lx,Ly, Lz, Fx, Fy, Fz, tmpX, tmpY, tmpZ, speed;
+    t_float F, L, Lx,Ly, Lz, Fx, Fy, Fz, tmp, tmpX, tmpY, tmpZ, speed;
     t_int i;
     // post("bang");
 	
@@ -82,15 +82,34 @@ void pmpd3d_bang(t_pmpd3d *x)
 		// compute new masses position
         if (x->mass[i].mobile > 0) // only if mobile
         {
+			// amplify force that opose to movement
+			if (x->mass[i].overdamp != 0)
+			{
+				tmp = x->mass[i].speedX * x->mass[i].forceX + x->mass[i].speedY * x->mass[i].forceY + x->mass[i].speedZ * x->mass[i].forceZ;
+				tmp = min(0,tmp); // overdamped only if force opose movment
+				tmp *= -x->mass[i].overdamp;
+				tmp += 1;
+				x->mass[i].forceX *= tmp;
+				x->mass[i].forceY *= tmp;
+				x->mass[i].forceZ *= tmp;
+			}
+			
+			// compute new velocity thanks to forces. (Forces = M * acceleration) 
             x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
             x->mass[i].speedY += x->mass[i].forceY * x->mass[i].invM;
             x->mass[i].speedZ += x->mass[i].forceZ * x->mass[i].invM;
+            
+            // no need to reset force to 0, because we compute a new force latter thanks to velocity damping
             // x->mass[i].forceX = 0;
             // x->mass[i].forceY = 0;        
             // x->mass[i].forceZ = 0;        
+            
+            // compute new speed thanks to new velocity
             x->mass[i].posX += x->mass[i].speedX ;
             x->mass[i].posY += x->mass[i].speedY ;
             x->mass[i].posZ += x->mass[i].speedZ ;
+            
+            // space limitation
             if ( (x->mass[i].posX < x->minX) || (x->mass[i].posX > x->maxX) || (x->mass[i].posY < x->minY) 
                 || (x->mass[i].posY > x->maxY) || (x->mass[i].posZ < x->minZ) || (x->mass[i].posZ > x->maxZ) ) 
             {
@@ -104,9 +123,12 @@ void pmpd3d_bang(t_pmpd3d *x)
                 x->mass[i].posY = tmpY;
                 x->mass[i].posZ = tmpZ;
             }
+            // velocity damping of every masse (set a new force)
             x->mass[i].forceX = -x->mass[i].D2 * x->mass[i].speedX;
             x->mass[i].forceY = -x->mass[i].D2 * x->mass[i].speedY;
             x->mass[i].forceZ = -x->mass[i].D2 * x->mass[i].speedZ;
+            
+            // offset on velocity damping (to impose a specific velocity)
             speed = sqrt(x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY + x->mass[i].speedZ * x->mass[i].speedZ);
             if (speed != 0) {
                 x->mass[i].forceX += x->mass[i].D2offset * (x->mass[i].speedX/speed);
@@ -186,6 +208,7 @@ void pmpd3d_mass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         x->mass[x->nb_mass].num = x->nb_mass;
         x->mass[x->nb_mass].D2 = 0;
         x->mass[x->nb_mass].D2offset = 0;
+		x->mass[x->nb_mass].overdamp = 0;
 		
         x->nb_mass++ ;
         x->nb_mass = min ( nb_max_mass -1, x->nb_mass );

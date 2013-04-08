@@ -677,3 +677,27 @@ void pmpd3d_posZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
+
+void pmpd3d_overdamp(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+// set the overdamped factor to a mass
+	t_int tmp, i;
+
+	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+	{
+		tmp = atom_getfloatarg(0, argc, argv);
+		tmp = max(0, min( x->nb_mass-1, tmp));
+		x->mass[tmp].overdamp = atom_getfloatarg(1, argc, argv);
+	}
+	if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{
+				x->mass[i].overdamp = atom_getfloatarg(1, argc, argv);
+			}
+		}
+	}
+}
+

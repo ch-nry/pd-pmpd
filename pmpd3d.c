@@ -99,7 +99,8 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_posX,            		gensym("setPosX"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_posY,            		gensym("setPosY"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_posZ,          		  	gensym("setPosZ"), A_GIMME, 0);
-      
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_overdamp,     		  	gensym("setOverdamp"), A_GIMME, 0);
+          
 /*        
  pmpd3d_get
  --

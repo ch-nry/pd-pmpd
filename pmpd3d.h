@@ -26,6 +26,7 @@ typedef struct _mass {
     t_float forceZ;
     t_float D2;
     t_float D2offset;
+    t_float overdamp;
     int num;
 } foo;
 
