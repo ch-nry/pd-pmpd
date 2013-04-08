@@ -24,6 +24,12 @@ closestNeighbor
 linkEndL
 add creation parametter to fix maximum number of link and mass
 
+pmpd2d list : a reprendre la version 3d
+
+BUG :
+pmpd2d et pmpd3d : setL, setLCurrent : distance calculé seulement en X.
+
+
 messages a tester : 
 #    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLCurrent,            gensym("setLCurrent"), A_GIMME, 0);
 #    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setActive,        		gensym("setActive"), A_GIMME, 0);
