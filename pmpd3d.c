@@ -51,7 +51,6 @@ void pmpd3d_setup(void)
         (t_newmethod)pmpd3d_new,
         0, sizeof(t_pmpd3d),CLASS_DEFAULT, 0);
 /*
- 
  pmpd3d_core
  --
  Basic functions for creation of the structure
@@ -81,14 +80,14 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setMassId,       		gensym("setMassId"), A_GIMME, 0);    
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setFixed,        		gensym("setFixed"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setMobile,       		gensym("setMobile"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setSpeed,        		gensym("setSpeed"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setSpeedX,       		gensym("setSpeedX"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setSpeedY,       		gensym("setSpeedY"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setSpeedZ,       		gensym("setSpeedZ"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setSpeed,        		gensym("setSpeed"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setForce,        		gensym("setForce"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setForceX,       		gensym("setForceX"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setForceY,       		gensym("setForceY"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setForceZ,       		gensym("setForceZ"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setForce,        		gensym("setForce"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setActive,        		gensym("setActive"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setInactive,       		gensym("setInactive"), A_GIMME, 0);     
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_pos,             		gensym("pos"), A_GIMME, 0);
@@ -162,7 +161,7 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkLengthSpeedNormL,   gensym("linkLengthSpeedNormL"), A_GIMME, 0);
     
 /*
- pmpd3d_list 
+ pmpd3d_tab
  --
  Functions to copy the internal state of the object in arrays
  Output Syntax : none
@@ -334,7 +333,7 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_addPosZ,         		gensym("addPosZ"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_grabMass,        		gensym("grabMass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_closestMass,     		gensym("closestMass"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesDistances,     	gensym("massDistance"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massDistances,	     	gensym("massDistance"), A_GIMME, 0);
     
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesXT,       			gensym("forceXT"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesYT,       			gensym("forceYT"), A_GIMME, 0);

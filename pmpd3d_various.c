@@ -353,7 +353,7 @@ void pmpd3d_closestMass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 }
 
-void pmpd3d_massesDistances_f_f(t_pmpd3d *x, t_int i, t_int j)
+void pmpd3d_massDistances_f_f(t_pmpd3d *x, t_int i, t_int j)
 {
 	t_float dist, tmp;
 	t_atom to_out[3];
@@ -372,7 +372,7 @@ void pmpd3d_massesDistances_f_f(t_pmpd3d *x, t_int i, t_int j)
 	outlet_anything(x->main_outlet, gensym("distance"), 3, to_out);
 }
 
-void pmpd3d_massesDistances(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_massDistances(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_int i,j;
 

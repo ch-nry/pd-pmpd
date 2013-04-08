@@ -1848,7 +1848,6 @@ void pmpd3d_linkEndT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                 vec[6*i+3].w_float = x->link[i].mass2->posX;
                 vec[6*i+4].w_float = x->link[i].mass2->posY;
                 vec[6*i+5].w_float = x->link[i].mass2->posZ;
-                
             }
             garray_redraw(a);
         }
@@ -1865,7 +1864,7 @@ void pmpd3d_linkEndT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {    
             i = 0;
             j = 0;
-            while ((i < vecsize-6) && (j < x->nb_link))
+            while ((i < vecsize-5) && (j < x->nb_link))
             {
                 if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
                 {

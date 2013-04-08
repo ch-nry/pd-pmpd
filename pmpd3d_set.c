@@ -137,6 +137,7 @@ void pmpd3d_setL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
 }
+
 void pmpd3d_setLCurrent(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
@@ -174,8 +175,6 @@ void pmpd3d_setLCurrent(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
 }
-
-
 
 void pmpd3d_setLKTab(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
@@ -676,7 +675,6 @@ void pmpd3d_posZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		}
 	}
 }
-
 
 void pmpd3d_overdamp(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {

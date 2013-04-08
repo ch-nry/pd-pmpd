@@ -443,7 +443,7 @@ void pmpd3d_linkPosMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                 sommeX += (x->link[i].mass1->posX + x->link[i].mass2->posX)/2;
                 sommeY += (x->link[i].mass1->posY + x->link[i].mass2->posY)/2;
                 sommeZ += (x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2;
-                somme  += sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass1->posX)/2));
+                somme  += sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + sqr((x->link[i].mass1->posZ + x->link[i].mass1->posZ)/2));
                 j++;
             }
         }
@@ -455,7 +455,7 @@ void pmpd3d_linkPosMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                 sommeX += (x->link[i].mass1->posX + x->link[i].mass2->posX)/2;
                 sommeY += (x->link[i].mass1->posY + x->link[i].mass2->posY)/2;
                 sommeZ += (x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2;
-                somme  += sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass1->posX)/2));
+                somme  += sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + sqr((x->link[i].mass1->posZ + x->link[i].mass1->posZ)/2));
                 j++;
         }
     }    
@@ -668,7 +668,7 @@ void pmpd3d_linkPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                 sommeX += (x->link[i].mass1->posX + x->link[i].mass2->posX)/2;
                 sommeY += (x->link[i].mass1->posY + x->link[i].mass2->posY)/2;
                 sommeZ += (x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2;
-                somme  += sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass1->posX)/2));
+                somme  += sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + sqr((x->link[i].mass1->posZ + x->link[i].mass1->posZ)/2));
                 j++;
             }
         }
@@ -680,7 +680,7 @@ void pmpd3d_linkPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             sommeX += (x->link[i].mass1->posX + x->link[i].mass2->posX)/2;
             sommeY += (x->link[i].mass1->posY + x->link[i].mass2->posY)/2;
             sommeZ += (x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2;
-            somme  += sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass1->posX)/2));
+            somme  += sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + sqr((x->link[i].mass1->posZ + x->link[i].mass1->posZ)/2));
             j++;
         }
     }    
@@ -702,7 +702,7 @@ void pmpd3d_linkPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                 stdX += sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2 - sommeX);
                 stdY += sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2 - sommeY);
                 stdZ += sqr((x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2 - sommeZ);
-                std  += sqr(sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass1->posX)/2)) - somme);
+                std  += sqr(sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + sqr((x->link[i].mass1->posZ + x->link[i].mass1->posZ)/2)) - somme);
                 j+=1;
             }
         }
@@ -714,7 +714,7 @@ void pmpd3d_linkPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             stdX += sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2 - sommeX);
             stdY += sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2 - sommeY);
             stdZ += sqr((x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2 - sommeZ);
-            std  += sqr(sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posX + x->link[i].mass1->posX)/2)) - somme);
+            std  += sqr(sqrt(sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + sqr((x->link[i].mass1->posZ + x->link[i].mass1->posZ)/2)) - somme);
             j+=1;
         }
     }        
@@ -1016,7 +1016,6 @@ void pmpd3d_linkLengthSpeedStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		std  = sqrt(std /j);    
 	}
     
-
     SETFLOAT(&(std_out[0]),stdX);
     SETFLOAT(&(std_out[1]),stdY);
     SETFLOAT(&(std_out[2]),stdZ);
