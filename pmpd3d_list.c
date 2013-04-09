@@ -544,7 +544,6 @@ void pmpd3d_massSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)+sqr(x->mass[i].speedZ)));
         outlet_anything(x->main_outlet, gensym("massSpeedNormL"),1 , pos_list);        
     }
-    
 }
 
 // ---------------------------------------------------------------------
