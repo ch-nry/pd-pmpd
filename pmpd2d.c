@@ -117,18 +117,18 @@ void pmpd2d_setup(void)
 */
 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_massPosL,      gensym("massPosL"), 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedsL,   gensym("massSpeedL"), 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForcesL,   gensym("massForceL"), 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedL,   gensym("massSpeedL"), 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForceL,   gensym("massForceL"), 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_massPosXL,     gensym("massPosXL"), 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedsXL,  gensym("massSpeedXL"), 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForcesXL,  gensym("massForceXL"), 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedXL,  gensym("massSpeedXL"), 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForceXL,  gensym("massForceXL"), 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_massPosYL,     gensym("massPosYL"), 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedsYL,  gensym("massSpeedYL"), 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForcesYL,  gensym("massForceYL"), 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedYL,  gensym("massSpeedYL"), 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForceYL,  gensym("massForceYL"), 0);
 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_massPosNormL,      gensym("massPosNormL"), 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedsNormL,   gensym("massSpeedNormL"), 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForcesNormL,   gensym("massForceNormL"), 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedNormL,   gensym("massSpeedNormL"), 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForceNormL,   gensym("massForceNormL"), 0);
 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkPosL,            gensym("linkPosL"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkLengthL,         gensym("linkLengthL"), A_GIMME, 0);
