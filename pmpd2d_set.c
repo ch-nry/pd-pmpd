@@ -105,13 +105,13 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     int tmp, i;
 
     if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
-    {
+    { // set a link to a specific length
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
         x->link[tmp].L = atom_getfloatarg(1, argc, argv);
     }
     if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
-    {
+    { // set a class of link to a specific length
         for (i=0; i< x->nb_link; i++)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
@@ -121,18 +121,18 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     if ( ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
-    {
+    { // set a link to it's current length
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
-        x->link[tmp].L = x->link[tmp].mass2->posX - x->link[tmp].mass1->posX;
+        x->link[tmp].L = x->link[tmp].distance;
     }
     if ( ( argv[0].a_type == A_SYMBOL ) && ( argc == 1 ) )
-    {
+    { // set a class of link to there current length
         for (i=0; i< x->nb_link; i++)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
-                x->link[i].L = x->link[i].mass2->posX - x->link[i].mass1->posX;
+                x->link[i].L = x->link[i].distance;
             }
         }
     }
@@ -143,29 +143,29 @@ void pmpd2d_setLCurrent(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     int tmp, i;
 
     if ( ( argc == 1 ) && ( argv[0].a_type == A_FLOAT ) )
-    {
+    { // set a link to it's current length
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
-        x->link[tmp].L = x->link[tmp].mass2->posX - x->link[tmp].mass1->posX;
+        x->link[tmp].L = x->link[tmp].distance;
     }
     else if ( ( argc == 1 ) && ( argv[0].a_type == A_SYMBOL ) )
-    {
+    { // set a class of link to there current length
         for (i=0; i< x->nb_link; i++)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
-                x->link[i].L = x->link[i].mass2->posX - x->link[i].mass1->posX;
+                x->link[i].L = x->link[i].distance;
             }
         }
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
-    {
+    { // set a link to a mix between it's curent length and it's size
         i = atom_getfloatarg(0, argc, argv);
         i = max(0, min( x->nb_link-1, i));
         x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
-    {
+    { // set a class of link to a mix between it's curent length and it's size
         for (i=0; i< x->nb_link; i++)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
