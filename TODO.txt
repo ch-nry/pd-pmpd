@@ -1,34 +1,29 @@
 DONE : 
 - code refactorisation
-- all messages switch to singular
-- change messages masses*L in order to add filter on masses Id (symbol only)
+- all messages name switch to singular for messages uniformisation
+- add fonctionality to messages masses*L in order to add filter on masses Id (symbol only)
 - same for links*L messages
 - New messages linkEnd[1,2][X,Y,Z]T
 - new messages to replace get messages : (should be almost compatible) : massPos [Id], massSpeed [Id], massForce [Id]
 - new messages to replace get messages : linkPos [Id] gives the center of links, to be consistant with other linkPosL and linkPosT.
 - new messages to replace get : linkEnd [Id] : should be compatible with get linksPos
-- new messages testMass and testLink to get all masses or links that fit specific conditions
+- new messages testMass and testLink to get all masses or links that fit specifics conditions
 - new messages testMassT and testLinkT (idem as testMass and testLink but with table)
 - new messages testMassL and testLinkL (idem as testMass and testLink but with list)
 - new messages massDistance Id Id : return message : massesDistance float_Id float_Id distance
-- new messages setLCurrent Id [proportion]
+- new messages setLCurrent Id [proportion] to change a link size depending on it's size and it's curent length
 - new message : forceXT [Id] table (same in other dimention), to add a force to many masses, value come from the table.
 - new message : setActive, setInactive for links
 - new statistics messages for links
-- interactors messages
-- [X,Y,Z]min/max -> min/max[X,Y,Z]
-
+- new interactors messages
+- rename messages for consistency : [X,Y,Z]min/max -> min/max[X,Y,Z]
+- debug "setL Id" with no arg : bad computation of link length (2d / 3d) 
+- few bugfix
 
 TODO : 
 closestNeighbor
 linkEndL
 add creation parametter to fix maximum number of link and mass
-
-pmpd2d list : a reprendre la version 3d
-
-BUG :
-pmpd2d et pmpd3d : setL, setLCurrent : distance calculé seulement en X.
-
 
 messages a tester : 
 #    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLCurrent,            gensym("setLCurrent"), A_GIMME, 0);
