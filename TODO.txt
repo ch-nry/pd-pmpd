@@ -24,6 +24,7 @@ TODO :
 closestNeighbor
 linkEndL
 add creation parametter to fix maximum number of link and mass
+iBox3d / iBox2d ?
 
 messages a tester : 
 #    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLCurrent,            gensym("setLCurrent"), A_GIMME, 0);

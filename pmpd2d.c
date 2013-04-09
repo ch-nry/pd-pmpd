@@ -270,8 +270,8 @@ void pmpd2d_setup(void)
  Functions to add a global interaction with a specific shape
 */ 
  
- //   class_addmethod(pmpd2d_class, (t_method)pmpd2d_iCircle,				gensym("iCircle"), A_GIMME, 0);
- //   class_addmethod(pmpd2d_class, (t_method)pmpd2d_iLine,					gensym("iLine"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_iCircle,				gensym("iCircle"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_iLine,					gensym("iLine"), A_GIMME, 0);
 
 /*
  pmpd2d_various
