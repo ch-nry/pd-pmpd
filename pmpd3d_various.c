@@ -42,7 +42,7 @@ void pmpd3d_force(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 // add a force to a specific mass
 	t_int tmp, i;
 
-	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
+	if ( (argc == 4) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
 	{
 		tmp = atom_getfloatarg(0, argc, argv);
 		tmp = max(0, min( x->nb_mass-1, tmp));
@@ -50,7 +50,7 @@ void pmpd3d_force(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		x->mass[tmp].forceY += atom_getfloatarg(2, argc, argv);
 		x->mass[tmp].forceZ += atom_getfloatarg(3, argc, argv);
 	}
-	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
+	else if ( (argc == 4) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{
@@ -69,13 +69,13 @@ void pmpd3d_forceX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 // add a force to a specific mass
 	t_int tmp, i;
 
-	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		tmp = atom_getfloatarg(0, argc, argv);
 		tmp = max(0, min( x->nb_mass-1, tmp));
 		x->mass[tmp].forceX += atom_getfloatarg(1, argc, argv);
 	}
-	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{
@@ -92,13 +92,13 @@ void pmpd3d_forceY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 // add a force to a specific mass
 	t_int tmp, i;
 
-	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		tmp = atom_getfloatarg(0, argc, argv);
 		tmp = max(0, min( x->nb_mass-1, tmp));
 		x->mass[tmp].forceY += atom_getfloatarg(1, argc, argv);
 	}
-	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{
@@ -115,13 +115,13 @@ void pmpd3d_forceZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 // add a force to a specific mass
 	t_int tmp, i;
 
-	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		tmp = atom_getfloatarg(0, argc, argv);
 		tmp = max(0, min( x->nb_mass-1, tmp));
 		x->mass[tmp].forceZ += atom_getfloatarg(1, argc, argv);
 	}
-	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{
@@ -181,7 +181,7 @@ void pmpd3d_addPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_int tmp, i;
 
-	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
+	if ( (argc == 4) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
 	{
 		tmp = atom_getfloatarg(0, argc, argv);
 		tmp = max(0, min( x->nb_mass-1, tmp));
@@ -189,7 +189,7 @@ void pmpd3d_addPos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		x->mass[tmp].posY += atom_getfloatarg(2, argc, argv);
 		x->mass[tmp].posZ += atom_getfloatarg(3, argc, argv);
 	}
-	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
+	else if ( (argc == 4) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{
@@ -207,13 +207,13 @@ void pmpd3d_addPosX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_int tmp, i;
 
-	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		tmp = atom_getfloatarg(0, argc, argv);
 		tmp = max(0, min( x->nb_mass-1, tmp));
 		x->mass[tmp].posX += atom_getfloatarg(1, argc, argv);
 	}
-	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{
@@ -229,13 +229,13 @@ void pmpd3d_addPosY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_int tmp, i;
 
-	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		tmp = atom_getfloatarg(0, argc, argv);
 		tmp = max(0, min( x->nb_mass-1, tmp));
 		x->mass[tmp].posY += atom_getfloatarg(1, argc, argv);
 	}
-	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{
@@ -251,13 +251,13 @@ void pmpd3d_addPosZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_int tmp, i;
 
-	if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		tmp = atom_getfloatarg(0, argc, argv);
 		tmp = max(0, min( x->nb_mass-1, tmp));
 		x->mass[tmp].posZ += atom_getfloatarg(1, argc, argv);
 	}
-	if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{
@@ -291,7 +291,7 @@ void pmpd3d_grabMass(t_pmpd3d *x, t_float posX, t_float posY, t_float posZ, t_fl
 			}
 		}
 	}
-	if (x->grab == 1)
+	else if (x->grab == 1)
 	{
 		x->mass[x->grab_nb].posX = posX;
 		x->mass[x->grab_nb].posY = posY;
@@ -458,7 +458,7 @@ void pmpd3d_forcesXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	t_word *vec;
 	t_symbol *array;
 
-	if ( argv[0].a_type == A_SYMBOL )
+	if ( ( argc > 0 ) && (argv[0].a_type == A_SYMBOL ))
 	{
 		array = atom_getsymbolarg(0,argc,argv);
 		if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
@@ -504,7 +504,7 @@ void pmpd3d_forcesYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	t_word *vec;
 	t_symbol *array;
 
-	if ( argv[0].a_type == A_SYMBOL )
+	if ( ( argc > 0 ) && (argv[0].a_type == A_SYMBOL ))
 	{
 		array = atom_getsymbolarg(0,argc,argv);
 		if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
@@ -550,7 +550,7 @@ void pmpd3d_forcesZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	t_word *vec;
 	t_symbol *array;
 
-	if ( argv[0].a_type == A_SYMBOL )
+	if ( ( argc > 0 ) && (argv[0].a_type == A_SYMBOL ))
 	{
 		array = atom_getsymbolarg(0,argc,argv);
 		if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))

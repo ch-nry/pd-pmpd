@@ -123,6 +123,7 @@ void pmpd3d_bang(t_pmpd3d *x)
                 x->mass[i].posY = tmpY;
                 x->mass[i].posZ = tmpZ;
             }
+            
             // velocity damping of every masse (set a new force)
             x->mass[i].forceX = -x->mass[i].D2 * x->mass[i].speedX;
             x->mass[i].forceY = -x->mass[i].D2 * x->mass[i].speedY;
@@ -138,8 +139,7 @@ void pmpd3d_bang(t_pmpd3d *x)
         }
 	
     for (i=0; i<x->nb_link; i++)
-		// compute link forces
-    {
+    { // compute link forces
 		if (x->link[i].active == 1)
         {
 			Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;

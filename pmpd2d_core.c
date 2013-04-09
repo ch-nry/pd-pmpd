@@ -79,12 +79,30 @@ void pmpd2d_bang(t_pmpd2d *x)
     // compute new masses position
         if (x->mass[i].mobile > 0) // only if mobile
         {
+			// amplify force that opose to movement
+			if (x->mass[i].overdamp != 0)
+			{
+				tmp = x->mass[i].speedX * x->mass[i].forceX + x->mass[i].speedY * x->mass[i].forceY;
+				tmp = min(0,tmp); // overdamped only if force opose movment
+				tmp *= -x->mass[i].overdamp;
+				tmp += 1;
+				x->mass[i].forceX *= tmp;
+				x->mass[i].forceY *= tmp;
+			}
+
+			// compute new velocity thanks to forces. (Forces = M * acceleration) 
             x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
             x->mass[i].speedY += x->mass[i].forceY * x->mass[i].invM;
+
+            // no need to reset force to 0, because we compute a new force latter thanks to velocity damping
             // x->mass[i].forceX = 0;
-            // x->mass[i].forceY = 0;        
+            // x->mass[i].forceY = 0;  
+    
+            // compute new speed thanks to new velocity
             x->mass[i].posX += x->mass[i].speedX ;
             x->mass[i].posY += x->mass[i].speedY ;
+
+            // space limitation
             if ( (x->mass[i].posX < x->minX) || (x->mass[i].posX > x->maxX) || (x->mass[i].posY < x->minY) || (x->mass[i].posY > x->maxY) ) 
             {
                 tmpX = min(x->maxX,max(x->minX,x->mass[i].posX));
@@ -93,9 +111,13 @@ void pmpd2d_bang(t_pmpd2d *x)
                 x->mass[i].speedY -= x->mass[i].posY - tmpY;
                 x->mass[i].posX = tmpX;
                 x->mass[i].posY = tmpY;
-            }
+            }            
+
+            // velocity damping of every masse (set a new force)
             x->mass[i].forceX = -x->mass[i].D2 * x->mass[i].speedX;
             x->mass[i].forceY = -x->mass[i].D2 * x->mass[i].speedY;
+
+            // offset on velocity damping (to impose a specific velocity)
             speed = sqrt(x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY);
             if (speed != 0) {
                 x->mass[i].forceX += x->mass[i].D2offset * (x->mass[i].speedX/speed);
@@ -104,41 +126,45 @@ void pmpd2d_bang(t_pmpd2d *x)
         }
 
     for (i=0; i<x->nb_link; i++)
-    // compute link forces
-    {
-        Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
-        Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
-        L = sqrt( sqr(Lx) + sqr(Ly) );
-        
-        if ( (L >= x->link[i].Lmin) && (L < x->link[i].Lmax)  && (L != 0))
+    { // compute link forces
+		if (x->link[i].active == 1)
         {
-            if (x->link[i].lType == 2)
-            { // K et D viennent d'une table
-                F  = x->link[i].D * tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
-                F += x->link[i].K * tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
-            }
-            else
-            {            
-                F  = x->link[i].D * (L - x->link[i].distance) ;
-                F += x->link[i].K *  pow_ch( L - x->link[i].L, x->link[i].Pow);
-            }
+            Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
+            Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
+            L = sqrt( sqr(Lx) + sqr(Ly) );
+        
+            if ( (L >= x->link[i].Lmin) && (L < x->link[i].Lmax)  && (L != 0))
+            {
+                if (x->link[i].lType == 2)
+                { // K et D viennent d'une table
+                    F  = x->link[i].D * tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
+                    F += x->link[i].K * tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
+                }
+                else
+                {            
+                    F  = x->link[i].D * (L - x->link[i].distance) ;
+                    F += x->link[i].K *  pow_ch( L - x->link[i].L, x->link[i].Pow);
+                }
 
-            Fx = F * Lx/L;
-            Fy = F * Ly/L;    
+                Fx = F * Lx/L;
+                Fy = F * Ly/L;    
                 
-            if (x->link[i].lType == 1)
-            { // on projette selon 1 axe
-                // F = Fx*x->link[i].VX + Fy*x->link[i].VY; // produit scalaire de la force sur le vecteur qui la porte
-                Fx = Fx*x->link[i].VX; // V est unitaire, dc on projete sans pb
-                Fy = Fy*x->link[i].VY;                
-            }
+                if (x->link[i].lType == 1)
+                { // on projette selon 1 axe
+                    // F = Fx*x->link[i].VX + Fy*x->link[i].VY; // produit scalaire de la force sur le vecteur qui la porte
+                    Fx = Fx*x->link[i].VX; // V est unitaire, dc on projete sans pb
+                    Fy = Fy*x->link[i].VY;                
+                }
             
-            x->link[i].mass1->forceX -= Fx;
-            x->link[i].mass1->forceY -= Fy;
-            x->link[i].mass2->forceX += Fx;
-            x->link[i].mass2->forceY += Fy;
+                x->link[i].mass1->forceX -= Fx;
+                x->link[i].mass1->forceY -= Fy;
+                x->link[i].mass2->forceX += Fx;
+                x->link[i].mass2->forceY += Fy;
+				x->link[i].forceX = Fx; // save for latter use
+				x->link[i].forceY = Fy;
+            }
+            x->link[i].distance=L;
         }
-        x->link[i].distance=L;
     }
 }
 
@@ -170,6 +196,7 @@ void pmpd2d_create_link(t_pmpd2d *x, t_symbol *Id, int mass1, int mass2, t_float
     {
         x->link[x->nb_link].lType = type;
         x->link[x->nb_link].Id = Id;
+        x->link[x->nb_link].active = 1;
         x->link[x->nb_link].mass1 = &x->mass[mass1]; 
         x->link[x->nb_link].mass2 = &x->mass[mass2];
         x->link[x->nb_link].K = K;

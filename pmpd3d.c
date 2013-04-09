@@ -4,7 +4,8 @@
       
  pmpd = physical modeling for pure data                                     
  Written by Cyrille Henry (ch@chnry.net)
- 
+ with help from Nicolas Mongermont
+
  Get sources on pd svn on sourceforge.
 
  This program is free software; you can redistribute it and/or                

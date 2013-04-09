@@ -40,14 +40,14 @@ void pmpd2d_force(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 // add a force to a specific mass
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].forceX += atom_getfloatarg(1, argc, argv);
         x->mass[tmp].forceY += atom_getfloatarg(2, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    else if ( (argc == 3) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -65,13 +65,13 @@ void pmpd2d_forceX(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 // add a force to a specific mass
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+    if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].forceX += atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -88,13 +88,13 @@ void pmpd2d_forceY(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 // add a force to a specific mass
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+    if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].forceY += atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -142,14 +142,14 @@ void pmpd2d_addPos(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].posX += atom_getfloatarg(1, argc, argv);
         x->mass[tmp].posY += atom_getfloatarg(2, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    else if ( (argc == 3) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -166,13 +166,13 @@ void pmpd2d_addPosX(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+    if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].posX += atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -188,13 +188,13 @@ void pmpd2d_addPosY(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+    if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].posY += atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -228,7 +228,7 @@ void pmpd2d_grabMass(t_pmpd2d *x, t_float posX, t_float posY, t_float grab)
             }
         }
     }
-    if (x->grab == 1)
+    else if (x->grab == 1)
     {
         x->mass[x->grab_nb].posX = posX;
         x->mass[x->grab_nb].posY = posY;        
@@ -390,7 +390,7 @@ void pmpd2d_forcesXT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	t_word *vec;
 	t_symbol *array;
 
-	if ( argv[0].a_type == A_SYMBOL )
+	if ( ( argc > 0 ) && (argv[0].a_type == A_SYMBOL ))
 	{
 		array = atom_getsymbolarg(0,argc,argv);
 		if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
@@ -436,7 +436,7 @@ void pmpd2d_forcesYT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	t_word *vec;
 	t_symbol *array;
 
-	if ( argv[0].a_type == A_SYMBOL )
+	if ( ( argc > 0 ) && (argv[0].a_type == A_SYMBOL ))
 	{
 		array = atom_getsymbolarg(0,argc,argv);
 		if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
