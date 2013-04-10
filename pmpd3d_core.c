@@ -394,7 +394,7 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     t_float Dl = atom_getfloatarg(6, argc, argv);
     if (Dl <= 0) Dl = 1;
 	
-    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    if ( ( argc > 2 ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         pmpd3d_create_link(x, Id, mass1, mass2, 1, 1, 1, 0, 1000000, 2);
         x->link[x->nb_link-1].arrayK = arrayK;
@@ -402,7 +402,7 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         x->link[x->nb_link-1].K_L = Kl;
         x->link[x->nb_link-1].D_L = Dl;        
     }
-    else if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
+    else if ( ( argc > 2 ) && ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{
@@ -416,7 +416,7 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
-	else if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
+	else if ( ( argc > 2 ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{
@@ -430,7 +430,7 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
-	else if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
+	else if ( ( argc > 2 ) && ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
 	{
 		for (i=0; i< x->nb_mass; i++)
 		{

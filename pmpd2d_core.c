@@ -230,12 +230,12 @@ void pmpd2d_link(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     if (argc > 7) Lmax = atom_getfloatarg(7, argc, argv);
 //    post("%d,%d, %f,%f", mass1, mass2, K, D);
 
-    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    if ( ( argc > 2 ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         pmpd2d_create_link(x, Id, mass1, mass2, K, D, Pow, Lmin, Lmax, 0);
     }
     else
-    if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
+    if ( ( argc > 2 ) && ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -246,7 +246,7 @@ void pmpd2d_link(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else
-    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
+    if ( ( argc > 2 ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -257,7 +257,7 @@ void pmpd2d_link(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else
-    if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
+    if ( ( argc > 2 ) && ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         for (i=0; i < x->nb_mass; i++)
         {
