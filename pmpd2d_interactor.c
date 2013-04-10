@@ -6,7 +6,7 @@ void pmpd2d_iCircle_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float r, t_flo
 	Y = x->mass[i].posY - b;
 
 	rayon = sqrt ( sqr(X) + sqr(Y) );
-	distance = r - rayon;
+	distance = rayon - r;
 	
 	if (rayon != 0)
 	{
@@ -22,9 +22,9 @@ void pmpd2d_iCircle_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float r, t_flo
 // X, Y : vecteur unitaire normal au cercle
 // rayon : distance au centre.
 	
-	if ( (rayon>Rmin) && (rayon<=Rmax) )
+	if ( (distance>Rmin) && (distance<=Rmax) )
 	{
-		tmp = pow_ch(K * distance, power);
+		tmp = -pow_ch(K * distance, power);
 		x->mass[i].forceX += X * tmp;
 		x->mass[i].forceY += Y * tmp;
 	}
@@ -98,7 +98,7 @@ void pmpd2d_iLine_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float c, t_float
 
 	if ( (distance>Rmin) && (distance<=Rmax) )
 	{
-		force = pow_ch(K * distance, power);
+		force = -pow_ch(K * distance, power);
 		x->mass[i].forceX += a * force;
 		x->mass[i].forceY += b * force;
 	}
@@ -149,7 +149,7 @@ void pmpd2d_iLine(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	power = atom_getfloatarg(6, argc, argv);
 	if (power == 0) power = 1;
 	
-	Rmin = 0;
+	Rmin = -1000000;
 	if ((argc>=8) && (argv[7].a_type == A_FLOAT)) { Rmin = (atom_getfloatarg(7,argc,argv));}
 	Rmax =  1000000;
 	if ((argc>=9) && (argv[8].a_type == A_FLOAT)) { Rmax = (atom_getfloatarg(8,argc,argv));}
