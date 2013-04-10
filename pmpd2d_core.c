@@ -71,7 +71,7 @@ void *pmpd2d_new()
 void pmpd2d_bang(t_pmpd2d *x)
 {
 // this part is doing all the PM
-    t_float F, L, Lx,Ly, Fx, Fy, tmpX, tmpY,speed;
+    t_float F, L, Lx,Ly, Fx, Fy, tmp, tmpX, tmpY,speed;
     t_int i;
     // post("bang");
 

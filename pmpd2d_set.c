@@ -187,7 +187,7 @@ void pmpd2d_setLKTab(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         tmp = max(0, min( x->nb_link-1, tmp));
         x->link[tmp].K_L = K_l;
     }
-    else if (argc == 2) && ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
