@@ -310,7 +310,7 @@ void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 	if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) )
 	{
-		pmpd2d_massesDistances_f_f(x, atom_getfloatarg(0, argc, argv), atom_getfloatarg(1, argc, argv));
+		pmpd2d_massDistances_f_f(x, atom_getfloatarg(0, argc, argv), atom_getfloatarg(1, argc, argv));
 	}
 	else if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_SYMBOL) )
 	{
@@ -318,7 +318,7 @@ void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
 			{
-				pmpd2d_massesDistances_f_f(x, atom_getfloatarg(0, argc, argv), i);
+				pmpd2d_massDistances_f_f(x, atom_getfloatarg(0, argc, argv), i);
 			}
 		}
 	}
@@ -328,7 +328,7 @@ void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			if ( (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id) )
 			{
-				pmpd2d_massesDistances_f_f(x, atom_getfloatarg(1, argc, argv), i);
+				pmpd2d_massDistances_f_f(x, atom_getfloatarg(1, argc, argv), i);
 			}
 		}
 	}
@@ -342,7 +342,7 @@ void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 				{
 					if ( atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
 					{
-						pmpd2d_massesDistances_f_f(x,i, j);
+						pmpd2d_massDistances_f_f(x,i, j);
 					}
 				}
 			}
@@ -354,7 +354,7 @@ void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			for (j=i+1; j < x->nb_mass; j++)
 			{
-				pmpd2d_massesDistances_f_f(x,i, j);
+				pmpd2d_massDistances_f_f(x,i, j);
 			}
 		}
 	}
@@ -366,7 +366,7 @@ void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				for (j=i+1; j < x->nb_mass; j++)
 				{
-					pmpd2d_massesDistances_f_f(x,i, j);
+					pmpd2d_massDistances_f_f(x,i, j);
 				}
 			}
 		}
@@ -375,7 +375,7 @@ void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	{
 		for (i=0; i < x->nb_mass; i++)
 		{
-			pmpd2d_massesDistances_f_f(x, atom_getfloatarg(0, argc, argv), i);
+			pmpd2d_massDistances_f_f(x, atom_getfloatarg(0, argc, argv), i);
 		}
 	}
 }
