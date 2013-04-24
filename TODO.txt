@@ -16,11 +16,15 @@ DONE :
 - new message : setActive, setInactive for links
 - new statistics messages for links
 - new interactors messages
+- message to change masses a link is connected to
 - rename messages for consistency : [X,Y,Z]min/max -> min/max[X,Y,Z]
 - debug "setL Id" with no arg : bad computation of link length (2d / 3d) 
 - few bugfix
 
 TODO : 
+# setActive : mettre la memoire de la longeur a la longueur actuel pour eviter les pb
+# moyen pour changer les masses d'attache d'un lien 
+
 closestNeighbor
 linkEndL
 add creation parametter to fix maximum number of link and mass
