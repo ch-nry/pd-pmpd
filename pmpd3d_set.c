@@ -493,6 +493,17 @@ void pmpd3d_setForceZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
 }
+		
+void pmpd3d_setActivei(t_pmpd3d *x, int i)
+{
+	float Lx, Ly,Lz, L;
+	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
+	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
+	Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
+	L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
+	x->link[i].distance = L; 
+	x->link[i].active = 1;
+}
 
 void pmpd3d_setActive(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
@@ -502,7 +513,7 @@ void pmpd3d_setActive(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
-        x->link[tmp].active = 1;
+		pmpd3d_setActivei(x,tmp);
     }
     else if ( (argc == 1) && ( argv[0].a_type == A_SYMBOL ) )
     {
@@ -510,7 +521,7 @@ void pmpd3d_setActive(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id )
             {
-                x->link[i].active = 1;
+				pmpd3d_setActivei(x,i);
             }
         }
     }
@@ -518,7 +529,7 @@ void pmpd3d_setActive(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     {
         for (i=0; i< x->nb_link; i++)
         {
-			x->link[i].active = 1;
+			pmpd3d_setActivei(x,i);
         }
     }
 }
@@ -699,3 +710,109 @@ void pmpd3d_overdamp(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
+void pmpd3d_setConnection1i(t_pmpd3d *x, int i, int j)
+{
+	float Lx, Ly,Lz, L;
+
+	x->link[i].mass1=&x->mass[max(0, min( x->nb_mass-1, j))];
+	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
+	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
+	Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
+	L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
+	x->link[i].distance = L; 
+}
+
+void pmpd3d_setConnection1(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	int tmp, i;
+	
+	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_link-1, tmp));
+		pmpd3d_setConnection1i(x,tmp,atom_getfloatarg(1, argc, argv));
+
+    }
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id )
+            {
+				pmpd3d_setConnection1i(x,i,atom_getfloatarg(1, argc, argv));
+            }
+        }
+    }
+}
+
+void pmpd3d_setConnection2i(t_pmpd3d *x, int i, int j)
+{
+	float Lx, Ly,Lz, L;
+
+	x->link[i].mass2=&x->mass[max(0, min( x->nb_mass-1, j))];
+	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
+	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
+	Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
+	L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
+	x->link[i].distance = L; 
+}
+
+void pmpd3d_setConnection2(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	int tmp, i;
+	
+	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_link-1, tmp));
+		pmpd3d_setConnection2i(x,tmp,atom_getfloatarg(1, argc, argv));
+
+    }
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id )
+            {
+				pmpd3d_setConnection2i(x,i,atom_getfloatarg(1, argc, argv));
+            }
+        }
+    }
+}
+
+void pmpd3d_setConnectioni(t_pmpd3d *x, int i, int j, int k)
+{
+	float Lx, Ly,Lz, L;
+
+	x->link[i].mass1=&x->mass[max(0, min( x->nb_mass-1, j))];
+	x->link[i].mass2=&x->mass[max(0, min( x->nb_mass-1, k))];
+
+	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
+	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
+	Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
+	L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
+	x->link[i].distance = L; 
+}
+
+void pmpd3d_setConnection(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	int tmp, i;
+	
+	if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_link-1, tmp));
+		pmpd3d_setConnectioni(x,tmp,atom_getfloatarg(1, argc, argv),atom_getfloatarg(2, argc, argv));
+
+    }
+    else if ( (argc == 3) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id )
+            {
+				pmpd3d_setConnectioni(x,i,atom_getfloatarg(1, argc, argv),atom_getfloatarg(2, argc, argv));
+            }
+        }
+    }
+}
