@@ -38,11 +38,11 @@ typedef struct _link {
     t_int active;
     t_float K;
     t_float D;
-    t_float L;
+    t_float L;	// taille du lien
     t_float Pow;
     t_float Lmin;
     t_float Lmax;
-    t_float distance;
+    t_float distance; // memoire de la taille du lien
     t_float VX; // vecteur portant la liaison, si c'est le cas
     t_float VY;
     t_float VZ;
