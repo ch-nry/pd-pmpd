@@ -158,12 +158,6 @@ int test_1d_link(int i, t_pmpd *x, int argc, t_atom *argv)
 				if ( tmp < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}		
-			else if ( atom_getsymbolarg(j,argc,argv) == gensym("lengthYInf") )
-			{
-				tmp = fabs(x->link[i].mass1->posY - x->link[i].mass2->posY);
-				if ( tmp >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
-				j+=2;
-			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("connectedTo") )
 			{
 				if (argv[j+1].a_type == A_SYMBOL)

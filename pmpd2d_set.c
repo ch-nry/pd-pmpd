@@ -446,7 +446,7 @@ void pmpd2d_setForceY(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd2d_setActivei(t_pmpd3d *x, int i)
+void pmpd2d_setActivei(t_pmpd2d *x, int i)
 {
 	float Lx, Ly, L;
 	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
@@ -472,7 +472,7 @@ void pmpd2d_setActive(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id )
             {
-		        pmpd2d_setActivei(x,tmp);
+		        pmpd2d_setActivei(x,i);
             }
         }
     }
@@ -480,7 +480,7 @@ void pmpd2d_setActive(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     {
         for (i=0; i< x->nb_link; i++)
         {
-		    pmpd2d_setActivei(x,tmp);
+		    pmpd2d_setActivei(x,i);
         }
     }
 }

@@ -95,9 +95,9 @@ void pmpd2d_setup(void)
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_posX,            gensym("setPosX"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_posY,            gensym("setPosY"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_overdamp,	  	gensym("setOverdamp"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd2d_setEnd1,		    gensym("setEnd1"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd2d_setEnd2,		 	gensym("setEnd2"), A_GIMME, 0);
-    class_addmethod(pmpd3d_class, (t_method)pmpd2d_setEnd,		  	gensym("setEnd"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_setEnd1,		    gensym("setEnd1"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_setEnd2,		 	gensym("setEnd2"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_setEnd,		  	gensym("setEnd"), A_GIMME, 0);
 /*        
  pmpd2d_get
  --

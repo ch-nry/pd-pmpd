@@ -348,7 +348,7 @@ void pmpd_linksLengthSpeedT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd_linksEndT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd_linkEndT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -401,7 +401,7 @@ void pmpd_linksEndT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linkEnd1T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd_linkEnd1T(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
@@ -451,7 +451,7 @@ void pmpd3d_linkEnd1T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
-void pmpd3d_linkEnd2T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd_linkEnd2T(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
     t_garray *a;
