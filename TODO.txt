@@ -20,10 +20,9 @@ DONE :
 - new message "overdamp" to amplifye forces that are opposed to movement
 - message to change masses a link is connected to
 - rename messages for consistency : [X,Y,Z]min/max -> min/max[X,Y,Z]
+- rename message posX to setPosX
 - debug "setL Id" with no arg : bad computation of link length (2d / 3d) 
 - lot's of bugfix
-
-
 
 TODO : 
 closestNeighbor
