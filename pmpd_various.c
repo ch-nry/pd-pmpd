@@ -158,3 +158,138 @@ void pmpd_closestMass(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     outlet_anything(x->main_outlet, gensym("closestMass"),2,std_out);
 }
 
+void pmpd_massDistances_f_f(t_pmpd *x, t_int i, t_int j)
+{
+	t_float dist, tmp;
+	t_atom to_out[3];
+
+	dist = x->mass[i].posX - x->mass[j].posX;
+
+	SETFLOAT(&(to_out[0]), i);
+	SETFLOAT(&(to_out[1]), j);
+	SETFLOAT(&(to_out[2]), dist);
+	outlet_anything(x->main_outlet, gensym("distance"), 3, to_out);
+}
+
+void pmpd_massDistances(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_int i,j;
+
+	if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) )
+	{
+		pmpd_massDistances_f_f(x, atom_getfloatarg(0, argc, argv), atom_getfloatarg(1, argc, argv));
+	}
+	else if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_SYMBOL) )
+	{
+		for (i=0; i < x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
+			{
+				pmpd_massDistances_f_f(x, atom_getfloatarg(0, argc, argv), i);
+			}
+		}
+	}
+	else if ( (argc == 2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_FLOAT) )
+	{
+		for (i=0; i < x->nb_mass; i++)
+		{
+			if ( (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id) )
+			{
+				pmpd_massDistances_f_f(x, atom_getfloatarg(1, argc, argv), i);
+			}
+		}
+	}
+	else if ( (argc == 2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_SYMBOL) )
+	{
+		for (i=0; i < x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{
+				for (j=i+1; j < x->nb_mass; j++)
+				{
+					if ( atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+					{
+						pmpd_massDistances_f_f(x,i, j);
+					}
+				}
+			}
+		}
+	}
+	else if (argc == 0)
+	{
+		for (i=0; i < x->nb_mass; i++)
+		{
+			for (j=i+1; j < x->nb_mass; j++)
+			{
+				pmpd_massDistances_f_f(x,i, j);
+			}
+		}
+	}
+	else if ((argc == 1) && (argv[0].a_type == A_SYMBOL) )
+	{
+		for (i=0; i < x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{
+				for (j=i+1; j < x->nb_mass; j++)
+				{
+					pmpd_massDistances_f_f(x,i, j);
+				}
+			}
+		}
+	}
+	else if ( (argc == 1) && (argv[0].a_type == A_FLOAT) )
+	{
+		for (i=0; i < x->nb_mass; i++)
+		{
+			pmpd_massDistances_f_f(x, atom_getfloatarg(0, argc, argv), i);
+		}
+	}
+}
+
+
+void pmpd_forcesXT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+// add forces to masses. forces comes from a table, masse can be filter on ther Id or not
+
+	t_int i, j;
+	t_garray *a;
+	int npoints;
+	t_word *vec;
+	t_symbol *array;
+
+	if ( ( argc > 0 ) && (argv[0].a_type == A_SYMBOL ))
+	{
+		array = atom_getsymbolarg(0,argc,argv);
+		if (!(a = (t_garray *)pd_findbyclass(array, garray_class)))
+			pd_error(x, "%s: no such array", array->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", array->s_name);
+		else
+		{
+			if ( argc == 1 )  // apply forces on all masses
+			{
+				j = min(x->nb_mass, npoints);
+				for (i=0; i< j; i++)
+				{
+					x->mass[i].forceX += vec[i].w_float;
+				}
+			}
+			else if (( argc > 1 ) && ( argv[1].a_type == A_SYMBOL ))
+			{
+				i=0;
+				j=0;
+
+				while ( (i < x->nb_mass) && (j < npoints) )
+				{
+					if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
+					{
+						x->mass[i].forceX += vec[j].w_float;
+						j++;
+					}
+					i++;
+				}
+			}
+		}
+	}
+}

@@ -19,6 +19,7 @@ typedef struct _mass {
     t_float posX;
     t_float forceX;
     t_float D2;
+    t_float overdamp;
     int num;
 } foo;
 
@@ -27,6 +28,7 @@ typedef struct _link {
     int lType;
     struct _mass *mass1;
     struct _mass *mass2;
+    t_int active;
     t_float K;
     t_float D;
     t_float L;
@@ -38,6 +40,7 @@ typedef struct _link {
     t_symbol *arrayD;
     t_float K_L; // longeur du tabeau K
     t_float D_L; // longeur du tabeau D
+    t_float forceX;
 } foo1 ;
 
 typedef struct _pmpd {

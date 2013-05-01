@@ -401,3 +401,102 @@ void pmpd_linksEndT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
+void pmpd3d_linkEnd1T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int i, j, vecsize;
+    t_garray *a;
+    t_word *vec;
+    
+    if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
+    {
+        t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+        if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+            pd_error(x, "%s: no such array", tab_name->s_name);
+        else if (!garray_getfloatwords(a, &vecsize, &vec))
+            pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+        else
+        {
+            int taille_max = x->nb_link;
+            taille_max = min(taille_max, vecsize);
+            for (i=0; i < taille_max ; i++)
+            {
+                vec[i].w_float = x->link[i].mass1->posX;
+            }
+            garray_redraw(a);
+        }
+    }
+    else 
+    if ( (argc==2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_SYMBOL) )
+    {
+        t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+        if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+            pd_error(x, "%s: no such array", tab_name->s_name);
+        else if (!garray_getfloatwords(a, &vecsize, &vec))
+            pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+        else
+        {    
+            i = 0;
+            j = 0;
+            while ((i < vecsize-2) && (j < x->nb_link))
+            {
+                if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
+                {
+                    vec[i].w_float = x->link[j].mass1->posX;
+                    i++;
+                }
+                j++;
+            }
+            garray_redraw(a);
+        }
+    }
+}
+
+void pmpd3d_linkEnd2T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int i, j, vecsize;
+    t_garray *a;
+    t_word *vec;
+    
+    if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
+    {
+        t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+        if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+            pd_error(x, "%s: no such array", tab_name->s_name);
+        else if (!garray_getfloatwords(a, &vecsize, &vec))
+            pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+        else
+        {
+            int taille_max = x->nb_link;
+            taille_max = min(taille_max, vecsize);
+            for (i=0; i < taille_max ; i++)
+            {
+                vec[i].w_float = x->link[i].mass2->posX;
+            }
+            garray_redraw(a);
+        }
+    }
+    else 
+    if ( (argc==2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_SYMBOL) )
+    {
+        t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+        if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+            pd_error(x, "%s: no such array", tab_name->s_name);
+        else if (!garray_getfloatwords(a, &vecsize, &vec))
+            pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+        else
+        {    
+            i = 0;
+            j = 0;
+            while ((i < vecsize-2) && (j < x->nb_link))
+            {
+                if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
+                {
+                    vec[i].w_float = x->link[j].mass2->posX;
+                    i++;
+                }
+                j++;
+            }
+            garray_redraw(a);
+        }
+    }
+}
