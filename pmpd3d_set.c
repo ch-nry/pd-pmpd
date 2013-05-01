@@ -146,7 +146,7 @@ void pmpd3d_setLCurrent(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     { // set a link to it's current length
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
-        x->link[tmp].L = x->link[tmp].mass2->posX - x->link[tmp].mass1->posX;
+        x->link[tmp].L = x->link[i].distance;
     }
     else if ( ( argc == 1 ) && ( argv[0].a_type == A_SYMBOL ) )
     { // set a class of link to there current length
