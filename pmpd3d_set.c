@@ -722,7 +722,7 @@ void pmpd3d_setConnection1i(t_pmpd3d *x, int i, int j)
 	x->link[i].distance = L; 
 }
 
-void pmpd3d_setConnection1(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_setEnd1(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	int tmp, i;
 	
@@ -757,7 +757,7 @@ void pmpd3d_setConnection2i(t_pmpd3d *x, int i, int j)
 	x->link[i].distance = L; 
 }
 
-void pmpd3d_setConnection2(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_setEnd2(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	int tmp, i;
 	
@@ -794,7 +794,7 @@ void pmpd3d_setConnectioni(t_pmpd3d *x, int i, int j, int k)
 	x->link[i].distance = L; 
 }
 
-void pmpd3d_setConnection(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd3d_setEnd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	int tmp, i;
 	
