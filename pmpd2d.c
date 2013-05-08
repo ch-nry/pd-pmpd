@@ -253,10 +253,10 @@ void pmpd2d_setup(void)
 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_massPosMean,       gensym("massPosMean"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_massPosStd,        gensym("massPosStd"),A_GIMME, 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForcesMean,    gensym("massForcesMean"), A_GIMME, 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForcesStd,     gensym("massForcesStd"),A_GIMME, 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedsMean,    gensym("massSpeedsMean"), A_GIMME, 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedsStd,     gensym("massSpeedsStd"),A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForcesMean,    gensym("massForceMean"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForcesStd,     gensym("massForceStd"),A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedsMean,    gensym("massSpeedMean"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massSpeedsStd,     gensym("massSpeedStd"),A_GIMME, 0);
 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkPosMean,               gensym("linkPosMean"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkLengthMean,               gensym("linkLengthMean"), A_GIMME, 0);
