@@ -424,7 +424,7 @@ void pmpd3d_testLinkL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		i++;
 	}
 	SETSYMBOL(&(list[0]),atom_getsymbolarg(0,argc,argv));
-	outlet_anything(x->main_outlet, gensym("testLink"),i+1 , list);
+	outlet_anything(x->main_outlet, gensym("testLinkL"),i+1 , list);
 }
 
 void pmpd3d_testMassL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
@@ -443,5 +443,5 @@ void pmpd3d_testMassL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		i++;
 	}
 	SETSYMBOL(&(list[0]),atom_getsymbolarg(0,argc,argv));
-	outlet_anything(x->main_outlet, gensym("testMass"),i+1 , list);
+	outlet_anything(x->main_outlet, gensym("testMassL"),i+1 , list);
 }
