@@ -17,6 +17,11 @@ t_float sqr(t_float x)
     return x*x ;
 }
 
+t_float mix(t_float X, t_float Y, t_float mix)
+{
+    return (1-mix)*X + mix*Y ;
+}
+
 t_float tabread2(t_pmpd *x, t_float pos, t_symbol *array)
 {
     t_garray *a;
