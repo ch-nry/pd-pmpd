@@ -25,7 +25,11 @@ DONE :
 - lot's of bugfix
 
 TODO : 
+massDistance : ajouter distanceX, Y, et Z
+
+
 closestNeighbor
 linkEndL
 add creation parametter to fix maximum number of link and mass
 iBox3d / iBox2d ?
+
