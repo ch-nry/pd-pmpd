@@ -468,8 +468,8 @@ void pmpd2d_linkEnd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             SETFLOAT(&(toout[1]), i);
             SETFLOAT(&(toout[2]), x->link[i].mass1->posX);
             SETFLOAT(&(toout[3]), x->link[i].mass1->posY);
-            SETFLOAT(&(toout[5]), x->link[i].mass2->posX);
-            SETFLOAT(&(toout[6]), x->link[i].mass2->posY);
+            SETFLOAT(&(toout[4]), x->link[i].mass2->posX);
+            SETFLOAT(&(toout[5]), x->link[i].mass2->posY);
             outlet_anything(x->main_outlet, gensym("linkEnd"), 6, toout);
         }
     }
@@ -484,8 +484,8 @@ void pmpd2d_linkEnd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 				SETFLOAT(&(toout[1]), i);
                 SETFLOAT(&(toout[2]), x->link[i].mass1->posX);
                 SETFLOAT(&(toout[3]), x->link[i].mass1->posY);
-                SETFLOAT(&(toout[5]), x->link[i].mass2->posX);
-                SETFLOAT(&(toout[6]), x->link[i].mass2->posY);
+                SETFLOAT(&(toout[4]), x->link[i].mass2->posX);
+                SETFLOAT(&(toout[5]), x->link[i].mass2->posY);
                 outlet_anything(x->main_outlet, gensym("linkEnd"), 6, toout);
             }
         } 
@@ -499,8 +499,8 @@ void pmpd2d_linkEnd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             SETFLOAT(&(toout[1]), i);
             SETFLOAT(&(toout[2]), x->link[i].mass1->posX);
             SETFLOAT(&(toout[3]), x->link[i].mass1->posY);
-            SETFLOAT(&(toout[5]), x->link[i].mass2->posX);
-            SETFLOAT(&(toout[6]), x->link[i].mass2->posY);
+            SETFLOAT(&(toout[4]), x->link[i].mass2->posX);
+            SETFLOAT(&(toout[5]), x->link[i].mass2->posY);
             outlet_anything(x->main_outlet, gensym("linkEnd"), 6, toout);
         } 
     }

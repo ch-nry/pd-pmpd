@@ -586,7 +586,7 @@ void pmpd3d_linkPosSpeedMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_linkLengthSpeedMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-	t_float sommeX, sommeY, sommeZ, somme, tmp;
+	t_float sommeX, sommeY, sommeZ, somme;
     t_int i,j;
     t_atom mean[4];
 
@@ -737,7 +737,7 @@ void pmpd3d_linkPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_linkLengthStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-	t_float sommeX, sommeY, sommeZ, somme, tmp;
+	t_float sommeX, sommeY, sommeZ, somme;
     t_int i,j;
     t_float stdX, stdY, stdZ, std;
     t_atom std_out[4];
@@ -925,7 +925,7 @@ void pmpd3d_linkPosSpeedStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_linkLengthSpeedStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-	t_float sommeX, sommeY, sommeZ, somme, tmp;
+	t_float sommeX, sommeY, sommeZ, somme;
     t_float stdX, stdY, stdZ, std;
     t_int i,j;
     t_atom std_out[4];

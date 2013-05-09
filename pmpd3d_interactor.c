@@ -270,7 +270,7 @@ void pmpd3d_iSphere(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	// [8] : max radium of the interactor
 	
 	
-	t_float a, b, c, R, K, power, tmp, Rmin, Rmax;
+	t_float a, b, c, R, K, power, Rmin, Rmax;
 	t_int i;
 
 	if (!((argc>=6) && (argv[1].a_type == A_FLOAT)&& (argv[2].a_type == A_FLOAT)&& (argv[3].a_type == A_FLOAT)&& (argv[4].a_type == A_FLOAT)))

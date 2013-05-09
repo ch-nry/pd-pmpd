@@ -1,6 +1,6 @@
 int test_1d_mass(int i, t_pmpd *x, int argc, t_atom *argv)
 {
-	t_float tmp, tmp2;
+	t_float tmp;
 	t_int j = 1;
 	while (j < argc) 
 	{
@@ -100,7 +100,7 @@ int test_1d_mass(int i, t_pmpd *x, int argc, t_atom *argv)
 int test_1d_link(int i, t_pmpd *x, int argc, t_atom *argv)
 {
 	t_int j;
-	t_float tmp, tmp2;
+	t_float tmp;
 	j = 1;
 	
 	while (j < argc) 

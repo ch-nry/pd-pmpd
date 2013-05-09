@@ -355,7 +355,7 @@ void pmpd3d_closestMass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_massDistances_f_f(t_pmpd3d *x, t_int i, t_int j)
 {
-	t_float dist, tmp,dx,dy,dz;
+	t_float dist,dx,dy,dz;
 	t_atom to_out[6];
 
 	dx = x->mass[i].posX - x->mass[j].posX;

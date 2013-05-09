@@ -42,7 +42,7 @@ void pmpd2d_iCircle(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	// [7] : max radium of the interactor
 	
 	
-	t_float a, b, R, K, power, tmp, Rmin, Rmax;
+	t_float a, b, R, K, power, Rmin, Rmax;
 	t_int i;
 
 	if (!((argc>=5) && (argv[1].a_type == A_FLOAT)&& (argv[2].a_type == A_FLOAT)&& (argv[3].a_type == A_FLOAT) ))

@@ -1,6 +1,6 @@
 int test_3d_mass(int i, t_pmpd3d *x, int argc, t_atom *argv)
 {
-	t_float tmp, tmp2;
+	t_float tmp;
 	t_int j = 1;
 	while (j < argc) 
 	{

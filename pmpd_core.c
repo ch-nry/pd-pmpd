@@ -68,7 +68,7 @@ void *pmpd_new()
 
 void pmpd_bang(t_pmpd *x)
 { // this part is doing all the PM
-    t_float F, L, absL, tmpX, speed;
+    t_float F, L, absL, tmpX;
     t_int i;
     // post("bang");
 

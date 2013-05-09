@@ -160,7 +160,7 @@ void pmpd_closestMass(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd_massDistances_f_f(t_pmpd *x, t_int i, t_int j)
 {
-	t_float dist, tmp;
+	t_float dist;
 	t_atom to_out[3];
 
 	dist = x->mass[i].posX - x->mass[j].posX;

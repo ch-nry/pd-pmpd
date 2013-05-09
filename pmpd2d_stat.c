@@ -491,14 +491,14 @@ void pmpd2d_linkPosSpeedMean(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     
     SETFLOAT(&(mean[0]),sommeX);
     SETFLOAT(&(mean[1]),sommeY);
-    SETFLOAT(&(mean[3]),somme);
+    SETFLOAT(&(mean[2]),somme);
     
     outlet_anything(x->main_outlet, gensym("linkPosSpeedMean"),3 , mean);
 }
 
 void pmpd2d_linkLengthSpeedMean(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
-	t_float sommeX, sommeY, somme, tmp;
+	t_float sommeX, sommeY, somme;
     t_int i,j;
     t_atom mean[3];
 
@@ -633,7 +633,7 @@ void pmpd2d_linkPosStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd2d_linkLengthStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
-	t_float sommeX, sommeY, somme, tmp;
+	t_float sommeX, sommeY, somme;
     t_int i,j;
     t_float stdX, stdY, std;
     t_atom std_out[4];
@@ -803,7 +803,7 @@ void pmpd2d_linkPosSpeedStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd2d_linkLengthSpeedStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
-	t_float sommeX, sommeY, somme, tmp;
+	t_float sommeX, sommeY, somme;
     t_float stdX, stdY, std;
     t_int i,j;
     t_atom std_out[4];

@@ -374,7 +374,7 @@ void pmpd_linkPosSpeedMean(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd_linkLengthSpeedMean(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
-	t_float sommeX, tmp;
+	t_float sommeX;
     t_int i,j;
     t_atom mean[1];
 
@@ -477,7 +477,7 @@ void pmpd_linkPosStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd_linkLengthStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
-	t_float sommeX, somme, tmp;
+	t_float sommeX, somme;
     t_int i,j;
     t_float stdX, std;
     t_atom std_out[2];
@@ -615,7 +615,7 @@ void pmpd_linkPosSpeedStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd_linkLengthSpeedStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
-	t_float sommeX, tmp;
+	t_float sommeX;
     t_float stdX;
     t_int i,j;
     t_atom std_out[1];
