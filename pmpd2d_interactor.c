@@ -79,12 +79,12 @@ void pmpd2d_iCircle(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	{
 		for (i=0; i < x->nb_mass; i++)
 		{
-			pmpd2d_iCircle_i(x, i, a, b, R, K, power, Rmin, Rmax);
+			pmpd2d_iCircle_i(x, i, a, b, R, K, power, Kt, powert, Rmin, Rmax);
 		}
 	}
 	else if (((argc>0) && argv[0].a_type == A_FLOAT))
 	{
-		pmpd2d_iCircle_i(x, atom_getfloatarg(0,argc,argv), a, b, R, K, power, Rmin, Rmax);
+		pmpd2d_iCircle_i(x, atom_getfloatarg(0,argc,argv), a, b, R, K, power, Kt, powert, Rmin, Rmax);
 	}
 	else if ((argc>0) && (argv[0].a_type == A_SYMBOL))
 	{
@@ -92,7 +92,7 @@ void pmpd2d_iCircle(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 			{
-				pmpd2d_iCircle_i(x, i, a, b, R, K, power, Rmin, Rmax);
+				pmpd2d_iCircle_i(x, i, a, b, R, K, power, Kt, powert, Rmin, Rmax);
 			}
 		}
 	}	
