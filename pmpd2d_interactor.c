@@ -1,4 +1,4 @@
-void pmpd2d_iCircle_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float r, t_float K, t_float power, t_float Rmin, t_float Rmax)
+void pmpd2d_iCircle_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float r, t_float K, t_float power, t_float Kt, t_float powert, t_float Rmin, t_float Rmax)
 {
 	t_float distance, X, Y, rayon, tmp;
 
@@ -27,6 +27,10 @@ void pmpd2d_iCircle_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float r, t_flo
 		tmp = -pow_ch(K * distance, power);
 		x->mass[i].forceX += X * tmp;
 		x->mass[i].forceY += Y * tmp;
+		tmp = -pow_ch(Kt * distance, power);
+		x->mass[i].forceX += -Y * tmp;
+		x->mass[i].forceY += X * tmp;
+		
 	}
 }
 
@@ -38,11 +42,13 @@ void pmpd2d_iCircle(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	// 3 : Circle radius
 	// 4 : K
 	// [5] : power of the force
-	// [6] : min radium of the interactor
-	// [7] : max radium of the interactor
+	// [6] : Kt
+	// [7] : power of the tengential force
+	// [8] : min radium of the interactor
+	// [9] : max radium of the interactor
 	
 	
-	t_float a, b, R, K, power, Rmin, Rmax;
+	t_float a, b, R, K, power, Kt, powert, Rmin, Rmax;
 	t_int i;
 
 	if (!((argc>=5) && (argv[1].a_type == A_FLOAT)&& (argv[2].a_type == A_FLOAT)&& (argv[3].a_type == A_FLOAT) ))
@@ -60,10 +66,14 @@ void pmpd2d_iCircle(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	power = atom_getfloatarg(5, argc, argv);
 	if (power == 0) power = 1;
 	
+	Kt = atom_getfloatarg(6, argc, argv);
+	powert = atom_getfloatarg(7, argc, argv);
+	if (powert == 0) power = 1;
+	
 	Rmin = 0;
-	if ((argc>=7) && (argv[6].a_type == A_FLOAT)) { Rmin = (atom_getfloatarg(6,argc,argv));}
+	if ((argc>=9) && (argv[6].a_type == A_FLOAT)) { Rmin = (atom_getfloatarg(8,argc,argv));}
 	Rmax =  1000000;
-	if ((argc>=8) && (argv[7].a_type == A_FLOAT)) { Rmax = (atom_getfloatarg(7,argc,argv));}
+	if ((argc>=10) && (argv[7].a_type == A_FLOAT)) { Rmax = (atom_getfloatarg(9,argc,argv));}
 
 	if ((argc>0) && (argv[0].a_type == A_FLOAT) && (atom_getfloatarg(0,argc,argv) == -1)) // all
 	{
