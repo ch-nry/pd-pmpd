@@ -23,11 +23,9 @@ DONE :
 - rename message posX to setPosX
 - debug "setL Id" with no arg : bad computation of link length (2d / 3d) 
 - lot's of bugfix
+- switch to makefile template 1.0.14
 
 TODO : 
-massDistance : ajouter distanceX, Y, et Z
-
-
 closestNeighbor
 linkEndL
 add creation parametter to fix maximum number of link and mass

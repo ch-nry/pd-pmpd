@@ -289,19 +289,21 @@ void pmpd2d_closestMass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)// t_fl
 
 void pmpd2d_massDistances_f_f(t_pmpd2d *x, t_int i, t_int j)
 {
-	t_float dist, tmp;
-	t_atom to_out[3];
+	t_float dist, tmp, dx, dy;
+	t_atom to_out[5];
 
-	tmp = x->mass[i].posX - x->mass[j].posX;
-	dist = sqr(tmp);
-	tmp = x->mass[i].posY - x->mass[j].posY;
-	dist += sqr(tmp);
+
+	dx = x->mass[i].posX - x->mass[j].posX;
+	dy = x->mass[i].posY - x->mass[j].posY;
+	dist = sqr(dx) + sqr(dy);
 	dist = sqrt(dist);
 
 	SETFLOAT(&(to_out[0]), i);
 	SETFLOAT(&(to_out[1]), j);
-	SETFLOAT(&(to_out[2]), dist);
-	outlet_anything(x->main_outlet, gensym("distance"), 3, to_out);
+	SETFLOAT(&(to_out[2]), dx);
+	SETFLOAT(&(to_out[3]), dy);
+	SETFLOAT(&(to_out[4]), dist);
+	outlet_anything(x->main_outlet, gensym("distance"), 5, to_out);
 }
 
 void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
