@@ -1,4 +1,4 @@
-#N canvas 587 248 571 767 10;
+#N canvas 585 254 571 767 10;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 705 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
@@ -286,7 +286,7 @@ their Id.;
 #X connect 4 0 2 0;
 #X restore 17 189 pd compute;
 #X obj 17 161 tgl 15 0 empty empty ON/OFF 25 10 1 10 -262144 -1 -1
-1 1;
+0 1;
 #X obj 172 220 r \$0-out;
 #X obj 17 106 bng 15 250 50 0 empty empty reset 25 10 1 10 -262144
 -1 -1;
@@ -893,27 +893,28 @@ posYInf \$1 / speedXSup \$1 / speedXInf \$1 / speedYSup \$1 / speedYInf
 \$1 / connectedTo \$1 (symbol or float);
 #X restore 12 490 pd tests ______________;
 #X text 188 493 To test specific parametters;
-#N canvas 991 188 547 405 interactors 0;
+#N canvas 989 194 547 405 interactors 0;
 #X text 28 58 \$1 : mess Id (float or symbol) to apply this interactor
 ;
-#X text 75 131 \$11 : K tengential;
-#X text 74 145 \$12 : power of the tengential force;
 #X text 27 71 \$2 \$3 : center of the circle;
 #X text 26 85 \$4 : circle radius;
 #X text 26 99 \$5 : K;
-#X text 25 112 \$6 : power of the force;
-#X text 23 161 \$7 : minimum radius of the interactor;
-#X text 20 175 \$8 : maximum radius of the interactor;
-#X msg 16 24 iCircle \$1 \$2 \$3 \$4 \$5 [\$6 [\$7 [\$8]]];
-#X text 24 241 \$1 : mass Id (float or symbol) to apply this interactor
+#X text 26 112 \$6 : power of the force;
+#X text 24 231 \$1 : mass Id (float or symbol) to apply this interactor
 ;
-#X text 23 254 \$2 \$3 : 1st point off the line;
-#X text 22 268 \$4 \$5 : 2nd point of the line;
-#X text 23 282 \$6 : K;
-#X text 23 297 \$7 : power of the force;
-#X text 22 314 \$8 : minimum profund of the interactor;
-#X text 21 329 \$9 : maximum profund of the interactor;
-#X msg 12 216 iLine \$1 \$2 \$3 \$4 \$5 \$6 [\$7 [\$8 [\$9 ]]];
+#X text 23 244 \$2 \$3 : 1st point off the line;
+#X text 22 258 \$4 \$5 : 2nd point of the line;
+#X text 23 272 \$6 : K;
+#X text 23 287 \$7 : power of the force;
+#X text 22 302 \$8 : minimum profund of the interactor;
+#X text 21 317 \$9 : maximum profund of the interactor;
+#X msg 12 206 iLine \$1 \$2 \$3 \$4 \$5 \$6 [\$7 [\$8 [\$9 ]]];
+#X text 26 126 \$7 : K tengential;
+#X text 26 140 \$8 : power of the tengential force;
+#X text 25 156 \$9 : minimum radius of the interactor;
+#X text 24 170 \$10 : maximum radius of the interactor;
+#X msg 16 24 iCircle \$1 \$2 \$3 \$4 \$5 [\$6 [\$7 [\$8 [\$9 [\$10
+]]]]];
 #X restore 12 509 pd interactors ________;
 #N canvas 890 232 700 758 statistics 0;
 #X obj 25 41 cnv 15 150 270 empty empty empty 20 12 0 14 -233017 -66577
