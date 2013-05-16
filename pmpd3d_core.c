@@ -187,32 +187,40 @@ void pmpd3d_bang(t_pmpd3d *x)
 }
 
 void pmpd3d_mass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
-//, t_symbol *Id, t_float mobile, t_float M, t_float posX, t_float posY, t_float posZ )
-{ // add a mass : Id, invM speedX posX
-    if(argv[0].a_type == A_SYMBOL)
-    {
-        x->mass[x->nb_mass].Id = atom_getsymbolarg(0,argc,argv);
-        x->mass[x->nb_mass].mobile = (int) atom_getfloatarg(1, argc, argv);
-        t_float M = atom_getfloatarg(2, argc, argv);
-        if (M<=0) M=1;
-        x->mass[x->nb_mass].invM = 1/M;
-        x->mass[x->nb_mass].speedX = 0;
-        x->mass[x->nb_mass].speedY = 0;
-        x->mass[x->nb_mass].speedZ = 0;
-        x->mass[x->nb_mass].posX = atom_getfloatarg(3, argc, argv);
-        x->mass[x->nb_mass].posY = atom_getfloatarg(4, argc, argv);
-        x->mass[x->nb_mass].posZ = atom_getfloatarg(5, argc, argv);
-        x->mass[x->nb_mass].forceX = 0;
-        x->mass[x->nb_mass].forceY = 0;
-        x->mass[x->nb_mass].forceZ = 0;
-        x->mass[x->nb_mass].num = x->nb_mass;
-        x->mass[x->nb_mass].D2 = 0;
-        x->mass[x->nb_mass].D2offset = 0;
-		x->mass[x->nb_mass].overdamp = 0;
-		
-        x->nb_mass++ ;
-        x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
-    }
+// t_symbol *Id, t_float mobile, t_float M, t_float posX, t_float posY, t_float posZ )
+{ 
+	x->mass[x->nb_mass].Id = gensym("mass");
+	if ((argc >= 1) &&  (argv[0].a_type == A_SYMBOL))
+		x->mass[x->nb_mass].Id = atom_getsymbolarg(0,argc,argv);
+	x->mass[x->nb_mass].mobile = 1;
+	if ((argc >= 2) &&  (argv[1].a_type == A_FLOAT))
+		x->mass[x->nb_mass].mobile = (int) atom_getfloatarg(1, argc, argv);
+	t_float M = 1;
+	if ((argc >= 3) &&  (argv[2].a_type == A_FLOAT))
+		M = atom_getfloatarg(3, argc, argv);
+	if (M<=0) M=1;
+	x->mass[x->nb_mass].invM = 1/M;
+	x->mass[x->nb_mass].speedX = 0;
+	x->mass[x->nb_mass].speedY = 0;
+	x->mass[x->nb_mass].speedZ = 0;
+	x->mass[x->nb_mass].posX = 0;
+	if ((argc >= 4) &&  (argv[3].a_type == A_FLOAT))
+		x->mass[x->nb_mass].posX = atom_getfloatarg(3, argc, argv);
+	x->mass[x->nb_mass].posY = 0;
+	if ((argc >= 5) &&  (argv[4].a_type == A_FLOAT))
+		x->mass[x->nb_mass].posY = atom_getfloatarg(4, argc, argv);
+	x->mass[x->nb_mass].posZ = 0;
+	if ((argc >= 6) &&  (argv[5].a_type == A_FLOAT))
+		x->mass[x->nb_mass].posZ = atom_getfloatarg(5, argc, argv);
+	x->mass[x->nb_mass].forceX = 0;
+	x->mass[x->nb_mass].forceY = 0;
+	x->mass[x->nb_mass].forceZ = 0;
+	x->mass[x->nb_mass].num = x->nb_mass;
+	x->mass[x->nb_mass].D2 = 0;
+	x->mass[x->nb_mass].D2offset = 0;
+	x->mass[x->nb_mass].overdamp = 0;
+	x->nb_mass++ ;
+	x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
 }
 
 void pmpd3d_create_link(t_pmpd3d *x, t_symbol *Id, int mass1, int mass2, t_float K, t_float D, t_float Pow, t_float Lmin, t_float Lmax, t_int type)
@@ -244,61 +252,67 @@ void pmpd3d_link(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	
     int i, j;
 	
-    t_symbol *Id = atom_getsymbolarg(0,argc,argv);
-    int mass1 = atom_getfloatarg(1, argc, argv);
-    int mass2 = atom_getfloatarg(2, argc, argv);
-    t_float K = atom_getfloatarg(3, argc, argv);
-    t_float D = atom_getfloatarg(4, argc, argv);
+	t_symbol *Id = gensym("link");
+	if ((argc >= 1) &&  (argv[0].a_type == A_SYMBOL))
+		Id = atom_getsymbolarg(0,argc,argv);
+	t_float K = 0;
+   	if ((argc >= 4) &&  (argv[3].a_type == A_FLOAT))
+		K = atom_getfloatarg(3, argc, argv);
+	t_float D = 0;
+   	if ((argc >= 5) &&  (argv[4].a_type == A_FLOAT))
+		D = atom_getfloatarg(4, argc, argv);
     t_float Pow = 1; 
-    if (argc > 5) Pow = atom_getfloatarg(5, argc, argv);
+    if ((argc > 5) &&  (argv[5].a_type == A_FLOAT)) 
+		Pow = atom_getfloatarg(5, argc, argv);
     t_float Lmin = -1000000;
-    if (argc > 6) Lmin = atom_getfloatarg(6, argc, argv);
+    if ((argc > 6) &&  (argv[6].a_type == A_FLOAT)) 
+		Lmin = atom_getfloatarg(6, argc, argv);
     t_float Lmax =  1000000;
-    if (argc > 7) Lmax = atom_getfloatarg(7, argc, argv);
+    if ((argc > 7)  &&  (argv[7].a_type == A_FLOAT)) 
+		Lmax = atom_getfloatarg(7, argc, argv);
 	//    post("%d,%d, %f,%f", mass1, mass2, K, D);
 	
-    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    if ( (argc >= 3) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
-        pmpd3d_create_link(x, Id, mass1, mass2, K, D, Pow, Lmin, Lmax, 0);
+        pmpd3d_create_link(x, Id, atom_getfloatarg(1, argc, argv), atom_getfloatarg(2, argc, argv), K, D, Pow, Lmin, Lmax, 0);
     }
-    else
-		if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
+    else if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
 		{
-			for (i=0; i< x->nb_mass; i++)
+			if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
 			{
-				if ( atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
-				{
-					pmpd3d_create_link(x, Id, i, mass2, K, D, Pow, Lmin, Lmax, 0);
-				}
+				pmpd3d_create_link(x, Id, i, atom_getfloatarg(2, argc, argv), K, D, Pow, Lmin, Lmax, 0);
 			}
 		}
-		else
-			if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
+	}
+	else if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(2,argc,argv) == x->mass[i].Id)
 			{
-				for (i=0; i< x->nb_mass; i++)
-				{
-					if ( atom_getsymbolarg(2,argc,argv) == x->mass[i].Id)
-					{
-						pmpd3d_create_link(x, Id, mass1, i, K, D, Pow, Lmin, Lmax, 0);
-					}
-				}
+				pmpd3d_create_link(x, Id, atom_getfloatarg(1, argc, argv), i, K, D, Pow, Lmin, Lmax, 0);
 			}
-			else
-				if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
+		}
+	}
+	else if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			for (j=0; j< x->nb_mass; j++)
+			{
+				if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
 				{
-					for (i=0; i< x->nb_mass; i++)
-					{
-						for (j=0; j< x->nb_mass; j++)
-						{
-							if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
-							{
-								if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
-									// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
-									pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
-							}
-						}   
-					}
+					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
+						// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
+						pmpd3d_create_link(x, Id, i, j, K, D, Pow, Lmin, Lmax, 0);
 				}
+			}   
+		}
+	}
+	else 
+		pmpd3d_create_link(x, Id, 0, 1, K, D, Pow, Lmin, Lmax, 0);
 }
 
 void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)

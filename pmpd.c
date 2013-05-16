@@ -56,7 +56,7 @@ void pmpd_setup(void)
 */
     class_addbang(pmpd_class, pmpd_bang);
     class_addmethod(pmpd_class, (t_method)pmpd_reset,           gensym("reset"), 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_mass,            gensym("mass"), A_DEFSYMBOL, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_mass,            gensym("mass"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_link,            gensym("link"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_tabLink,         gensym("tabLink"), A_GIMME, 0);
 
