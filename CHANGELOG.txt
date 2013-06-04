@@ -25,3 +25,4 @@ from version 0.10 to version 0.11
 - debug "setL Id" with no arg : bad computation of link length (2d / 3d) 
 - lot's of bugfix
 - switch to makefile template 1.0.14
+- addd default aguments for mass and link creation. (this allow to create a mass with a [mass< message better than [mass mass 1 1 0< message)
