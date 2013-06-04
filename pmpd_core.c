@@ -140,7 +140,7 @@ void pmpd_mass(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 		x->mass[x->nb_mass].mobile = (int) atom_getfloatarg(1, argc, argv);
 	t_float M = 1;
 	if ((argc >= 3) &&  (argv[2].a_type == A_FLOAT))
-		M = atom_getfloatarg(3, argc, argv);
+		M = atom_getfloatarg(2, argc, argv);
 	if (M<=0) M=1;
 	x->mass[x->nb_mass].invM = 1/M;
 	x->mass[x->nb_mass].speedX = 0;
