@@ -1,4 +1,4 @@
-#N canvas 583 82 572 750 10;
+#N canvas 222 94 572 750 10;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 705 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
@@ -383,147 +383,127 @@ pmpd object. They are of three types :;
 #X text 11 19 DESCRIPTION: Physical modeling for Pd in 2d;
 #X text 265 709 - Cyrille Henry 2011;
 #X text 265 721 based on MSD by Nicolas Montgermont \, 2005;
-#N canvas 44 50 1228 704 links_attributes 0;
-#X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
+#N canvas 191 127 1169 655 links_attributes 0;
+#X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 8 260 cnv 15 150 110 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 8 220 cnv 15 170 380 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 2 239 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 2 199 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 7 2 ATTRIBUTES Messages;
-#X text 5 239 Lists :;
-#X obj 9 374 cnv 15 150 110 empty empty empty 20 12 0 14 -233017 -66577
+#X text 17 2 ATTRIBUTES Messages;
+#X text 15 199 Lists :;
+#X obj 565 26 cnv 15 190 600 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 9 487 cnv 15 150 110 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 565 5 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 611 26 cnv 15 150 110 empty empty empty 20 12 0 14 -233017 -66577
+#X text 791 519 \$2 (optional): Masses Id;
+#X text 790 506 \$1 : table name;
+#X text 578 5 tables :;
+#X text 188 253 Output all links x or y in a list on outlet No 1;
+#X msg 14 250 linkPosXL [\$1];
+#X msg 35 269 linkPosYL [\$1];
+#X msg 15 287 linkPosNormL [\$1];
+#X msg 16 321 linkLengthL [\$1];
+#X msg 16 340 linkLengthXL [\$1];
+#X msg 36 359 linkLengthYL [\$1];
+#X msg 19 414 linkPosSpeedL [\$1];
+#X msg 19 433 linkPosSpeedXL [\$1];
+#X msg 38 452 linkPosSpeedYL [\$1];
+#X msg 17 470 linkPosSpeedNormL [\$1];
+#X msg 17 510 linkLengthSpeedL [\$1];
+#X msg 17 529 linkLengthSpeedXL [\$1];
+#X msg 37 548 linkLengthSpeedYL [\$1];
+#X msg 575 38 linkPosT \$1 [\$2];
+#X msg 575 57 linkPosXT \$1 [\$2];
+#X msg 595 75 linkPosYT \$1 [\$2];
+#X msg 574 94 linkPosNormT \$1 [\$2];
+#X msg 576 132 linkLengthT \$1 [\$2];
+#X msg 576 151 linkLengthXT \$1 [\$2];
+#X msg 596 170 linkLengthYT \$1 [\$2];
+#X msg 575 188 linkLengthNormT \$1 [\$2];
+#X msg 576 229 linkPosSpeedT \$1 [\$2];
+#X msg 576 248 linkPosSpeedXT \$1 [\$2];
+#X msg 596 267 linkPosSpeedYT \$1 [\$2];
+#X msg 576 285 linkPosSpeedNormT \$1 [\$2];
+#X msg 574 326 linkLengthSpeedT \$1 [\$2];
+#X msg 573 345 linkLengthSpeedXT \$1 [\$2];
+#X msg 594 364 linkLengthSpeedYT \$1 [\$2];
+#X obj 8 88 cnv 15 170 100 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 605 5 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#X msg 20 96 linkPos [\$1];
+#X msg 20 136 linkEnd [\$1];
+#X obj 2 69 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 612 140 cnv 15 150 110 empty empty empty 20 12 0 14 -233017
--66577 0;
-#X obj 612 253 cnv 15 150 110 empty empty empty 20 12 0 14 -233017
--66577 0;
-#X text 833 502 \$2 (optional): Masses Id;
-#X text 832 489 \$1 : table name;
-#X text 608 5 tables :;
-#X text 168 304 Output all links x or y in a list on outlet No 1;
-#X obj 10 603 cnv 15 150 110 empty empty empty 20 12 0 14 -233017 -66577
-0;
-#X obj 612 369 cnv 15 150 110 empty empty empty 20 12 0 14 -233017
--66577 0;
-#X msg 9 290 linkPosXL [\$1];
-#X msg 10 309 linkPosYL [\$1];
-#X msg 10 327 linkPosNormL [\$1];
-#X msg 11 381 linkLengthL [\$1];
-#X msg 11 400 linkLengthXL [\$1];
-#X msg 11 419 linkLengthYL [\$1];
-#X msg 14 494 linkPosSpeedL [\$1];
-#X msg 14 513 linkPosSpeedXL [\$1];
-#X msg 13 532 linkPosSpeedYL [\$1];
-#X msg 12 550 linkPosSpeedNormL [\$1];
-#X msg 12 610 linkLengthSpeedL [\$1];
-#X msg 12 629 linkLengthSpeedXL [\$1];
-#X msg 12 648 linkLengthSpeedYL [\$1];
-#X msg 615 38 linkPosT \$1 [\$2];
-#X msg 615 57 linkPosXT \$1 [\$2];
-#X msg 615 75 linkPosYT \$1 [\$2];
-#X msg 614 94 linkPosNormT \$1 [\$2];
-#X msg 616 152 linkLengthT \$1 [\$2];
-#X msg 616 171 linkLengthXT \$1 [\$2];
-#X msg 616 190 linkLengthYT \$1 [\$2];
-#X msg 615 208 linkLengthNormT \$1 [\$2];
-#X msg 616 259 linkPosSpeedT \$1 [\$2];
-#X msg 616 278 linkPosSpeedXT \$1 [\$2];
-#X msg 616 297 linkPosSpeedYT \$1 [\$2];
-#X msg 616 315 linkPosSpeedNormT \$1 [\$2];
-#X msg 614 376 linkLengthSpeedT \$1 [\$2];
-#X msg 613 395 linkLengthSpeedXT \$1 [\$2];
-#X msg 614 414 linkLengthSpeedYT \$1 [\$2];
-#X obj 8 88 cnv 15 150 100 empty empty empty 20 12 0 14 -233017 -66577
-0;
-#X text 172 93 \$1 : id float or symbol of masses (nothing for all)
-;
-#X text 172 153 \$1 : id float or symbol of masses (nothing for all)
-;
-#X msg 12 96 linkPos [\$1];
-#X msg 12 156 linkEnd [\$1];
-#X obj 2 69 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
-0;
-#X text 5 69 generic :;
-#X msg 10 437 linkLengthNormL [\$1];
-#X msg 13 667 linkLengthSpeedNormL [\$1];
-#X msg 615 433 linkLengthSpeedNormT \$1 [\$2];
-#X obj 614 543 cnv 15 150 200 empty empty empty 20 12 0 14 -233017
--66577 0;
-#X obj 608 522 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
-0;
-#X text 611 522 tables :;
-#X msg 628 551 linkEndT \$1 [\$2];
-#X msg 640 571 linkEnd1T \$1 [\$2];
-#X msg 639 591 linkEnd2T \$1 [\$2];
-#X msg 638 612 linkEndXT \$1 [\$2];
-#X msg 638 631 linkEnd1XT \$1 [\$2];
-#X msg 638 651 linkEnd2XT \$1 [\$2];
-#X msg 639 673 linkEndYT \$1 [\$2];
-#X msg 641 693 linkEnd1YT \$1 [\$2];
-#X msg 640 713 linkEnd2YT \$1 [\$2];
-#X msg 9 271 linkPosL [\$1);
-#X text 202 130 linkPos symbolId number centerX centerY;
-#X text 172 189 linkEnd symbolId number posX1 posY1 posX2 posY2;
-#X text 795 583 table is posX1 posY1 posX2 posY2 ....;
+#X text 15 69 generic :;
+#X msg 15 377 linkLengthNormL [\$1];
+#X msg 18 567 linkLengthSpeedNormL [\$1];
+#X msg 575 383 linkLengthSpeedNormT \$1 [\$2];
+#X msg 577 429 linkEndT \$1 [\$2];
+#X msg 589 449 linkEnd1T \$1 [\$2];
+#X msg 589 469 linkEnd2T \$1 [\$2];
+#X msg 589 489 linkEndXT \$1 [\$2];
+#X msg 589 508 linkEnd1XT \$1 [\$2];
+#X msg 589 528 linkEnd2XT \$1 [\$2];
+#X msg 589 548 linkEndYT \$1 [\$2];
+#X msg 589 568 linkEnd1YT \$1 [\$2];
+#X msg 589 588 linkEnd2YT \$1 [\$2];
+#X msg 14 231 linkPosL [\$1);
+#X text 212 105 linkPos symbolId number centerX centerY;
+#X text 213 150 linkEnd symbolId number posX1 posY1 posX2 posY2;
+#X text 786 456 table is posX1 posY1 posX2 posY2 ....;
 #X text 17 26 The attributes messages ask the object to output some
 of its internal parameters. They can be output as lists for positions
 and forces of links;
-#X text 173 113 output a message for every link :;
-#X text 173 173 output a message for every link :;
-#X text 794 35 Output all links center positions on a table [\$1];
-#X text 794 67 Output all links center positions x or y on a table
+#X text 183 90 output a message for every link :;
+#X text 184 134 output a message for every link :;
+#X text 764 35 Output all links center positions on a table [\$1];
+#X text 764 56 Output all links center positions x or y on a table
 [\$1];
-#X text 793 105 Output all norm of links center positions vector (sqrt(x*x+y*y))
+#X text 764 94 Output all norm of links center positions vector (sqrt(x*x+y*y))
 on a table [\$1];
-#X text 797 154 Output all link lengths in a list on outlet No 1;
-#X text 796 181 Output all link lengths in x or y in a list on outlet
+#X text 767 133 Output all link lengths in a list on outlet No 1;
+#X text 766 152 Output all link lengths in x or y in a list on outlet
 No 1;
-#X text 799 218 Output all norm of link length vectors (sqrt(x*x+y*y))
+#X text 769 189 Output all norm of link length vectors (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 182 674 Output all norm of link lenght deformation speed vectors
+#X text 191 568 Output all norm of link lenght deformation speed vectors
 (sqrt(x*x+y*y)) in a list on outlet No 1;
-#X text 182 647 Output all link lenghts deformation speed in x or y
+#X text 190 534 Output all link lenghts deformation speed in x or y
 in a list on outlet No 1;
-#X text 182 611 Output all links lenghts deformation speed in a list
+#X text 190 510 Output all links lenghts deformation speed in a list
 on outlet No 1;
-#X text 192 567 Output all norm of link center speed vectors (sqrt(x*x+y*y))
+#X text 189 472 Output all norm of link center speed vectors (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 173 531 Output all link center speeds in x or y in a list on
+#X text 188 431 Output all link center speeds in x or y in a list on
 outlet No 1;
-#X text 169 501 Output all link center speeds in a list on outlet No
+#X text 189 414 Output all link center speeds in a list on outlet No
 1;
-#X text 179 446 Output all norm of link lenght vectors (sqrt(x*x+y*y))
+#X text 189 377 Output all norm of link lenght vectors (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 170 418 Output all link lenghts in x or y in a list on outlet
+#X text 188 342 Output all link lenghts in x or y in a list on outlet
 No 1;
-#X text 168 385 Output all link lenghts in a list on outlet No 1;
-#X text 168 332 Output all norm of position vectors (sqrt(x*x+y*y))
+#X text 188 325 Output all link lenghts in a list on outlet No 1;
+#X text 188 292 Output all norm of position vectors (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 168 272 Output all link center positions in a list on outlet
+#X text 188 232 Output all link center positions in a list on outlet
 No 1;
-#X text 799 294 Output all link center speeds in x or y in a list on
+#X text 769 250 Output all link center speeds in x or y in a list on
 outlet No 1;
-#X text 795 264 Output all link center speeds in a list on outlet No
+#X text 767 227 Output all link center speeds in a list on outlet No
 1;
-#X text 815 326 Output all norm of link center speed vectors (sqrt(x*x+y*y))
+#X text 769 285 Output all norm of link center speed vectors (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 808 377 Output all link lenght deformation speeds in a list
+#X text 772 326 Output all link lenght deformation speeds in a list
 on outlet No 1;
-#X text 808 413 Output all link lenght deformation speeds in x or y
+#X text 772 352 Output all link lenght deformation speeds in x or y
 in a list on outlet No 1;
-#X text 838 441 Output all norm of link lenght deformation speed vectors
+#X text 772 385 Output all norm of link lenght deformation speed vectors
 (sqrt(x*x+y*y)) in a list on outlet No 1;
-#X text 790 551 Put position of the 2 link ends on a table [\$1] \,
+#X text 776 429 Put position of the 2 link ends on a table [\$1] \,
 filter on link id is possible;
+#X text 213 173 \$1 (optional): Link Id;
 #X restore 12 466 pd links_attributes ___;
-#N canvas 280 143 935 531 creation____________ 0;
+#N canvas 278 149 935 531 creation____________ 0;
 #X obj 5 75 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -594,296 +574,297 @@ the model. Messages create links and masses or destroy them.;
 links. They work as general links but their calculation is made following
 a vector.;
 #X restore 12 407 pd creation____________;
-#N canvas 98 50 1133 700 dynamic 0;
-#X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
+#N canvas 96 88 1057 814 dynamic 0;
+#X obj -35 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 10 85 cnv 15 150 750 empty empty empty 20 12 0 14 -233017 -66577
+#X obj -30 85 cnv 15 150 670 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 4 62 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj -36 62 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 574 86 cnv 15 130 740 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 434 86 cnv 15 130 670 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 567 62 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 427 62 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 7 62 Masses :;
-#X text 570 62 Links :;
-#X text 7 2 DYNAMIC SETTINGS Messages;
-#X msg 30 183 forceX \$1 \$2;
-#X text 190 114 \$1 : Id (symbol) or No;
-#X text 193 185 \$1 : Id (symbol) or No;
-#X msg 29 311 setMobile \$1;
-#X msg 29 332 setFixed \$1;
-#X text 190 96 Set position of fixed mass(es);
-#X text 177 248 Set minimimum and maximum position of all masses;
-#X text 188 311 Set mass to mobile or fixed;
-#X msg 593 150 setD \$1 \$2;
-#X text 748 136 \$2 : New value;
-#X msg 593 99 setK \$1 \$2;
-#X text 748 192 \$2 : New value;
-#X text 748 245 \$2 : New value;
-#X text 742 100 Set rigidity of link(s);
-#X text 742 156 Set damping of link(s);
-#X msg 593 205 setL \$1 \$2;
-#X text 742 209 Set initial lenght of link(s);
-#X text 748 118 \$1 : Id (symbol) or No;
-#X text 748 174 \$1 : Id (symbol) or No;
-#X text 748 227 \$1 : Id (symbol) or No;
-#X text 191 328 \$1 : Id (symbol) or No;
-#X msg 29 358 grabMass \$1 \$2 \$3;
-#X msg 30 204 forceY \$1 \$2;
-#X text 191 445 \$2 : New Id;
-#X msg 30 413 setMassId \$1 \$2;
-#X text 182 412 Change the Id of a mass;
-#X text 192 428 \$1 : mass (number or Id);
-#X msg 23 530 setSpeed \$1 \$2;
-#X text 186 482 \$1 : Id (symbol) or No;
-#X text 183 465 set force on mass(es);
-#X text 185 549 \$1 : Id (symbol) or No;
-#X text 182 532 set speed of a mass(es);
-#X text 184 610 \$1 : Id (symbol) or No;
-#X text 181 593 add pos of a mass(es);
-#X text 183 654 grab a mass \, and move it;
-#X text 196 388 \$3 : grab or not (0 or 1);
-#X msg 24 462 setForce \$1 \$2 \$3;
-#X text 186 500 \$2 / \$3 : Value;
-#X msg 24 482 setForceX \$1 \$2;
-#X msg 24 501 setForceY \$1 \$2;
-#X text 190 132 \$2 / \$3 : Value;
-#X msg 30 163 force \$1 \$2 \$3;
-#X text 191 203 \$2 / \$3 : Value;
-#X text 180 264 \$1 / \$2 : Value;
-#X msg 23 549 setSpeedX \$1 \$2;
-#X msg 23 568 setSpeedY \$1 \$2;
-#X text 185 566 \$2 / \$3 : Value;
-#X text 185 628 \$2 / \$3 : Value;
-#X msg 24 593 addPos \$1 \$2 \$3;
-#X msg 588 346 setLinkId \$1 \$2;
-#X text 742 347 Change the Id of a link;
-#X text 746 381 \$2 : New Id;
-#X msg 586 406 setLKTab \$1 \$2;
-#X text 745 406 change the table (K) size of a non linear link;
-#X text 747 443 \$2 : New KL;
-#X msg 586 468 setLDTab \$1 \$2;
-#X text 745 468 change the table (D) size of a non linear link;
-#X text 747 505 \$2 : New DL;
-#X msg 31 225 min \$1 \$2;
-#X msg 31 245 max \$1 \$2;
-#X msg 24 612 addPosX \$1 \$2;
-#X msg 24 632 addPosY \$1 \$2;
-#X text 186 769 \$2 : damping;
-#X text 185 754 \$1 : Id (symbol) or No;
-#X msg 22 738 setDEnvOffset \$1 \$2;
-#X text 174 738 Change environement damping offset;
-#X text 173 683 Change environement damping;
-#X msg 23 683 setDEnv \$1 \$2;
-#X text 185 714 \$2 : damping;
-#X text 184 699 \$1 : Id (symbol) or No;
-#X msg 31 265 minX \$1;
-#X msg 90 265 maxX \$1;
-#X msg 31 287 minY \$1;
-#X msg 90 287 maxY \$1;
-#X msg 31 96 setPos \$1 \$2 \$3;
-#X msg 31 116 setPosX \$1 \$2;
-#X msg 31 137 setPosY \$1 \$2;
-#X text 721 272 Set initial lenght of link(s);
-#X text 727 290 \$1 : Id (symbol) or No;
-#X msg 581 271 setLCurrent \$1 [\$2];
-#X text 727 308 \$2 : mix between link size (0) and curent length (1)
+#X text -23 62 Masses :;
+#X text 440 62 Links :;
+#X text -23 2 DYNAMIC SETTINGS Messages;
+#X msg 0 183 forceX \$1 \$2;
+#X text 150 114 \$1 : Id (symbol) or No;
+#X text 153 184 \$1 : Id (symbol) or No;
+#X msg -20 311 setMobile \$1;
+#X msg -20 332 setFixed \$1;
+#X text 126 94 Set position of fixed mass(es);
+#X text 131 227 Set minimimum and maximum position of all masses;
+#X text 133 311 Set mass to mobile or fixed;
+#X msg 443 150 setD \$1 \$2;
+#X text 607 134 \$2 : New value;
+#X msg 443 99 setK \$1 \$2;
+#X text 607 190 \$2 : New value;
+#X text 607 243 \$2 : New value;
+#X text 571 98 Set rigidity of link(s);
+#X text 571 154 Set damping of link(s);
+#X msg 443 205 setL \$1 \$2;
+#X text 571 207 Set initial lenght of link(s);
+#X text 607 116 \$1 : Id (symbol) or No;
+#X text 607 172 \$1 : Id (symbol) or No;
+#X text 607 225 \$1 : Id (symbol) or No;
+#X text 157 329 \$1 : Id (symbol) or No;
+#X msg -20 353 grabMass \$1 \$2 \$3;
+#X msg 0 204 forceY \$1 \$2;
+#X text 159 445 \$2 : New Id;
+#X msg -20 411 setMassId \$1 \$2;
+#X text 132 410 Change the Id of a mass;
+#X text 160 428 \$1 : mass (number or Id);
+#X msg -21 531 setSpeed \$1 \$2;
+#X text 160 487 \$1 : Id (symbol) or No;
+#X text 130 467 set force on mass(es);
+#X text 160 550 \$1 : Id (symbol) or No;
+#X text 128 531 set speed of a mass(es);
+#X text 160 610 \$1 : Id (symbol) or No;
+#X text 131 592 add pos of a mass(es);
+#X text 161 388 \$3 : grab or not (0 or 1);
+#X msg -20 467 setForce \$1 \$2 \$3;
+#X text 160 505 \$2 / \$3 : Value;
+#X msg 0 487 setForceX \$1 \$2;
+#X msg 0 506 setForceY \$1 \$2;
+#X text 150 131 \$2 / \$3 : Value;
+#X msg -20 163 force \$1 \$2 \$3;
+#X text 152 202 \$2 / \$3 : Value;
+#X text 156 241 \$1 / \$2 : Value;
+#X msg -1 550 setSpeedX \$1 \$2;
+#X msg -1 569 setSpeedY \$1 \$2;
+#X text 160 567 \$2 / \$3 : Value;
+#X text 161 628 \$2 / \$3 : Value;
+#X msg -20 592 addPos \$1 \$2 \$3;
+#X msg 443 346 setLinkId \$1 \$2;
+#X text 572 347 Change the Id of a link;
+#X text 607 379 \$2 : New Id;
+#X msg 443 406 setLKTab \$1 \$2;
+#X text 571 406 change the table (K) size of a non linear link;
+#X text 609 443 \$2 : New KL;
+#X msg 443 468 setLDTab \$1 \$2;
+#X text 571 468 change the table (D) size of a non linear link;
+#X text 607 505 \$2 : New DL;
+#X msg -19 225 min \$1 \$2;
+#X msg -19 245 max \$1 \$2;
+#X msg 0 611 addPosX \$1 \$2;
+#X msg 0 631 addPosY \$1 \$2;
+#X text 160 748 \$2 : damping;
+#X text 159 733 \$1 : Id (symbol) or No;
+#X msg -22 717 setDEnvOffset \$1 \$2;
+#X text 129 717 Change environement damping offset;
+#X text 133 662 Change environement damping;
+#X msg -21 662 setDEnv \$1 \$2;
+#X text 160 693 \$2 : damping;
+#X text 159 678 \$1 : Id (symbol) or No;
+#X msg 1 265 minX \$1;
+#X msg 60 265 maxX \$1;
+#X msg 1 287 minY \$1;
+#X msg 60 287 maxY \$1;
+#X msg -19 96 setPos \$1 \$2 \$3;
+#X msg 1 116 setPosX \$1 \$2;
+#X msg 1 137 setPosY \$1 \$2;
+#X text 575 272 Set initial lenght of link(s);
+#X text 607 290 \$1 : Id (symbol) or No;
+#X msg 442 271 setLCurrent \$1 [\$2];
+#X text 607 308 \$2 : mix between link size (0) and curent length (1)
 ;
-#X msg 586 576 setActive \$1 \$2;
-#X msg 585 532 setInactive \$1 \$2;
-#X text 745 576 compute the link at each bang;
-#X msg 586 620 setOverdamp \$1 \$2;
-#X text 741 677 \$2 : overdamp value;
-#X msg 588 705 setEnd \$1 \$2 \$3;
-#X text 742 740 \$2 : mass number for end 1;
-#X text 742 707 Change the masses a link is connected to;
-#X text 741 756 \$3 : mass number for end 2;
-#X msg 600 728 setEnd1 \$1 \$2;
-#X msg 600 750 setEnd2 \$1 \$2;
-#X text 181 352 Grab nearest mass and move it;
-#X text 196 372 \$1 \$2 : position;
-#X text 10 25 Dynamic settings messages allow the user to redefine
+#X msg 444 576 setActive \$1 \$2;
+#X msg 443 532 setInactive \$1 \$2;
+#X text 574 576 compute the link at each bang;
+#X msg 444 620 setOverdamp \$1 \$2;
+#X text 609 664 \$2 : overdamp value;
+#X msg 446 685 setEnd \$1 \$2 \$3;
+#X text 603 720 \$2 : mass number for end 1;
+#X text 571 686 Change the masses a link is connected to;
+#X text 603 736 \$3 : mass number for end 2;
+#X msg 460 708 setEnd1 \$1 \$2;
+#X msg 460 730 setEnd2 \$1 \$2;
+#X text 131 352 Grab nearest mass and move it;
+#X text 161 372 \$1 \$2 : position;
+#X text -30 25 Dynamic settings messages allow the user to redefine
 internal parameters of links and masses.;
-#X text 191 168 Add force to mass(es);
-#X text 722 326 if no \$2 arg is provided \, then L is set to current
+#X text 131 163 Add force to mass(es);
+#X text 632 326 if no \$2 arg is provided \, then L is set to current
 length;
-#X text 744 532 do not compute a link anymore;
-#X text 740 621 Change the overdamp of a link. i.e a strange parameter
+#X text 574 532 do not compute a link anymore;
+#X text 570 621 Change the overdamp of a link. i.e a strange parameter
 that amplifies forces opposed to movment. Use at your own risk.;
-#X text 580 778 if only 1 argument is provided \, message generally
+#X text 485 771 if only 1 argument is provided \, message generally
 uses this argument as the value applied to all masses (or links);
-#X text 741 363 \$1 : link (Id (symbol) or No);
-#X text 746 426 \$1 : link (Id (symbol) or No);
-#X text 747 488 \$1 : link (Id (symbol) or No);
-#X text 745 552 \$1 : link (Id (symbol) or No);
-#X text 746 596 \$1 : link (Id (symbol) or No);
-#X text 741 663 \$1 : link (Id (symbol) or No);
-#X text 743 724 \$1 : link (Id (symbol) or No);
+#X text 607 363 \$1 : link (Id (symbol) or No);
+#X text 608 426 \$1 : link (Id (symbol) or No);
+#X text 607 488 \$1 : link (Id (symbol) or No);
+#X text 608 552 \$1 : link (Id (symbol) or No);
+#X text 608 596 \$1 : link (Id (symbol) or No);
+#X text 609 650 \$1 : link (Id (symbol) or No);
+#X text 603 704 \$1 : link (Id (symbol) or No);
 #X restore 12 427 pd dynamic settings ___;
 #X text 112 658 54_pmpd2dtest.pd;
 #X obj 325 272 print;
-#N canvas 16 50 1221 700 masses_attributes___ 0;
-#X obj 5 75 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#N canvas 12 89 1153 632 masses_attributes___ 0;
+#X obj 5 75 cnv 15 500 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 5 3 cnv 15 500 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 10 378 cnv 15 150 110 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 10 298 cnv 15 150 300 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 4 357 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 277 cnv 15 500 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 7 74 General :;
-#X text 7 2 ATTRIBUTES Messages;
-#X text 7 357 Lists :;
-#X text 170 422 Output all masses x or y in a list on outlet No 1;
-#X obj 11 492 cnv 15 150 110 empty empty empty 20 12 0 14 -233017 -66577
+#X text 17 74 General :;
+#X text 27 2 ATTRIBUTES Messages;
+#X text 17 276 Lists :;
+#X text 169 326 Output all masses x or y in a list on outlet No 1;
+#X obj 541 26 cnv 15 170 330 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 11 605 cnv 15 150 110 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 541 5 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 611 26 cnv 15 150 110 empty empty empty 20 12 0 14 -233017 -66577
+#X text 342 597 \$1 (optional): Masses Id;
+#X text 765 354 \$2 (optional): Masses Id;
+#X text 764 341 \$1 : table name;
+#X obj 10 97 cnv 15 150 150 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 605 5 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
-0;
-#X obj 612 140 cnv 15 150 110 empty empty empty 20 12 0 14 -233017
--66577 0;
-#X obj 612 253 cnv 15 150 110 empty empty empty 20 12 0 14 -233017
--66577 0;
-#X text 174 718 \$1 (optional): Masses Id;
-#X text 815 376 \$2 (optional): Masses Id;
-#X text 814 363 \$1 : table name;
-#X text 608 5 tables :;
-#X obj 10 157 cnv 15 150 150 empty empty empty 20 12 0 14 -233017 -66577
-0;
-#X msg 14 165 massPos [\$1];
+#X msg 14 105 massPos [\$1];
+#X text 187 106 \$1 : id float or symbol of masses (nothing for all)
+;
+#X text 218 143 massPos symbolId number posX posY posZ;
 #X text 187 166 \$1 : id float or symbol of masses (nothing for all)
 ;
-#X text 218 203 massPos symbolId number posX posY posZ;
-#X text 187 226 \$1 : id float or symbol of masses (nothing for all)
+#X text 218 203 massPos symbolId number speedX speedY speedZ;
+#X text 187 225 \$1 : id float or symbol of masses (nothing for all)
 ;
-#X text 218 263 massPos symbolId number speedX speedY speedZ;
-#X text 187 285 \$1 : id float or symbol of masses (nothing for all)
-;
-#X msg 14 284 massForce [\$1];
-#X text 218 318 massPos symbolId number forceX forceY forceZ;
-#X msg 14 225 massSpeed [\$1];
-#X msg 13 383 massPosL [\$1];
-#X msg 13 402 massPosXL [\$1];
-#X msg 13 421 massPosYL [\$1];
-#X msg 13 439 massesPosNormL [\$1];
-#X msg 14 498 massSpeedL [\$1];
-#X msg 15 517 massSpeedXL [\$1];
-#X msg 14 535 massSpeedYL [\$1];
-#X msg 15 554 massSpeedsNormL [\$1];
-#X msg 18 611 massForceL [\$1];
-#X msg 16 630 massForceXL [\$1];
-#X msg 16 649 massForceYL [\$1];
-#X msg 15 667 massForceNormL [\$1];
-#X msg 619 38 massPosT \$1 [\$2];
-#X msg 619 57 massPosXT \$1 [\$2];
-#X msg 619 76 massPosYT \$1 [\$2];
-#X msg 618 94 massPosNormT \$1 [\$2];
-#X msg 620 152 massSpeedsT \$1 [\$2];
-#X msg 620 171 massSpeedsXT \$1 [\$2];
-#X msg 620 190 massSpeedsYT \$1 [\$2];
-#X msg 620 208 massSpeedsNormT \$1 [\$2];
-#X msg 621 259 massForcesT \$1 [\$2];
-#X msg 620 278 massForcesXT \$1 [\$2];
-#X msg 620 297 massForcesYT \$1 [\$2];
-#X msg 620 315 massSpeedsNormT \$1 [\$2];
-#X obj 611 561 cnv 15 150 110 empty empty empty 20 12 0 14 -233017
+#X msg 14 224 massForce [\$1];
+#X text 218 258 massPos symbolId number forceX forceY forceZ;
+#X msg 14 165 massSpeed [\$1];
+#X msg 13 303 massPosL [\$1];
+#X msg 13 322 massPosXL [\$1];
+#X msg 33 341 massPosYL [\$1];
+#X msg 13 359 massesPosNormL [\$1];
+#X msg 14 398 massSpeedL [\$1];
+#X msg 14 417 massSpeedXL [\$1];
+#X msg 34 435 massSpeedYL [\$1];
+#X msg 15 454 massSpeedsNormL [\$1];
+#X msg 18 501 massForceL [\$1];
+#X msg 18 520 massForceXL [\$1];
+#X msg 38 539 massForceYL [\$1];
+#X msg 18 557 massForceNormL [\$1];
+#X msg 549 38 massPosT \$1 [\$2];
+#X msg 549 57 massPosXT \$1 [\$2];
+#X msg 569 76 massPosYT \$1 [\$2];
+#X msg 548 94 massPosNormT \$1 [\$2];
+#X msg 550 152 massSpeedsT \$1 [\$2];
+#X msg 550 171 massSpeedsXT \$1 [\$2];
+#X msg 570 190 massSpeedsYT \$1 [\$2];
+#X msg 550 208 massSpeedsNormT \$1 [\$2];
+#X msg 551 259 massForcesT \$1 [\$2];
+#X msg 550 278 massForcesXT \$1 [\$2];
+#X msg 550 297 massForcesYT \$1 [\$2];
+#X msg 550 315 massSpeedsNormT \$1 [\$2];
+#X obj 545 491 cnv 15 170 110 empty empty empty 20 12 0 14 -233017
 -66577 0;
-#X obj 609 539 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 543 469 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 790 568 output the closest mass;
-#X text 612 539 others :;
-#X text 789 582 \$1 : x -position;
-#X text 789 597 \$2 : y -position;
-#X msg 618 647 massDistance [\$1 [\$2]];
-#X text 796 662 distance mass1 mass2 distanceX \, distanceY \, distanceZ
+#X text 725 498 output the closest mass;
+#X text 546 469 others :;
+#X msg 555 557 massDistance [\$1 [\$2]];
+#X text 764 572 distance mass1 mass2 distanceX \, distanceY \, distanceZ
 \, distance;
-#X obj 608 410 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 542 380 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 768 464 \$1 : table name;
-#X text 767 483 \$2 : masses name;
-#X obj 609 431 cnv 15 150 80 empty empty empty 20 12 0 14 -233017 -66577
+#X text 764 428 \$1 : table name;
+#X text 763 444 \$2 : masses name;
+#X obj 543 401 cnv 15 170 50 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X msg 617 438 forceXT \$1 [\$2];
-#X msg 618 458 forceYT \$1 [\$2];
-#X msg 622 570 closestMass \$1 \$2 \$3 [\$4];
-#X text 611 410 Table in:;
-#X text 789 614 \$3 : none or Id;
+#X msg 551 408 forceXT \$1 [\$2];
+#X msg 571 428 forceYT \$1 [\$2];
+#X msg 551 500 closestMass \$1 \$2 \$3 [\$4];
+#X text 545 380 Table in:;
+#X text 764 541 \$3 : none or Id;
 #X text 15 30 The attributes messages ask the object to output some
 of its internal parameters. They can be output as lists for positions
 and forces of masses.;
+#X text 188 126 output a message for every mass :;
 #X text 188 186 output a message for every mass :;
-#X text 188 246 output a message for every mass :;
-#X text 188 301 output a message for every mass :;
-#X text 172 619 Output all forces applied to masses in a list on outlet
+#X text 188 241 output a message for every mass :;
+#X text 172 499 Output all forces applied to masses in a list on outlet
 No 1;
-#X text 799 263 Output all forces applied to masses on a table;
-#X text 766 441 apply a force to masses. Force comes from a table;
-#X text 781 648 output a series of messages :;
-#X text 170 390 Output all mass positions in a list on outlet No 1
+#X text 724 263 Output all forces applied to masses on a table;
+#X text 730 406 apply a force to masses. Force comes from a table;
+#X text 729 558 output a series of messages :;
+#X text 170 310 Output all mass positions in a list on outlet No 1
 ;
-#X text 171 451 Output all norm of position vectors (sqrt(x*x+y*y))
+#X text 168 361 Output all norm of position vectors (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 171 504 Output all mass speeds in a list on outlet No 1;
-#X text 172 536 Output all mass speeds in x or y in a list on outlet
+#X text 171 399 Output all mass speeds in a list on outlet No 1;
+#X text 171 418 Output all mass speeds in x or y in a list on outlet
 No 1;
-#X text 171 564 Output all norm of speed vectors (sqrt(x*x+y*y)) in
+#X text 171 456 Output all norm of speed vectors (sqrt(x*x+y*y)) in
 a list on outlet No 1;
-#X text 175 649 Output all mass forces in x or y in a list on outlet
+#X text 172 519 Output all mass forces in x or y in a list on outlet
 No 1;
-#X text 171 677 Output all norm of force vectors (sqrt(x*x+y*y)) in
+#X text 171 557 Output all norm of force vectors (sqrt(x*x+y*y)) in
 a list on outlet No 1;
-#X text 792 38 Output all mass positions on a table (\$1);
-#X text 794 67 Output all mass x or y on a table (\$1);
-#X text 794 95 Output all norm of position vectors (sqrt(x*x+y*y))
+#X text 719 38 Output all mass positions on a table (\$1);
+#X text 719 57 Output all mass x or y on a table (\$1);
+#X text 721 94 Output all norm of position vectors (sqrt(x*x+y*y))
 on a table (\$1);
-#X text 795 149 Output all mass speeds on a table;
-#X text 796 181 Output all mass speeds in x or y on a table;
-#X text 801 209 Output all norm of speed vectors (sqrt(x*x+y*y)) on
+#X text 722 149 Output all mass speeds on a table;
+#X text 723 172 Output all mass speeds in x or y on a table;
+#X text 724 209 Output all norm of speed vectors (sqrt(x*x+y*y)) on
 a table;
-#X text 798 294 Output all mass forces in x or y on a table;
-#X text 804 322 Output all norm of force vectors (sqrt(x*x+y*y)) on
+#X text 724 281 Output all mass forces in x or y on a table;
+#X text 724 315 Output all norm of force vectors (sqrt(x*x+y*y)) on
 a table;
+#X text 544 5 tables out :;
+#X text 764 512 \$1 : x position;
+#X text 764 527 \$2 : y position;
 #X restore 12 447 pd masses_attributes___;
-#N canvas 308 76 770 592 tests 0;
-#X msg 20 26 testMass testId filterId filter_parametter ...;
-#X text 265 52 testMass testId mass_number;
-#X text 344 125 testMassL filterID 0/1 0/1 0/1 ...;
-#X msg 22 154 testMassT tab_name filterId filter_parametter ...;
-#X msg 22 93 testMassL testId filterId filter_parametter ....;
-#X text 38 191 masses test can be :;
-#X msg 19 344 testLink testId filterId filter_parametter ...;
-#X msg 21 411 testLinkL testId filterId filter_parametter ....;
-#X msg 21 472 testLinkT tab_name filterId filter_parametter ...;
-#X text 264 370 testLink testId mass_number;
-#X text 342 442 testLinkL filterID 0/1 0/1 0/1 ...;
-#X text 35 509 links test can be :;
-#X text 180 191 Id \$1 / posXSup \$1 / posXInf \$1 / posYSup \$1 /
+#N canvas 958 177 849 836 tests 0;
+#X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X text 17 2 TESTS Messages;
+#X obj 6 47 cnv 15 170 100 empty empty empty 20 12 0 14 -233017 -66577
+0;
+#X obj 688 313 cnv 15 170 100 empty empty empty 20 12 0 14 -233017
+-66577 0;
+#X msg 6 50 testMass testId filterId filter_parametter ...;
+#X text 337 69 testMass testId mass_number;
+#X text 343 166 testMassL filterID 0/1 0/1 0/1 ...;
+#X msg 5 205 testMassT tab_name filterId filter_parametter ...;
+#X msg 4 129 testMassL testId filterId filter_parametter ....;
+#X text 72 252 masses test can be :;
+#X msg 93 457 testLink testId filterId filter_parametter ...;
+#X msg 95 524 testLinkL testId filterId filter_parametter ....;
+#X msg 95 585 testLinkT tab_name filterId filter_parametter ...;
+#X text 338 483 testLink testId mass_number;
+#X text 416 555 testLinkL filterID 0/1 0/1 0/1 ...;
+#X text 109 622 links test can be :;
+#X text 206 250 Id \$1 / posXSup \$1 / posXInf \$1 / posYSup \$1 /
 posYInf \$1 / speedXSup \$1 / speedXInf \$1 / speedYSup \$1 / speedYInf
 \$1 / speedSup \$1 / speedInf \$1 / distanceCircleSup \$1 \$2 \$3 \$4
 (centerX \, centerY \, distance) / distanceCircleInf \$1 \$2 \$3 \$4
 (centerX \, centerY \, distance) / massSup \$1 / massInf \$1 / forceSup
 \$1 / forceInf \$1 / forceXSup \$1 / forceXInf \$1 / forceYSup \$1
 / forceYInf \$1;
-#X text 177 509 Id \$1 / forceSup \$1 / forceInf \$1 / forceXSup \$1
+#X text 251 622 Id \$1 / forceSup \$1 / forceInf \$1 / forceXSup \$1
 / forceXInf \$1 / forceYSup \$1 / forceYInf \$1 / lengthSup \$1 / lengthInf
 \$1 / lengthXSup \$1 / lengthXInf \$1 / lengthYSup \$1 / lengthYInf
 \$1 / connectedTo \$1 (symbol or float);
-#X text 315 29 output a message for every mass that passes all the
+#X text 299 47 output a message for every mass that passes all the
 tests:;
-#X text 327 92 output a list with 0 or 1 for every mass depending on
-whether it passes all tests or not;
-#X text 341 153 Put in a table 0 or 1 depending on whether masses pass
-all tests;
-#X text 314 347 output a message for every link that passes all the
-tests:;
-#X text 326 410 output a list with 0 or 1 for every link depending
+#X text 318 127 output a list with 0 or 1 for every mass depending
 on whether it passes all tests or not;
-#X text 340 471 Put in a table 0 or 1 depending on whether links pass
+#X text 323 209 Put in a table 0 or 1 depending on whether masses pass
 all tests;
+#X text 388 460 output a message for every link that passes all the
+tests:;
+#X text 400 523 output a list with 0 or 1 for every link depending
+on whether it passes all tests or not;
+#X text 414 584 Put in a table 0 or 1 depending on whether links pass
+all tests;
+#X obj 4 24 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+0;
+#X text 17 24 generic :;
 #X restore 12 486 pd tests ______________;
 #N canvas 93 109 547 405 interactors 0;
 #X text 27 71 \$2 \$3 : center of the circle;
