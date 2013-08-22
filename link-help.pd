@@ -1,5 +1,5 @@
-#N canvas 331 134 656 710 10;
-#N canvas 85 7 622 478 physical 0;
+#N canvas 346 134 656 710 10;
+#N canvas 88 77 622 478 physical 0;
 #X text 23 268 Generated force is the sum of 3 differents forces :
 ;
 #X text 102 142 eL[t] = L[t] - L[0];
@@ -23,66 +23,44 @@ positions of Masses (M1 \, M2) :;
 #X restore 239 679 pd physical equations;
 #X text 217 593 value range :;
 #X text 260 13 link between 2 masses;
-#X text 88 562 1 : force to apply to mass 1 (float);
+#X text 71 562 1 : force to apply to mass 1 (float);
 #X text 89 530 2 : force to apply to mass 2 (float);
-#X text 257 381 if the size of the link is < Lmin then force of the
-link will be null;
-#X text 263 432 if the size of the link is > Lmax then force of the
-link will be null;
-#X text 242 622 K \, D \, D2 are positive. Negative values make strange
-(non physical) things. High values can cause numerical instability.
-;
 #X obj 25 501 link;
-#X text 127 471 2 : position of mass 2 (float);
+#X text 130 471 2 : position of mass 2 (float);
 #X floatatom 25 562 5 0 0 0 - - -;
-#X floatatom 44 529 5 0 0 0 - - -;
-#X text 225 68 1 : name;
+#X floatatom 46 529 5 0 0 0 - - -;
 #X floatatom 93 471 5 0 0 0 - - -;
 #X msg 105 125 setL 0;
 #X msg 105 154 setK 0;
 #X msg 105 184 setD 0;
 #X msg 104 214 setD2 0;
-#X text 226 122 2 : Lenght;
-#X text 250 139 change Length of the link;
-#X text 226 153 3 : rigidity;
-#X text 249 168 change rigidity;
-#X text 230 238 change position of mass 1;
 #X msg 106 265 bang;
-#X text 228 258 compute and output forces \, according to the last
-masses positions;
 #X msg 107 291 reset;
 #X msg 109 316 resetF;
 #X msg 109 338 resetL;
 #X msg 110 366 setLmin 0;
-#X text 229 185 4 : Damping of the link deformation;
-#X text 231 214 5 : Damping of the masses speed;
+#X text 225 185 4 : Damping of the link deformation;
+#X text 225 214 5 : Damping of the masses speed;
 #X obj 105 240 0;
-#X text 227 288 reset position of masses and set speed of the link
-to zero;
-#X text 230 314 reset damping and inertial force of the link.;
-#X text 228 339 set the length of the liaison to it's curent lengh
-;
-#X text 234 363 set the minimum size of the link;
-#X text 233 416 set the maximum size of the link;
 #X msg 110 416 setLmax 10000;
 #X text 250 84 you can use it in pd to send messages / bang / etc to
 the lia. this is for simplifying connection.;
-#N canvas 292 12 556 402 Lmin 0;
+#N canvas 295 77 556 402 Lmin 0;
 #X text 23 14 Lmin and Lmax are useful for non-linear links;
-#X text 24 42 If the length of the link is < Lmin then force of the
-link will be null;
-#X text 24 86 If the length of the link is > Lmax then force of the
-link will be null;
 #X text 13 137 Case Lmin = 0 and Lmax = 10 :;
 #X text 38 163 At L = 0 \, links can break (a bit like a magnet.);
 #X text 38 183 At L = 10 \, this is a repulsive-only link useful for
 interaction between two structures.;
 #X text 12 237 Case Lmin = 10 and Lmax = very positive :;
 #X text 38 262 At L = 10 \, this is an attractive link only;
+#X text 24 42 If the length of the link is < Lmin then the force of
+the link will be null;
+#X text 24 86 If the length of the link is > Lmax then the force of
+the link will be null;
 #X text 13 304 note : D2 is damping associated with the mass but not
-the link. So it's not affected by Lmin and Lmax;
+with the link. So it's not affected by Lmin and Lmax;
 #X restore 477 456 pd Lmin Lmax exemple;
-#N canvas 0 0 231 186 name 0;
+#N canvas 6 105 231 186 name 0;
 #X obj 23 6 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1 -1
 ;
 #X obj 23 27 s lia_foo;
@@ -93,20 +71,41 @@ the link. So it's not affected by Lmin and Lmax;
 #X connect 0 0 1 0;
 #X connect 2 0 4 0;
 #X connect 5 0 3 0;
-#X restore 496 117 pd name example;
-#X text 138 33 link : get position of masses \, output forces to apply
+#X restore 509 106 pd name example;
+#X text 226 122 2 : Length;
+#X text 226 377 if the size of the link is < Lmin then the force of
+the link will be null;
+#X text 225 428 if the size of the link is > Lmax then the force of
+the link will be null;
+#X text 242 622 K \, D \, D2 are positive. Negative values produce
+strange (non physical) behaviours. High values can cause numerical
+instability.;
+#X text 226 153 3 : Rigidity;
+#X text 248 135 changes Length of the link;
+#X text 249 168 changes rigidity;
+#X text 230 236 changes position of mass 1;
+#X text 228 258 computes and outputs forces \, according to the last
+masses positions;
+#X text 227 288 resets position of masses and sets speed of the link
+to zero;
+#X text 226 313 resets damping and inertial force of the link.;
+#X text 226 339 sets the length of the link to its current length;
+#X text 227 363 sets the minimum size of the link;
+#X text 226 413 sets the maximum size of the link;
+#X text 225 68 1 : Name;
+#X text 138 37 link : get position of masses \, output forces to apply.
 ;
-#X connect 8 0 10 0;
-#X connect 8 1 11 0;
-#X connect 13 0 8 1;
-#X connect 14 0 8 0;
-#X connect 15 0 8 0;
-#X connect 16 0 8 0;
-#X connect 17 0 8 0;
-#X connect 23 0 8 0;
-#X connect 25 0 8 0;
-#X connect 26 0 8 0;
-#X connect 27 0 8 0;
-#X connect 28 0 8 0;
-#X connect 31 0 8 0;
-#X connect 37 0 8 0;
+#X connect 5 0 7 0;
+#X connect 5 1 8 0;
+#X connect 9 0 5 1;
+#X connect 10 0 5 0;
+#X connect 11 0 5 0;
+#X connect 12 0 5 0;
+#X connect 13 0 5 0;
+#X connect 14 0 5 0;
+#X connect 15 0 5 0;
+#X connect 16 0 5 0;
+#X connect 17 0 5 0;
+#X connect 18 0 5 0;
+#X connect 21 0 5 0;
+#X connect 22 0 5 0;
