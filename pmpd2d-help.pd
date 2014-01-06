@@ -1,4 +1,4 @@
-#N canvas 305 129 572 750 10;
+#N canvas 303 134 572 750 10;
 #X declare -lib Gem;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -869,7 +869,7 @@ on whether it passes all tests or not;
 #X text 346 438 Put in a table 0 or 1 depending on whether links pass
 all tests;
 #X restore 12 486 pd tests ______________;
-#N canvas 1089 488 623 367 interactors 0;
+#N canvas 1087 493 650 358 interactors 0;
 #X obj -30 -169 cnv 15 600 15 empty empty empty 20 12 0 14 -233017
 -66577 0;
 #X obj -30 -147 cnv 15 330 300 empty empty empty 20 12 0 14 -233017
@@ -896,8 +896,8 @@ all tests;
 ;
 #X text 27 60 \$2 \$3 : 1st point of the line;
 #X text -18 -170 INTERACTOR Messages;
-#X text 310 -140 add a circular interaction on masses;
-#X text 310 22 add a linear interaction on masses;
+#X text 310 -140 create a one time circular interaction on masses;
+#X text 307 21 create a one time linear interaction on masses;
 #X restore 12 505 pd interactors ________;
 #N canvas 1058 327 589 534 statistics 0;
 #X obj -126 50 cnv 15 150 170 empty empty empty 20 12 0 14 -233017

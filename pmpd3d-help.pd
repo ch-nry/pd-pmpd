@@ -1,4 +1,4 @@
-#N canvas 199 109 570 717 10;
+#N canvas 123 294 570 717 10;
 #X declare -lib Gem;
 #X obj 4 289 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -878,7 +878,7 @@ on whether it passes all tests or not;
 all tests;
 #X restore 12 457 pd tests ______________;
 #X text 158 458 To test specific parametters;
-#N canvas 405 540 627 463 interactors 0;
+#N canvas 403 545 627 463 interactors 0;
 #X obj 8 -87 cnv 15 360 450 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X msg 20 -75 iCylinder \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8 \$9 [\$10 [\$11
@@ -893,7 +893,6 @@ all tests;
 #X text 53 49 \$12 : power of the tengential force;
 #X text 53 61 \$13 : minimum radius of the interactor;
 #X text 52 73 \$14 : maximum radius of the interactor;
-#X text 54 139 \$2 \$3 \$4 : vector perpendicular to the place;
 #X text 53 153 \$5 \$6 \$7 : one point of the plane;
 #X text 53 167 \$8 : K;
 #X text 53 181 \$9 : power of the force;
@@ -916,6 +915,7 @@ all tests;
 #X text 378 -71 add a cylindrer interactor to masses;
 #X text 377 100 add a plane interactor to masses;
 #X text 375 231 add a dpherical interactor to masses;
+#X text 54 138 \$2 \$3 \$4 : vector perpendicular to the plane;
 #X restore 12 476 pd interactors ________;
 #N canvas 290 156 605 507 statistics 0;
 #X obj -61 51 cnv 15 150 170 empty empty empty 20 12 0 14 -233017 -66577
