@@ -276,7 +276,7 @@ void pmpd3d_setFixed(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].mobile = 0;
     }
-    else if ( (argc == 2) && (argv[0].a_type == A_SYMBOL ) )
+    else if ( (argc == 1) && (argv[0].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
