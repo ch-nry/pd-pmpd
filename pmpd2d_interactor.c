@@ -104,7 +104,7 @@ void pmpd2d_iLine_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float c, t_float
 {
     t_float distance, force;
 
-    distance = ( (a * x->mass[i].posX)  + (b * x->mass[i].posY) )  - c;
+    distance = (a * x->mass[i].posX)  + (b * x->mass[i].posY) + c;
 
 	if ( (distance>Rmin) && (distance<=Rmax) )
 	{
@@ -156,7 +156,9 @@ void pmpd2d_iLine(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     // line equation : aX + bY + c = 0 
 
 	K = atom_getfloatarg(5, argc, argv);
-	power = atom_getfloatarg(6, argc, argv);
+	
+	power = 1;
+	if ((argc>=7) && (argv[6].a_type == A_FLOAT)) { power = atom_getfloatarg(6, argc, argv);}
 	if (power == 0) power = 1;
 	
 	Rmin = -1000000;
