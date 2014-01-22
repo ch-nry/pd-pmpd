@@ -68,13 +68,13 @@ int test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCircleInf"))
 			{ 
 				tmp = sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv));
-				if ( tmp >= sqr(atom_getfloatarg(j+4,argc,argv)) ) { return(0); }
+				if ( tmp >= sqr(atom_getfloatarg(j+3,argc,argv)) ) { return(0); }
 				j += 5;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCircleSup"))
 			{ 
 				tmp = sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv));
-				if ( tmp < sqr(atom_getfloatarg(j+4,argc,argv)) ) { return(0); }
+				if ( tmp < sqr(atom_getfloatarg(j+3,argc,argv)) ) { return(0); }
 				j += 5;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("massSup"))
