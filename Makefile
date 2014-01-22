@@ -48,7 +48,7 @@ ALL_LIBS =
 #------------------------------------------------------------------------------#
 
 # these can be set from outside without (usually) breaking the build
-CFLAGS = -Wall -W -g -Wno-unused
+CFLAGS =  -W -g 
 LDFLAGS =
 LIBS =
 
@@ -145,16 +145,14 @@ ifeq ($(UNAME),ANDROID)
   NDK_SYSROOT=$(NDK_BASE)/platforms/android-$(NDK_PLATFORM_LEVEL)/arch-$(NDK_ABI)
   NDK_UNAME := $(shell uname -s | tr '[A-Z]' '[a-z]')
   NDK_COMPILER_VERSION=4.6
-  NDK_TOOLCHAIN=$(wildcard \
-	$(NDK_BASE)/toolchains/$(NDK_ABI)*-$(NDK_COMPILER_VERSION)/prebuilt/$(NDK_UNAME)-x86)
+  NDK_TOOLCHAIN=$(wildcard $(NDK_BASE)/toolchains/$(NDK_ABI)*-$(NDK_COMPILER_VERSION)/prebuilt/$(NDK_UNAME)-x86_64)
   CC := $(wildcard $(NDK_TOOLCHAIN)/bin/*-linux-android*-gcc) --sysroot=$(NDK_SYSROOT)
   OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
   CFLAGS += 
   LDFLAGS += -rdynamic -shared
   SHARED_LDFLAGS += -Wl,-soname,$(SHARED_LIB) -shared
   LIBS += -lc $(LIBS_android)
-  STRIP := $(wildcard $(NDK_TOOLCHAIN)/bin/$(NDK_ABI)-linux-android*-strip) \
-	--strip-unneeded -R .note -R .comment
+  STRIP := $(wildcard $(NDK_TOOLCHAIN)/bin/$(NDK_ABI)-linux-android*-strip) --strip-unneeded -R .note -R .comment
   DISTBINDIR=$(DISTDIR)-$(OS)-$(shell uname -m)
 endif
 ifeq ($(UNAME),Linux)
