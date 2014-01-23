@@ -1,4 +1,4 @@
-#N canvas 303 134 572 750 10;
+#N canvas 299 144 572 750 10;
 #X declare -lib Gem;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -235,7 +235,7 @@ links \, or manually \, by messages \, don't do anything.;
 #X text 11 602 Outlets:;
 #X text 19 657 See Also:;
 #X text 74 48 Full Name:;
-#N canvas 54 145 262 70 Related_Objects 0;
+#N canvas 52 178 262 70 Related_Objects 0;
 #X obj 3 10 cnv 15 250 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 3 30 cnv 15 250 30 empty empty empty 20 12 0 14 -233017 -66577
@@ -574,7 +574,7 @@ the model. Messages create links and masses or destroy them.;
 links. They work as general links but their calculation is made following
 a vector.;
 #X restore 12 407 pd creation____________;
-#N canvas 94 94 1057 814 dynamic 0;
+#N canvas 88 109 1057 814 dynamic 0;
 #X obj -35 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj -30 85 cnv 15 150 670 empty empty empty 20 12 0 14 -233017 -66577
@@ -597,10 +597,7 @@ a vector.;
 #X text 131 227 Set minimimum and maximum position of all masses;
 #X text 133 311 Set mass to mobile or fixed;
 #X msg 443 150 setD \$1 \$2;
-#X text 607 134 \$2 : New value;
 #X msg 443 99 setK \$1 \$2;
-#X text 607 190 \$2 : New value;
-#X text 607 243 \$2 : New value;
 #X text 571 98 Set rigidity of link(s);
 #X text 571 154 Set damping of link(s);
 #X msg 443 205 setL \$1 \$2;
@@ -611,7 +608,6 @@ a vector.;
 #X text 157 329 \$1 : Id (symbol) or No;
 #X msg -20 353 grabMass \$1 \$2 \$3;
 #X msg 0 204 forceY \$1 \$2;
-#X text 159 445 \$2 : New Id;
 #X msg -20 411 setMassId \$1 \$2;
 #X text 132 410 Change the Id of a mass;
 #X text 160 428 \$1 : mass (number or Id);
@@ -649,13 +645,11 @@ a vector.;
 #X msg -19 245 max \$1 \$2;
 #X msg 0 611 addPosX \$1 \$2;
 #X msg 0 631 addPosY \$1 \$2;
-#X text 160 748 \$2 : damping;
 #X text 159 733 \$1 : Id (symbol) or No;
 #X msg -22 717 setDEnvOffset \$1 \$2;
 #X text 129 717 Change environement damping offset;
 #X text 133 662 Change environement damping;
 #X msg -21 662 setDEnv \$1 \$2;
-#X text 160 693 \$2 : damping;
 #X text 159 678 \$1 : Id (symbol) or No;
 #X msg 1 265 minX \$1;
 #X msg 60 265 maxX \$1;
@@ -699,6 +693,12 @@ uses this argument as the value applied to all masses (or links);
 #X text 608 596 \$1 : link (Id (symbol) or No);
 #X text 609 650 \$1 : link (Id (symbol) or No);
 #X text 603 704 \$1 : link (Id (symbol) or No);
+#X text 607 134 \$2 : New value (float or table);
+#X text 607 190 \$2 : New value (float or table);
+#X text 607 243 \$2 : New value (float or table);
+#X text 160 748 \$2 : damping (float or table);
+#X text 160 693 \$2 : damping (float or table);
+#X text 159 445 \$2 : New Id;
 #X restore 12 427 pd dynamic settings ___;
 #X text 112 658 54_pmpd2dtest.pd;
 #X obj 325 272 print;
@@ -819,7 +819,7 @@ a table;
 #X text 764 512 \$1 : x position;
 #X text 764 527 \$2 : y position;
 #X restore 12 447 pd masses_attributes___;
-#N canvas 519 183 725 566 tests 0;
+#N canvas 437 480 725 566 tests 0;
 #X obj 5 3 cnv 15 700 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text 17 2 TESTS Messages;
@@ -831,13 +831,6 @@ a table;
 #X msg 15 155 testMassT tab_name filterId filter_parametter ...;
 #X msg 14 99 testMassL testId filterId filter_parametter ....;
 #X text 52 213 masses test can be :;
-#X text 196 211 Id \$1 / posXSup \$1 / posXInf \$1 / posYSup \$1 /
-posYInf \$1 / speedXSup \$1 / speedXInf \$1 / speedYSup \$1 / speedYInf
-\$1 / speedSup \$1 / speedInf \$1 / distanceCircleSup \$1 \$2 \$3 \$4
-(centerX \, centerY \, distance) / distanceCircleInf \$1 \$2 \$3 \$4
-(centerX \, centerY \, distance) / massSup \$1 / massInf \$1 / forceSup
-\$1 / forceInf \$1 / forceXSup \$1 / forceXInf \$1 / forceYSup \$1
-/ forceYInf \$1;
 #X text 339 47 output a message for every mass that passes all the
 tests:;
 #X text 344 99 output a list with 0 or 1 for every mass depending on
@@ -868,6 +861,13 @@ tests:;
 on whether it passes all tests or not;
 #X text 346 438 Put in a table 0 or 1 depending on whether links pass
 all tests;
+#X text 196 211 Id \$1 / posXSup \$1 / posXInf \$1 / posYSup \$1 /
+posYInf \$1 / speedXSup \$1 / speedXInf \$1 / speedYSup \$1 / speedYInf
+\$1 / speedSup \$1 / speedInf \$1 / distanceCircleSup \$1 \$2 \$3 (centerX
+\, centerY \, distance) / distanceCircleInf \$1 \$2 \$3 (centerX \,
+centerY \, distance) / massSup \$1 / massInf \$1 / forceSup \$1 / forceInf
+\$1 / forceXSup \$1 / forceXInf \$1 / forceYSup \$1 / forceYInf \$1
+;
 #X restore 12 486 pd tests ______________;
 #N canvas 1087 493 650 358 interactors 0;
 #X obj -30 -169 cnv 15 600 15 empty empty empty 20 12 0 14 -233017

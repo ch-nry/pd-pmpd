@@ -1,4 +1,4 @@
-#N canvas 123 294 570 717 10;
+#N canvas 1018 178 570 717 10;
 #X declare -lib Gem;
 #X obj 4 289 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -200,7 +200,7 @@ the model. Messages create links and masses or destroy them.;
 links. They work as general links except their calculation is made
 following a vector.;
 #X restore 12 377 pd creation____________;
-#N canvas 76 174 1143 866 dynamic 0;
+#N canvas 72 184 1143 866 dynamic 0;
 #X obj 5 3 cnv 15 1050 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 84 cnv 15 150 750 empty empty empty 20 12 0 14 -233017 -66577
@@ -222,9 +222,6 @@ following a vector.;
 #X text 158 94 Set position of fixed mass(es);
 #X text 170 346 Set mass to mobile or fixed;
 #X msg 530 150 setD \$1 \$2;
-#X text 681 134 \$2 : New value;
-#X text 681 190 \$2 : New value;
-#X text 683 249 \$2 : New value;
 #X text 655 98 Set rigidity of link(s);
 #X text 655 154 Set damping of link(s);
 #X msg 529 211 setL \$1 \$2;
@@ -235,7 +232,6 @@ following a vector.;
 #X text 193 362 \$1 : Id (symbol) or No;
 #X text 167 390 Grab nearest mass;
 #X msg 35 209 forceY \$1 \$2;
-#X text 193 467 \$2 : New Id;
 #X msg 14 435 setMassId \$1 \$2;
 #X text 166 436 Change the Id of a mass;
 #X text 194 452 \$1 : mass (number or Id);
@@ -282,9 +278,7 @@ following a vector.;
 #X msg 39 682 addPosY \$1 \$2;
 #X msg 40 701 addPosZ \$1 \$2;
 #X msg 19 727 setDEnv \$1 \$2;
-#X text 195 761 \$2 : damping;
 #X text 194 746 \$1 : Id (symbol) or No;
-#X text 193 819 \$2 : damping;
 #X text 192 804 \$1 : Id (symbol) or No;
 #X msg 20 772 setDEnvOffset \$1 \$2;
 #X msg 36 288 minX \$1;
@@ -308,7 +302,6 @@ a specific velocity to masses);
 #X text 650 590 compute the link at each bang;
 #X text 691 676 \$1 : link (number or Id);
 #X msg 529 634 setOverdamp \$1 \$2;
-#X text 691 690 \$2 : overdamp value;
 #X text 690 728 \$1 : link (number or Id);
 #X msg 528 709 setEnd \$1 \$2 \$3;
 #X text 690 744 \$2 : mass number for end 1;
@@ -334,6 +327,13 @@ that amplifies forces that oppose to movment. Use at your own risk.
 #X text 663 793 if only 1 argument is provided \, message generally
 uses this argument as the value applied to all masses (or links);
 #X text 166 248 Set minimimum or maximum position of all masses;
+#X text 681 134 \$2 : New value (float or table);
+#X text 681 190 \$2 : New value (float or table);
+#X text 683 249 \$2 : New value (float or table);
+#X text 691 690 \$2 : overdamp value (float or table);
+#X text 193 819 \$2 : damping (float or table);
+#X text 195 761 \$2 : damping (float or table);
+#X text 193 467 \$2 : New Id;
 #X restore 12 397 pd dynamic settings ___;
 #X text 158 397 To set the model parameters after creation.;
 #N canvas 155 259 1157 693 masses_attributes 0;

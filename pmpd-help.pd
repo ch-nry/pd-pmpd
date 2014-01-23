@@ -1,4 +1,4 @@
-#N canvas 169 129 590 764 10;
+#N canvas 165 139 590 764 10;
 #X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 709 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
@@ -186,7 +186,7 @@ on outlet No 1;
 #X text 187 652 Put position of the 2 link end on a table [\$1] \,
 filter on link Id is possible;
 #X restore 12 517 pd links_attributes ___;
-#N canvas 163 116 997 789 dynamic 0;
+#N canvas 161 121 997 789 dynamic 0;
 #X obj 5 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 10 85 cnv 15 130 650 empty empty empty 20 12 0 14 -233017 -66577
@@ -213,10 +213,7 @@ filter on link Id is possible;
 #X text 147 196 Set minimimum and maximum position of all masses;
 #X text 147 244 Set mass to mobile or fixed;
 #X msg 471 150 setD \$1 \$2;
-#X text 639 136 \$2 : New value;
 #X msg 470 99 setK \$1 \$2;
-#X text 639 192 \$2 : New value;
-#X text 639 245 \$2 : New value;
 #X text 607 100 Set rigidity of link(s);
 #X text 606 156 Set damping of link(s);
 #X msg 472 205 setL \$1 \$2;
@@ -226,7 +223,6 @@ filter on link Id is possible;
 #X text 189 261 \$1 : Id (symbol) or No;
 #X msg 21 610 setDEnv \$1;
 #X text 148 612 Change environement damping;
-#X text 184 629 \$1 : damping;
 #X msg 472 342 setLinkId \$1 \$2;
 #X text 608 343 Change the Id of a link;
 #X text 639 360 \$1 : link (number or Id);
@@ -266,7 +262,6 @@ filter on link Id is possible;
 #X msg 21 217 maxX \$1;
 #X msg 81 195 min \$1;
 #X msg 81 217 max \$1;
-#X text 183 690 \$2 : damping;
 #X text 182 675 \$1 : Id (symbol) or No;
 #X msg 19 659 setDEnvOffset \$1 \$2;
 #X text 145 659 Change environement damping offset;
@@ -284,7 +279,6 @@ filter on link Id is possible;
 #X text 603 541 compute the link at each bang;
 #X text 631 628 \$1 : link (number or Id);
 #X msg 471 585 setOverdamp \$1 \$2;
-#X text 631 642 \$2 : overdamp value;
 #X text 633 685 \$1 : link (number or Id);
 #X msg 473 666 setEnd \$1 \$2 \$3;
 #X text 632 701 \$2 : mass number for end 1;
@@ -304,8 +298,14 @@ that amplifies forces that oppose to movment. Use at your own risk.
 ;
 #X text 603 209 Set initial length of link(s);
 #X text 611 266 Set initial length of link(s);
+#X text 639 136 \$2 : New value (float or table);
+#X text 639 192 \$2 : New value (float or table);
+#X text 639 245 \$2 : New value (float or table);
+#X text 631 642 \$2 : overdamp value (float or table);
+#X text 183 690 \$2 : damping (float or table);
+#X text 184 629 \$1 : damping (float or table);
 #X restore 12 477 pd dynamic settings ___;
-#N canvas 577 175 571 697 creation____________ 0;
+#N canvas 573 185 571 697 creation____________ 0;
 #X obj 11 95 cnv 15 100 60 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 75 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -341,7 +341,6 @@ that amplifies forces that oppose to movment. Use at your own risk.
 #X text 291 461 \$5 : damping;
 #X text 10 28 Creation messages are used to define the structure of
 the model. Messages create links and masses or destroy them.;
-#X text 291 479 \$6 : Power of the rigidity distance;
 #X msg 20 549 tabLink \$1 \$2 \$3 \$4 \$5 \$6 \$7;
 #X text 292 565 \$1 : Id (symbol);
 #X text 292 565 \$1 : Id (symbol);
@@ -357,6 +356,7 @@ the model. Messages create links and masses or destroy them.;
 #X text 128 130 post current physical model topology;
 #X text 287 498 [\$7] : minimum lenght of link;
 #X text 288 515 [\$8] : maximum lenght of link;
+#X text 288 479 [\$6] : Power of the rigidity distance;
 #X restore 12 457 pd creation____________;
 #N canvas 50 82 901 640 More_Info 0;
 #X text 96 12 pmpd : mass - spring - damper model;
