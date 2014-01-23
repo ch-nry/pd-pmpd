@@ -1,7 +1,10 @@
 void pmpd_setK(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
-
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
@@ -18,12 +21,37 @@ void pmpd_setK(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
+    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_link; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+				{
+					x->link[i].K = vec[n].w_float;
+					// post("linkK %d = table %d : %f", i, n, vec[n].w_float);
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
 }
+
 
 void pmpd_setD(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
-
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
@@ -40,12 +68,36 @@ void pmpd_setD(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
+    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_link; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+				{
+					x->link[i].D = vec[n].w_float;
+					// post("linkD %d = table %d : %f", i, n, vec[n].w_float);
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
 }
 
 void pmpd_setD2(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
-
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
@@ -69,13 +121,37 @@ void pmpd_setD2(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             x->mass[i].D2 = atom_getfloatarg(0, argc, argv);
         }
     }
+    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_link; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+				{
+					x->link[i].K = vec[n].w_float;
+					// post("linkD2 %d = table %d : %f", i, n, vec[n].w_float);
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
 
 }
 
 void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
-
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
@@ -108,6 +184,27 @@ void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
+    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_link; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+				{
+					x->link[i].L = vec[n].w_float;
+					// post("linkL %d = table %d : %f", i, n, vec[n].w_float);
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
 }
 
 void pmpd_setLCurrent(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
