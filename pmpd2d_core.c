@@ -453,35 +453,70 @@ void pmpd2d_delLink_int(t_pmpd2d *x, int dellink)
 
 void pmpd2d_delLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
-	int i;
+	int i,nb_toremove;
 	if ( (argc > 0) && ( argv[0].a_type == A_FLOAT ) )
 		pmpd2d_delLink_int(x, atom_getfloatarg(0, argc, argv));
 	if ( (argc > 0) && ( argv[0].a_type == A_SYMBOL ) )
-		for (i=0; i<x->nb_link; )
+/*		for (i=0; i<x->nb_link; )
 			if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id )
 				pmpd2d_delLink_int(x, i);
 			else i++;
-
+*/
+	{
+		nb_toremove=0;
+		for (i=0; i < x->nb_link; i++)
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id )
+			{
+				nb_toremove++;
+			}
+			else			
+			{	
+				if (nb_toremove > 0)
+				{
+					x->link[i-nb_toremove]=x->link[i]; 
+				}
+			}
+		}
+		x->nb_link -= nb_toremove;
+	}
 }
 
 void pmpd2d_delMass_int(t_pmpd2d *x, int delmass)
 {
-	int i;
+	int i,nb_toremove;
 
 	if ( ( delmass < x->nb_mass ) && ( delmass >= 0) )
 	{
-		for (i=0; i < x->nb_link; ) // delete link connected to the mass to delete
+	/*	for (i=0; i < x->nb_link; ) // delete link connected to the mass to delete
 		{
 			if ( (x->link[i].mass1->num == delmass) || (x->link[i].mass2->num == delmass) )
 			pmpd2d_delLink_int(x, i);
 			else i++;
 			// post("loop %d sur %d", i, x->nb_link);
+		}*/
+		nb_toremove=0;
+		for (i=0; i < x->nb_link; i++)
+		{
+			if ( (x->link[i].mass1->num == delmass) || (x->link[i].mass2->num == delmass) )
+			{
+				nb_toremove++;
+			}
+			else			
+			{	
+				if (nb_toremove > 0)
+				{
+					x->link[i-nb_toremove]=x->link[i]; 
+				}
+			}
 		}
+		x->nb_link -= nb_toremove;
+		
 		for (i=0; i < x->nb_link; i++) // change pointer to mass that index moved
 		{
 			if (x->link[i].mass1->num > delmass )
 			{ x->link[i].mass1 = &x->mass[x->link[i].mass1->num-1]; }
-			if (x->link[i].mass2->num > delmass )
+			else if (x->link[i].mass2->num > delmass )
 			{ x->link[i].mass2 = &x->mass[x->link[i].mass2->num-1]; }
 		}
 		x->nb_mass--;
@@ -495,13 +530,64 @@ void pmpd2d_delMass_int(t_pmpd2d *x, int delmass)
 
 void pmpd2d_delMass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
-	int i, delmass;
+	int i, j, delmass, nb_toremove;
 	if ( (argc > 0) && ( argv[0].a_type == A_FLOAT ) )
 		pmpd2d_delMass_int(x, atom_getfloatarg(0, argc, argv));
 	if ( (argc > 0) && ( argv[0].a_type == A_SYMBOL ) )
+	/*
 		for (i=0; i<x->nb_mass; )
 			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id )
 				pmpd2d_delMass_int(x, i);
 			else i++;
-
+	*/
+	{
+		nb_toremove=0;
+		for (i=0; i < x->nb_link; i++) // revove link associated with this mass Id
+		{
+			if ( (x->link[i].mass1->Id == atom_getsymbolarg(0, argc, argv)) || (x->link[i].mass2->Id == atom_getsymbolarg(0, argc, argv)) )
+			{
+				nb_toremove++;
+			}
+			else			
+			{	
+				if (nb_toremove > 0)
+				{
+					x->link[i-nb_toremove]=x->link[i]; 
+				}
+			}
+		}
+		x->nb_link -= nb_toremove;
+		
+		nb_toremove=0;
+		for (i=0; i < x->nb_mass; i++) // remove mass
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id )
+			{
+				nb_toremove++;
+				// post("remove mass %d", i);
+			}
+			else			
+			{	
+				if (nb_toremove > 0)
+				{
+					x->mass[i-nb_toremove]=x->mass[i]; 
+					x->mass[i-nb_toremove].num = i-nb_toremove;
+					for (j=0; j < x->nb_link; j++) // for every link replace mass with the new pointer
+					{
+						if (x->link[j].mass1->num == i )
+						{ 
+							// post("mass %d : relocate link %d to mass %d",i, j, i-nb_toremove);
+							x->link[j].mass1 = &x->mass[i-nb_toremove]; 
+						}
+						else if (x->link[j].mass2->num == i )
+						{ 
+							// post("mass %d : relocate link2 %d to mass %d",i, j, i-nb_toremove);
+							x->link[j].mass2 = &x->mass[i-nb_toremove];				
+						}
+					}
+				}
+			}
+		}
+		x->nb_mass -= nb_toremove;
+	}
 }
