@@ -61,6 +61,8 @@ void pmpd2d_setup(void)
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_link,            gensym("link"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_tLink,           gensym("tLink"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_tabLink,         gensym("tabLink"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_delLink,         gensym("delLink"), A_GIMME, 0);    
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_delMass,         gensym("delMass"), A_GIMME, 0);    
 
 /*    
  pmpd2d_set

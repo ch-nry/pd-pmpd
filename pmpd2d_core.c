@@ -315,14 +315,13 @@ void pmpd2d_tLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     t_float Lmax =  1000000;
     if (argc > 9) Lmax = atom_getfloatarg(9, argc, argv);
 
-    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    if ( (argc > 6) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         pmpd2d_create_link(x, Id, mass1, mass2, K, D, Pow, Lmin, Lmax, 1);
         x->link[x->nb_link-1].VX = vecteurX;
         x->link[x->nb_link-1].VY = vecteurY;
     }
-    else
-    if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
+    else if ( (argc > 6) && ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -334,8 +333,7 @@ void pmpd2d_tLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    else
-    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
+    else if ( (argc > 6) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -347,8 +345,7 @@ void pmpd2d_tLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    else
-    if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
+    else if ( (argc > 6) && ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -384,7 +381,7 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     t_float Dl = atom_getfloatarg(6, argc, argv);
     if (Dl <= 0) Dl = 1;
 
-    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
+    if ( (argc > 5) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         pmpd2d_create_link(x, Id, mass1, mass2, 1, 1, 1, 0, 1000000, 2);
         x->link[x->nb_link-1].arrayK = arrayK;
@@ -392,8 +389,7 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         x->link[x->nb_link-1].K_L = Kl;
         x->link[x->nb_link-1].D_L = Dl;    
     }
-    else
-    if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
+    else if ( (argc > 5) && ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -407,8 +403,7 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    else
-    if ( ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
+    else if ( (argc > 5) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -422,8 +417,7 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    else
-    if ( ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
+    else if ( (argc > 5) && ( argv[1].a_type == A_SYMBOL ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -444,6 +438,70 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }   
         }
     }
+}
+
+void pmpd2d_delLink_int(t_pmpd2d *x, int dellink)
+{
+	int i;
+	if ( ( dellink < x->nb_link ) && ( dellink >= 0) )
+	{
+		x->nb_link--;
+		for (i=dellink; i < x->nb_link; i++)
+		x->link[i]=x->link[i+1]; 
+	}
+}
+
+void pmpd2d_delLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	int i;
+	if ( (argc > 0) && ( argv[0].a_type == A_FLOAT ) )
+		pmpd2d_delLink_int(x, atom_getfloatarg(0, argc, argv));
+	if ( (argc > 0) && ( argv[0].a_type == A_SYMBOL ) )
+		for (i=0; i<x->nb_link; )
+			if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id )
+				pmpd2d_delLink_int(x, i);
+			else i++;
 
 }
 
+void pmpd2d_delMass_int(t_pmpd2d *x, int delmass)
+{
+	int i;
+
+	if ( ( delmass < x->nb_mass ) && ( delmass >= 0) )
+	{
+		for (i=0; i < x->nb_link; ) // delete link connected to the mass to delete
+		{
+			if ( (x->link[i].mass1->num == delmass) || (x->link[i].mass2->num == delmass) )
+			pmpd2d_delLink_int(x, i);
+			else i++;
+			// post("loop %d sur %d", i, x->nb_link);
+		}
+		for (i=0; i < x->nb_link; i++) // change pointer to mass that index moved
+		{
+			if (x->link[i].mass1->num > delmass )
+			{ x->link[i].mass1 = &x->mass[x->link[i].mass1->num-1]; }
+			if (x->link[i].mass2->num > delmass )
+			{ x->link[i].mass2 = &x->mass[x->link[i].mass2->num-1]; }
+		}
+		x->nb_mass--;
+		for (i=delmass; i < x->nb_mass; i++)
+		{
+			x->mass[i]=x->mass[i+1];
+			x->mass[i].num=i;
+		}
+	}
+}
+
+void pmpd2d_delMass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	int i, delmass;
+	if ( (argc > 0) && ( argv[0].a_type == A_FLOAT ) )
+		pmpd2d_delMass_int(x, atom_getfloatarg(0, argc, argv));
+	if ( (argc > 0) && ( argv[0].a_type == A_SYMBOL ) )
+		for (i=0; i<x->nb_mass; )
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id )
+				pmpd2d_delMass_int(x, i);
+			else i++;
+
+}

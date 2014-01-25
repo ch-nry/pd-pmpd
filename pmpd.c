@@ -59,6 +59,8 @@ void pmpd_setup(void)
     class_addmethod(pmpd_class, (t_method)pmpd_mass,            gensym("mass"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_link,            gensym("link"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_tabLink,         gensym("tabLink"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_delLink,         gensym("delLink"), A_GIMME, 0);    
+    class_addmethod(pmpd_class, (t_method)pmpd_delMass,         gensym("delMass"), A_GIMME, 0);   
 
 /*    
  pmpd_set

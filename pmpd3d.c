@@ -63,7 +63,8 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_link,            		gensym("link"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_tLink,           		gensym("tLink"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_tabLink,         		gensym("tabLink"), A_GIMME, 0);
-
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_delLink,         		gensym("delLink"), A_GIMME, 0);    
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_delMass,         		gensym("delMass"), A_GIMME, 0);   
 /*    
  pmpd3d_set
  --
