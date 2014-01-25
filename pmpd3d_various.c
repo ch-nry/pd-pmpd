@@ -1,7 +1,7 @@
 void pmpd3d_infosL(t_pmpd3d *x)
 {
 	t_int i;
-	post("list of mass");
+    post("list of %d mass", x->nb_mass);
 	post("number, Id, mobile, mass, Damping, positionX Y Z, speedX Y Z, forcesX Y Z");
 	for(i=0; i < x->nb_mass; i++)
 	{
@@ -11,7 +11,7 @@ void pmpd3d_infosL(t_pmpd3d *x)
 			x->mass[i].forceX, x->mass[i].forceY, x->mass[i].forceZ );
 	}
 
-	post("list of link");
+    post("list of %d link", x->nb_link);
 	post("number, Id, mass1, mass2, K, D, Pow, L, Lmin, Lmax");
 	for(i=0; i < x->nb_link; i++)
 	{

@@ -1,7 +1,7 @@
 void pmpd2d_infosL(t_pmpd2d *x)
 {
     int i;
-    post("list of mass");
+    post("list of %d mass",  x->nb_mass);
     post("number, Id, mobile, mass, damping, positionX Y, speedX Y, forcesX Y");
     for(i=0; i < x->nb_mass; i++)
     {
@@ -10,7 +10,7 @@ void pmpd2d_infosL(t_pmpd2d *x)
             x->mass[i].speedX, x->mass[i].speedY, x->mass[i].forceX, x->mass[i].forceY );
     }
 
-    post("list of link");
+    post("list of %d link", x->nb_link);
     post("number, Id, active, mass1, mass2, K, D, Pow, L, Lmin, Lmax");
     for(i=0; i < x->nb_link; i++)
     {
