@@ -55,7 +55,7 @@ void pmpd2d_iCircle(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 	if (!((argc>=5) && (argv[1].a_type == A_FLOAT)&& (argv[2].a_type == A_FLOAT)&& (argv[3].a_type == A_FLOAT) ))
 	{
-		post("bad argument for iCircle");
+		pd_error(x,"bad argument for iCircle");
 		return;
 	}
 	
@@ -133,7 +133,7 @@ void pmpd2d_iLine(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 	if (!((argc>=6) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) && (argv[3].a_type == A_FLOAT) && (argv[4].a_type == A_FLOAT) && (argv[5].a_type == A_FLOAT) ))
 	{
-		post("bad argument for iLine");
+		pd_error(x,"bad argument for iLine");
 		return;
 	}
 	

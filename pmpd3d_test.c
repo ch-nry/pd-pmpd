@@ -151,7 +151,7 @@ int test_3d_mass(int i, t_pmpd3d *x, int argc, t_atom *argv)
 			}
 			else
 			{
-				post("Option \"%s\" not reconized, stoping test",atom_getsymbolarg(j,argc,argv)->s_name);
+				pd_error(x,"Option \"%s\" not reconized, stoping test",atom_getsymbolarg(j,argc,argv)->s_name);
 				return(-1);
 			}
 		}
@@ -284,13 +284,13 @@ int test_3d_link(int i, t_pmpd3d *x, int argc, t_atom *argv)
 				}
 				else
 				{
-					post("bad argument for connectedTo");
+					pd_error(x,"bad argument for connectedTo");
 					j+=1;
 				}
 			}
 			else
 			{
-				post("Option \"%s\" not reconized, stoping test",atom_getsymbolarg(j,argc,argv)->s_name);
+				pd_error(x,"Option \"%s\" not reconized, stoping test",atom_getsymbolarg(j,argc,argv)->s_name);
 				return(-1);
 			}
 		}

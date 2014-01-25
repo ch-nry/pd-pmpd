@@ -62,7 +62,7 @@ void pmpd3d_iCylinder(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	
 	if (!((argc>=9) && (argv[1].a_type == A_FLOAT)&& (argv[2].a_type == A_FLOAT)&& (argv[3].a_type == A_FLOAT)&& (argv[4].a_type == A_FLOAT)&& (argv[5].a_type == A_FLOAT)&& (argv[6].a_type == A_FLOAT)&& (argv[7].a_type == A_FLOAT)&& (argv[8].a_type == A_FLOAT)))
 	{
-		post("bad argument for iCylinder");
+		pd_error(x,"bad argument for iCylinder");
 		return;
 	}
 	t_float xc, yc, zc, a, b, c, d, r, K, Kt, power, powert, tmp, Rmin, Rmax;
@@ -165,7 +165,7 @@ void pmpd3d_iPlane(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 	if (!((argc>=8) && (argv[1].a_type == A_FLOAT)&& (argv[2].a_type == A_FLOAT)&& (argv[3].a_type == A_FLOAT)&& (argv[4].a_type == A_FLOAT)&& (argv[5].a_type == A_FLOAT)&& (argv[6].a_type == A_FLOAT)&& (argv[7].a_type == A_FLOAT)))
 	{
-		post("bad argument for iPlane");
+		pd_error(x,"bad argument for iPlane");
 		return;
 	}
 	
@@ -275,7 +275,7 @@ void pmpd3d_iSphere(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 	if (!((argc>=6) && (argv[1].a_type == A_FLOAT)&& (argv[2].a_type == A_FLOAT)&& (argv[3].a_type == A_FLOAT)&& (argv[4].a_type == A_FLOAT)))
 	{
-		post("bad argument for iSphere");
+		pd_error(x,"bad argument for iSphere");
 		return;
 	}
 	
