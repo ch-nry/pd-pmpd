@@ -1,3 +1,5 @@
+
+
 void pmpd2d_iCircle_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float r, t_float K, t_float power, t_float Kt, t_float powert, t_float Rmin, t_float Rmax)
 {
 	t_float distance, X, Y, rayon, tmp;
@@ -187,4 +189,91 @@ void pmpd2d_iLine(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}	
+}
+
+// --------------------------------------------------------
+
+void pmpd2d_iTable_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max, t_float zone_y_min, t_float zone_y_max, int taille_x, int taille_y, t_word *tableX, t_word *tableY)
+{
+	t_float Xtable, Ytable, Xindex, Yindex, force1, force2, force;
+	int index;
+	 
+	if ( (x->mass[i].posX >= zone_x_min) && (x->mass[i].posX < zone_x_max) && (x->mass[i].posY >= zone_y_min) && (x->mass[i].posY < zone_y_max) )
+	{
+		Xtable = (x->mass[i].posX - zone_x_min) / (zone_x_max - zone_x_min);
+		Ytable = (x->mass[i].posY - zone_y_min) / (zone_y_max - zone_y_min);
+		Xtable *= taille_x - 1; //from [ 0 to table size - 1[
+		Ytable *= taille_y - 1; 
+		index = (int)Xtable;
+		index += (int)Ytable*taille_y;
+		Xtable = Xtable - (int)(Xtable);
+		Ytable = Ytable - (int)(Ytable);
+		force1 = (1-Xtable) * tableX[index].w_float + (Xtable) * tableX[index+1].w_float ;
+		force2 = (1-Xtable) * tableX[index+taille_y].w_float + (Xtable) * tableX[index+1+taille_y].w_float;
+		force = (1-Ytable) * force1 + Ytable * force2;
+		x->mass[i].forceX += force;
+		force1 = (1-Xtable) * tableY[index].w_float + (Xtable) * tableY[index+1].w_float ;
+		force2 = (1-Xtable) * tableY[index+taille_y].w_float + (Xtable) * tableY[index+1+taille_y].w_float;
+		force = (1-Ytable) * force1 + Ytable * force2;
+		x->mass[i].forceY += force;
+	}
+}
+
+void pmpd2d_iTable(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	// Argument : 
+	// 0 : mass to apply this interactor
+	// 1, 2 : Xmin, Xmax 
+	// 3, 4 : Ymin, Ymax physical location of the interator
+	// 5, 6 : matrix size
+	// 7, 8 : table name containing the matrix
+	
+	t_garray *a1, *a2;
+    int npoints1, npoints2;
+    t_word *vec1, *vec2;
+    
+    t_float Xmin, Xmax, Ymin, Ymax;
+    int X, Y, i;
+    
+	if (!((argc==9) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) &&
+		(argv[3].a_type == A_FLOAT) && (argv[4].a_type == A_FLOAT) && (argv[5].a_type == A_FLOAT) && 
+		(argv[6].a_type == A_FLOAT) && (argv[7].a_type == A_SYMBOL) && (argv[8].a_type == A_SYMBOL) ) )
+	{
+		pd_error(x,"bad argument for iTable");
+		return;
+	}
+
+	if (!(a1 = (t_garray *)pd_findbyclass(atom_getsymbolarg(7,argc,argv), garray_class)))
+		pd_error(x, "%s: no such array", atom_getsymbolarg(7,argc,argv)->s_name);
+	else if (!garray_getfloatwords(a1, &npoints1, &vec1))
+		pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(7,argc,argv)->s_name);
+	else if (!(a2 = (t_garray *)pd_findbyclass(atom_getsymbolarg(8,argc,argv), garray_class)))
+		pd_error(x, "%s: no such array", atom_getsymbolarg(8,argc,argv)->s_name);
+	else if (!garray_getfloatwords(a2, &npoints2, &vec2))
+		pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(8,argc,argv)->s_name);
+	else if ( ( npoints1 < atom_getfloatarg(5,argc,argv) * atom_getfloatarg(6,argc,argv) ) || ( npoints2 < atom_getfloatarg(5,argc,argv) * atom_getfloatarg(6,argc,argv) ) )
+		pd_error(x, "not enough point in tables for iTable");
+	else
+	{
+		 
+		Xmin = atom_getfloatarg(1, argc, argv);
+		Xmax = atom_getfloatarg(2, argc, argv);
+		Ymin = atom_getfloatarg(3, argc, argv);
+		Ymax = atom_getfloatarg(4, argc, argv);
+		X = atom_getfloatarg(5, argc, argv);
+		Y = atom_getfloatarg(6, argc, argv);
+		
+		if ( argv[0].a_type == A_FLOAT )
+		{
+			pmpd2d_iTable_i(x, (int)atom_getfloatarg(0,argc,argv), Xmin, Xmax, Ymin, Ymax, X, Y, vec1, vec2);
+		}
+		else if ( argv[0].a_type == A_SYMBOL )
+		{	for (i=0; i < x->nb_mass; i++)
+			{	if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					pmpd2d_iTable_i(x, i, Xmin, Xmax, Ymin, Ymax, X, Y, vec1, vec2);
+				}
+			}
+		}
+	}
 }
