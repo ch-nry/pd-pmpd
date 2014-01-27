@@ -193,7 +193,7 @@ void pmpd2d_iLine(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 // --------------------------------------------------------
 
-void pmpd2d_iTable_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max, t_float zone_y_min, t_float zone_y_max, int taille_x, int taille_y, t_float K, t_word *tableX, t_word *tableY)
+void pmpd2d_iMatrix_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max, t_float zone_y_min, t_float zone_y_max, int taille_x, int taille_y, t_float K, t_word *tableX, t_word *tableY)
 {
 	t_float Xtable, Ytable, Xindex, Yindex, force1, force2, force;
 	int index;
@@ -219,7 +219,7 @@ void pmpd2d_iTable_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max,
 	}
 }
 
-void pmpd2d_iTable(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd2d_iMatrix(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	// Argument : 
 	// 0 : mass to apply this interactor
@@ -266,13 +266,13 @@ void pmpd2d_iTable(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 		if ( argv[0].a_type == A_FLOAT )
 		{
-			pmpd2d_iTable_i(x, (int)atom_getfloatarg(0,argc,argv), Xmin, Xmax, Ymin, Ymax, X, Y, K, vec1, vec2);
+			pmpd2d_iMatrix_i(x, (int)atom_getfloatarg(0,argc,argv), Xmin, Xmax, Ymin, Ymax, X, Y, K, vec1, vec2);
 		}
 		else if ( argv[0].a_type == A_SYMBOL )
 		{	for (i=0; i < x->nb_mass; i++)
 			{	if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 				{
-					pmpd2d_iTable_i(x, i, Xmin, Xmax, Ymin, Ymax, X, Y, K, vec1, vec2);
+					pmpd2d_iMatrix_i(x, i, Xmin, Xmax, Ymin, Ymax, X, Y, K, vec1, vec2);
 				}
 			}
 		}

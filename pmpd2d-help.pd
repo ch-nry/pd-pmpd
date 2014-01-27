@@ -1,4 +1,4 @@
-#N canvas 299 144 572 750 10;
+#N canvas 297 149 572 750 10;
 #X declare -lib Gem;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -869,10 +869,10 @@ centerY \, distance) / massSup \$1 / massInf \$1 / forceSup \$1 / forceInf
 \$1 / forceXSup \$1 / forceXInf \$1 / forceYSup \$1 / forceYInf \$1
 ;
 #X restore 12 486 pd tests ______________;
-#N canvas 1087 493 650 358 interactors 0;
+#N canvas 1085 498 709 556 interactors 0;
 #X obj -30 -169 cnv 15 600 15 empty empty empty 20 12 0 14 -233017
 -66577 0;
-#X obj -30 -147 cnv 15 330 300 empty empty empty 20 12 0 14 -233017
+#X obj -30 -147 cnv 15 330 450 empty empty empty 20 12 0 14 -233017
 -66577 0;
 #X text 25 -105 \$2 \$3 : center of the circle;
 #X text 24 -91 \$4 : circle radius;
@@ -898,6 +898,16 @@ centerY \, distance) / massSup \$1 / massInf \$1 / forceSup \$1 / forceInf
 #X text -18 -170 INTERACTOR Messages;
 #X text 310 -140 create a one time circular interaction on masses;
 #X text 307 21 create a one time linear interaction on masses;
+#X msg -16 174 iMatrix \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8 \$9;
+#X text 25 193 \$1 : mass Id (float or symbol) to apply this interactor
+;
+#X text 26 208 \$2 : K;
+#X text 26 222 \$3 \$4 \$5 \$6 : space limitation of the matrix in
+the pm world (Xmin \, Xmax \, Ymin \, Ymax);
+#X text 27 250 \$7 \$8 : matrix size;
+#X text 27 265 \$9 \$10 : table name (X and Y) containing matrix data
+;
+#X text 307 171 create a one time spacial interaction on masses;
 #X restore 12 505 pd interactors ________;
 #N canvas 1058 327 589 534 statistics 0;
 #X obj -126 50 cnv 15 150 170 empty empty empty 20 12 0 14 -233017
