@@ -1,4 +1,4 @@
-#N canvas 222 423 905 391 10;
+#N canvas 214 443 905 391 10;
 #X declare -lib Gem;
 #X obj 52 253 pmpd2d;
 #X obj 52 78 loadbang;
@@ -117,7 +117,7 @@ RaZ \$3 \$4 0.3 0;
 #X connect 10 0 11 0;
 #X restore 52 297 pd mass_render;
 #X msg 187 122 bang \, massPos mobil;
-#X msg 188 170 iLine mobil \$1 \$2 0.5 0.5 0.1 1 0 0.3;
+#X msg 188 170 iCircle mobil \$1 \$2 0.2 0.05 1 0 1 -0.2 0;
 #X msg 485 71 set iCircle mobil \, adddollar 1 \, adddollar 2 \, add2
 0 0 1 0.01 1 0 0.2;
 #X msg 486 108 set iCircle mobil \, adddollar 1 \, adddollar 2 \, add2
@@ -132,18 +132,18 @@ RaZ \$3 \$4 0.3 0;
 0 0 -0.1 1 -0.1 0.1;
 #X text 483 12 select an interactor and clik-drag the mouse on the
 gem windows to see the effect.;
-#N canvas 50 82 657 333 iTable 0;
+#N canvas 432 102 657 333 iTable 0;
 #X obj 192 129 s iteractorX;
 #X obj 191 207 s iteractorY;
-#X msg 90 62 iTable mobil 0 1 0 1 3 3 iteractorX iteractorY;
 #X obj 404 122 table iteractorX 9;
-#X msg 193 185 0 0 -1 0 0 0 0 0 1 0;
+#X obj 92 251 outlet;
 #X obj 404 142 table iteractorY 9;
-#X msg 194 105 0 -0 -1 0 0 1 0 0 0 0;
-#X obj 55 214 outlet;
-#X connect 2 0 7 0;
-#X connect 4 0 1 0;
-#X connect 6 0 0 0;
+#X msg 196 105 0 -1 0 1 -1 0 1 -1 0 1;
+#X msg 193 185 0 -1 -1 -1 0 0 0 1 1 1;
+#X msg 92 61 iTable mobil 0.1 0 1 0 1 3 3 iteractorX iteractorY;
+#X connect 5 0 0 0;
+#X connect 6 0 1 0;
+#X connect 7 0 3 0;
 #X restore 188 211 pd iTable;
 #X connect 0 0 10 0;
 #X connect 1 0 3 0;
