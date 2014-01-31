@@ -1,7 +1,7 @@
 from version 0.10 to version 0.11
 
 - code refactorisation
-- all messages name switch to singular for messages uniformisation
+- all messages name switch to singular for messages uniformisation (old are keep for compatbility)
 - add fonctionality to messages masses*L in order to add filter on masses Id (symbol only)
 - same for links*L messages
 - New messages linkEnd[1,2][X,Y,Z]T
@@ -13,7 +13,6 @@ from version 0.10 to version 0.11
 - new messages testMassL and testLinkL (idem as testMass and testLink but with list)
 - new messages massDistance Id Id : return message : massesDistance float_Id float_Id distance
 - new messages setLCurrent Id [proportion] to change a link size depending on it's size and it's curent length
-- new message : forceXT [Id] table (same in other dimention), to add a force to many masses, value come from the table.
 - new message : setActive, setInactive for links
 - new statistics messages for links
 - new interactors messages
@@ -25,4 +24,7 @@ from version 0.10 to version 0.11
 - debug "setL Id" with no arg : bad computation of link length (2d / 3d) 
 - lot's of bugfix
 - switch to makefile template 1.0.14
-- addd default aguments for mass and link creation. (this allow to create a mass with a [mass< message better than [mass mass 1 1 0< message)
+- add default aguments for mass and link creation. (this allow to create a mass with a [mass< message better than [mass mass 1 1 0< message)
+- new examples
+- few set messages can accept 2 symbol : 1 for the class of link/mass to control, 1 for the table name to use as source for the data (so that 1 single message can set lot's of mass/link with diferent data in a very efficient way)
+

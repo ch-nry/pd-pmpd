@@ -1,9 +1,9 @@
-#N canvas 80 656 798 297 10;
+#N canvas 111 480 772 393 10;
 #X declare -lib Gem;
 #X obj 52 8 loadbang;
 #X obj 64 31 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#N canvas 1296 344 692 614 creation 0;
+#N canvas 1227 349 692 614 creation 0;
 #X obj 41 20 inlet;
 #X obj 51 48 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
@@ -102,15 +102,21 @@
 #X array force 100 float 2;
 #X coords 0 1 99 -1 200 140 1;
 #X restore 491 3 graph;
-#X msg 146 52 setK tab_force force \, bang \, massPos mobil;
 #X text 404 -56 draw in the table to change link rigidity independendy
 of each link;
+#N canvas 0 50 450 250 (subpatch) 0;
+#X array K 100 float 2;
+#X coords 0 1 99 -1 200 140 1;
+#X restore 489 165 graph;
+#X msg 146 52 setK tab_force K \, bang \, massPos mobil;
+#X msg 163 81 force mobil force;
 #X connect 0 0 2 0;
 #X connect 1 0 2 0;
 #X connect 2 0 10 0;
 #X connect 4 0 5 0;
-#X connect 5 0 12 0;
+#X connect 5 0 14 0;
 #X connect 6 0 7 0;
 #X connect 8 0 9 0;
 #X connect 10 0 8 0;
-#X connect 12 0 10 0;
+#X connect 14 0 10 0;
+#X connect 15 0 10 0;

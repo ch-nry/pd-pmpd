@@ -1,4 +1,4 @@
-#N canvas 165 139 590 764 10;
+#N canvas 161 149 590 764 10;
 #X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 709 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
@@ -186,7 +186,7 @@ on outlet No 1;
 #X text 187 652 Put position of the 2 link end on a table [\$1] \,
 filter on link Id is possible;
 #X restore 12 517 pd links_attributes ___;
-#N canvas 161 121 997 789 dynamic 0;
+#N canvas 157 131 997 789 dynamic 0;
 #X obj 5 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 10 85 cnv 15 130 650 empty empty empty 20 12 0 14 -233017 -66577
@@ -209,7 +209,6 @@ filter on link Id is possible;
 #X msg 20 265 setFixed \$1;
 #X text 146 94 Set position of fixed mass(es);
 #X text 187 125 \$2 : Value;
-#X text 188 179 \$2 : Value;
 #X text 147 196 Set minimimum and maximum position of all masses;
 #X text 147 244 Set mass to mobile or fixed;
 #X msg 471 150 setD \$1 \$2;
@@ -304,6 +303,7 @@ that amplifies forces that oppose to movment. Use at your own risk.
 #X text 631 642 \$2 : overdamp value (float or table);
 #X text 183 690 \$2 : damping (float or table);
 #X text 184 629 \$1 : damping (float or table);
+#X text 188 179 \$2 : Value (float or symbol);
 #X restore 12 477 pd dynamic settings ___;
 #N canvas 573 185 571 697 creation____________ 0;
 #X obj 11 95 cnv 15 100 60 empty empty empty 20 12 0 14 -233017 -66577
@@ -566,7 +566,7 @@ or fixed \, in this case forces applied to them automatically \, by
 links \, or manually \, by messages \, don't do anything.;
 #X connect 1 0 2 0;
 #X restore 18 715 pd More_Info;
-#N canvas 422 178 607 825 masses_attributes___ 0;
+#N canvas 420 183 614 722 masses_attributes___ 0;
 #X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 7 307 cnv 15 150 100 empty empty empty 20 12 0 14 -233017 -66577
@@ -585,15 +585,15 @@ links \, or manually \, by messages \, don't do anything.;
 #X obj 8 414 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X text 206 383 \$1 (optional): Masses Id;
-#X obj 9 658 cnv 15 150 150 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 9 558 cnv 15 150 150 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 9 637 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 9 537 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 172 666 output the closest mass;
-#X text 201 680 \$1 : position;
-#X text 12 637 others :;
-#X msg 17 666 closestMass \$1 (\$2);
-#X text 201 695 \$2 : none or Id;
+#X text 172 566 output the closest mass;
+#X text 201 580 \$1 : position;
+#X text 12 537 others :;
+#X msg 17 566 closestMass \$1 (\$2);
+#X text 201 595 \$2 : none or Id;
 #X obj 5 75 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X text 7 74 General :;
@@ -605,16 +605,8 @@ links \, or manually \, by messages \, don't do anything.;
 #X msg 14 224 massForce [\$1];
 #X text 201 238 massPos symbolId number forceX forceY forceZ;
 #X msg 14 165 massSpeed [\$1];
-#X obj 9 538 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
-0;
-#X text 202 592 \$1 : table name;
-#X text 201 611 \$2 : masses name;
-#X obj 10 559 cnv 15 150 70 empty empty empty 20 12 0 14 -233017 -66577
-0;
-#X msg 21 566 forceXT \$1 [\$2];
-#X text 12 538 Table in:;
-#X msg 16 717 massDistance [\$1 [\$2]];
-#X text 199 732 distance mass1 mass2 distanceX \, distanceY \, distanceZ
+#X msg 16 617 massDistance [\$1 [\$2]];
+#X text 199 632 distance mass1 mass2 distanceX \, distanceY \, distanceZ
 \, distance;
 #X msg 17 320 massPosL (\$1);
 #X msg 17 340 massForceL (\$1);
@@ -634,16 +626,15 @@ links \, or manually \, by messages \, don't do anything.;
 #X text 15 30 The attributes messages ask the object to output some
 of its internal parameters. They can be output as lists for positions
 and forces of masses.;
-#X text 170 569 apply a force to masses. Force comes from a table;
-#X text 175 718 output a series of messages :;
+#X text 175 618 output a series of messages :;
 #X text 11 414 Tables out:;
 #X text 167 444 Output all masses positions on a table;
 #X text 167 465 Output all forces applied on masses on a table;
 #X text 167 485 Output all speeds of the masses on a table;
 #X text 200 517 \$2 (optional): Masses Id);
 #X text 200 502 \$1 = table name;
-#X text 197 760 \$1 (optional): Masses Id;
-#X text 197 776 \$2 (optional): Masses Id;
+#X text 197 660 \$1 (optional): Masses Id;
+#X text 197 676 \$2 (optional): Masses Id;
 #X restore 12 497 pd masses_attributes___;
 #N canvas 410 289 631 464 statistics 0;
 #X obj 20 41 cnv 15 170 150 empty empty empty 20 12 0 14 -233017 -66577

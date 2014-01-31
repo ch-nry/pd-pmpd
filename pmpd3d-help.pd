@@ -1,4 +1,4 @@
-#N canvas 1018 178 570 717 10;
+#N canvas 1016 183 570 717 10;
 #X declare -lib Gem;
 #X obj 4 289 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -129,7 +129,7 @@ mass mob 1 100 1 0 -1 \, mass mob 1 100 0 0 -1 \, mass mob 1 100 1
 #X obj 17 226 pmpd3d;
 #X text 417 226 2 Send forces;
 #X text 112 617 01_pmpd3dtest.pd;
-#N canvas 254 213 950 547 creation____________ 0;
+#N canvas 252 218 950 547 creation____________ 0;
 #X obj 5 75 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 3 cnv 15 450 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -200,7 +200,7 @@ the model. Messages create links and masses or destroy them.;
 links. They work as general links except their calculation is made
 following a vector.;
 #X restore 12 377 pd creation____________;
-#N canvas 72 184 1143 866 dynamic 0;
+#N canvas 70 189 1143 866 dynamic 0;
 #X obj 5 3 cnv 15 1050 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 84 cnv 15 150 750 empty empty empty 20 12 0 14 -233017 -66577
@@ -249,7 +249,6 @@ following a vector.;
 #X msg 39 521 setForceY \$1 \$2;
 #X text 189 131 \$2 / \$3 : Value;
 #X msg 15 171 force \$1 \$2 \$3;
-#X text 189 212 \$2 / \$3 : Value;
 #X text 173 730 Change environement damping;
 #X msg 39 582 setSpeedX \$1 \$2;
 #X msg 39 601 setSpeedY \$1 \$2;
@@ -334,9 +333,10 @@ uses this argument as the value applied to all masses (or links);
 #X text 193 819 \$2 : damping (float or table);
 #X text 195 761 \$2 : damping (float or table);
 #X text 193 467 \$2 : New Id;
+#X text 189 212 \$2 / \$3 : Value (float or symbol);
 #X restore 12 397 pd dynamic settings ___;
 #X text 158 397 To set the model parameters after creation.;
-#N canvas 155 259 1157 693 masses_attributes 0;
+#N canvas 153 264 1157 693 masses_attributes 0;
 #X obj 5 95 cnv 15 500 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 3 cnv 15 500 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -361,16 +361,16 @@ No 1;
 #X text 206 627 \$1 (optional): Masses Id;
 #X text 769 383 \$2 (optional): Masses Id;
 #X text 768 370 \$1 : table name;
-#X obj 551 541 cnv 15 170 110 empty empty empty 20 12 0 14 -233017
+#X obj 551 431 cnv 15 170 110 empty empty empty 20 12 0 14 -233017
 -66577 0;
-#X obj 549 519 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 549 409 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 730 548 output the closest mass;
-#X text 552 519 others :;
-#X text 764 564 \$1 : x -position;
-#X text 764 579 \$2 : y -position;
-#X text 764 594 \$3 : z -position;
-#X text 764 606 \$4 : none or Id;
+#X text 730 438 output the closest mass;
+#X text 552 409 others :;
+#X text 764 454 \$1 : x -position;
+#X text 764 469 \$2 : y -position;
+#X text 764 484 \$3 : z -position;
+#X text 764 496 \$4 : none or Id;
 #X msg 9 125 massPos [\$1];
 #X text 191 246 \$1 : id float or symbol of masses (nothing for all)
 ;
@@ -382,13 +382,9 @@ No 1;
 #X msg 9 206 massForce [\$1];
 #X text 195 218 massPos symbolId number forceX forceY forceZ;
 #X msg 9 165 massSpeed [\$1];
-#X msg 560 627 massDistance [\$1 [\$2]];
-#X text 757 643 distance mass1 mass2 distanceX \, distanceY \, distanceZ
+#X msg 560 517 massDistance [\$1 [\$2]];
+#X text 757 533 distance mass1 mass2 distanceX \, distanceY \, distanceZ
 \, distance;
-#X obj 548 410 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
-0;
-#X text 768 453 \$1 : table name;
-#X text 767 469 \$2 : masses name;
 #X msg 8 306 massPosL [\$1];
 #X msg 8 325 massPosXL [\$1];
 #X msg 28 344 massPosYL [\$1];
@@ -404,11 +400,6 @@ No 1;
 #X msg 31 551 massForceYL [\$1];
 #X msg 30 570 massForceZL [\$1];
 #X msg 10 589 massForceNormL [\$1];
-#X obj 549 431 cnv 15 170 80 empty empty empty 20 12 0 14 -233017 -66577
-0;
-#X msg 557 438 forceXT \$1 [\$2];
-#X msg 578 458 forceYT \$1 [\$2];
-#X msg 577 478 forceZT \$1 [\$2];
 #X msg 555 38 massPosT \$1 [\$2];
 #X msg 555 57 massPosXT \$1 [\$2];
 #X msg 575 76 massPosYT \$1 [\$2];
@@ -424,9 +415,8 @@ No 1;
 #X msg 576 297 massForcesYT \$1 [\$2];
 #X msg 576 316 massForcesZT \$1 [\$2];
 #X msg 556 335 massSpeedsNormT \$1 [\$2];
-#X msg 558 549 closestMass \$1 \$2 \$3 [\$4];
+#X msg 558 439 closestMass \$1 \$2 \$3 [\$4];
 #X text 548 5 tables out :;
-#X text 551 410 Table in:;
 #X text 15 30 The attributes messages ask the object to output some
 of its internal parameters. They can be output as lists for positions
 and forces of masses \, or directly send value to a table.;
@@ -457,8 +447,7 @@ No 1;
 ;
 #X text 732 335 Output all norm of forces vectors (sqrt(x*x+y*y)) in
 a list on outlet No 1;
-#X text 727 433 apply a force to masses. Force comes from a table;
-#X text 725 628 output a series of messages :;
+#X text 725 518 output a series of messages :;
 #X restore 12 417 pd masses_attributes __;
 #N canvas 164 124 1167 755 links_attributes 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577

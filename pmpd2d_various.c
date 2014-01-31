@@ -39,7 +39,10 @@ void pmpd2d_force(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // add a force to a specific mass
     int tmp, i;
-
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    
     if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
@@ -58,13 +61,38 @@ void pmpd2d_force(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					if (n >= npoints-2) break;
+					x->mass[i].forceX += vec[n].w_float;
+					n++;
+					x->mass[i].forceY += vec[n].w_float;
+					n++;
+				}
+			}
+		}
+	}
 }
 
 void pmpd2d_forceX(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // add a force to a specific mass
     int tmp, i;
-
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
@@ -81,13 +109,35 @@ void pmpd2d_forceX(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-}
+	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					x->mass[i].forceX += vec[n].w_float;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}}
 
 void pmpd2d_forceY(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // add a force to a specific mass
     int tmp, i;
-
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
@@ -104,6 +154,26 @@ void pmpd2d_forceY(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
+	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					x->mass[i].forceY += vec[n].w_float;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
 }
 
 void pmpd2d_min(t_pmpd2d *x, t_float minX, t_float minY)
@@ -382,6 +452,7 @@ void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
+/*
 void pmpd2d_forcesXT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // add forces to masses. forces comes from a table, masse can be filter on ther Id or not
@@ -473,3 +544,4 @@ void pmpd2d_forcesYT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		}
 	}
 }
+*/

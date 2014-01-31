@@ -28,14 +28,17 @@ void pmpd_forceX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
 // add a force to a specific mass
     int tmp, i;
-
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    
+    if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].forceX += atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -45,6 +48,26 @@ void pmpd_forceX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
+	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					x->mass[i].forceX += vec[n].w_float;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
 }
 
 void pmpd_minX(t_pmpd *x, t_float min)
@@ -61,13 +84,13 @@ void pmpd_addPosX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+    if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].posX += atom_getfloatarg(1, argc, argv);
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -247,7 +270,7 @@ void pmpd_massDistances(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
-
+/*
 void pmpd_forcesXT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
 // add forces to masses. forces comes from a table, masse can be filter on ther Id or not
@@ -293,3 +316,4 @@ void pmpd_forcesXT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 		}
 	}
 }
+*/
