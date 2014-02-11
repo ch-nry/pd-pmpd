@@ -1,5 +1,5 @@
-#N canvas 173 648 543 322 10;
-#X declare -lib Gem;
+#N canvas 454 264 543 322 10;
+#X declare -lib Gem -path ../;
 #X obj 52 193 pmpd2d;
 #X obj 52 78 loadbang;
 #X obj 64 101 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
@@ -55,7 +55,7 @@ lenght of the link connected to this mass to curent length;
 #X msg 27 228 delLink inactive;
 #X msg 95 438 testLink remove_long_link lengthSup 0.15;
 #X obj 388 58 route remove_long_link fixing_corner mouse_move adapt_length
-, f 61;
+;
 #X connect 0 0 2 0;
 #X connect 1 0 2 0;
 #X connect 2 0 44 0;
@@ -121,10 +121,9 @@ lenght of the link connected to this mass to curent length;
 #X connect 46 2 33 0;
 #X connect 46 3 42 0;
 #X restore 52 126 pd creation;
-#X obj 56 21 declare -lib Gem;
 #X obj 186 77 gemhead;
 #X obj 186 100 t b;
-#X obj 54 45 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1 1
+#X obj 54 45 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
 ;
 #N canvas 1157 484 591 562 linkrender 0;
 #X obj 150 9 inlet;
@@ -202,17 +201,18 @@ lenght of the link connected to this mass to curent length;
 #X obj 52 216 route testLink testMass linkEnd;
 #X msg 188 170 testMass mouse_move distanceCircleInf \$1 \$2 0.05;
 #X text 50 283 click and drag connection point with mouse to destrod
-the net, f 62;
-#X connect 0 0 12 0;
+the net;
+#X obj 56 21 declare -lib Gem -path ../;
+#X connect 0 0 11 0;
 #X connect 1 0 3 0;
 #X connect 2 0 3 0;
 #X connect 3 0 0 0;
-#X connect 5 0 6 0;
+#X connect 4 0 5 0;
+#X connect 5 0 8 0;
 #X connect 6 0 9 0;
-#X connect 7 0 10 0;
-#X connect 9 0 0 0;
-#X connect 11 0 13 0;
-#X connect 12 0 3 1;
-#X connect 12 1 3 1;
-#X connect 12 2 8 0;
-#X connect 13 0 0 0;
+#X connect 8 0 0 0;
+#X connect 10 0 12 0;
+#X connect 11 0 3 1;
+#X connect 11 1 3 1;
+#X connect 11 2 7 0;
+#X connect 12 0 0 0;
