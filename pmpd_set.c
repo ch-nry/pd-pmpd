@@ -4,6 +4,7 @@ void pmpd_setK(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -21,8 +22,10 @@ void pmpd_setK(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -34,7 +37,7 @@ void pmpd_setK(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
 				{
-					x->link[i].K = vec[n].w_float;
+					x->link[i].K = K*vec[n].w_float;
 					// post("linkK %d = table %d : %f", i, n, vec[n].w_float);
 					n++;
 					if (n >= npoints) break;
@@ -51,14 +54,15 @@ void pmpd_setD(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
-    
+    t_float K;
+
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
         x->link[tmp].D = atom_getfloatarg(1, argc, argv);
     }
-    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -68,8 +72,10 @@ void pmpd_setD(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -81,7 +87,7 @@ void pmpd_setD(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
 				{
-					x->link[i].D = vec[n].w_float;
+					x->link[i].D = K*vec[n].w_float;
 					// post("linkD %d = table %d : %f", i, n, vec[n].w_float);
 					n++;
 					if (n >= npoints) break;
@@ -97,6 +103,7 @@ void pmpd_setD2(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -114,15 +121,17 @@ void pmpd_setD2(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
+    else if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
             x->mass[i].D2 = atom_getfloatarg(0, argc, argv);
         }
     }
-    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -134,7 +143,7 @@ void pmpd_setD2(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
 				{
-					x->link[i].K = vec[n].w_float;
+					x->link[i].K = K*vec[n].w_float;
 					// post("linkD2 %d = table %d : %f", i, n, vec[n].w_float);
 					n++;
 					if (n >= npoints) break;
@@ -151,6 +160,7 @@ void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -158,7 +168,7 @@ void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         tmp = max(0, min( x->nb_link-1, tmp));
         x->link[tmp].L = atom_getfloatarg(1, argc, argv);
     }
-    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -168,13 +178,13 @@ void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    if ( ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
+    else if ( ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
         x->link[tmp].L = x->link[tmp].mass2->posX - x->link[tmp].mass1->posX;
     }
-    if ( ( argv[0].a_type == A_SYMBOL ) && ( argc == 1 ) )
+    else if ( ( argv[0].a_type == A_SYMBOL ) && ( argc == 1 ) )
     {
         for (i=0; i< x->nb_link; i++)
         {
@@ -184,8 +194,10 @@ void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -197,7 +209,7 @@ void pmpd_setL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
 				{
-					x->link[i].L = vec[n].w_float;
+					x->link[i].L = K*vec[n].w_float;
 					// post("linkL %d = table %d : %f", i, n, vec[n].w_float);
 					n++;
 					if (n >= npoints) break;
@@ -338,13 +350,13 @@ void pmpd_setFixed(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( (argc == 2) && (argc == 1) && (argv[0].a_type == A_FLOAT) ) 
+    if ( (argc == 1) && (argv[0].a_type == A_FLOAT) ) 
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].mobile = 0;
     }
-    if ( (argc == 2) && (argc == 1) && (argv[0].a_type == A_SYMBOL) )
+    if ( (argc == 1) && (argv[0].a_type == A_SYMBOL) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
@@ -360,13 +372,13 @@ void pmpd_setMobile(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( (argc == 2) && (argc == 1) && (argv[0].a_type == A_FLOAT) )
+    if ( (argc == 1) && (argv[0].a_type == A_FLOAT) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].mobile = 1;
     }
-    if ( (argc == 2) && (argc == 1) && (argv[0].a_type == A_SYMBOL) ) 
+    if ( (argc == 1) && (argv[0].a_type == A_SYMBOL) ) 
     {
         for (i=0; i< x->nb_mass; i++)
         {

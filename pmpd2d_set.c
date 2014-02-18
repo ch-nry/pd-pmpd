@@ -4,6 +4,7 @@ void pmpd2d_setK(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -21,8 +22,10 @@ void pmpd2d_setK(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -34,7 +37,7 @@ void pmpd2d_setK(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
 				{
-					x->link[i].K = vec[n].w_float;
+					x->link[i].K = K*vec[n].w_float;
 					n++;
 					if (n >= npoints) break;
 				}
@@ -49,7 +52,8 @@ void pmpd2d_setD(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
-    
+    t_float K;
+
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
@@ -66,8 +70,10 @@ void pmpd2d_setD(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -79,7 +85,7 @@ void pmpd2d_setD(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
 				{
-					x->link[i].D = vec[n].w_float;
+					x->link[i].D = K*vec[n].w_float;
 					n++;
 					if (n >= npoints) break;
 				}
@@ -94,6 +100,7 @@ void pmpd2d_setDEnv(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -118,8 +125,10 @@ void pmpd2d_setDEnv(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             x->mass[i].D2 = atom_getfloatarg(0, argc, argv);
         }
     }
-    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -131,7 +140,7 @@ void pmpd2d_setDEnv(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 				{
-					x->mass[i].D2 = vec[n].w_float;
+					x->mass[i].D2 = K*vec[n].w_float;
 					n++;
 					if (n >= npoints) break;
 				}
@@ -146,6 +155,7 @@ void pmpd2d_setDEnvOffset(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
     if (  (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -170,8 +180,10 @@ void pmpd2d_setDEnvOffset(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             x->mass[i].D2offset = atom_getfloatarg(0, argc, argv);
         }
     }
-    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -183,7 +195,7 @@ void pmpd2d_setDEnvOffset(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 				{
-					x->mass[i].D2offset = vec[n].w_float;
+					x->mass[i].D2offset = K*vec[n].w_float;
 					n++;
 					if (n >= npoints) break;
 				}
@@ -198,6 +210,7 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
     if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     { // set a link to a specific length
@@ -231,8 +244,10 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -244,7 +259,7 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
 				{
-					x->link[i].L = vec[n].w_float;
+					x->link[i].L = K*vec[n].w_float;
 					n++;
 					if (n >= npoints) break;
 				}
@@ -726,6 +741,7 @@ void pmpd2d_overdamp(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
 	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
@@ -743,8 +759,10 @@ void pmpd2d_overdamp(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
-	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -756,7 +774,7 @@ void pmpd2d_overdamp(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 				{
-					x->mass[i].overdamp = vec[n].w_float;
+					x->mass[i].overdamp = K*vec[n].w_float;
 					n++;
 					if (n >= npoints) break;
 				}

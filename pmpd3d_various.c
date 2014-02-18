@@ -44,6 +44,7 @@ void pmpd3d_force(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
 	if ( (argc == 4) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
 	{
@@ -65,8 +66,10 @@ void pmpd3d_force(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
-	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -79,11 +82,11 @@ void pmpd3d_force(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 				{
 					if (n >= npoints-3) break;
-					x->mass[i].forceX += vec[n].w_float;
+					x->mass[i].forceX += K*vec[n].w_float;
 					n++;
-					x->mass[i].forceY += vec[n].w_float;
+					x->mass[i].forceY += K*vec[n].w_float;
 					n++;
-					x->mass[i].forceZ += vec[n].w_float;
+					x->mass[i].forceZ += K*vec[n].w_float;
 					n++;
 				}
 			}
@@ -98,6 +101,7 @@ void pmpd3d_forceX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
 	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
@@ -115,8 +119,10 @@ void pmpd3d_forceX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
-	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -128,7 +134,7 @@ void pmpd3d_forceX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 				{
-					x->mass[i].forceX += vec[n].w_float;
+					x->mass[i].forceX += K*vec[n].w_float;
 					n++;
 					if (n >= npoints) break;
 				}
@@ -144,6 +150,7 @@ void pmpd3d_forceY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
 	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
@@ -161,8 +168,10 @@ void pmpd3d_forceY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
-	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -174,7 +183,7 @@ void pmpd3d_forceY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 				{
-					x->mass[i].forceY += vec[n].w_float;
+					x->mass[i].forceY += K*vec[n].w_float;
 					n++;
 					if (n >= npoints) break;
 				}
@@ -190,6 +199,7 @@ void pmpd3d_forceZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     t_garray *a;
     int npoints, n;
     t_word *vec;
+    t_float K;
     
 	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
@@ -207,8 +217,10 @@ void pmpd3d_forceZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
-	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
     {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
 			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
 		else if (!garray_getfloatwords(a, &npoints, &vec))
@@ -220,7 +232,7 @@ void pmpd3d_forceZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			{
 				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 				{
-					x->mass[i].forceZ += vec[n].w_float;
+					x->mass[i].forceZ += K*vec[n].w_float;
 					n++;
 					if (n >= npoints) break;
 				}
