@@ -198,8 +198,8 @@ void pmpd2d_mass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	x->mass[x->nb_mass].overdamp = 0;
 	x->nb_mass++ ;
 	x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
-}
-
+}  
+    
 void pmpd2d_create_link(t_pmpd2d *x, t_symbol *Id, int mass1, int mass2, t_float K, t_float D, t_float Pow, t_float Lmin, t_float Lmax, t_int type)
 { // create a link based on mass number
 
@@ -220,6 +220,8 @@ void pmpd2d_create_link(t_pmpd2d *x, t_symbol *Id, int mass1, int mass2, t_float
         x->link[x->nb_link].Lmin = Lmin;
         x->link[x->nb_link].Lmax = Lmax;
         x->link[x->nb_link].distance = x->link[x->nb_link].L ;
+        x->link[x->nb_link].forceX = 0 ;
+        x->link[x->nb_link].forceY = 0 ;
 
         x->nb_link++ ;
         x->nb_link = min ( nb_max_link -1, x->nb_link );

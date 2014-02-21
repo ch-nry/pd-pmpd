@@ -241,7 +241,9 @@ void pmpd3d_create_link(t_pmpd3d *x, t_symbol *Id, int mass1, int mass2, t_float
         x->link[x->nb_link].Lmin = Lmin;
         x->link[x->nb_link].Lmax = Lmax;
         x->link[x->nb_link].distance = x->link[x->nb_link].L ;
-		
+        x->link[x->nb_link].forceX = 0 ;
+        x->link[x->nb_link].forceY = 0 ;
+        x->link[x->nb_link].forceZ = 0 ;
         x->nb_link++ ;
         x->nb_link = min ( nb_max_link -1, x->nb_link );
     }
