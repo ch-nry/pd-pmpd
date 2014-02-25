@@ -1,94 +1,95 @@
-#N canvas 828 174 515 653 12;
-#X text 66 263 physical modeling for pure data using a collection of
-physical ojects.;
+#N canvas 425 76 515 653 12;
+#X declare -path ../;
 #N canvas 50 97 623 384 read 0;
 #X text 412 312 ch20031213;
 #X text 30 25 The aim of this collection of objects is to create physical
 behavior with pure data. It's not audio synthesis. But it can be used
 for the creation of parameters that can be used for driving an audio
 or video synthesis.;
-#X text 30 101 Most of the examples use GEM \, to allow visualization
-of the "physical" geometry \, but you don't need it to use this collection.
-;
-#X text 30 161 any comments \, criticism \, suggestions \, help would
-be highly apreciated :;
-#X text 28 240 informations can be find :;
 #X text 122 263 http://www.chnry.net/ch/?120-pmpd&lang=en;
 #X text 123 207 ch@chnry.net;
+#X text 30 101 Most of the examples use GEM \, to allow visualization
+of the "physical" geometry \, but it's not mandatory.;
+#X text 30 161 Any comments \, criticism \, suggestions \, help would
+be highly appreciated :;
+#X text 28 240 Informations can be found online:;
 #X restore 69 316 pd read me first;
 #N canvas 50 87 663 567 basics 0;
-#X text 34 30 Object in this collection can be mass \, link and interactor
-\, in 1D \, 2D or 3D.;
-#X text 47 69 Masses (mass \, mass2D \, mass3D) are ponctual. They've
-got a weight \, and know their position. They can move when they receive
-a force \, acording to physical rules.;
-#X text 47 126 Link (link \, link2D \, link3D) are the basic interaction
-beetween 2 masss. It is a visco-elastic link. The link object receive
-the position of 2 masss \, compute the force beetween the 2 masss and
-output a force for each mass.;
-#X text 47 202 Interactors are a kind of link \, but influence a group
-of masss at once. They can be used for global interaction. We will
-look further into it later.;
-#X text 32 272 This collection of objects can be interconnected for
+#X text 29 272 This collection of objects can be interconnected for
 the creation of "physical" structures. Such structures can then move
 \, and distord themselves \, according to forces applied to them.;
 #X text 29 350 The resulting movements are very natural \, due to the
 physical equations used to define the objects.;
+#X text 29 395 You have to declare the path of the pmpd externals to
+use them \, for example:;
+#X obj 31 441 declare -path ../;
+#X text 34 30 Objects in this collection can be mass \, link and interactor
+\, in 1D \, 2D or 3D.;
+#X text 47 69 Masses (mass \, mass2D \, mass3D) are ponctual. They've
+got a weight \, and know their position. They can move when they receive
+a force \, according to physical rules.;
+#X text 47 126 Links (link \, link2D \, link3D) are the basic interaction
+beetween 2 masss. It is a visco-elastic link. The link object receive
+the position of 2 masses \, compute the force beetween the 2 masses
+and output a force for each mass.;
+#X text 47 202 Interactors are a kind of link \, but influence a group
+of masses at once. They can be used for global interaction. We will
+look further into it later.;
 #X restore 69 344 pd basics;
-#N canvas 426 97 645 737 global_description 0;
-#X obj 34 169 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+#N canvas 424 30 645 737 global_description 0;
+#X obj 35 149 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
-#X obj 34 268 print;
-#X obj 34 217 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+#X obj 35 268 print;
+#X obj 35 217 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
-#X text 57 165 1;
-#X text 58 216 2;
-#X text 36 452 Here is the basic connection beetween 2 masss :;
+#X text 58 145 1;
+#X text 59 216 2;
 #X obj 40 591 link;
 #X text 36 529 You can also create things like this :;
-#X text 32 23 For patching simplification \, objects in this collection
-only have "cold" inlets. The computation speed depends on an external
-metronome. This metronome should bang alternatively all links in the
-model and then masss of the model.;
-#X text 33 103 mass and link have a name corresponding to their class
-name. They will receive everything sent to this name.;
-#X text 159 236 clicking on bang 1 or 2 is equivalent;
-#X text 32 304 As you sould send a bang alternatively to links and
-masss \, you sould give diferent names to the links group and masss
-group.;
-#X text 36 361 Masses output their position when you bang them. This
+#X text 160 236 clicking on bang 1 or 2 is equivalent;
+#X text 32 361 Masses output their position when you bang them. This
 position depends on the forces applied to the mass.;
-#X text 36 401 Links output a force according to the position of the
-masss when you bang them. This force sould be applied to the same mass.
-;
-#X text 40 626 The mass1 will never receive forces \, so it will never
+#X text 37 627 The mass1 will never receive forces \, so it will never
 move. It is useful for creating a structure attached to a fixed point.
 ;
-#X obj 110 489 mass;
-#X obj 156 489 link;
-#X obj 195 489 mass;
-#X obj 34 188 s \$0-foo1;
-#X obj 34 237 mass2D \$0-foo1;
+#X obj 106 489 mass;
+#X obj 152 489 link;
+#X obj 191 489 mass;
+#X obj 35 168 s \$0-foo1;
+#X obj 35 237 mass2D \$0-foo1;
 #X obj 40 558 mass \$0-mass1;
 #X obj 76 591 mass \$0-mass2;
-#X connect 0 0 18 0;
-#X connect 2 0 19 0;
-#X connect 6 1 21 0;
-#X connect 15 0 16 0;
-#X connect 16 0 15 0;
-#X connect 16 1 17 0;
-#X connect 17 0 16 1;
-#X connect 19 0 1 0;
-#X connect 20 0 6 0;
-#X connect 21 0 6 1;
+#X text 32 23 For patching simplification \, objects in this collection
+only have "cold" inlets. The computation speed depends on an external
+metronome. This metronome should bang alternatively all links and then
+all masses of the model.;
+#X text 33 103 Masses and links have a name corresponding to their
+class name. They will receive everything sent to this name.;
+#X text 32 304 As you sould send a bang alternatively to links and
+masses \, you sould give different names to the links group and masses
+group.;
+#X text 32 401 Links output a force according to the position of the
+masses when you bang them. This force sould be applied to the same
+mass.;
+#X text 32 451 Here is the basic connection beetween 2 masses :;
+#X connect 0 0 13 0;
+#X connect 2 0 14 0;
+#X connect 5 1 16 0;
+#X connect 10 0 11 0;
+#X connect 11 0 10 0;
+#X connect 11 1 12 0;
+#X connect 12 0 11 1;
+#X connect 14 0 1 0;
+#X connect 15 0 5 0;
+#X connect 16 0 5 1;
 #X restore 69 373 pd global_description;
 #N canvas 50 92 762 661 test 0;
-#X msg 108 98 1;
-#X msg 74 98 0;
-#X msg 41 98 -1;
-#X msg 141 98 2;
+#X msg 104 114 1;
+#X msg 70 114 0;
+#X msg 37 114 -1;
+#X msg 137 114 2;
 #X obj 15 16 loadbang;
-#X floatatom 41 169 5 0 0 0 - - -;
+#X floatatom 37 185 5 0 0 0 - - -;
 #X msg 106 390 1;
 #X msg 72 390 0;
 #X msg 39 390 -1;
@@ -100,122 +101,53 @@ move. It is useful for creating a structure attached to a fixed point.
 #X msg 39 508 -1;
 #X msg 139 508 2;
 #X floatatom 39 579 5 0 0 0 - - -;
-#X text 247 61 A force to a mass make it to move at a constant speed.
-You can accelerate it or decelerate it using message box. a nul force
-as no effect.;
 #X floatatom 172 267 5 0 0 0 - - -;
 #X msg 104 264 1;
 #X msg 70 264 0;
 #X msg 37 264 -1;
 #X msg 137 264 2;
-#X text 247 405 Viscosity link : the force is proportinal to the deformation
-speed of the link;
-#X text 249 265 Rigidity link : the force is proportional to the elongation
-of the link. (the right inlet is not used \, so the like take is defauld
-value : 0.) Lengh of the link is null.;
-#X text 238 529 Visco-elasic link : the effect is the somme of the
-2 previus link.;
 #X obj 15 43 metro 300;
 #X obj 15 69 s \$0-foo2;
-#X obj 41 142 mass \$0-foo2 10 0 0;
+#X obj 37 158 mass \$0-foo2 10 0 0;
 #X obj 37 298 link \$0-foo2 0 0.1 0;
 #X obj 39 434 link \$0-foo2 0 0 0.1;
 #X obj 39 552 link \$0-foo2 0 0.1 0.1;
-#X connect 0 0 28 0;
-#X connect 1 0 28 0;
-#X connect 2 0 28 0;
-#X connect 3 0 28 0;
-#X connect 4 0 26 0;
-#X connect 6 0 30 0;
-#X connect 7 0 30 0;
-#X connect 8 0 30 0;
-#X connect 9 0 30 0;
-#X connect 12 0 31 0;
-#X connect 13 0 31 0;
-#X connect 14 0 31 0;
-#X connect 15 0 31 0;
-#X connect 18 0 29 0;
-#X connect 19 0 29 0;
-#X connect 20 0 29 0;
-#X connect 21 0 29 0;
-#X connect 22 0 29 0;
-#X connect 26 0 27 0;
-#X connect 28 0 5 0;
-#X connect 29 0 11 0;
-#X connect 30 0 10 0;
-#X connect 31 0 16 0;
+#X text 250 125 A force to a mass make it move at a constant speed.
+You can accelerate it or decelerate it using message box. A nul force
+as no effect.;
+#X text 249 265 Rigidity link : the force is proportional to the elongation
+of the link. (the right inlet is not used \, so the like take is defauld
+value : 0.). Lenght of the link is null.;
+#X text 250 405 Viscosity link : the force is proportional to the deformation
+speed of the link;
+#X text 248 529 Visco-elastic link : the effect is the sum of the 2
+previous links.;
+#X connect 0 0 24 0;
+#X connect 1 0 24 0;
+#X connect 2 0 24 0;
+#X connect 3 0 24 0;
+#X connect 4 0 22 0;
+#X connect 6 0 26 0;
+#X connect 7 0 26 0;
+#X connect 8 0 26 0;
+#X connect 9 0 26 0;
+#X connect 12 0 27 0;
+#X connect 13 0 27 0;
+#X connect 14 0 27 0;
+#X connect 15 0 27 0;
+#X connect 17 0 25 0;
+#X connect 18 0 25 0;
+#X connect 19 0 25 0;
+#X connect 20 0 25 0;
+#X connect 21 0 25 0;
+#X connect 22 0 23 0;
+#X connect 24 0 5 0;
+#X connect 25 0 11 0;
+#X connect 26 0 10 0;
+#X connect 27 0 16 0;
 #X restore 71 494 pd test;
-#N canvas 390 241 879 595 simple_exemple 0;
-#X obj 356 237 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 0 0;
-#X obj 74 98 hradio 15 1 0 5 empty empty empty 0 -6 0 8 -262144 -1
--1 0;
-#N canvas 477 50 445 299 preset 0;
-#X msg 36 193 setK 0.05 \, setD 0 \, setD2 30;
-#X msg 55 166 setK 1 \, setD 0 \, setD2 30;
-#X msg 75 138 setK 1 \, setD 0 \, setD2 200;
-#X obj 36 16 inlet;
-#X obj 115 254 outlet;
-#X msg 95 108 setK 300 \, setD 300 \, setD2 5;
-#X obj 36 43 sel 2 1 0 3 4;
-#X msg 115 78 setK 3000 \, setD 1000 \, setD2 5000;
-#X connect 0 0 4 0;
-#X connect 1 0 4 0;
-#X connect 2 0 4 0;
-#X connect 3 0 6 0;
-#X connect 5 0 4 0;
-#X connect 6 0 0 0;
-#X connect 6 1 1 0;
-#X connect 6 2 2 0;
-#X connect 6 3 5 0;
-#X connect 6 4 7 0;
-#X connect 7 0 4 0;
-#X restore 74 119 pd preset;
-#X obj 336 237 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
--1 -1 0 0;
-#X text 80 415 the mass is link to the cursor with diferents kinf of
-linkison (see the preset);
-#X text 71 18 comportement of a single mass link to a fixed point with
-a visco elastic link.;
-#X text 173 95 <- diferents comportement of the link;
-#N canvas 50 110 268 186 stuff 0;
-#X obj 13 20 loadbang;
-#X obj 48 97 s \$0-link;
-#X obj 13 72 t b b;
-#X obj 13 123 s \$0-mass;
-#X obj 13 45 metro 5;
-#X obj 89 20 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#X msg 124 92 reset;
-#X msg 89 66 resetL \, resetF;
-#X obj 89 40 t b b;
-#X connect 0 0 4 0;
-#X connect 2 0 3 0;
-#X connect 2 1 1 0;
-#X connect 4 0 2 0;
-#X connect 5 0 8 0;
-#X connect 6 0 3 0;
-#X connect 7 0 1 0;
-#X connect 8 0 7 0;
-#X connect 8 1 6 0;
-#X restore 75 65 pd stuff;
-#X text 98 346 click or move the slider ->;
-#X text 396 346 look at the mouvement of the mass (the right slider)
-;
-#X text 80 481 surch system can be usefull for replacing the line object
-of pd when more natural evolution is neaded...;
-#X obj 169 167 link \$0-link 0 1 0 200;
-#X obj 356 167 mass \$0-mass 10000 0;
-#X connect 1 0 2 0;
-#X connect 2 0 11 0;
-#X connect 3 0 11 0;
-#X connect 11 1 12 0;
-#X connect 12 0 0 0;
-#X connect 12 0 11 1;
-#X restore 71 521 pd simple_exemple;
-#X text 95 409 look at mass and link help file :;
-#X obj 96 427 mass;
-#X obj 96 457 link;
+#X obj 96 432 mass;
+#X obj 96 462 link;
 #N canvas 102 112 450 634 list 0;
 #X obj 190 135 iAmbient2D;
 #X obj 305 137 iAmbient3D;
@@ -253,25 +185,25 @@ of pd when more natural evolution is neaded...;
 #X obj 190 579 pmpd;
 #X obj 308 578 pmpd~;
 #X restore 71 551 pd list of pmpd's object;
-#X obj 0 177 cnv 15 15 15 Ma1 M1 empty 2 10 0 14 -1 -66577 0;
-#X obj 9 159 cnv 15 15 15 Ma3 M3 empty 2 10 0 14 -1 -66577 0;
-#X obj 20 142 cnv 15 15 15 Ma5 M5 empty 2 10 0 14 -1 -66577 0;
-#X obj 77 200 cnv 15 15 15 Ma9 M9 empty 2 10 0 14 -1 -66577 0;
-#X obj 185 170 cnv 15 15 15 empty M29 empty 2 10 0 14 -1 -66577 0;
-#X obj 122 200 cnv 15 15 15 Ma2 M2 empty 2 10 0 14 -1 -66577 0;
-#X obj 123 174 cnv 15 15 15 Ma4 M4 empty 2 10 0 14 -1 -66577 0;
-#X obj 100 174 cnv 15 15 15 Ma6 M6 empty 2 10 0 14 -1 -66577 0;
-#X obj 76 174 cnv 15 15 15 Ma8 M8 empty 2 10 0 14 -1 -66577 0;
-#X obj 115 193 cnv 15 15 15 Ma11 M11 empty 2 10 0 14 -1 -66577 0;
-#X obj 84 193 cnv 15 15 15 Ma12 M12 empty 2 10 0 14 -1 -66577 0;
-#X obj 180 143 cnv 15 15 15 Ma14 M14 empty 2 10 0 14 -1 -66577 0;
-#X obj 196 153 cnv 15 15 15 Ma13 M13 empty 2 10 0 14 -1 -66577 0;
-#X obj 169 159 cnv 15 15 15 Ma15 M15 empty 2 10 0 14 -1 -66577 0;
-#X obj 239 170 cnv 15 15 15 empty M30 empty 2 10 0 14 -1 -66577 0;
-#X obj 248 143 cnv 15 15 15 Ma20 M20 empty 2 10 0 14 -1 -66577 0;
-#X obj 257 161 cnv 15 15 15 Ma17 M17 empty 2 10 0 14 -1 -66577 0;
-#X obj 248 188 cnv 15 15 15 Ma19 M19 empty 2 10 0 14 -1 -66577 0;
-#X obj 266 179 cnv 15 15 15 Ma18 M18 empty 2 10 0 14 -1 -66577 0;
+#X obj 10 200 cnv 15 15 15 Ma1 M1 empty 2 10 0 14 -1 -66577 0;
+#X obj 24 185 cnv 15 15 15 Ma3 M3 empty 2 10 0 14 -1 -66577 0;
+#X obj 39 172 cnv 15 15 15 Ma5 M5 empty 2 10 0 14 -1 -66577 0;
+#X obj 79 200 cnv 15 15 15 Ma9 M9 empty 2 10 0 14 -1 -66577 0;
+#X obj 183 200 cnv 15 15 15 empty M29 empty 2 10 0 14 -1 -66577 0;
+#X obj 120 200 cnv 15 15 15 Ma2 M2 empty 2 10 0 14 -1 -66577 0;
+#X obj 120 160 cnv 15 15 15 Ma4 M4 empty 2 10 0 14 -1 -66577 0;
+#X obj 100 170 cnv 15 15 15 Ma6 M6 empty 2 10 0 14 -1 -66577 0;
+#X obj 79 160 cnv 15 15 15 Ma8 M8 empty 2 10 0 14 -1 -66577 0;
+#X obj 119 180 cnv 15 15 15 Ma11 M11 empty 2 10 0 14 -1 -66577 0;
+#X obj 80 180 cnv 15 15 15 Ma12 M12 empty 2 10 0 14 -1 -66577 0;
+#X obj 184 172 cnv 15 15 15 Ma14 M14 empty 2 10 0 14 -1 -66577 0;
+#X obj 198 187 cnv 15 15 15 Ma13 M13 empty 2 10 0 14 -1 -66577 0;
+#X obj 169 185 cnv 15 15 15 Ma15 M15 empty 2 10 0 14 -1 -66577 0;
+#X obj 239 180 cnv 15 15 15 empty M30 empty 2 10 0 14 -1 -66577 0;
+#X obj 260 160 cnv 15 15 15 Ma20 M20 empty 2 10 0 14 -1 -66577 0;
+#X obj 259 180 cnv 15 15 15 Ma17 M17 empty 2 10 0 14 -1 -66577 0;
+#X obj 239 200 cnv 15 15 15 Ma19 M19 empty 2 10 0 14 -1 -66577 0;
+#X obj 259 200 cnv 15 15 15 Ma18 M18 empty 2 10 0 14 -1 -66577 0;
 #N canvas 50 87 470 320 pmpd 0;
 #X msg 143 132 reset;
 #X obj 7 70 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1;
@@ -747,7 +679,78 @@ of pd when more natural evolution is neaded...;
 -1;
 #X obj 1 216 cnv 10 500 10 empty empty empty 20 12 0 14 -99865 -66577
 0;
-#X obj 37 153 cnv 15 15 15 Ma7 M7 empty 2 10 0 14 -1 -66577 0;
-#X obj 26 170 cnv 15 15 15 empty M28 empty 2 10 0 14 -1 -66577 0;
-#X obj 158 176 cnv 15 15 15 Ma16 M16 empty 2 10 0 14 -1 -66577 0;
-#X connect 30 0 29 0;
+#X obj 53 187 cnv 15 15 15 Ma7 M7 empty 2 10 0 14 -1 -66577 0;
+#X obj 38 200 cnv 15 15 15 empty M28 empty 2 10 0 14 -1 -66577 0;
+#X obj 155 200 cnv 15 15 15 Ma16 M16 empty 2 10 0 14 -1 -66577 0;
+#X text 66 263 Physical modeling for pure data using a collection of
+physical ojects.;
+#X text 95 409 Look at mass and link help file :;
+#N canvas 257 116 879 595 simple_example 0;
+#X obj 356 237 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+-1 -1 0 0;
+#X obj 169 109 hradio 15 1 0 5 empty empty empty 0 -6 0 8 -262144 -1
+-1 0;
+#N canvas 477 50 445 299 preset 0;
+#X msg 36 193 setK 0.05 \, setD 0 \, setD2 30;
+#X msg 55 166 setK 1 \, setD 0 \, setD2 30;
+#X msg 75 138 setK 1 \, setD 0 \, setD2 200;
+#X obj 36 16 inlet;
+#X obj 115 254 outlet;
+#X msg 95 108 setK 300 \, setD 300 \, setD2 5;
+#X obj 36 43 sel 2 1 0 3 4;
+#X msg 115 78 setK 3000 \, setD 1000 \, setD2 5000;
+#X connect 0 0 4 0;
+#X connect 1 0 4 0;
+#X connect 2 0 4 0;
+#X connect 3 0 6 0;
+#X connect 5 0 4 0;
+#X connect 6 0 0 0;
+#X connect 6 1 1 0;
+#X connect 6 2 2 0;
+#X connect 6 3 5 0;
+#X connect 6 4 7 0;
+#X connect 7 0 4 0;
+#X restore 169 130 pd preset;
+#X obj 336 237 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+-1 -1 0 0;
+#N canvas 50 110 268 186 stuff 0;
+#X obj 13 20 loadbang;
+#X obj 48 97 s \$0-link;
+#X obj 13 72 t b b;
+#X obj 13 123 s \$0-mass;
+#X obj 13 45 metro 5;
+#X obj 89 20 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X msg 124 92 reset;
+#X msg 89 66 resetL \, resetF;
+#X obj 89 40 t b b;
+#X connect 0 0 4 0;
+#X connect 2 0 3 0;
+#X connect 2 1 1 0;
+#X connect 4 0 2 0;
+#X connect 5 0 8 0;
+#X connect 6 0 3 0;
+#X connect 7 0 1 0;
+#X connect 8 0 7 0;
+#X connect 8 1 6 0;
+#X restore 75 65 pd stuff;
+#X text 98 346 click or move the slider ->;
+#X obj 169 167 link \$0-link 0 1 0 200;
+#X obj 356 167 mass \$0-mass 10000 0;
+#X text 268 106 <- differents comportement of the link;
+#X text 396 346 look at the movement of the mass (the right slider)
+;
+#X text 80 415 The mass is linked to the cursor with differents kind
+of link (see the preset);
+#X text 80 461 Surch system can be useful for replacing the line object
+of pd when more natural evolution is needed...;
+#X text 71 18 Behavior of a single mass linked to a fixed point with
+a visco elastic link.;
+#X connect 1 0 2 0;
+#X connect 2 0 6 0;
+#X connect 3 0 6 0;
+#X connect 6 1 7 0;
+#X connect 7 0 0 0;
+#X connect 7 0 6 1;
+#X restore 71 521 pd simple_example;
+#X connect 27 0 26 0;
