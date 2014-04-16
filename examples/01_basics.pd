@@ -1,6 +1,6 @@
-#N canvas 425 76 515 653 12;
+#N canvas 423 82 515 653 12;
 #X declare -path ../;
-#N canvas 50 97 623 384 read 0;
+#N canvas 50 112 623 384 read 0;
 #X text 412 312 ch20031213;
 #X text 30 25 The aim of this collection of objects is to create physical
 behavior with pure data. It's not audio synthesis. But it can be used
@@ -14,7 +14,7 @@ of the "physical" geometry \, but it's not mandatory.;
 be highly appreciated :;
 #X text 28 240 Informations can be found online:;
 #X restore 69 316 pd read me first;
-#N canvas 50 87 663 567 basics 0;
+#N canvas 50 92 663 567 basics 0;
 #X text 29 272 This collection of objects can be interconnected for
 the creation of "physical" structures. Such structures can then move
 \, and distord themselves \, according to forces applied to them.;
@@ -36,7 +36,7 @@ and output a force for each mass.;
 of masses at once. They can be used for global interaction. We will
 look further into it later.;
 #X restore 69 344 pd basics;
-#N canvas 424 30 645 737 global_description 0;
+#N canvas 422 82 645 737 global_description 0;
 #X obj 35 149 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
 #X obj 35 268 print;
@@ -83,25 +83,25 @@ mass.;
 #X connect 15 0 5 0;
 #X connect 16 0 5 1;
 #X restore 69 373 pd global_description;
-#N canvas 50 92 762 661 test 0;
+#N canvas 50 97 762 661 test 0;
 #X msg 104 114 1;
 #X msg 70 114 0;
 #X msg 37 114 -1;
 #X msg 137 114 2;
 #X obj 15 16 loadbang;
-#X floatatom 37 185 5 0 0 0 - - -;
+#X floatatom 37 185 5 0 0 0 - - -, f 5;
 #X msg 106 390 1;
 #X msg 72 390 0;
 #X msg 39 390 -1;
 #X msg 139 390 2;
-#X floatatom 39 461 5 0 0 0 - - -;
-#X floatatom 37 325 5 0 0 0 - - -;
+#X floatatom 39 461 5 0 0 0 - - -, f 5;
+#X floatatom 37 325 5 0 0 0 - - -, f 5;
 #X msg 106 508 1;
 #X msg 72 508 0;
 #X msg 39 508 -1;
 #X msg 139 508 2;
-#X floatatom 39 579 5 0 0 0 - - -;
-#X floatatom 172 267 5 0 0 0 - - -;
+#X floatatom 39 579 5 0 0 0 - - -, f 5;
+#X floatatom 172 267 5 0 0 0 - - -, f 5;
 #X msg 104 264 1;
 #X msg 70 264 0;
 #X msg 37 264 -1;
@@ -148,7 +148,7 @@ previous links.;
 #X restore 71 494 pd test;
 #X obj 96 432 mass;
 #X obj 96 462 link;
-#N canvas 102 112 450 634 list 0;
+#N canvas 100 117 451 696 list 0;
 #X obj 190 135 iAmbient2D;
 #X obj 305 137 iAmbient3D;
 #X obj 190 166 iCircle2D;
@@ -184,6 +184,8 @@ previous links.;
 #X text 21 579 other;
 #X obj 190 579 pmpd;
 #X obj 308 578 pmpd~;
+#X obj 190 601 pmpd2d;
+#X obj 190 623 pmpd3d;
 #X restore 71 551 pd list of pmpd's object;
 #X obj 10 200 cnv 15 15 15 Ma1 M1 empty 2 10 0 14 -1 -66577 0;
 #X obj 24 185 cnv 15 15 15 Ma3 M3 empty 2 10 0 14 -1 -66577 0;
@@ -685,7 +687,7 @@ previous links.;
 #X text 66 263 Physical modeling for pure data using a collection of
 physical ojects.;
 #X text 95 409 Look at mass and link help file :;
-#N canvas 257 116 879 595 simple_example 0;
+#N canvas 255 121 879 595 simple_example 0;
 #X obj 356 237 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
 -1 -1 0 0;
 #X obj 169 109 hradio 15 1 0 5 empty empty empty 0 -6 0 8 -262144 -1
