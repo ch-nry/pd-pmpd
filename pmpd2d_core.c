@@ -518,7 +518,7 @@ void pmpd2d_delMass_int(t_pmpd2d *x, int delmass)
 		{
 			if (x->link[i].mass1->num > delmass )
 			{ x->link[i].mass1 = &x->mass[x->link[i].mass1->num-1]; }
-			else if (x->link[i].mass2->num > delmass )
+			if (x->link[i].mass2->num > delmass )
 			{ x->link[i].mass2 = &x->mass[x->link[i].mass2->num-1]; }
 		}
 		x->nb_mass--;

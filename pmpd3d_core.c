@@ -608,7 +608,7 @@ void pmpd3d_delMass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 							// post("mass %d : relocate link %d to mass %d",i, j, i-nb_toremove);
 							x->link[j].mass1 = &x->mass[i-nb_toremove]; 
 						}
-						else if (x->link[j].mass2->num == i )
+						if (x->link[j].mass2->num == i )
 						{ 
 							// post("mass %d : relocate link2 %d to mass %d",i, j, i-nb_toremove);
 							x->link[j].mass2 = &x->mass[i-nb_toremove];				
