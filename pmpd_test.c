@@ -1,7 +1,7 @@
 int test_1d_mass(int i, t_pmpd *x, int argc, t_atom *argv)
 {
 	t_float tmp;
-	t_int j = 1;
+	t_int j = 1, k;
 	while (j < argc) 
 	{
 		if (argv[j].a_type != A_SYMBOL) 
@@ -87,7 +87,67 @@ int test_1d_mass(int i, t_pmpd *x, int argc, t_atom *argv)
 				if ( x->mass[i].forceX >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
-		else
+			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkSup") )
+			{ // link number
+				tmp=0;
+				for (k=0; k < x->nb_link; k++)
+				{
+					if ( (x->link[k].mass1->num == x->mass[i].num) ||  (x->link[k].mass2->num == x->mass[i].num) ) tmp++;
+				}
+				if ( tmp <= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				j+=2;
+			}
+			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkInf") )
+			{ // link number
+				tmp=0;
+				for (k=0; k < x->nb_link; k++)
+				{
+					if ( (x->link[k].mass1->num == x->mass[i].num) ||  (x->link[k].mass2->num == x->mass[i].num) ) tmp++;
+				}
+				if ( tmp >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				j+=2;
+			}
+			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkEqual") )
+			{ // link number
+				tmp=0;
+				for (k=0; k < x->nb_link; k++)
+				{
+					if ( (x->link[k].mass1->num == x->mass[i].num) ||  (x->link[k].mass2->num == x->mass[i].num) ) tmp++;
+				}
+				if ( tmp != atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				j+=2;
+			}
+			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkNameSup") )
+			{ // link name, link number
+				tmp=0;
+				for (k=0; k < x->nb_link; k++)
+				{
+					if ( (x->link[k].Id ==  atom_getsymbolarg(j+1,argc,argv)) && ((x->link[k].mass2->num == x->mass[i].num) ||  (x->link[k].mass1->num == x->mass[i].num)) ) tmp++;
+				}
+				if ( tmp <= atom_getfloatarg(j+2,argc,argv) ) { return(0); }
+				j+=3;
+			}
+			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkNameInf") )
+			{ // link name, link number
+				tmp=0;
+				for (k=0; k < x->nb_link; k++)
+				{
+					if ( (x->link[k].Id ==  atom_getsymbolarg(j+1,argc,argv)) && ((x->link[k].mass2->num == x->mass[i].num) ||  (x->link[k].mass1->num == x->mass[i].num)) ) tmp++;
+				}
+				if ( tmp >= atom_getfloatarg(j+2,argc,argv) ) { return(0); }
+				j+=3;
+			}
+			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkNameEqual") )
+			{ // link name, link number
+				tmp=0;
+				for (k=0; k < x->nb_link; k++)
+				{
+					if ( (x->link[k].Id ==  atom_getsymbolarg(j+1,argc,argv)) && ((x->link[k].mass2->num == x->mass[i].num) ||  (x->link[k].mass1->num == x->mass[i].num)) ) tmp++;
+				}
+				if ( tmp != atom_getfloatarg(j+2,argc,argv) ) { return(0); }
+				j+=3;
+			}
+			else
 			{
 				pd_error(x,"Option \"%s\" not reconized, stoping test",atom_getsymbolarg(j,argc,argv)->s_name);
 				return(-1);
