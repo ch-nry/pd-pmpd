@@ -76,7 +76,7 @@ void pmpd3d_setK(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
 		else
 		{
-			offset = atom_getfloatarg(1, argc, argv);
+			offset = atom_getfloatarg(0, argc, argv);
 			n=min(npoints,x->nb_link-atom_getfloatarg(1, argc, argv));
 			for (i=0; i < n; i++)
 			{
@@ -164,7 +164,7 @@ void pmpd3d_setD(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
 		else
 		{
-			offset = atom_getfloatarg(1, argc, argv);
+			offset = atom_getfloatarg(0, argc, argv);
 			n=min(npoints,x->nb_link-atom_getfloatarg(1, argc, argv));
 			for (i=0; i < n; i++)
 			{
@@ -259,7 +259,7 @@ void pmpd3d_setDEnv(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
 		else
 		{
-			offset = atom_getfloatarg(1, argc, argv);
+			offset = atom_getfloatarg(0, argc, argv);
 			n=min(npoints,x->nb_mass-atom_getfloatarg(1, argc, argv));
 			for (i=0; i < n; i++)
 			{
@@ -281,7 +281,7 @@ void pmpd3d_setDEnvOffset(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     {
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
-        x->mass[tmp].D2offset = atom_getfloatarg(1, argc, argv);
+        x->mass[tmp].D2offset = atom_getfloatarg(0, argc, argv);
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -354,7 +354,7 @@ void pmpd3d_setDEnvOffset(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
 		else
 		{
-			offset = atom_getfloatarg(1, argc, argv);
+			offset = atom_getfloatarg(0, argc, argv);
 			n=min(npoints,x->nb_mass-atom_getfloatarg(1, argc, argv));
 			for (i=0; i < n; i++)
 			{
@@ -936,20 +936,19 @@ void pmpd3d_pos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
 		else
 		{
-			offset = atom_getfloatarg(1, argc, argv);
-			n=min((int)npoints/3,x->nb_mass-offset);
-			n+=offset;
-			for (i=offset; i < n; i++)
+			offset = atom_getfloatarg(0, argc, argv);
+			n=min((int)npoints/2,x->nb_mass-offset);
+			for (i=0; i < n; i++)
 			{
-					x->mass[i].posX = K*vec[3*i].w_float;
-					x->mass[i].posY = K*vec[3*i+1].w_float;
-					x->mass[i].posZ = K*vec[3*i+2].w_float;
-                    x->mass[i].speedX = 0; 
-                    x->mass[i].forceX = 0;
-                    x->mass[i].speedY = 0; 
-                    x->mass[i].forceY = 0;
-                    x->mass[i].speedZ = 0; 
-                    x->mass[i].forceZ = 0;
+					x->mass[i+offset].posX = K*vec[3*i].w_float;
+                    x->mass[i+offset].speedX = 0; 
+                    x->mass[i+offset].forceX = 0;
+					x->mass[i+offset].posY = K*vec[3*i+1].w_float;
+                    x->mass[i+offset].speedY = 0; 
+                    x->mass[i+offset].forceY = 0; 
+					x->mass[i+offset].posZ = K*vec[3*i+1].w_float;
+                    x->mass[i+offset].speedZ = 0; 
+                    x->mass[i+offset].forceZ = 0;                    
 			}
 		}
 	} 
@@ -1020,14 +1019,13 @@ void pmpd3d_posX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
 		else
 		{
-			offset = atom_getfloatarg(1, argc, argv);
+			offset = atom_getfloatarg(0, argc, argv);
 			n=min(npoints,x->nb_mass-offset);
-			n+=offset;
-			for (i=offset; i < n; i++)
+			for (i=0; i < n; i++)
 			{
-					x->mass[i].posX = K*vec[i].w_float;
-                    x->mass[i].speedX = 0; 
-                    x->mass[i].forceX = 0;
+					x->mass[i+offset].posX = K*vec[i].w_float;
+                    x->mass[i+offset].speedX = 0; 
+                    x->mass[i+offset].forceX = 0;
 			}
 		}
 	} 
@@ -1097,14 +1095,13 @@ void pmpd3d_posY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
 		else
 		{
-			offset = atom_getfloatarg(1, argc, argv);
+			offset = atom_getfloatarg(0, argc, argv);
 			n=min(npoints,x->nb_mass-offset);
-			n+=offset;
-			for (i=offset; i < n; i++)
+			for (i=0; i < n; i++)
 			{
-					x->mass[i].posY = K*vec[i].w_float;
-                    x->mass[i].speedY = 0; 
-                    x->mass[i].forceY = 0;
+					x->mass[i+offset].posY = K*vec[i].w_float;
+                    x->mass[i+offset].speedY = 0; 
+                    x->mass[i+offset].forceY = 0;
 			}
 		}
 	} 
@@ -1174,14 +1171,13 @@ void pmpd3d_posZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
 		else
 		{
-			offset = atom_getfloatarg(1, argc, argv);
+			offset = atom_getfloatarg(0, argc, argv);
 			n=min(npoints,x->nb_mass-offset);
-			n+=offset;
-			for (i=offset; i < n; i++)
+			for (i=0; i < n; i++)
 			{
-					x->mass[i].posZ = K*vec[i].w_float;
-                    x->mass[i].speedZ = 0; 
-                    x->mass[i].forceZ = 0;
+					x->mass[i+offset].posZ = K*vec[i].w_float;
+                    x->mass[i+offset].speedZ = 0; 
+                    x->mass[i+offset].forceZ = 0;
 			}
 		}
 	} 
