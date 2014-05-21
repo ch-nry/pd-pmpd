@@ -1,5 +1,5 @@
-#define nb_max_link   100000 
-#define nb_max_mass   100000
+#define nb_max_link   5000000 
+#define nb_max_mass   5000000
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
