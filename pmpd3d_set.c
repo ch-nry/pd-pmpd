@@ -1,6 +1,6 @@
 void pmpd3d_setK(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i;
+    int tmp, i, offset;
     t_garray *a;
     int npoints, n;
     t_word *vec;
@@ -44,11 +44,51 @@ void pmpd3d_setK(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_link; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+				{
+					x->link[i].K = K*vec[n].w_float;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
+	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
+	{
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			offset = atom_getfloatarg(1, argc, argv);
+			n=min(npoints,x->nb_link-atom_getfloatarg(1, argc, argv));
+			for (i=0; i < n; i++)
+			{
+					x->link[i+offset].K = K*vec[i].w_float;
+			}
+		}
+	}
 }
 
 void pmpd3d_setD(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i;
+    int tmp, i, offset;
     t_garray *a;
     int npoints, n;
     t_word *vec;
@@ -92,11 +132,51 @@ void pmpd3d_setD(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_link; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+				{
+					x->link[i].D = K*vec[n].w_float;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
+	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
+	{
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			offset = atom_getfloatarg(1, argc, argv);
+			n=min(npoints,x->nb_link-atom_getfloatarg(1, argc, argv));
+			for (i=0; i < n; i++)
+			{
+					x->link[i+offset].D = K*vec[i].w_float;
+			}
+		}
+	}
 }
 
 void pmpd3d_setDEnv(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i;
+    int tmp, i, offset;
     t_garray *a;
     int npoints, n;
     t_word *vec;
@@ -147,11 +227,51 @@ void pmpd3d_setDEnv(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					x->mass[i].D2 = K*vec[n].w_float;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
+	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
+	{
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			offset = atom_getfloatarg(1, argc, argv);
+			n=min(npoints,x->nb_mass-atom_getfloatarg(1, argc, argv));
+			for (i=0; i < n; i++)
+			{
+					x->mass[i+offset].D2 = K*vec[i].w_float;
+			}
+		}
+	}
 }
 
 void pmpd3d_setDEnvOffset(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i;
+    int tmp, i, offset;
     t_garray *a;
     int npoints, n;
     t_word *vec;
@@ -202,11 +322,51 @@ void pmpd3d_setDEnvOffset(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					x->mass[i].D2offset = K*vec[n].w_float;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
+	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
+	{
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			offset = atom_getfloatarg(1, argc, argv);
+			n=min(npoints,x->nb_mass-atom_getfloatarg(1, argc, argv));
+			for (i=0; i < n; i++)
+			{
+					x->mass[i+offset].D2offset = K*vec[i].w_float;
+			}
+		}
+	}
 }
 
 void pmpd3d_setL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i;
+    int tmp, i, offset;
     t_garray *a;
     int npoints, n;
     t_word *vec;
@@ -696,7 +856,11 @@ void pmpd3d_setInactive(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_pos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // displace a mass to a certain position
-	t_int tmp, i;
+	t_int tmp, i, offset;
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    t_float K;
 
 	if ( (argc == 4) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
 	{
@@ -730,12 +894,75 @@ void pmpd3d_pos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					x->mass[i].posX = K*vec[n].w_float;
+                    x->mass[i].speedX = 0; 
+                    x->mass[i].forceX = 0;
+					n++;
+					x->mass[i].posY = K*vec[n].w_float;
+                    x->mass[i].speedY = 0; 
+                    x->mass[i].forceY = 0;
+					n++;
+					x->mass[i].posZ = K*vec[n].w_float;
+                    x->mass[i].speedZ = 0; 
+                    x->mass[i].forceZ = 0;
+					n++;
+					if (n >= npoints +2) break;
+				}
+			}
+		}
+	}
+	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
+	{
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			offset = atom_getfloatarg(1, argc, argv);
+			n=min((int)npoints/3,x->nb_mass-offset);
+			n+=offset;
+			for (i=offset; i < n; i++)
+			{
+					x->mass[i].posX = K*vec[3*i].w_float;
+					x->mass[i].posY = K*vec[3*i+1].w_float;
+					x->mass[i].posZ = K*vec[3*i+2].w_float;
+                    x->mass[i].speedX = 0; 
+                    x->mass[i].forceX = 0;
+                    x->mass[i].speedY = 0; 
+                    x->mass[i].forceY = 0;
+                    x->mass[i].speedZ = 0; 
+                    x->mass[i].forceZ = 0;
+			}
+		}
+	} 
 }
 
 void pmpd3d_posX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // displace a mass to a certain position
-	t_int tmp, i;
+	t_int tmp, i, offset;
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    t_float K;
 
 	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
@@ -759,12 +986,61 @@ void pmpd3d_posX(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					x->mass[i].posX = K*vec[n].w_float;
+                    x->mass[i].speedX = 0; 
+                    x->mass[i].forceX = 0;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
+	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
+	{
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			offset = atom_getfloatarg(1, argc, argv);
+			n=min(npoints,x->nb_mass-offset);
+			n+=offset;
+			for (i=offset; i < n; i++)
+			{
+					x->mass[i].posX = K*vec[i].w_float;
+                    x->mass[i].speedX = 0; 
+                    x->mass[i].forceX = 0;
+			}
+		}
+	} 
 }
 
 void pmpd3d_posY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // displace a mass to a certain position
-	t_int tmp, i;
+	t_int tmp, i, offset;
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    t_float K;
 
 	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
@@ -787,12 +1063,61 @@ void pmpd3d_posY(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					x->mass[i].posY = K*vec[n].w_float;
+                    x->mass[i].speedY = 0; 
+                    x->mass[i].forceY = 0;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
+	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
+	{
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			offset = atom_getfloatarg(1, argc, argv);
+			n=min(npoints,x->nb_mass-offset);
+			n+=offset;
+			for (i=offset; i < n; i++)
+			{
+					x->mass[i].posY = K*vec[i].w_float;
+                    x->mass[i].speedY = 0; 
+                    x->mass[i].forceY = 0;
+			}
+		}
+	} 
 }
 
 void pmpd3d_posZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // displace a mass to a certain position
-	t_int tmp, i;
+	t_int tmp, i, offset;
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    t_float K;
 
 	if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
 	{
@@ -815,6 +1140,51 @@ void pmpd3d_posZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			}
 		}
 	}
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					x->mass[i].posZ = K*vec[n].w_float;
+                    x->mass[i].speedZ = 0; 
+                    x->mass[i].forceZ = 0;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
+	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
+	{
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			offset = atom_getfloatarg(1, argc, argv);
+			n=min(npoints,x->nb_mass-offset);
+			n+=offset;
+			for (i=offset; i < n; i++)
+			{
+					x->mass[i].posZ = K*vec[i].w_float;
+                    x->mass[i].speedZ = 0; 
+                    x->mass[i].forceZ = 0;
+			}
+		}
+	} 
 }
 
 void pmpd3d_overdamp(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)

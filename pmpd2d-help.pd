@@ -1,4 +1,4 @@
-#N canvas 289 169 572 750 10;
+#N canvas 287 174 572 750 10;
 #X declare -lib Gem;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -574,7 +574,7 @@ the model. Messages create links and masses or destroy them.;
 links. They work as general links but their calculation is made following
 a vector.;
 #X restore 12 407 pd creation____________;
-#N canvas 82 124 1057 814 dynamic 0;
+#N canvas 80 129 1057 814 dynamic 0;
 #X obj -35 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj -30 85 cnv 15 150 670 empty empty empty 20 12 0 14 -233017 -66577
@@ -623,7 +623,6 @@ a vector.;
 #X text 160 505 \$2 / \$3 : Value;
 #X msg 0 487 setForceX \$1 \$2;
 #X msg 0 506 setForceY \$1 \$2;
-#X text 150 131 \$2 / \$3 : Value;
 #X msg -20 163 force \$1 \$2 \$3;
 #X text 156 241 \$1 / \$2 : Value;
 #X msg -1 550 setSpeedX \$1 \$2;
@@ -699,6 +698,7 @@ uses this argument as the value applied to all masses (or links);
 #X text 152 202 \$2 / \$3 : Value (float or symbol);
 #X msg 443 532 setInactive \$1;
 #X msg 444 576 setActive \$1;
+#X text 150 131 \$2 / \$3 : Value (float or table);
 #X restore 12 427 pd dynamic settings ___;
 #X text 112 658 54_pmpd2dtest.pd;
 #X obj 325 272 print;

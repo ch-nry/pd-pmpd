@@ -1,4 +1,4 @@
-#N canvas 375 233 570 717 10;
+#N canvas 373 238 570 717 10;
 #X declare -lib Gem;
 #X obj 4 289 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -200,7 +200,7 @@ the model. Messages create links and masses or destroy them.;
 links. They work as general links except their calculation is made
 following a vector.;
 #X restore 12 377 pd creation____________;
-#N canvas 70 189 1143 866 dynamic 0;
+#N canvas 68 189 1143 866 dynamic 0;
 #X obj 5 3 cnv 15 1050 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 84 cnv 15 150 750 empty empty empty 20 12 0 14 -233017 -66577
@@ -247,7 +247,6 @@ following a vector.;
 #X text 193 512 \$2 / \$3 : Value;
 #X msg 39 502 setForceX \$1 \$2;
 #X msg 39 521 setForceY \$1 \$2;
-#X text 189 131 \$2 / \$3 : Value;
 #X msg 15 171 force \$1 \$2 \$3;
 #X text 173 730 Change environement damping;
 #X msg 39 582 setSpeedX \$1 \$2;
@@ -334,6 +333,7 @@ uses this argument as the value applied to all masses (or links);
 #X text 195 761 \$2 : damping (float or table);
 #X text 193 467 \$2 : New Id;
 #X text 189 212 \$2 / \$3 : Value (float or symbol);
+#X text 189 131 \$2 / \$3 : Value (float or table);
 #X restore 12 397 pd dynamic settings ___;
 #X text 158 397 To set the model parameters after creation.;
 #N canvas 153 264 1157 693 masses_attributes 0;
