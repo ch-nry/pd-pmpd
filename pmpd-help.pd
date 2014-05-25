@@ -1,4 +1,4 @@
-#N canvas 544 167 584 778 10;
+#N canvas 542 172 584 778 10;
 #X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 729 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
@@ -636,36 +636,36 @@ and forces of masses.;
 #X text 197 660 \$1 (optional): Masses Id;
 #X text 197 676 \$2 (optional): Masses Id;
 #X restore 12 497 pd masses_attributes___;
-#N canvas 410 289 631 464 statistics 0;
-#X obj 20 41 cnv 15 170 150 empty empty empty 20 12 0 14 -233017 -66577
+#N canvas 869 217 619 540 statistics 0;
+#X obj 20 41 cnv 15 170 190 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 19 21 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 260 196 \$1 : none or Id;
+#X text 368 230 \$1 : none or Id;
 #X text 202 119 output the standard deviation of masses force;
 #X text 202 166 output the standard deviation of masses velocity;
 #X text 22 21 masses :;
-#X obj 23 247 cnv 15 170 180 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 23 277 cnv 15 170 220 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 23 227 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 23 257 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 246 434 \$1 : none or Id;
-#X text 209 316 output the standard deviation of links length;
-#X text 208 358 output the standard deviation of links center position
+#X text 362 502 \$1 : none or Id;
+#X text 209 346 output the standard deviation of links length;
+#X text 208 388 output the standard deviation of links center position
 velocity;
-#X text 209 405 output the standard deviation of links length change
+#X text 209 435 output the standard deviation of links length change
 ;
-#X text 26 227 links :;
+#X text 26 257 links :;
 #X text 201 51 output the average position of masses;
 #X text 202 74 output the standard deviation of masses position;
 #X text 202 143 output the average velocity of masses;
-#X text 208 254 output the average position of links center;
-#X text 208 297 output the average links length;
-#X text 208 336 output the average center position velocity of links
+#X text 208 284 output the average position of links center;
+#X text 208 327 output the average links length;
+#X text 208 366 output the average center position velocity of links
 ;
-#X text 209 385 output the average change in links length;
+#X text 209 415 output the average change in links length;
 #X text 201 96 output the average force applied to masses;
-#X text 208 274 output the standard deviation of links center position
+#X text 208 304 output the standard deviation of links center position
 ;
 #X msg 30 51 massPosMean [\$1];
 #X msg 30 74 massPosStd [\$1];
@@ -673,14 +673,22 @@ velocity;
 #X msg 31 120 massForceStd [\$1];
 #X msg 30 97 massForceMean [\$1];
 #X msg 31 143 massSpeedMean [\$1];
-#X msg 34 254 linkPosMean [\$1];
-#X msg 34 275 linkPosStd [\$1];
-#X msg 34 296 linkLengthMean [\$1];
-#X msg 34 317 linkLengthStd [\$1];
-#X msg 34 338 linkPosSpeedMean [\$1];
-#X msg 34 358 linkPosSpeedStd [\$1];
-#X msg 34 384 linkLengthSpeedMean [\$1];
-#X msg 34 405 linkLengthSpeedStd [\$1];
+#X msg 34 284 linkPosMean [\$1];
+#X msg 34 305 linkPosStd [\$1];
+#X msg 34 326 linkLengthMean [\$1];
+#X msg 34 347 linkLengthStd [\$1];
+#X msg 34 368 linkPosSpeedMean [\$1];
+#X msg 34 388 linkPosSpeedStd [\$1];
+#X msg 34 414 linkLengthSpeedMean [\$1];
+#X msg 34 435 linkLengthSpeedStd [\$1];
+#X msg 31 187 massInfo \$1;
+#X msg 35 457 linkInfo \$1;
+#X msg 31 208 massNumber \$1;
+#X msg 35 478 linkNumber;
+#X text 201 187 output various information on the masses;
+#X text 202 210 output the number of masses;
+#X text 208 457 output various information on the links;
+#X text 209 479 output the number of links;
 #X restore 12 537 pd statistics _________;
 #X text 161 539 To get statistical data of the simulation.;
 #X text 101 388 Bang - A bang at the left inlet computes the new model

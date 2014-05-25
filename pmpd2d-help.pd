@@ -1,4 +1,4 @@
-#N canvas 285 179 572 750 10;
+#N canvas 283 184 572 750 10;
 #X declare -lib Gem;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -900,12 +900,12 @@ the pm world (Xmin \, Xmax \, Ymin \, Ymax);
 ;
 #X text 307 171 create a one time spacial interaction on masses;
 #X restore 12 505 pd interactors ________;
-#N canvas 892 284 589 534 statistics 0;
-#X obj -126 50 cnv 15 150 170 empty empty empty 20 12 0 14 -233017
+#N canvas 890 238 584 585 statistics 0;
+#X obj -127 50 cnv 15 150 210 empty empty empty 20 12 0 14 -233017
 -66577 0;
 #X obj -125 30 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 145 224 \$1 : none or Id;
+#X text 241 250 \$1 : none or Id;
 #X msg -121 63 massPosMean;
 #X msg -121 85 massPosStd \$1;
 #X msg -121 110 massForceMean;
@@ -915,23 +915,23 @@ the pm world (Xmin \, Xmax \, Ymin \, Ymax);
 #X text 30 63 output the average position of masses and center distance
 ;
 #X text -112 30 masses :;
-#X obj -125 266 cnv 15 150 250 empty empty empty 20 12 0 14 -233017
+#X obj -125 286 cnv 15 150 290 empty empty empty 20 12 0 14 -233017
 -66577 0;
-#X obj -126 246 cnv 15 550 15 empty empty empty 20 12 0 14 -158509
+#X obj -126 266 cnv 15 550 15 empty empty empty 20 12 0 14 -158509
 -66577 0;
-#X msg -119 301 linkPosStd \$1;
-#X msg -119 358 linkLengthStd \$1;
-#X msg -119 414 linkPosSpeedStd \$1;
-#X text 150 512 \$1 : none or Id;
-#X msg -119 479 linkLengthSpeedStd \$1;
-#X msg -119 273 linkPosMean \$1;
-#X msg -119 329 linkLengthMean \$1;
-#X msg -118 386 linkPosSpeedMean \$1;
-#X msg -119 449 linkLengthSpeedMean \$1;
-#X text -113 246 links :;
+#X msg -119 321 linkPosStd \$1;
+#X msg -119 378 linkLengthStd \$1;
+#X msg -119 434 linkPosSpeedStd \$1;
+#X text 289 563 \$1 : none or Id;
+#X msg -119 499 linkLengthSpeedStd \$1;
+#X msg -119 293 linkPosMean \$1;
+#X msg -119 349 linkLengthMean \$1;
+#X msg -118 406 linkPosSpeedMean \$1;
+#X msg -119 469 linkLengthSpeedMean \$1;
+#X text -113 266 links :;
 #X text 30 161 output the average velocity of masses (X \, Y \, Norm)
 ;
-#X text 34 384 output the average center position velocity of links
+#X text 34 404 output the average center position velocity of links
 (X \, Y \, Norm);
 #X text 30 84 output the standard deviation of mass positions and center
 distance;
@@ -939,23 +939,29 @@ distance;
 Norm);
 #X text 31 133 output the standard deviation of mass forces;
 #X text 30 188 output the standard deviation of mass velocities;
-#X text 32 303 output the standard deviation of link center positions
+#X text 32 323 output the standard deviation of link center positions
 ;
-#X text 32 330 output the average link lengths (X \, Y \, L);
-#X text 33 357 output the standard deviation of link lengths;
-#X text 34 414 output the standard deviation of link center position
+#X text 32 350 output the average link lengths (X \, Y \, L);
+#X text 33 377 output the standard deviation of link lengths;
+#X text 34 434 output the standard deviation of link center position
 velocities;
-#X text 32 450 output the average change in link lengths (X \, Y \,
+#X text 32 470 output the average change in link lengths (X \, Y \,
 Norm);
-#X text 32 479 output the standard deviation of link lengths change
+#X text 32 499 output the standard deviation of link lengths change
 ;
-#X text 32 270 output the average position of link centers (X \, Y
+#X text 32 290 output the average position of link centers (X \, Y
 \, center disdance);
 #X obj -125 6 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text -113 5 STATISTICS Messages;
 #X msg -120 213 massInfo \$1;
-#X msg -118 508 linkInfo \$1;
+#X msg -118 525 linkInfo \$1;
+#X msg -120 239 massNumber \$1;
+#X msg -118 551 linkNumber;
+#X text 30 213 output various information on the masses;
+#X text 31 241 output the number of masses;
+#X text 35 525 output various information on the links;
+#X text 36 553 output the number of links;
 #X restore 12 525 pd statistics _________;
 #X text 164 507 To send complex forces;
 #X text 163 526 To get statistical data of the simulation;

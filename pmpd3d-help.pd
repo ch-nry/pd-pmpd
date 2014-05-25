@@ -1,4 +1,4 @@
-#N canvas 373 238 570 717 10;
+#N canvas 332 144 570 717 10;
 #X declare -lib Gem;
 #X obj 4 289 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -908,12 +908,12 @@ forceYSup \$1 / forceYInf \$1 / forceZSup \$1 / forceZInf \$1 / nbLinkInf
 #X text 375 231 add a dpherical interactor to masses;
 #X text 54 138 \$2 \$3 \$4 : vector perpendicular to the plane;
 #X restore 12 476 pd interactors ________;
-#N canvas 290 156 605 507 statistics 0;
-#X obj -61 51 cnv 15 150 170 empty empty empty 20 12 0 14 -233017 -66577
+#N canvas 1012 207 621 608 statistics 0;
+#X obj -61 51 cnv 15 150 210 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj -61 31 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 130 212 \$1 : none or Id;
+#X text 370 242 \$1 : none or Id;
 #X msg -56 64 massPosMean;
 #X msg -56 87 massPosStd \$1;
 #X msg -55 116 massForceMean;
@@ -925,44 +925,52 @@ forceYSup \$1 / forceYInf \$1 / forceZSup \$1 / forceZInf \$1 / nbLinkInf
 #X text 95 169 output the average velocity of masses (X \, Y \, Z \,
 Norm);
 #X text -48 31 masses :;
-#X obj -61 251 cnv 15 150 240 empty empty empty 20 12 0 14 -233017
+#X obj -61 291 cnv 15 150 280 empty empty empty 20 12 0 14 -233017
 -66577 0;
-#X obj -61 231 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj -61 271 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X msg -53 288 linkPosStd \$1;
-#X msg -53 341 linkLengthStd \$1;
-#X msg -53 398 linkPosSpeedStd \$1;
-#X text 129 477 \$1 : none or Id;
-#X msg -52 462 linkLengthSpeedStd \$1;
-#X msg -53 258 linkPosMean \$1;
-#X msg -53 314 linkLengthMean \$1;
-#X msg -53 368 linkPosSpeedMean \$1;
-#X msg -53 432 linkLengthSpeedMean \$1;
-#X text 98 366 output the average center position velocity of links
+#X msg -53 328 linkPosStd \$1;
+#X msg -53 381 linkLengthStd \$1;
+#X msg -53 438 linkPosSpeedStd \$1;
+#X text 288 572 \$1 : none or Id;
+#X msg -52 502 linkLengthSpeedStd \$1;
+#X msg -53 298 linkPosMean \$1;
+#X msg -53 354 linkLengthMean \$1;
+#X msg -53 408 linkPosSpeedMean \$1;
+#X msg -53 472 linkLengthSpeedMean \$1;
+#X text 98 406 output the average center position velocity of links
 (X \, Y \, Z \, Norm);
-#X text -48 231 links :;
+#X text -48 271 links :;
 #X text 95 86 output the standard deviation of mass positions and center
 distance;
 #X text 96 113 output the average force applied to masses (X \, Y \,
 Z and Norm);
 #X text 96 143 output the standard deviation of mass forces;
 #X text 95 193 output the standard deviation of mass velocities;
-#X text 98 258 output the average position of link centers (X \, Y
+#X text 98 298 output the average position of link centers (X \, Y
 \, Z \, center disdance);
-#X text 99 290 output the standard deviation of link center positions
+#X text 99 330 output the standard deviation of link center positions
 ;
-#X text 98 315 output the average links lengths (X \, Y \, Z \, L)
+#X text 98 355 output the average links lengths (X \, Y \, Z \, L)
 ;
-#X text 99 340 output the standard deviation of link lengths;
-#X text 98 398 output the standard deviation of link center position
+#X text 99 380 output the standard deviation of link lengths;
+#X text 98 438 output the standard deviation of link center position
 velocities;
-#X text 98 433 output the average change in link lengths (X \, Y \,
+#X text 98 473 output the average change in link lengths (X \, Y \,
 Z \, Norm);
-#X text 101 461 output the standard deviation of link lengths change
+#X text 101 501 output the standard deviation of link lengths change
 ;
 #X obj -61 9 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text -49 8 STATISTICS Messages;
+#X msg -54 216 massInfo \$1;
+#X msg -51 527 linkInfo \$1;
+#X msg -54 242 massNumber \$1;
+#X msg -51 548 linkNumber;
+#X text 96 216 output various information on the masses;
+#X text 97 244 output the number of masses;
+#X text 102 527 output various information on the links;
+#X text 103 550 output the number of links;
 #X restore 13 496 pd statistics _________;
 #X text 158 477 To send complex forces;
 #X text 157 498 To get statistical data of the simulation;
