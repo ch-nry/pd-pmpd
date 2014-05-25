@@ -271,6 +271,8 @@ void pmpd2d_setup(void)
 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_massInfo,       gensym("massInfo"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkInfo,       gensym("linkInfo"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massNumber,       gensym("massNumber"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkNumber,       gensym("linkNumber"), A_GIMME, 0);
 
 /* 	
  pmpd2d_interactor

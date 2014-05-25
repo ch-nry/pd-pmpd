@@ -1028,7 +1028,7 @@ void pmpd3d_linkLengthSpeedStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_massInfo(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_atom info[14];
-	int i, j;
+	int i;
 	
     if (argc==0) 
     {
@@ -1050,15 +1050,12 @@ void pmpd3d_massInfo(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			SETFLOAT(&(info[13]), x->mass[i].forceZ);
 			outlet_anything(x->main_outlet, gensym("massInfo"), 14, info);
 		}		
-		SETFLOAT(&(info[0]), x->nb_mass);
-		outlet_anything(x->main_outlet, gensym("massNumber"), 1, info);
 	}
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
-		j=0;
 		for(i=0; i < x->nb_mass; i++)
 		{
-            if (atom_getsymbolarg(0,argc,argv) == x->mass[j].Id) 
+            if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id) 
 			{
 				SETFLOAT(&(info[0]),  i);
 				SETSYMBOL(&(info[1]), x->mass[i].Id);
@@ -1075,11 +1072,8 @@ void pmpd3d_massInfo(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				SETFLOAT(&(info[12]), x->mass[i].forceY);
 				SETFLOAT(&(info[13]), x->mass[i].forceZ);
 				outlet_anything(x->main_outlet, gensym("massInfo"), 14, info);
-				j++;
 			}
 		}
-		SETFLOAT(&(info[0]), j);
-		outlet_anything(x->main_outlet, gensym("massNumber"), 1, info);
 	}
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
@@ -1108,7 +1102,7 @@ void pmpd3d_massInfo(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_linkInfo(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_atom info[14];
-	int i, j, k;
+	int i, k;
 	
     if (argc==0) 
     {
@@ -1151,15 +1145,12 @@ void pmpd3d_linkInfo(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				outlet_anything(x->main_outlet, gensym("linkInfo"), 12, info);	
 			}
 		}		
-		SETFLOAT(&(info[0]), x->nb_link);
-		outlet_anything(x->main_outlet, gensym("linkNumber"), 1, info);
 	}
     else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
     {
-		j=0;
 		for(i=0; i < x->nb_link; i++)
 		{
-            if (atom_getsymbolarg(0,argc,argv) == x->link[j].Id) 
+            if (atom_getsymbolarg(0,argc,argv) == x->link[i].Id) 
 			{
 				SETFLOAT(&(info[1]),  i);
 				SETSYMBOL(&(info[2]), x->link[i].Id);
@@ -1198,10 +1189,7 @@ void pmpd3d_linkInfo(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 					outlet_anything(x->main_outlet, gensym("linkInfo"), 12, info);	
 				}
 			}	
-			j++;
 		}
-		SETFLOAT(&(info[0]), j);
-		outlet_anything(x->main_outlet, gensym("linkNumber"), 1, info);
 	}
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
@@ -1245,5 +1233,55 @@ void pmpd3d_linkInfo(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			SETFLOAT(&(info[11]), x->link[i].D_L);
 			outlet_anything(x->main_outlet, gensym("linkInfo"), 12, info);	
 		}
+	}
+}
+
+void pmpd3d_massNumber(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_atom info[1];
+	int i, j;
+	
+    if (argc==0) 
+    {		
+		SETFLOAT(&(info[0]), x->nb_mass);
+		outlet_anything(x->main_outlet, gensym("massNumber"), 1, info);
+	}
+    else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
+    {
+		j=0;
+		for(i=0; i < x->nb_mass; i++)
+		{
+            if (atom_getsymbolarg(0,argc,argv) == x->mass[j].Id) 
+			{
+				j++;
+			}
+		}
+		SETFLOAT(&(info[0]), j);
+		outlet_anything(x->main_outlet, gensym("massNumber"), 1, info);
+	}
+}
+
+void pmpd3d_linkNumber(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_atom info[1];
+	int i, j ;
+	
+    if (argc==0) 
+    {
+		SETFLOAT(&(info[0]), x->nb_link);
+		outlet_anything(x->main_outlet, gensym("linkNumber"), 1, info);
+	}
+    else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
+    {
+		j=0;
+		for(i=0; i < x->nb_link; i++)
+		{
+            if (atom_getsymbolarg(0,argc,argv) == x->link[j].Id) 
+			{
+				j++;
+			}	
+		}
+		SETFLOAT(&(info[0]), j);
+		outlet_anything(x->main_outlet, gensym("linkNumber"), 1, info);
 	}
 }
