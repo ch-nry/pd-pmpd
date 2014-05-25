@@ -678,3 +678,179 @@ void pmpd_linkLengthSpeedStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     SETFLOAT(&(std_out[0]),stdX);
     outlet_anything(x->main_outlet, gensym("linkLengthSpeedStd"),1 , std_out);
 }
+
+
+void pmpd_massInfo(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_atom info[8];
+	int i, j;
+	
+    if (argc==0) 
+    {
+		for(i=0; i < x->nb_mass; i++)
+		{
+			SETFLOAT(&(info[0]),  i);
+			SETSYMBOL(&(info[1]), x->mass[i].Id);
+			SETFLOAT(&(info[2]),  x->mass[i].mobile);
+			SETFLOAT(&(info[3]),  1/x->mass[i].invM);
+			SETFLOAT(&(info[4]),  x->mass[i].D2);
+			SETFLOAT(&(info[5]),  x->mass[i].posX);
+			SETFLOAT(&(info[6]),  x->mass[i].speedX);
+			SETFLOAT(&(info[7]),  x->mass[i].forceX);
+			outlet_anything(x->main_outlet, gensym("massInfo"), 8, info);
+		}		
+		SETFLOAT(&(info[0]), x->nb_mass);
+		outlet_anything(x->main_outlet, gensym("massNumber"), 1, info);
+	}
+    else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
+    {
+		j=0;
+		for(i=0; i < x->nb_mass; i++)
+		{
+            if (atom_getsymbolarg(0,argc,argv) == x->mass[j].Id) 
+			{
+				SETFLOAT(&(info[0]),  i);
+				SETSYMBOL(&(info[1]), x->mass[i].Id);
+				SETFLOAT(&(info[2]),  x->mass[i].mobile);
+				SETFLOAT(&(info[3]),  1/x->mass[i].invM);
+				SETFLOAT(&(info[4]),  x->mass[i].D2);
+				SETFLOAT(&(info[5]),  x->mass[i].posX);
+				SETFLOAT(&(info[6]),  x->mass[i].speedX);
+				SETFLOAT(&(info[7]),  x->mass[i].forceX);
+				outlet_anything(x->main_outlet, gensym("massInfo"), 8, info);
+				j++;
+			}
+		}
+		SETFLOAT(&(info[0]), j);
+		outlet_anything(x->main_outlet, gensym("massNumber"), 1, info);
+	}
+    else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
+    {
+		i=(int)atom_getfloatarg(0, argc, argv);
+		i=max(i,0);
+		i=min(i,x->nb_mass-1);
+		
+		SETFLOAT(&(info[0]),  i);
+		SETSYMBOL(&(info[1]), x->mass[i].Id);
+		SETFLOAT(&(info[2]),  x->mass[i].mobile);
+		SETFLOAT(&(info[3]),  1/x->mass[i].invM);
+		SETFLOAT(&(info[4]),  x->mass[i].D2);
+		SETFLOAT(&(info[5]),  x->mass[i].posX);
+		SETFLOAT(&(info[6]),  x->mass[i].speedX);
+		SETFLOAT(&(info[7]),  x->mass[i].forceX);
+		outlet_anything(x->main_outlet, gensym("massInfo"), 8, info);
+	}
+}
+
+void pmpd_linkInfo(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_atom info[14];
+	int i, j, k;
+	
+    if (argc==0) 
+    {
+		for(i=0; i < x->nb_link; i++)
+		{
+			SETFLOAT(&(info[1]),  i);
+			SETSYMBOL(&(info[2]), x->link[i].Id);
+			SETFLOAT(&(info[3]),  x->link[i].active);
+			SETFLOAT(&(info[4]),  x->link[i].mass1->num);
+			SETFLOAT(&(info[5]),  x->link[i].mass2->num);
+			SETFLOAT(&(info[6]),  x->link[i].K);
+			SETFLOAT(&(info[7]),  x->link[i].D);
+			
+			switch(x->link[i].lType)
+			{
+			case 0 :
+				SETSYMBOL(&(info[0]),  gensym("link"));
+				SETFLOAT(&(info[8]),   x->link[i].Pow);
+				SETFLOAT(&(info[9]),   x->link[i].L);
+				SETFLOAT(&(info[10]),   x->link[i].Lmin);
+				SETFLOAT(&(info[11]),  x->link[i].Lmax);
+				outlet_anything(x->main_outlet, gensym("linkInfo"), 12, info);			
+				break;
+			case 2 :
+				SETSYMBOL(&(info[0]), gensym("tabLink"));
+				SETSYMBOL(&(info[8]), x->link[i].arrayK);
+				SETFLOAT(&(info[9]),  x->link[i].K_L);
+				SETSYMBOL(&(info[10]), x->link[i].arrayD);
+				SETFLOAT(&(info[11]), x->link[i].D_L);
+				outlet_anything(x->main_outlet, gensym("linkInfo"), 12, info);	
+			}
+		}		
+		SETFLOAT(&(info[0]), x->nb_link);
+		outlet_anything(x->main_outlet, gensym("linkNumber"), 1, info);
+	}
+    else if ((argc==1) && (argv[0].a_type == A_SYMBOL)) 
+    {
+		j=0;
+		for(i=0; i < x->nb_link; i++)
+		{
+            if (atom_getsymbolarg(0,argc,argv) == x->link[j].Id) 
+			{
+				SETFLOAT(&(info[1]),  i);
+				SETSYMBOL(&(info[2]), x->link[i].Id);
+				SETFLOAT(&(info[3]),  x->link[i].active);
+				SETFLOAT(&(info[4]),  x->link[i].mass1->num);
+				SETFLOAT(&(info[5]),  x->link[i].mass2->num);
+				SETFLOAT(&(info[6]),  x->link[i].K);
+				SETFLOAT(&(info[7]),  x->link[i].D);
+			
+				switch(x->link[i].lType)
+				{
+				case 0 :
+					SETSYMBOL(&(info[0]),  gensym("link"));
+					SETFLOAT(&(info[8]),   x->link[i].Pow);
+					SETFLOAT(&(info[9]),   x->link[i].L);
+					SETFLOAT(&(info[10]),   x->link[i].Lmin);
+					SETFLOAT(&(info[11]),  x->link[i].Lmax);
+					outlet_anything(x->main_outlet, gensym("linkInfo"), 12, info);		
+					break;
+				case 2 :
+					SETSYMBOL(&(info[0]), gensym("tabLink"));
+					SETSYMBOL(&(info[8]), x->link[i].arrayK);
+					SETFLOAT(&(info[9]),  x->link[i].K_L);
+					SETSYMBOL(&(info[10]), x->link[i].arrayD);
+					SETFLOAT(&(info[11]), x->link[i].D_L);
+					outlet_anything(x->main_outlet, gensym("linkInfo"), 12, info);	
+				}
+			}	
+			j++;
+		}
+		SETFLOAT(&(info[0]), j);
+		outlet_anything(x->main_outlet, gensym("linkNumber"), 1, info);
+	}
+    else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
+    {
+		i=(int)atom_getfloatarg(0, argc, argv);
+		i=max(i,0);
+		i=min(i,x->nb_link-1);
+		
+		SETFLOAT(&(info[1]),  i);
+		SETSYMBOL(&(info[2]), x->link[i].Id);
+		SETFLOAT(&(info[3]),  x->link[i].active);
+		SETFLOAT(&(info[4]),  x->link[i].mass1->num);
+		SETFLOAT(&(info[5]),  x->link[i].mass2->num);
+		SETFLOAT(&(info[6]),  x->link[i].K);
+		SETFLOAT(&(info[7]),  x->link[i].D);
+		
+		switch(x->link[i].lType)
+		{
+		case 0 :
+			SETSYMBOL(&(info[0]),  gensym("link"));
+			SETFLOAT(&(info[8]),   x->link[i].Pow);
+			SETFLOAT(&(info[9]),   x->link[i].L);
+			SETFLOAT(&(info[10]),   x->link[i].Lmin);
+			SETFLOAT(&(info[11]),  x->link[i].Lmax);
+			outlet_anything(x->main_outlet, gensym("linkInfo"), 12, info);			
+			break;
+		case 2 :
+			SETSYMBOL(&(info[0]), gensym("tabLink"));
+			SETSYMBOL(&(info[8]), x->link[i].arrayK);
+			SETFLOAT(&(info[9]),  x->link[i].K_L);
+			SETSYMBOL(&(info[10]), x->link[i].arrayD);
+			SETFLOAT(&(info[11]), x->link[i].D_L);
+			outlet_anything(x->main_outlet, gensym("linkInfo"), 12, info);	
+		}
+	}
+}

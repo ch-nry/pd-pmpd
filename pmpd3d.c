@@ -298,6 +298,8 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkPosSpeedStd,        	gensym("linkPosSpeedStd"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkLengthSpeedStd,		gensym("linkLengthSpeedStd"), A_GIMME, 0);
 
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massInfo,       gensym("massInfo"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkInfo,       gensym("linkInfo"), A_GIMME, 0);
 /* 	
  pmpd3d_interactor
  --

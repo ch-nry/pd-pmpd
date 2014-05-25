@@ -1,4 +1,4 @@
-#N canvas 287 174 572 750 10;
+#N canvas 285 179 572 750 10;
 #X declare -lib Gem;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -809,7 +809,7 @@ a table;
 #X text 218 203 massSpeed symbolId number speedX speedY speedZ;
 #X text 218 258 massForce symbolId number forceX forceY forceZ;
 #X restore 12 447 pd masses_attributes___;
-#N canvas 435 485 725 566 tests 0;
+#N canvas 433 489 725 566 tests 0;
 #X obj 5 3 cnv 15 700 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text 17 2 TESTS Messages;
@@ -900,7 +900,7 @@ the pm world (Xmin \, Xmax \, Ymin \, Ymax);
 ;
 #X text 307 171 create a one time spacial interaction on masses;
 #X restore 12 505 pd interactors ________;
-#N canvas 1058 327 589 534 statistics 0;
+#N canvas 892 284 589 534 statistics 0;
 #X obj -126 50 cnv 15 150 170 empty empty empty 20 12 0 14 -233017
 -66577 0;
 #X obj -125 30 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -954,6 +954,8 @@ Norm);
 #X obj -125 6 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text -113 5 STATISTICS Messages;
+#X msg -120 213 massInfo \$1;
+#X msg -118 508 linkInfo \$1;
 #X restore 12 525 pd statistics _________;
 #X text 164 507 To send complex forces;
 #X text 163 526 To get statistical data of the simulation;

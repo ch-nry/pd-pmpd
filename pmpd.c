@@ -204,6 +204,8 @@ void pmpd_setup(void)
     class_addmethod(pmpd_class, (t_method)pmpd_linkPosSpeedStd,        	gensym("linkPosSpeedStd"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linkLengthSpeedStd,		gensym("linkLengthSpeedStd"), A_GIMME, 0);
 
+    class_addmethod(pmpd_class, (t_method)pmpd_massInfo,       gensym("massInfo"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkInfo,       gensym("linkInfo"), A_GIMME, 0);
 
 /*
  pmpd_various
