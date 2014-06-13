@@ -205,7 +205,7 @@ void pmpd2d_iMatrix_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max
 		Xtable *= taille_x - 1; //from [ 0 to table size - 1[
 		Ytable *= taille_y - 1; 
 		index = (int)Xtable;
-		index += (int)Ytable*taille_y;
+		index += (int)Ytable*taille_x;
 		Xtable = Xtable - (int)(Xtable);
 		Ytable = Ytable - (int)(Ytable);
 		force1 = (1-Xtable) * tableX[index].w_float + (Xtable) * tableX[index+1].w_float ;
