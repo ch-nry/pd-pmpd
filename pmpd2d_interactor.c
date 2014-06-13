@@ -202,18 +202,24 @@ void pmpd2d_iMatrix_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max
 	{
 		Xtable = (x->mass[i].posX - zone_x_min) / (zone_x_max - zone_x_min);
 		Ytable = (x->mass[i].posY - zone_y_min) / (zone_y_max - zone_y_min);
-		Xtable *= taille_x - 1; //from [ 0 to table size - 1[
-		Ytable *= taille_y - 1; 
+		Xtable = max(Xtable, 0);
+		Xtable = min(Xtable, 1);
+		Ytable = max(Ytable, 0);
+		Ytable = min(Ytable, 1);
+		Xtable *= taille_x - 1.001; //from [ 0 to table size - 1[
+		Ytable *= taille_y - 1.001; // taille_x must be > 1
 		index = (int)Xtable;
-		index += (int)Ytable*taille_x;
+		index += ((int)Ytable)*taille_x;
 		Xtable = Xtable - (int)(Xtable);
 		Ytable = Ytable - (int)(Ytable);
+		
 		force1 = (1-Xtable) * tableX[index].w_float + (Xtable) * tableX[index+1].w_float ;
-		force2 = (1-Xtable) * tableX[index+taille_y].w_float + (Xtable) * tableX[index+1+taille_y].w_float;
+		force2 = (1-Xtable) * tableX[index+taille_x].w_float + (Xtable) * tableX[index+1+taille_x].w_float;
 		force = (1-Ytable) * force1 + Ytable * force2;
 		x->mass[i].forceX += K * force;
+		
 		force1 = (1-Xtable) * tableY[index].w_float + (Xtable) * tableY[index+1].w_float ;
-		force2 = (1-Xtable) * tableY[index+taille_y].w_float + (Xtable) * tableY[index+1+taille_y].w_float;
+		force2 = (1-Xtable) * tableY[index+taille_x].w_float + (Xtable) * tableY[index+1+taille_x].w_float;
 		force = (1-Ytable) * force1 + Ytable * force2;
 		x->mass[i].forceY += K * force;
 	}
@@ -245,6 +251,8 @@ void pmpd2d_iMatrix(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 	X = atom_getfloatarg(6, argc, argv);
 	Y = atom_getfloatarg(7, argc, argv);
+	X = max(2,X);
+	Y = max(2,Y);
 
 	if (!(a1 = (t_garray *)pd_findbyclass(atom_getsymbolarg(8,argc,argv), garray_class)))
 		pd_error(x, "%s: no such array", atom_getsymbolarg(8,argc,argv)->s_name);
