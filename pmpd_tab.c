@@ -364,7 +364,7 @@ void pmpd_linkEndT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-1)/2);
+            taille_max = min(taille_max, vecsize/2 - 1);
             for (i=0; i < taille_max ; i++)
             {
                 vec[2*i  ].w_float = x->link[i].mass1->posX;

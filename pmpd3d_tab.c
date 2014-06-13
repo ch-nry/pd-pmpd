@@ -14,7 +14,7 @@ void pmpd3d_massesPosT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_mass;
-            taille_max = min(taille_max, (vecsize-2)/3);
+            taille_max = min(taille_max, vecsize/3 -2);
             for (i=0; i < taille_max ; i++)
             {
                 vec[3*i  ].w_float = x->mass[i].posX;
@@ -70,7 +70,7 @@ void pmpd3d_massesSpeedsT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_mass;
-            taille_max = min(taille_max, (vecsize-2)/3);
+            taille_max = min(taille_max, vecsize/3 - 2);
             for (i=0; i < taille_max ; i++)
             {
                 vec[3*i  ].w_float = x->mass[i].speedX;
@@ -126,7 +126,7 @@ void pmpd3d_massesForcesT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_mass;
-            taille_max = min(taille_max, (vecsize-2)/3);
+            taille_max = min(taille_max, vecsize/3 - 2);
             for (i=0; i < taille_max ; i++)
             {
                 vec[3*i  ].w_float = x->mass[i].forceX;
@@ -787,7 +787,7 @@ void pmpd3d_linkPosT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-2)/3);
+            taille_max = min(taille_max, vecsize/3 -2);
             for (i=0; i < taille_max ; i++)
             {
                 vec[3*i  ].w_float = (x->link[i].mass2->posX + x->link[i].mass1->posX)/2;
@@ -843,7 +843,7 @@ void pmpd3d_linkLengthT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-2)/3);
+            taille_max = min(taille_max, vecsize/3 - 2);
             for (i=0; i < taille_max ; i++)
             {
                 vec[3*i  ].w_float = x->link[i].mass2->posX - x->link[i].mass1->posX;
@@ -899,7 +899,7 @@ void pmpd3d_linkPosSpeedT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-2)/3);
+            taille_max = min(taille_max, vecsize/3 - 2);
             for (i=0; i < taille_max ; i++)
             {
                 vec[3*i  ].w_float = (x->link[i].mass2->speedX + x->link[i].mass1->speedX)/2;
@@ -955,7 +955,7 @@ void pmpd3d_linkLengthSpeedT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-2)/3);
+            taille_max = min(taille_max, vecsize/3 - 2);
             for (i=0; i < taille_max ; i++)
             {
                 vec[3*i  ].w_float = x->link[i].mass2->speedX - x->link[i].mass1->speedX;
@@ -1839,7 +1839,7 @@ void pmpd3d_linkEndT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-5)/6);
+            taille_max = min(taille_max, vecsize/6 - 5 );
             for (i=0; i < taille_max ; i++)
             {
                 vec[6*i  ].w_float = x->link[i].mass1->posX;
@@ -1904,7 +1904,7 @@ void pmpd3d_linkEndXT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-1)/2);
+            taille_max = min(taille_max, vecsize/2 - 1 );
             for (i=0; i < taille_max ; i++)
             {
                 vec[2*i  ].w_float = x->link[i].mass1->posX;
@@ -1957,7 +1957,7 @@ void pmpd3d_linkEndYT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-1)/2);
+            taille_max = min(taille_max, vecsize/2 -1);
             for (i=0; i < taille_max ; i++)
             {
                 vec[2*i  ].w_float = x->link[i].mass1->posY;
@@ -2010,7 +2010,7 @@ void pmpd3d_linkEndZT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-1)/2);
+            taille_max = min(taille_max, vecsize/2 -1);
             for (i=0; i < taille_max ; i++)
             {
                 vec[2*i  ].w_float = x->link[i].mass1->posZ;
@@ -2063,7 +2063,7 @@ void pmpd3d_linkEnd1T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-2)/3);
+            taille_max = min(taille_max, vecsize/3 -2);
             for (i=0; i < taille_max ; i++)
             {
                 vec[3*i  ].w_float = x->link[i].mass1->posX;
@@ -2269,7 +2269,7 @@ void pmpd3d_linkEnd2T(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         else
         {
             int taille_max = x->nb_link;
-            taille_max = min(taille_max, (vecsize-2)/3);
+            taille_max = min(taille_max, vecsize/3 -2);
             for (i=0; i < taille_max ; i++)
             {
                 vec[3*i  ].w_float = x->link[i].mass2->posX;
