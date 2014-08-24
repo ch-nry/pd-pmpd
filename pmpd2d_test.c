@@ -1,5 +1,7 @@
 int test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 {
+// TODO : check arg number and type befor using them
+
 	t_float tmp;
 	t_int j = 1, k;
 	while (j < argc) 
