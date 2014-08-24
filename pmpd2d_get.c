@@ -545,9 +545,68 @@ void pmpd2d_linkPos(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             SETSYMBOL(&(toout[0]), x->link[i].Id);
             SETFLOAT(&(toout[1]), i);
-			SETFLOAT(&(toout[2]), (x->link[i].mass1->posX+x->link[i].mass2->posX)/2);
-			SETFLOAT(&(toout[3]), (x->link[i].mass1->posY+x->link[i].mass2->posY)/2);
+			SETFLOAT(&(toout[2]), (x->link[i].mass1->posX-x->link[i].mass2->posX));
+			SETFLOAT(&(toout[3]), (x->link[i].mass1->posY+x->link[i].mass2->posY));
             outlet_anything(x->main_outlet, gensym("linkPos"), 4, toout);
+        } 
+    }
+}
+
+void pmpd2d_linkLength(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	int i;
+    t_atom  toout[5];    
+    t_float tmp1, tmp2;
+
+    if ((argc>0)&&(argv[0].a_type == A_FLOAT)) 
+    {
+        i = atom_getfloatarg(0, argc, argv);
+        if ( (i>=0) && (i<x->nb_link) )
+        {
+            tmp1=x->link[i].mass1->posX-x->link[i].mass2->posX;
+            tmp2=x->link[i].mass1->posY-x->link[i].mass2->posY;
+
+            SETSYMBOL(&(toout[0]), x->link[i].Id);
+            SETFLOAT(&(toout[1]), i);
+            SETFLOAT(&(toout[2]), tmp1);
+            SETFLOAT(&(toout[3]), tmp2);
+            SETFLOAT(&(toout[4]), sqrt(tmp1*tmp1 + tmp2*tmp2));
+            outlet_anything(x->main_outlet, gensym("linkLength"), 5, toout);
+        }
+    }
+    else
+    if ((argc>0)&&(argv[0].a_type == A_SYMBOL))
+    {
+        SETSYMBOL(&(toout[0]), atom_getsymbolarg(0,argc,argv));
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+            {
+                tmp1=x->link[i].mass1->posX-x->link[i].mass2->posX;
+                tmp2=x->link[i].mass1->posY-x->link[i].mass2->posY;
+
+				SETFLOAT(&(toout[1]), i);
+                SETFLOAT(&(toout[2]), tmp1);
+                SETFLOAT(&(toout[3]), tmp2);
+                SETFLOAT(&(toout[4]), sqrt(tmp1*tmp1 + tmp2*tmp2));
+                outlet_anything(x->main_outlet, gensym("linkLength"), 5, toout);
+            }
+        } 
+    }
+    else
+    if (argc == 0) 
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            tmp1=x->link[i].mass1->posX-x->link[i].mass2->posX;
+            tmp2=x->link[i].mass1->posY-x->link[i].mass2->posY;
+
+            SETSYMBOL(&(toout[0]), x->link[i].Id);
+            SETFLOAT(&(toout[1]), i);
+            SETFLOAT(&(toout[2]), tmp1);
+            SETFLOAT(&(toout[3]), tmp2);
+            SETFLOAT(&(toout[4]), sqrt(tmp1*tmp1 + tmp2*tmp2));
+            outlet_anything(x->main_outlet, gensym("linkLength"), 5, toout);
         } 
     }
 }
