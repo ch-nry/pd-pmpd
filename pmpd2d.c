@@ -114,6 +114,7 @@ void pmpd2d_setup(void)
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_massForce,    	gensym("massForce"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkPos,     	gensym("linkPos"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkEnd,	       	gensym("linkEnd"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkLength,     	gensym("linkLength"), A_GIMME, 0);
 
 /*
  pmpd2d_list 
