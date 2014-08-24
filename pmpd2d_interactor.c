@@ -70,12 +70,12 @@ void pmpd2d_iCircle(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	
 	Kt = atom_getfloatarg(6, argc, argv);
 	powert = atom_getfloatarg(7, argc, argv);
-	if (powert == 0) power = 1;
+	if (powert == 0) powert = 1;
 	
 	Rmin = 0;
-	if ((argc>=9) && (argv[6].a_type == A_FLOAT)) { Rmin = (atom_getfloatarg(8,argc,argv));}
+	if ((argc>=9) && (argv[8].a_type == A_FLOAT)) { Rmin = (atom_getfloatarg(8,argc,argv));}
 	Rmax =  1000000;
-	if ((argc>=10) && (argv[7].a_type == A_FLOAT)) { Rmax = (atom_getfloatarg(9,argc,argv));}
+	if ((argc>=10) && (argv[9].a_type == A_FLOAT)) { Rmax = (atom_getfloatarg(9,argc,argv));}
 
 	if ((argc>0) && (argv[0].a_type == A_FLOAT) && (atom_getfloatarg(0,argc,argv) == -1)) // all
 	{
