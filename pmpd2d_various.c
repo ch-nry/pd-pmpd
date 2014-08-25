@@ -346,6 +346,7 @@ void pmpd2d_closestMass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)// t_fl
     else {
         if ((x->nb_mass > 0))
         {
+            x->grab_nb= 0;
             dist = sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY);
             for (i=1; i<x->nb_mass; i++)
             {
