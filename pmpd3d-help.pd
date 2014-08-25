@@ -1,4 +1,4 @@
-#N canvas 332 144 570 717 10;
+#N canvas 330 149 570 717 10;
 #X declare -lib Gem;
 #X obj 4 289 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -449,7 +449,7 @@ No 1;
 a list on outlet No 1;
 #X text 725 518 output a series of messages :;
 #X restore 12 417 pd masses_attributes __;
-#N canvas 164 124 1167 755 links_attributes 0;
+#N canvas 162 129 1167 755 links_attributes 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 8 260 cnv 15 170 450 empty empty empty 20 12 0 14 -233017 -66577
@@ -502,16 +502,14 @@ a list on outlet No 1;
 #X msg 573 395 linkLengthSpeedXT \$1 [\$2];
 #X msg 594 414 linkLengthSpeedYT \$1 [\$2];
 #X msg 595 433 linkLengthSpeedZT \$1 [\$2];
-#X obj 8 88 cnv 15 170 100 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 8 88 cnv 15 170 120 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X text 192 93 \$1 : id float or symbol of masses (nothing for all)
-;
-#X text 192 153 \$1 : id float or symbol of masses (nothing for all)
+#X text 121 222 \$1 : id float or symbol of masses (nothing for all)
 ;
 #X msg 12 96 linkPos [\$1];
-#X msg 12 156 linkEnd [\$1];
-#X text 222 130 linkPos symbolId number centerX centerY centerZ;
-#X text 192 189 linkEnd symbolId number posX1 posY1 posZ1 posX2 posY2
+#X msg 12 146 linkEnd [\$1];
+#X text 217 112 linkPos symbolId number centerX centerY centerZ;
+#X text 189 160 linkEnd symbolId number posX1 posY1 posZ1 posX2 posY2
 posZ2;
 #X obj 2 69 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -536,8 +534,8 @@ posZ2;
 #X text 15 25 The attributes messages ask the object to output some
 of its internal parameters. They can be output as lists for positions
 and forces of links;
-#X text 193 113 output a message for every link :;
-#X text 193 173 output a message for every link :;
+#X text 188 95 output a message for every link :;
+#X text 188 145 output a message for every link :;
 #X text 188 272 Output all link center positions in a list on outlet
 No 1;
 #X text 184 348 Output all norm of position vectors (sqrt(x*x+y*y+z*z))
@@ -583,6 +581,10 @@ in a list on outlet No 1;
 (sqrt(x*x+y*y+z*z)) in a list on outlet No 1;
 #X text 770 521 Put position of the 2 link ends on a table [\$1] \,
 filter on link id is possible;
+#X msg 12 186 linkLength [\$1];
+#X text 188 185 output a message for every link :;
+#X text 188 200 linkLength symbolId number lengthX lengthY lengthZ
+length;
 #X restore 12 437 pd links_attributes ___;
 #N canvas 26 50 901 640 More_Info 0;
 #X text 96 12 pmpd : mass - spring - damper model;

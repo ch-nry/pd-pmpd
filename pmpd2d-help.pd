@@ -1,4 +1,4 @@
-#N canvas 281 189 572 750 10;
+#N canvas 277 199 572 750 10;
 #X declare -lib Gem;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -383,15 +383,15 @@ pmpd object. They are of three types :;
 #X text 11 19 DESCRIPTION: Physical modeling for Pd in 2d;
 #X text 265 709 - Cyrille Henry 2011;
 #X text 265 721 based on MSD by Nicolas Montgermont \, 2005;
-#N canvas 594 400 1169 655 links_attributes 0;
+#N canvas 586 356 1173 699 links_attributes 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 8 220 cnv 15 170 380 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 8 250 cnv 15 170 380 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 2 199 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 2 229 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X text 17 2 ATTRIBUTES Messages;
-#X text 15 199 Lists :;
+#X text 15 229 Lists :;
 #X obj 565 26 cnv 15 190 600 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 565 5 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -399,20 +399,20 @@ pmpd object. They are of three types :;
 #X text 785 519 \$2 (optional): Masses Id;
 #X text 785 506 \$1 : table name;
 #X text 578 5 tables :;
-#X text 188 253 Output all links x or y in a list on outlet No 1;
-#X msg 14 250 linkPosXL [\$1];
-#X msg 35 269 linkPosYL [\$1];
-#X msg 15 287 linkPosNormL [\$1];
-#X msg 16 321 linkLengthL [\$1];
-#X msg 16 340 linkLengthXL [\$1];
-#X msg 36 359 linkLengthYL [\$1];
-#X msg 19 414 linkPosSpeedL [\$1];
-#X msg 19 433 linkPosSpeedXL [\$1];
-#X msg 38 452 linkPosSpeedYL [\$1];
-#X msg 17 470 linkPosSpeedNormL [\$1];
-#X msg 17 510 linkLengthSpeedL [\$1];
-#X msg 17 529 linkLengthSpeedXL [\$1];
-#X msg 37 548 linkLengthSpeedYL [\$1];
+#X text 188 283 Output all links x or y in a list on outlet No 1;
+#X msg 14 280 linkPosXL [\$1];
+#X msg 35 299 linkPosYL [\$1];
+#X msg 15 317 linkPosNormL [\$1];
+#X msg 16 351 linkLengthL [\$1];
+#X msg 16 370 linkLengthXL [\$1];
+#X msg 36 389 linkLengthYL [\$1];
+#X msg 19 444 linkPosSpeedL [\$1];
+#X msg 19 463 linkPosSpeedXL [\$1];
+#X msg 38 482 linkPosSpeedYL [\$1];
+#X msg 17 500 linkPosSpeedNormL [\$1];
+#X msg 17 540 linkLengthSpeedL [\$1];
+#X msg 17 559 linkLengthSpeedXL [\$1];
+#X msg 37 578 linkLengthSpeedYL [\$1];
 #X msg 575 38 linkPosT \$1 [\$2];
 #X msg 575 57 linkPosXT \$1 [\$2];
 #X msg 595 75 linkPosYT \$1 [\$2];
@@ -428,15 +428,15 @@ pmpd object. They are of three types :;
 #X msg 574 326 linkLengthSpeedT \$1 [\$2];
 #X msg 573 345 linkLengthSpeedXT \$1 [\$2];
 #X msg 594 364 linkLengthSpeedYT \$1 [\$2];
-#X obj 8 88 cnv 15 170 100 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 8 88 cnv 15 170 120 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X msg 20 96 linkPos [\$1];
 #X msg 20 136 linkEnd [\$1];
 #X obj 2 69 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X text 15 69 generic :;
-#X msg 15 377 linkLengthNormL [\$1];
-#X msg 18 567 linkLengthSpeedNormL [\$1];
+#X msg 15 407 linkLengthNormL [\$1];
+#X msg 18 597 linkLengthSpeedNormL [\$1];
 #X msg 575 383 linkLengthSpeedNormT \$1 [\$2];
 #X msg 577 429 linkEndT \$1 [\$2];
 #X msg 589 449 linkEnd1T \$1 [\$2];
@@ -447,7 +447,7 @@ pmpd object. They are of three types :;
 #X msg 589 548 linkEndYT \$1 [\$2];
 #X msg 589 568 linkEnd1YT \$1 [\$2];
 #X msg 589 588 linkEnd2YT \$1 [\$2];
-#X msg 14 231 linkPosL [\$1);
+#X msg 14 261 linkPosL [\$1);
 #X text 212 105 linkPos symbolId number centerX centerY;
 #X text 213 150 linkEnd symbolId number posX1 posY1 posX2 posY2;
 #X text 784 456 table is posX1 posY1 posX2 posY2 ....;
@@ -466,26 +466,26 @@ on a table [\$1];
 No 1;
 #X text 768 189 Output all norm of link length vectors (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 191 568 Output all norm of link lenght deformation speed vectors
+#X text 191 598 Output all norm of link lenght deformation speed vectors
 (sqrt(x*x+y*y)) in a list on outlet No 1;
-#X text 190 534 Output all link lenghts deformation speed in x or y
+#X text 190 564 Output all link lenghts deformation speed in x or y
 in a list on outlet No 1;
-#X text 190 510 Output all links lenghts deformation speed in a list
+#X text 190 540 Output all links lenghts deformation speed in a list
 on outlet No 1;
-#X text 189 472 Output all norm of link center speed vectors (sqrt(x*x+y*y))
+#X text 189 502 Output all norm of link center speed vectors (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 188 431 Output all link center speeds in x or y in a list on
+#X text 188 461 Output all link center speeds in x or y in a list on
 outlet No 1;
-#X text 189 414 Output all link center speeds in a list on outlet No
+#X text 189 444 Output all link center speeds in a list on outlet No
 1;
-#X text 189 377 Output all norm of link lenght vectors (sqrt(x*x+y*y))
+#X text 189 407 Output all norm of link lenght vectors (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 188 342 Output all link lenghts in x or y in a list on outlet
+#X text 188 372 Output all link lenghts in x or y in a list on outlet
 No 1;
-#X text 188 325 Output all link lenghts in a list on outlet No 1;
-#X text 188 292 Output all norm of position vectors (sqrt(x*x+y*y))
+#X text 188 355 Output all link lenghts in a list on outlet No 1;
+#X text 188 322 Output all norm of position vectors (sqrt(x*x+y*y))
 in a list on outlet No 1;
-#X text 188 232 Output all link center positions in a list on outlet
+#X text 188 262 Output all link center positions in a list on outlet
 No 1;
 #X text 768 250 Output all link center speeds in x or y in a list on
 outlet No 1;
@@ -501,7 +501,10 @@ in a list on outlet No 1;
 (sqrt(x*x+y*y)) in a list on outlet No 1;
 #X text 770 429 Put position of the 2 link ends on a table [\$1] \,
 filter on link id is possible;
-#X text 213 173 \$1 (optional): Link Id;
+#X text 154 212 \$1 (optional): Link Id;
+#X msg 20 176 linkLength [\$1];
+#X text 184 174 output a message for every link :;
+#X text 213 190 linkLength symbolId number lengthX lengthY length;
 #X restore 12 466 pd links_attributes ___;
 #N canvas 276 155 935 531 creation____________ 0;
 #X obj 5 75 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -702,7 +705,7 @@ uses this argument as the value applied to all masses (or links);
 #X restore 12 427 pd dynamic settings ___;
 #X text 112 658 54_pmpd2dtest.pd;
 #X obj 325 272 print;
-#N canvas 50 105 1153 632 masses_attributes___ 0;
+#N canvas 48 110 1153 632 masses_attributes___ 0;
 #X obj 5 75 cnv 15 500 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 3 cnv 15 500 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -809,7 +812,7 @@ a table;
 #X text 218 203 massSpeed symbolId number speedX speedY speedZ;
 #X text 218 258 massForce symbolId number forceX forceY forceZ;
 #X restore 12 447 pd masses_attributes___;
-#N canvas 433 489 725 566 tests 0;
+#N canvas 555 361 725 566 tests 0;
 #X obj 5 3 cnv 15 700 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text 17 2 TESTS Messages;

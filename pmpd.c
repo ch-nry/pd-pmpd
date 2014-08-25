@@ -104,6 +104,7 @@ void pmpd_setup(void)
     class_addmethod(pmpd_class, (t_method)pmpd_massForce,    	gensym("massForce"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linkPos,     	gensym("linkPos"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linkEnd,	        gensym("linkEnd"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkLength,	    gensym("linkLength"), A_GIMME, 0);
 
 /*
  pmpd_list 

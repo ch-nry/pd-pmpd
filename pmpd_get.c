@@ -503,3 +503,48 @@ void pmpd_linkPos(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
 }
+
+void pmpd_linkLength(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+	int i;
+    t_atom  toout[3];    
+
+    if ((argc>0)&&(argv[0].a_type == A_FLOAT)) 
+    {
+        i = atom_getfloatarg(0, argc, argv);
+        if ( (i>=0) && (i<x->nb_link) )
+        {
+            SETSYMBOL(&(toout[0]), x->link[i].Id);
+            SETFLOAT(&(toout[1]), i);
+            SETFLOAT(&(toout[2]), x->link[i].mass1->posX-x->link[i].mass2->posX);
+            outlet_anything(x->main_outlet, gensym("linkLength"), 3, toout);
+        }
+    }
+    else
+    if ((argc>0)&&(argv[0].a_type == A_SYMBOL))
+    {
+        SETSYMBOL(&(toout[0]), atom_getsymbolarg(0,argc,argv));
+        for (i=0; i< x->nb_link; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
+            {
+	            SETSYMBOL(&(toout[0]), x->link[i].Id);
+	            SETFLOAT(&(toout[1]), i);
+	            SETFLOAT(&(toout[2]), x->link[i].mass1->posX-x->link[i].mass2->posX);
+	            outlet_anything(x->main_outlet, gensym("linkLength"), 3, toout);
+            }
+        } 
+    }
+    else
+    if (argc == 0) 
+    {
+        for (i=0; i< x->nb_link; i++)
+        {
+            SETSYMBOL(&(toout[0]), x->link[i].Id);
+            SETFLOAT(&(toout[1]), i);
+            SETFLOAT(&(toout[2]), x->link[i].mass1->posX-x->link[i].mass2->posX);
+            outlet_anything(x->main_outlet, gensym("linkLength"), 3, toout);
+        } 
+    }
+}
+

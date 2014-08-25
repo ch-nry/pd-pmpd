@@ -1,4 +1,4 @@
-#N canvas 542 172 584 778 10;
+#N canvas 540 177 584 778 10;
 #X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 729 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
@@ -108,26 +108,26 @@ msd object. They are of three types :;
 #X text 266 736 - Cyrille Henry \, 2011;
 #X text 283 752 based on MSD by Nicolas Montgermont;
 #X obj 17 187 loadbang;
-#N canvas 179 163 607 855 links_attributes 0;
+#N canvas 175 152 617 876 links_attributes 0;
 #X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 9 221 cnv 15 170 190 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 9 241 cnv 15 170 190 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 9 201 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 9 221 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X text 7 2 ATTRIBUTES Messages;
-#X text 12 201 Lists :;
-#X obj 11 440 cnv 15 170 200 empty empty empty 20 12 0 14 -233017 -66577
+#X text 12 221 Lists :;
+#X obj 11 460 cnv 15 170 200 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 11 419 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 11 439 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 277 391 \$1 (optional): Masses Id;
-#X text 284 780 \$2 (optional): Masses Id;
-#X text 283 767 \$1 : table name;
-#X text 14 419 tables :;
-#X text 189 233 Output all links center positions in a list on outlet
+#X text 277 411 \$1 (optional): Masses Id;
+#X text 284 800 \$2 (optional): Masses Id;
+#X text 283 787 \$1 : table name;
+#X text 14 439 tables :;
+#X text 189 253 Output all links center positions in a list on outlet
 No 1;
-#X text 183 449 Output all links center positions in a table (\$1)
+#X text 183 469 Output all links center positions in a table (\$1)
 ;
 #X obj 8 95 cnv 15 170 100 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -137,54 +137,55 @@ No 1;
 0;
 #X text 11 74 generic :;
 #X text 216 116 linkPos symbolId number center;
-#X text 219 154 linkEnd symbolId number posX1 posX2;
-#X obj 11 644 cnv 15 170 190 empty empty empty 20 12 0 14 -233017 -66577
+#X text 216 144 linkEnd symbolId number posX1 posX2;
+#X obj 11 664 cnv 15 170 190 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X msg 18 652 linkEndT \$1 [\$2];
-#X msg 27 672 linkEnd1T \$1 [\$2];
-#X msg 27 691 linkEnd2T \$1 [\$2];
-#X msg 27 710 linkEndXT \$1 [\$2];
-#X msg 27 729 linkEnd1XT \$1 [\$2];
-#X msg 27 748 linkEnd2XT \$1 [\$2];
-#X msg 27 767 linkEndYT \$1 [\$2];
-#X msg 27 786 linkEnd1YT \$1 [\$2];
-#X msg 27 805 linkEnd2YT \$1 [\$2];
-#X text 216 683 table is posX1 posY1 posX2 posY2 ....;
-#X msg 18 231 linkPosL (\$1);
-#X msg 18 250 linkPosXL (\$1);
-#X msg 19 273 linkLengthL (\$1);
-#X msg 19 292 linkLengthXL (\$1);
-#X msg 18 316 linkPosSpeedL (\$1);
-#X msg 18 335 linkPosSpeedXL (\$1);
-#X msg 18 359 linkLengthSpeedL (\$1);
-#X msg 18 378 linkLengthSpeedXL (\$1);
-#X msg 15 445 linkPosT \$1 (\$2);
-#X msg 15 464 linkPosXT \$1 (\$2);
-#X msg 16 492 linkLengthT \$1 (\$2);
-#X msg 16 511 linkLengthXT \$1 (\$2);
-#X msg 16 542 linkPosSpeedT \$1 (\$2);
-#X msg 16 561 linkPosSpeedXT \$1 (\$2);
-#X msg 16 592 linkLengthSpeedT \$1 (\$2);
-#X msg 16 611 linkLengthSpeedXT \$1 (\$2);
+#X msg 18 672 linkEndT \$1 [\$2];
+#X msg 27 692 linkEnd1T \$1 [\$2];
+#X msg 27 711 linkEnd2T \$1 [\$2];
+#X msg 27 730 linkEndXT \$1 [\$2];
+#X msg 27 749 linkEnd1XT \$1 [\$2];
+#X msg 27 768 linkEnd2XT \$1 [\$2];
+#X msg 27 787 linkEndYT \$1 [\$2];
+#X msg 27 806 linkEnd1YT \$1 [\$2];
+#X msg 27 825 linkEnd2YT \$1 [\$2];
+#X text 216 703 table is posX1 posY1 posX2 posY2 ....;
+#X msg 18 251 linkPosL (\$1);
+#X msg 18 270 linkPosXL (\$1);
+#X msg 19 293 linkLengthL (\$1);
+#X msg 19 312 linkLengthXL (\$1);
+#X msg 18 336 linkPosSpeedL (\$1);
+#X msg 18 355 linkPosSpeedXL (\$1);
+#X msg 18 379 linkLengthSpeedL (\$1);
+#X msg 18 398 linkLengthSpeedXL (\$1);
+#X msg 15 465 linkPosT \$1 (\$2);
+#X msg 15 484 linkPosXT \$1 (\$2);
+#X msg 16 512 linkLengthT \$1 (\$2);
+#X msg 16 531 linkLengthXT \$1 (\$2);
+#X msg 16 562 linkPosSpeedT \$1 (\$2);
+#X msg 16 581 linkPosSpeedXT \$1 (\$2);
+#X msg 16 612 linkLengthSpeedT \$1 (\$2);
+#X msg 16 631 linkLengthSpeedXT \$1 (\$2);
 #X text 15 30 The attributes messages ask the object to output some
 of its internal parameters. They can be output as lists for positions
 and forces of links;
-#X text 220 175 \$1 : Id float or symbol of masses (nothing for all)
+#X text 79 205 \$1 : Id float or symbol of masses (nothing for all)
 ;
 #X text 187 99 output a message for every link :;
-#X text 187 138 output a message for every link :;
-#X text 189 277 Output all links length in a list on outlet No 1;
-#X text 191 323 Output all links center speed in a list on outlet No
+#X text 189 297 Output all links length in a list on outlet No 1;
+#X text 191 343 Output all links center speed in a list on outlet No
 1;
-#X text 191 359 Output all links length deformation speed in a list
+#X text 191 379 Output all links length deformation speed in a list
 on outlet No 1;
-#X text 181 495 Output all links length in a list on outlet No 1;
-#X text 183 543 Output all links center speed in a list on outlet No
+#X text 181 515 Output all links length in a list on outlet No 1;
+#X text 183 563 Output all links center speed in a list on outlet No
 1;
-#X text 184 592 Output all links length deformation speed in a list
+#X text 184 612 Output all links length deformation speed in a list
 on outlet No 1;
-#X text 187 652 Put position of the 2 link end on a table [\$1] \,
+#X text 187 672 Put position of the 2 link end on a table [\$1] \,
 filter on link Id is possible;
+#X msg 14 172 linkLength [\$1];
+#X text 216 174 linkLength symbolId number length;
 #X restore 12 517 pd links_attributes ___;
 #N canvas 157 131 997 789 dynamic 0;
 #X obj 5 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -566,7 +567,7 @@ or fixed \, in this case forces applied to them automatically \, by
 links \, or manually \, by messages \, don't do anything.;
 #X connect 1 0 2 0;
 #X restore 18 735 pd More_Info;
-#N canvas 420 183 614 722 masses_attributes___ 0;
+#N canvas 418 188 614 722 masses_attributes___ 0;
 #X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 7 307 cnv 15 150 100 empty empty empty 20 12 0 14 -233017 -66577

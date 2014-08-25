@@ -119,6 +119,7 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massForce,    			gensym("massForce"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkPos,     	   		gensym("linkPos"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkEnd,	       			gensym("linkEnd"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_linkLength,	       		gensym("linkLength"), A_GIMME, 0);
 
 /*
  pmpd3d_list 
