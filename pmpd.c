@@ -72,6 +72,7 @@ void pmpd_setup(void)
     class_addmethod(pmpd_class, (t_method)pmpd_setPow,          gensym("setPow"), A_GIMME, 0);    
     class_addmethod(pmpd_class, (t_method)pmpd_setD2,           gensym("setDEnv"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_setL,            gensym("setL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_addL,            gensym("addL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_setLCurrent,     gensym("setLCurrent"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_setLKTab,        gensym("setLKTab"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_setLDTab,        gensym("setLDTab"), A_GIMME, 0);

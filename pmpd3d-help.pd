@@ -1,4 +1,4 @@
-#N canvas 330 149 570 717 10;
+#N canvas 326 159 570 717 10;
 #X declare -lib Gem;
 #X obj 4 289 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -200,7 +200,7 @@ the model. Messages create links and masses or destroy them.;
 links. They work as general links except their calculation is made
 following a vector.;
 #X restore 12 377 pd creation____________;
-#N canvas 68 189 1143 866 dynamic 0;
+#N canvas 64 189 1143 866 dynamic 0;
 #X obj 5 3 cnv 15 1050 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 84 cnv 15 150 750 empty empty empty 20 12 0 14 -233017 -66577
@@ -224,8 +224,6 @@ following a vector.;
 #X msg 530 150 setD \$1 \$2;
 #X text 655 98 Set rigidity of link(s);
 #X text 655 154 Set damping of link(s);
-#X msg 529 211 setL \$1 \$2;
-#X text 657 213 Set initial lenght of link(s);
 #X text 681 116 \$1 : Id (symbol) or No;
 #X text 681 172 \$1 : Id (symbol) or No;
 #X text 683 231 \$1 : Id (symbol) or No;
@@ -254,18 +252,18 @@ following a vector.;
 #X text 191 596 \$2 / \$3 : Value;
 #X text 174 681 \$2 / \$3 : Value;
 #X msg 19 644 addPos \$1 \$2 \$3;
-#X msg 529 359 setLinkId \$1 \$2;
-#X text 655 360 Change the Id of a link;
-#X text 688 377 \$1 : link (number or Id);
-#X text 689 394 \$2 : New Id;
-#X msg 527 425 setLKTab \$1 \$2;
-#X text 650 425 change the table (K) size of a non linear link;
-#X text 691 445 \$1 : link (number or Id);
-#X text 692 462 \$2 : New KL;
-#X text 691 507 \$1 : link (number or Id);
-#X msg 528 487 setLDTab \$1 \$2;
-#X text 651 487 change the table (D) size of a non linear link;
-#X text 692 524 \$2 : New DL;
+#X msg 529 379 setLinkId \$1 \$2;
+#X text 655 380 Change the Id of a link;
+#X text 688 397 \$1 : link (number or Id);
+#X text 689 414 \$2 : New Id;
+#X msg 527 445 setLKTab \$1 \$2;
+#X text 650 445 change the table (K) size of a non linear link;
+#X text 691 465 \$1 : link (number or Id);
+#X text 692 482 \$2 : New KL;
+#X text 691 527 \$1 : link (number or Id);
+#X msg 528 507 setLDTab \$1 \$2;
+#X text 651 507 change the table (D) size of a non linear link;
+#X text 692 544 \$2 : New DL;
 #X msg 35 228 forceZ \$1 \$2;
 #X msg 16 248 min \$1 \$2;
 #X msg 16 268 max \$1 \$2;
@@ -290,23 +288,23 @@ following a vector.;
 #X msg 36 152 setPosZ \$1 \$2;
 #X text 171 777 Set environement damping offset (in order to force
 a specific velocity to masses);
-#X text 657 272 Set initial lenght of link(s);
-#X text 687 291 \$1 : Id (symbol) or No;
-#X msg 529 271 setLCurrent \$1 [\$2];
-#X text 691 610 \$1 : link (number or Id);
-#X text 691 566 \$1 : link (number or Id);
-#X msg 529 590 setActive \$1 \$2;
-#X msg 529 546 setInactive \$1 \$2;
-#X text 650 590 compute the link at each bang;
-#X text 691 676 \$1 : link (number or Id);
-#X msg 529 634 setOverdamp \$1 \$2;
-#X text 690 728 \$1 : link (number or Id);
-#X msg 528 709 setEnd \$1 \$2 \$3;
-#X text 690 744 \$2 : mass number for end 1;
-#X text 652 710 Change the masses a link is connected to;
-#X text 690 760 \$3 : mass number for end 2;
-#X msg 548 732 setEnd1 \$1 \$2;
-#X msg 548 754 setEnd2 \$1 \$2;
+#X text 657 292 Set initial lenght of link(s);
+#X text 687 311 \$1 : Id (symbol) or No;
+#X msg 529 291 setLCurrent \$1 [\$2];
+#X text 691 630 \$1 : link (number or Id);
+#X text 691 586 \$1 : link (number or Id);
+#X msg 529 610 setActive \$1 \$2;
+#X msg 529 566 setInactive \$1 \$2;
+#X text 650 610 compute the link at each bang;
+#X text 691 696 \$1 : link (number or Id);
+#X msg 529 654 setOverdamp \$1 \$2;
+#X text 690 748 \$1 : link (number or Id);
+#X msg 528 729 setEnd \$1 \$2 \$3;
+#X text 690 764 \$2 : mass number for end 1;
+#X text 652 730 Change the masses a link is connected to;
+#X text 690 780 \$3 : mass number for end 2;
+#X msg 548 752 setEnd1 \$1 \$2;
+#X msg 548 774 setEnd2 \$1 \$2;
 #X msg 530 99 setK \$1 \$2;
 #X msg 36 133 setPosY \$1 \$2;
 #X msg 14 390 grabMass \$1 \$2 \$3 \$4;
@@ -314,26 +312,31 @@ a specific velocity to masses);
 #X text 10 25 Dynamic settings messages allow the user to redefine
 internal parameters of links and masses.;
 #X text 166 170 Add force to mass(es);
-#X text 686 309 \$2 : mix between link size (0) and current length
+#X text 686 329 \$2 : mix between link size (0) and current length
 (1);
-#X text 686 327 if no \$2 arg is provided \, then L is set to current
+#X text 686 347 if no \$2 arg is provided \, then L is set to current
 length;
-#X text 651 546 do not compute a link anymore;
-#X text 654 635 Change the overdamp of a link. i.e a strange parameter
+#X text 651 566 do not compute a link anymore;
+#X text 654 655 Change the overdamp of a link. i.e a strange parameter
 that amplifies forces that oppose to movment. Use at your own risk.
 ;
-#X text 663 793 if only 1 argument is provided \, message generally
+#X text 663 813 if only 1 argument is provided \, message generally
 uses this argument as the value applied to all masses (or links);
 #X text 166 248 Set minimimum or maximum position of all masses;
 #X text 681 134 \$2 : New value (float or table);
 #X text 681 190 \$2 : New value (float or table);
 #X text 683 249 \$2 : New value (float or table);
-#X text 691 690 \$2 : overdamp value (float or table);
+#X text 691 710 \$2 : overdamp value (float or table);
 #X text 193 819 \$2 : damping (float or table);
 #X text 195 761 \$2 : damping (float or table);
 #X text 193 467 \$2 : New Id;
 #X text 189 212 \$2 / \$3 : Value (float or symbol);
 #X text 189 131 \$2 / \$3 : Value (float or table);
+#X msg 529 211 setL \$1 \$2 [\$3];
+#X msg 529 231 addL \$1 \$2 [\$3];
+#X text 683 266 [\$3] : optional multiplicator coef for table;
+#X text 657 213 Set initial lenght of link(s) / add value to link length
+;
 #X restore 12 397 pd dynamic settings ___;
 #X text 158 397 To set the model parameters after creation.;
 #N canvas 153 264 1157 693 masses_attributes 0;

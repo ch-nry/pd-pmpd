@@ -76,6 +76,7 @@ void pmpd2d_setup(void)
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setDEnv,         gensym("setDEnv"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setDEnvOffset,   gensym("setDEnvOffset"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setL,            gensym("setL"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_addL,            gensym("addL"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setLCurrent,     gensym("setLCurrent"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setLKTab,        gensym("setLKTab"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setLDTab,        gensym("setLDTab"), A_GIMME, 0);

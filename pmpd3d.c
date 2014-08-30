@@ -76,6 +76,7 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setDEnv,         		gensym("setDEnv"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setDEnvOffset,   		gensym("setDEnvOffset"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setL,            		gensym("setL"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_addL,            		gensym("addL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLCurrent,            	gensym("setLCurrent"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLKTab,        		gensym("setLKTab"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setLDTab,        		gensym("setLDTab"), A_GIMME, 0);
