@@ -612,7 +612,7 @@ void pmpd3d_linkLength(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             tmp1=x->link[i].mass1->posX-x->link[i].mass2->posX;
             tmp2=x->link[i].mass1->posY-x->link[i].mass2->posY;
-            tmp3=x->link[i].mass1->posZ-x->link[i].mass3->posZ;
+            tmp3=x->link[i].mass1->posZ-x->link[i].mass2->posZ;
 
             SETSYMBOL(&(toout[0]), x->link[i].Id);
             SETFLOAT(&(toout[1]), i);
@@ -633,7 +633,7 @@ void pmpd3d_linkLength(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             {
 	            tmp1=x->link[i].mass1->posX-x->link[i].mass2->posX;
 	            tmp2=x->link[i].mass1->posY-x->link[i].mass2->posY;
-	            tmp3=x->link[i].mass1->posZ-x->link[i].mass3->posZ;
+	            tmp3=x->link[i].mass1->posZ-x->link[i].mass2->posZ;
 	
 	            SETSYMBOL(&(toout[0]), x->link[i].Id);
 	            SETFLOAT(&(toout[1]), i);
@@ -652,7 +652,7 @@ void pmpd3d_linkLength(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
             tmp1=x->link[i].mass1->posX-x->link[i].mass2->posX;
             tmp2=x->link[i].mass1->posY-x->link[i].mass2->posY;
-            tmp3=x->link[i].mass1->posZ-x->link[i].mass3->posZ;
+            tmp3=x->link[i].mass1->posZ-x->link[i].mass2->posZ;
 
             SETSYMBOL(&(toout[0]), x->link[i].Id);
             SETFLOAT(&(toout[1]), i);
