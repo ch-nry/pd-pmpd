@@ -278,6 +278,8 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_testLinkT,       		gensym("testLinkT"), A_GIMME, 0); 
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_testMassL,       		gensym("testMassL"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_testLinkL,       		gensym("testLinkL"), A_GIMME, 0); 
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_testMassL,       		gensym("testMassN"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_testLinkL,       		gensym("testLinkN"), A_GIMME, 0); 
 
 /*    
  pmpd3d_stat

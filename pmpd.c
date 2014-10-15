@@ -186,6 +186,8 @@ void pmpd_setup(void)
     class_addmethod(pmpd_class, (t_method)pmpd_testLinkT,       		gensym("testLinkT"), A_GIMME, 0); 
     class_addmethod(pmpd_class, (t_method)pmpd_testMassL,       		gensym("testMassL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_testLinkL,       		gensym("testLinkL"), A_GIMME, 0); 
+    class_addmethod(pmpd_class, (t_method)pmpd_testMassL,       		gensym("testMassN"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_testLinkL,       		gensym("testLinkN"), A_GIMME, 0); 
 
 /*    
  pmpd_stat

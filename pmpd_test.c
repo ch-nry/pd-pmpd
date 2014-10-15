@@ -396,3 +396,50 @@ void pmpd_testMassL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	outlet_anything(x->main_outlet, gensym("testMassL"),i+1 , list);
 }
 
+void pmpd_testLinkN(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_atom std_out[3];
+	t_int i, tmp;
+
+	SETSYMBOL(&(std_out[0]),atom_getsymbolarg(0,argc,argv));
+    i = atom_getfloatarg(1,argc,argv);
+    i = min(x->nb_link-1,i);
+    i = max(0,i);
+    SETFLOAT(&(std_out[1]),i);
+
+    tmp=test_link(i,x,argc,argv);
+    if (tmp == -1)
+    {	
+        return;
+    }
+    if (tmp)
+        SETFLOAT(&(std_out[2]),1);
+    else
+        SETFLOAT(&(std_out[2]),0);
+
+    outlet_anything(x->main_outlet, gensym("testLinkN"),3,std_out);
+}
+
+void pmpd_testMassN(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_atom std_out[3];
+	t_int i, tmp;
+
+	SETSYMBOL(&(std_out[0]),atom_getsymbolarg(0,argc,argv));
+    i = atom_getfloatarg(1,argc,argv);
+    i = min(x->nb_mass-1,i);
+    i = max(0,i);
+    SETFLOAT(&(std_out[1]),i);
+
+    tmp=test_mass(i,x,argc,argv);
+    if (tmp == -1)
+    {	
+        return;
+    }
+    if (tmp)
+        SETFLOAT(&(std_out[2]),1);
+    else
+        SETFLOAT(&(std_out[2]),0);
+
+    outlet_anything(x->main_outlet, gensym("testMassN"),3,std_out);
+}

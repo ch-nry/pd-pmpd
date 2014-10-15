@@ -210,6 +210,11 @@ int test_2d_link(int i, t_pmpd2d *x, int argc, t_atom *argv)
 				if ( x->link[i].Id != atom_getsymbolarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
+            else if (atom_getsymbolarg(j,argc,argv) == gensym("lengthSup") )
+			{
+				if ( x->link[i].distance < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				j+=2;
+			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceXSup") )
 			{
 				if ( x->link[i].forceX < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
@@ -242,11 +247,6 @@ int test_2d_link(int i, t_pmpd2d *x, int argc, t_atom *argv)
 				tmp = sqr(x->link[i].forceX) + sqr(x->link[i].forceY);
 				tmp2 = sqr(atom_getfloatarg(j+1,argc,argv));
 				if ( tmp >= tmp2 ) { return(0); }
-				j+=2;
-			}
-			else if (atom_getsymbolarg(j,argc,argv) == gensym("lengthSup") )
-			{
-				if ( x->link[i].distance < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("lengthInf") )
@@ -456,3 +456,50 @@ void pmpd2d_testMassL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	outlet_anything(x->main_outlet, gensym("testMassL"),i+1 , list);
 }
 
+void pmpd2d_testLinkN(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_atom std_out[3];
+	t_int i, tmp;
+
+	SETSYMBOL(&(std_out[0]),atom_getsymbolarg(0,argc,argv));
+    i = atom_getfloatarg(1,argc,argv);
+    i = min(x->nb_link-1,i);
+    i = max(0,i);
+    SETFLOAT(&(std_out[1]),i);
+
+    tmp=test_2d_link(i,x,argc,argv);
+    if (tmp == -1)
+    {	
+        return;
+    }
+    if (tmp)
+        SETFLOAT(&(std_out[2]),1);
+    else
+        SETFLOAT(&(std_out[2]),0);
+
+    outlet_anything(x->main_outlet, gensym("testLinkN"),3,std_out);
+}
+
+void pmpd2d_testMassN(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_atom std_out[3];
+	t_int i, tmp;
+
+	SETSYMBOL(&(std_out[0]),atom_getsymbolarg(0,argc,argv));
+    i = atom_getfloatarg(1,argc,argv);
+    i = min(x->nb_mass-1,i);
+    i = max(0,i);
+    SETFLOAT(&(std_out[1]),i);
+
+    tmp=test_2d_mass(i,x,argc,argv);
+    if (tmp == -1)
+    {	
+        return;
+    }
+    if (tmp)
+        SETFLOAT(&(std_out[2]),1);
+    else
+        SETFLOAT(&(std_out[2]),0);
+
+    outlet_anything(x->main_outlet, gensym("testMassN"),3,std_out);
+}

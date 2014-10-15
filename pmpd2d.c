@@ -248,7 +248,9 @@ void pmpd2d_setup(void)
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_testMassT,       		gensym("testMassT"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_testLinkT,       		gensym("testLinkT"), A_GIMME, 0); 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_testMassL,       		gensym("testMassL"), A_GIMME, 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_testLinkL,       		gensym("testLinkL"), A_GIMME, 0); 
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_testLinkL,       		gensym("testLinkL"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_testMassL,       		gensym("testMassN"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_testLinkL,       		gensym("testLinkN"), A_GIMME, 0); 
 
 /*    
  pmpd2d_stat
