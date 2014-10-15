@@ -347,6 +347,7 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_addPosZ,         		gensym("addPosZ"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_grabMass,        		gensym("grabMass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_closestMass,     		gensym("closestMass"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_closestMassN,     		gensym("closestMassN"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massDistances,	     	gensym("massDistance"), A_GIMME, 0);
     
 //    class_addmethod(pmpd3d_class, (t_method)pmpd3d_forcesXT,       			gensym("forceXT"), A_GIMME, 0);

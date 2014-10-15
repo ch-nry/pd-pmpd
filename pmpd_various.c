@@ -274,6 +274,83 @@ void pmpd_massDistances(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
+int bulle_order(t_int *listIndex, t_float *listDistance, t_int index)
+{
+    t_int tmpI;
+    t_float tmpD;
+    
+    if ( listDistance[index] < listDistance[index+1] )
+    {
+        tmpD =  listDistance[index];
+        tmpI =  listIndex[index];
+        listDistance[index] = listDistance[index+1];
+        listIndex[index] = listIndex[index+1];
+        listDistance[index+1] = tmpD;
+        listIndex[index+1]= tmpI;
+        return(1);
+    }
+    return(0);
+}
+
+void pmpd_closestMassN(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_float dist;
+	t_int i, j, nbout, list_index[x->nb_mass];
+    t_float list_distance[x->nb_mass];
+	t_atom std_out[x->nb_mass * 2];
+	t_float posX;
+
+	if ( (argc >= 1)  && (argv[0].a_type == A_FLOAT) )
+        nbout = atom_getfloatarg(0, argc, argv);
+    else
+        nbout = 1;
+    nbout = max(nbout,0);
+    nbout = min(nbout,x->nb_mass);
+
+	if ( (argc >= 2)  && (argv[1].a_type == A_FLOAT) )
+        posX = atom_getfloatarg(1, argc, argv);
+    else
+        posX = 0;
+
+    for (i=0; i < nbout; i++) // on remplie avec les premiere données disponible
+    {
+        list_index[i] = i;
+        list_distance[i] = x->mass[i].posX - posX ;
+    }
+
+    for (i=1; i < nbout; i++) //trie a bulle pour ordoner cela
+    {
+        for (j=0; j < nbout-i; j++)
+        {
+            bulle_order(list_index, list_distance, j);
+        } 
+    }
+  
+    for (i = nbout; i< x->nb_mass; i++) // on test le reste des masses
+    {
+        dist = x->mass[i].posX - posX;
+        if (dist < list_distance[0]) // cette mass doit rentrer dans la liste
+        {
+            list_index[0] = i;
+            list_distance[0] = dist;
+            j = 0;
+            while ( (j<nbout-1) && bulle_order(list_index, list_distance, j) ) // on reordone la liste
+            {
+                j++;
+            }
+        }
+    }
+  
+    for (i=0; i<nbout; i++)
+    {
+        SETFLOAT(&(std_out[2*i]), list_index[nbout-1-i]);
+        SETFLOAT(&(std_out[2*i+1]), list_distance[nbout-1-i]);        
+    }
+
+	outlet_anything(x->main_outlet, gensym("closestMassN"),2*nbout,std_out);
+}
+
+
 /*
 void pmpd_forcesXT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {

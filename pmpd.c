@@ -235,6 +235,7 @@ void pmpd_setup(void)
 
     class_addmethod(pmpd_class, (t_method)pmpd_grabMass,        gensym("grabMass"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_closestMass,     gensym("closestMass"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_closestMassN,     gensym("closestMassN"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_massDistances,	gensym("massDistance"), A_GIMME, 0);  
 //    class_addmethod(pmpd_class, (t_method)pmpd_forcesXT,        gensym("forceXT"), A_GIMME, 0);
 
