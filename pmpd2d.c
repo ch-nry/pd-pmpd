@@ -188,8 +188,8 @@ void pmpd2d_setup(void)
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesNormT,   gensym("massesForcesNormT"), A_GIMME, 0);
 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesPosNormT,      gensym("massPosNormT"),  A_GIMME, 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsNormT,   gensym("massSpeedsNormT"), A_GIMME, 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesNormT,   gensym("massForcesNormT"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesSpeedsNormT,   gensym("massSpeedNormT"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_massesForcesNormT,   gensym("massForceNormT"), A_GIMME, 0);
 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksPosT,               gensym("linksPosT"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linksLengthT,           gensym("linksLengthT"), A_GIMME, 0);
