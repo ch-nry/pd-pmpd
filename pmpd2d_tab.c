@@ -1914,3 +1914,61 @@ void pmpd2d_linkEnd2YT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
+// ---------------------------------------------------------------------
+
+void pmpd2d_linkEndNormeForce(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int i, j, vecsize;
+    t_garray *a;
+    t_word *vec;
+    t_float tmp;
+    
+    if ( (argc==1) && (argv[0].a_type == A_SYMBOL) )
+    {
+        t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+        if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+            pd_error(x, "%s: no such array", tab_name->s_name);
+        else if (!garray_getfloatwords(a, &vecsize, &vec))
+            pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+        else
+        {
+            int taille_max = x->nb_link;
+            taille_max = min(taille_max, vecsize/2 );
+            for (i=0; i < taille_max ; i++)
+            {
+                tmp = sqrt(sqr(x->link[i].forceX) + sqr(x->link[i].forceY));
+                vec[2*i  ].w_float = -tmp;
+                vec[2*i+1].w_float = tmp;
+            }
+            garray_redraw(a);
+        }
+    }
+    else 
+    if ( (argc==2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_SYMBOL) )
+    {
+        t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+        if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+            pd_error(x, "%s: no such array", tab_name->s_name);
+        else if (!garray_getfloatwords(a, &vecsize, &vec))
+            pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+        else
+        {    
+            i = 0;
+            j = 0;
+            while ((i < vecsize-1) && (j < x->nb_link))
+            {
+                if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
+                {
+                    tmp = sqrt(sqr(x->link[j].forceX) + sqr(x->link[j].forceY));
+                    vec[i].w_float = -tmp;
+                    i++;
+                    vec[i].w_float = tmp;
+                    i++;
+                }
+                j++;
+            }
+            garray_redraw(a);
+        }
+    }
+}
+

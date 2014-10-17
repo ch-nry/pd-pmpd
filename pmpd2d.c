@@ -236,6 +236,7 @@ void pmpd2d_setup(void)
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkEndYT,               gensym("linkEndYT"),  A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkEnd1YT,               gensym("linkEnd1YT"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkEnd2YT,               gensym("linkEnd2YT"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_linkEndNormeForce,        gensym("linkEndForceNorm"), A_GIMME, 0);
 
 /*
  pmpd2d_test
