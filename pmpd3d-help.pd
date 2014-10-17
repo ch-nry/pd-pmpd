@@ -1,4 +1,4 @@
-#N canvas 326 159 570 717 10;
+#N canvas 964 299 570 717 10;
 #X declare -lib Gem;
 #X obj 4 289 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -129,7 +129,7 @@ mass mob 1 100 1 0 -1 \, mass mob 1 100 0 0 -1 \, mass mob 1 100 1
 #X obj 17 226 pmpd3d;
 #X text 417 226 2 Send forces;
 #X text 112 617 01_pmpd3dtest.pd;
-#N canvas 252 218 950 547 creation____________ 0;
+#N canvas 248 228 950 547 creation____________ 0;
 #X obj 5 75 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 3 cnv 15 450 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -200,7 +200,7 @@ the model. Messages create links and masses or destroy them.;
 links. They work as general links except their calculation is made
 following a vector.;
 #X restore 12 377 pd creation____________;
-#N canvas 64 189 1143 866 dynamic 0;
+#N canvas 60 189 1143 866 dynamic 0;
 #X obj 5 3 cnv 15 1050 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 84 cnv 15 150 750 empty empty empty 20 12 0 14 -233017 -66577
@@ -339,7 +339,7 @@ uses this argument as the value applied to all masses (or links);
 ;
 #X restore 12 397 pd dynamic settings ___;
 #X text 158 397 To set the model parameters after creation.;
-#N canvas 153 264 1157 693 masses_attributes 0;
+#N canvas 147 279 1157 693 masses_attributes 0;
 #X obj 5 95 cnv 15 500 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 3 cnv 15 500 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -364,16 +364,13 @@ No 1;
 #X text 206 627 \$1 (optional): Masses Id;
 #X text 769 383 \$2 (optional): Masses Id;
 #X text 768 370 \$1 : table name;
-#X obj 551 431 cnv 15 170 110 empty empty empty 20 12 0 14 -233017
+#X obj 551 431 cnv 15 170 230 empty empty empty 20 12 0 14 -233017
 -66577 0;
 #X obj 549 409 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X text 730 438 output the closest mass;
 #X text 552 409 others :;
-#X text 764 454 \$1 : x -position;
-#X text 764 469 \$2 : y -position;
-#X text 764 484 \$3 : z -position;
-#X text 764 496 \$4 : none or Id;
+#X text 764 499 \$4 : none or Id;
 #X msg 9 125 massPos [\$1];
 #X text 191 246 \$1 : id float or symbol of masses (nothing for all)
 ;
@@ -385,8 +382,8 @@ No 1;
 #X msg 9 206 massForce [\$1];
 #X text 195 218 massPos symbolId number forceX forceY forceZ;
 #X msg 9 165 massSpeed [\$1];
-#X msg 560 517 massDistance [\$1 [\$2]];
-#X text 757 533 distance mass1 mass2 distanceX \, distanceY \, distanceZ
+#X msg 560 627 massDistance [\$1 [\$2]];
+#X text 757 643 distance mass1 mass2 distanceX \, distanceY \, distanceZ
 \, distance;
 #X msg 8 306 massPosL [\$1];
 #X msg 8 325 massPosXL [\$1];
@@ -408,16 +405,6 @@ No 1;
 #X msg 575 76 massPosYT \$1 [\$2];
 #X msg 575 95 massPosZT \$1 [\$2];
 #X msg 554 114 massPosNormT \$1 [\$2];
-#X msg 556 152 massSpeedsT \$1 [\$2];
-#X msg 556 171 massSpeedsXT \$1 [\$2];
-#X msg 576 190 massSpeedsYT \$1 [\$2];
-#X msg 576 209 massSpeedsZT \$1 [\$2];
-#X msg 556 228 massSpeedsNormT \$1 [\$2];
-#X msg 557 259 massForcesT \$1 [\$2];
-#X msg 556 278 massForcesXT \$1 [\$2];
-#X msg 576 297 massForcesYT \$1 [\$2];
-#X msg 576 316 massForcesZT \$1 [\$2];
-#X msg 556 335 massSpeedsNormT \$1 [\$2];
 #X msg 558 439 closestMass \$1 \$2 \$3 [\$4];
 #X text 548 5 tables out :;
 #X text 15 30 The attributes messages ask the object to output some
@@ -450,9 +437,29 @@ No 1;
 ;
 #X text 732 335 Output all norm of forces vectors (sqrt(x*x+y*y)) in
 a list on outlet No 1;
-#X text 725 518 output a series of messages :;
+#X text 725 628 output a series of messages :;
+#X msg 556 152 massSpeedT \$1 [\$2];
+#X msg 556 171 massSpeedXT \$1 [\$2];
+#X msg 576 190 massSpeedYT \$1 [\$2];
+#X msg 576 209 massSpeedZT \$1 [\$2];
+#X msg 556 228 massSpeedNormT \$1 [\$2];
+#X msg 557 259 massForceT \$1 [\$2];
+#X msg 556 278 massForceXT \$1 [\$2];
+#X msg 576 297 massForceYT \$1 [\$2];
+#X msg 576 316 massForceZT \$1 [\$2];
+#X msg 556 335 massSpeedNormT \$1 [\$2];
+#X text 730 518 output the closest mass;
+#X text 764 537 \$1 : number of closest mass to output;
+#X msg 558 519 closestMassN \$1 \$2 \$3 [\$4];
+#X text 764 454 \$1 : x position;
+#X text 764 469 \$2 : y position;
+#X text 764 484 \$3 : z position;
+#X text 764 552 \$2 : x position;
+#X text 764 567 \$3 : y position;
+#X text 764 582 \$4 : z position;
+#X text 764 596 \$5 : none or Id;
 #X restore 12 417 pd masses_attributes __;
-#N canvas 162 129 1167 755 links_attributes 0;
+#N canvas 160 134 1167 755 links_attributes 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 8 260 cnv 15 170 450 empty empty empty 20 12 0 14 -233017 -66577
@@ -819,8 +826,8 @@ defining the characteristic step by step.;
 #X text 416 133 1 Create window;
 #X msg 318 211 forceZ 1 30;
 #X msg 318 233 forceX mob 10;
-#N canvas 54 321 735 607 tests 0;
-#X text 183 522 Id \$1 / forceSup \$1 / forceInf \$1 / forceXSup \$1
+#N canvas 672 253 780 683 tests 0;
+#X text 183 612 Id \$1 / forceSup \$1 / forceInf \$1 / forceXSup \$1
 / forceXInf \$1 / forceYSup \$1 / forceYInf \$1 / forceZSup \$1 / forceZInf
 \$1 / lengthSup \$1 / lengthInf \$1 / lengthXSup \$1 / lengthXInf \$1
 / lengthYSup \$1 / lengthYInf \$1 / lengthZSup \$1 / lengthZInf \$1
@@ -828,14 +835,14 @@ defining the characteristic step by step.;
 #X obj 5 3 cnv 15 700 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text 17 2 TESTS Messages;
-#X obj 5 45 cnv 15 330 150 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 5 45 cnv 15 330 200 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X msg 16 50 testMass testId filterId filter_parametter ...;
 #X text 377 69 testMass testId mass_number;
 #X text 380 130 testMassL filterID 0/1 0/1 0/1 ...;
 #X msg 15 155 testMassT tab_name filterId filter_parametter ...;
 #X msg 14 99 testMassL testId filterId filter_parametter ....;
-#X text 52 213 masses test can be :;
+#X text 52 253 masses test can be :;
 #X text 339 47 output a message for every mass that passes all the
 tests:;
 #X text 344 99 output a list with 0 or 1 for every mass depending on
@@ -845,24 +852,24 @@ all tests;
 #X obj 4 24 cnv 15 700 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X text 17 24 masses :;
-#X obj 9 334 cnv 15 700 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 9 374 cnv 15 700 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 22 334 links :;
-#X obj 10 355 cnv 15 330 150 empty empty empty 20 12 0 14 -233017 -66577
+#X text 22 374 links :;
+#X obj 10 395 cnv 15 330 200 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X msg 17 364 testLink testId filterId filter_parametter ...;
-#X msg 16 414 testLinkL testId filterId filter_parametter ....;
-#X msg 17 465 testLinkT tab_name filterId filter_parametter ...;
-#X text 377 384 testLink testId mass_number;
-#X text 377 449 testLinkL filterID 0/1 0/1 0/1 ...;
-#X text 58 523 links test can be :;
-#X text 345 364 output a message for every link that passes all the
+#X msg 17 404 testLink testId filterId filter_parametter ...;
+#X msg 16 454 testLinkL testId filterId filter_parametter ....;
+#X msg 17 505 testLinkT tab_name filterId filter_parametter ...;
+#X text 377 424 testLink testId mass_number;
+#X text 377 489 testLinkL filterID 0/1 0/1 0/1 ...;
+#X text 58 613 links test can be :;
+#X text 345 404 output a message for every link that passes all the
 tests:;
-#X text 346 417 output a list with 0 or 1 for every link depending
+#X text 346 457 output a list with 0 or 1 for every link depending
 on whether it passes all tests or not;
-#X text 346 468 Put in a table 0 or 1 depending on whether links pass
+#X text 346 508 Put in a table 0 or 1 depending on whether links pass
 all tests;
-#X text 182 214 Id \$1 / posXSup \$1 / posXInf \$1 / posYSup \$1 /
+#X text 182 254 Id \$1 / posXSup \$1 / posXInf \$1 / posYSup \$1 /
 posYInf \$1 / posZSup \$1 / posZInf \$1 / speedXSup \$1 / speedXInf
 \$1 / speedYSup \$1 / speedYInf \$1 / speedZSup \$1 / speedZInf \$1
 / speedSup \$1 / speedInf \$1 / distanceCircleSup \$1 \$2 \$3 \$4 (centerX
@@ -872,110 +879,117 @@ posYInf \$1 / posZSup \$1 / posZInf \$1 / speedXSup \$1 / speedXInf
 forceYSup \$1 / forceYInf \$1 / forceZSup \$1 / forceZInf \$1 / nbLinkInf
 \$1 / nbLinkSup \$1 / nbLinkEqual \$1 / nbLinkNameInf \$1 \$2 / nbLinkNameSup
 \$1 \$2 / nbLinkNameEqual \$1 \$2, f 86;
+#X msg 15 205 testMassN massnumber filterId filter_parametter ...;
+#X text 346 207 output : testMassN \, mass_id \, mass_number \, 0 or
+1 (test result);
+#X msg 17 555 testLinkT link_number filterId filter_parametter ...
+;
+#X text 346 556 output : testLinkN \, link_id \, link_number \, 0 or
+1 (test result);
 #X restore 12 457 pd tests ______________;
 #X text 158 458 To test specific parametters;
-#N canvas 403 545 627 463 interactors 0;
-#X obj 8 -87 cnv 15 360 450 empty empty empty 20 12 0 14 -233017 -66577
+#N canvas 401 550 627 463 interactors 0;
+#X obj 8 3 cnv 15 360 450 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X msg 20 -75 iCylinder \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8 \$9 [\$10 [\$11
+#X msg 20 15 iCylinder \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8 \$9 [\$10 [\$11
 [\$12 [\$13 [\$14]]]]];
-#X text 54 -39 \$1 : mess Id (float or symbol) to apply this interactor
+#X text 54 51 \$1 : mess Id (float or symbol) to apply this interactor
 ;
-#X text 54 -26 \$2 \$3 \$4 : center of the cylinder;
-#X text 54 -12 \$5 \$6 \$7 : center vector of the cylinder;
-#X text 54 12 \$9 : K;
-#X text 53 25 \$10 : power of the force;
-#X text 53 37 \$11 : K tengential;
-#X text 53 49 \$12 : power of the tengential force;
-#X text 53 61 \$13 : minimum radius of the interactor;
-#X text 52 73 \$14 : maximum radius of the interactor;
-#X text 53 153 \$5 \$6 \$7 : one point of the plane;
-#X text 53 167 \$8 : K;
-#X text 53 181 \$9 : power of the force;
-#X text 52 195 \$10 : minimum profund of the interactor;
-#X text 52 210 \$11 : maximum profund of the interactor;
-#X msg 21 101 iPlane \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8 [\$9 [\$10 [\$11]]]
+#X text 54 64 \$2 \$3 \$4 : center of the cylinder;
+#X text 54 78 \$5 \$6 \$7 : center vector of the cylinder;
+#X text 54 102 \$9 : K;
+#X text 53 115 \$10 : power of the force;
+#X text 53 127 \$11 : K tengential;
+#X text 53 139 \$12 : power of the tengential force;
+#X text 53 151 \$13 : minimum radius of the interactor;
+#X text 52 163 \$14 : maximum radius of the interactor;
+#X text 53 243 \$5 \$6 \$7 : one point of the plane;
+#X text 53 257 \$8 : K;
+#X text 53 271 \$9 : power of the force;
+#X text 52 285 \$10 : minimum profund of the interactor;
+#X text 52 300 \$11 : maximum profund of the interactor;
+#X msg 21 191 iPlane \$1 \$2 \$3 \$4 \$5 \$6 \$7 \$8 [\$9 [\$10 [\$11]]]
 ;
-#X text 53 252 \$1 : mess Id (float or symbol) to apply this interactor
+#X text 53 342 \$1 : mess Id (float or symbol) to apply this interactor
 ;
-#X text 53 265 \$2 \$3 \$4 : center of the sphere;
-#X text 54 0 \$8 : cylinder radius;
-#X text 53 280 \$5 : cylinder radius;
-#X text 53 294 \$6 : K;
-#X text 53 309 \$7 : power of the force;
-#X text 53 323 \$8 : minimum radius of the interactor;
-#X text 52 337 \$9 : maximum radius of the interactor;
-#X msg 22 235 iSphere \$1 \$2 \$3 \$4 \$5 \$6 [\$7 [\$8 [\$9]]];
-#X text 54 125 \$1 : mass Id (float or symbol) to apply this interactor
+#X text 53 355 \$2 \$3 \$4 : center of the sphere;
+#X text 54 90 \$8 : cylinder radius;
+#X text 53 370 \$5 : cylinder radius;
+#X text 53 384 \$6 : K;
+#X text 53 399 \$7 : power of the force;
+#X text 53 413 \$8 : minimum radius of the interactor;
+#X text 52 427 \$9 : maximum radius of the interactor;
+#X msg 22 325 iSphere \$1 \$2 \$3 \$4 \$5 \$6 [\$7 [\$8 [\$9]]];
+#X text 54 215 \$1 : mass Id (float or symbol) to apply this interactor
 ;
-#X text 378 -71 add a cylindrer interactor to masses;
-#X text 377 100 add a plane interactor to masses;
-#X text 375 231 add a dpherical interactor to masses;
-#X text 54 138 \$2 \$3 \$4 : vector perpendicular to the plane;
+#X text 378 19 add a cylindrer interactor to masses;
+#X text 377 190 add a plane interactor to masses;
+#X text 375 321 add a dpherical interactor to masses;
+#X text 54 228 \$2 \$3 \$4 : vector perpendicular to the plane;
 #X restore 12 476 pd interactors ________;
-#N canvas 1012 207 621 608 statistics 0;
-#X obj -61 51 cnv 15 150 210 empty empty empty 20 12 0 14 -233017 -66577
+#N canvas 1010 212 621 608 statistics 0;
+#X obj 19 51 cnv 15 150 210 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj -61 31 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 19 31 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 370 242 \$1 : none or Id;
-#X msg -56 64 massPosMean;
-#X msg -56 87 massPosStd \$1;
-#X msg -55 116 massForceMean;
-#X msg -55 144 massForceStd \$1;
-#X msg -54 168 massSpeedMean;
-#X msg -55 193 massSpeedStd \$1;
-#X text 95 64 output the average position of masses and center distance
+#X text 450 242 \$1 : none or Id;
+#X msg 24 64 massPosMean;
+#X msg 24 87 massPosStd \$1;
+#X msg 25 116 massForceMean;
+#X msg 25 144 massForceStd \$1;
+#X msg 26 168 massSpeedMean;
+#X msg 25 193 massSpeedStd \$1;
+#X text 175 64 output the average position of masses and center distance
 ;
-#X text 95 169 output the average velocity of masses (X \, Y \, Z \,
-Norm);
-#X text -48 31 masses :;
-#X obj -61 291 cnv 15 150 280 empty empty empty 20 12 0 14 -233017
--66577 0;
-#X obj -61 271 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X text 175 169 output the average velocity of masses (X \, Y \, Z
+\, Norm);
+#X text 32 31 masses :;
+#X obj 19 291 cnv 15 150 280 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X msg -53 328 linkPosStd \$1;
-#X msg -53 381 linkLengthStd \$1;
-#X msg -53 438 linkPosSpeedStd \$1;
-#X text 288 572 \$1 : none or Id;
-#X msg -52 502 linkLengthSpeedStd \$1;
-#X msg -53 298 linkPosMean \$1;
-#X msg -53 354 linkLengthMean \$1;
-#X msg -53 408 linkPosSpeedMean \$1;
-#X msg -53 472 linkLengthSpeedMean \$1;
-#X text 98 406 output the average center position velocity of links
+#X obj 19 271 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+0;
+#X msg 27 328 linkPosStd \$1;
+#X msg 27 381 linkLengthStd \$1;
+#X msg 27 438 linkPosSpeedStd \$1;
+#X text 368 572 \$1 : none or Id;
+#X msg 28 502 linkLengthSpeedStd \$1;
+#X msg 27 298 linkPosMean \$1;
+#X msg 27 354 linkLengthMean \$1;
+#X msg 27 408 linkPosSpeedMean \$1;
+#X msg 27 472 linkLengthSpeedMean \$1;
+#X text 178 406 output the average center position velocity of links
 (X \, Y \, Z \, Norm);
-#X text -48 271 links :;
-#X text 95 86 output the standard deviation of mass positions and center
-distance;
-#X text 96 113 output the average force applied to masses (X \, Y \,
-Z and Norm);
-#X text 96 143 output the standard deviation of mass forces;
-#X text 95 193 output the standard deviation of mass velocities;
-#X text 98 298 output the average position of link centers (X \, Y
+#X text 32 271 links :;
+#X text 175 86 output the standard deviation of mass positions and
+center distance;
+#X text 176 113 output the average force applied to masses (X \, Y
+\, Z and Norm);
+#X text 176 143 output the standard deviation of mass forces;
+#X text 175 193 output the standard deviation of mass velocities;
+#X text 178 298 output the average position of link centers (X \, Y
 \, Z \, center disdance);
-#X text 99 330 output the standard deviation of link center positions
+#X text 179 330 output the standard deviation of link center positions
 ;
-#X text 98 355 output the average links lengths (X \, Y \, Z \, L)
+#X text 178 355 output the average links lengths (X \, Y \, Z \, L)
 ;
-#X text 99 380 output the standard deviation of link lengths;
-#X text 98 438 output the standard deviation of link center position
+#X text 179 380 output the standard deviation of link lengths;
+#X text 178 438 output the standard deviation of link center position
 velocities;
-#X text 98 473 output the average change in link lengths (X \, Y \,
+#X text 178 473 output the average change in link lengths (X \, Y \,
 Z \, Norm);
-#X text 101 501 output the standard deviation of link lengths change
+#X text 181 501 output the standard deviation of link lengths change
 ;
-#X obj -61 9 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 19 9 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X text -49 8 STATISTICS Messages;
-#X msg -54 216 massInfo \$1;
-#X msg -51 527 linkInfo \$1;
-#X msg -54 242 massNumber \$1;
-#X msg -51 548 linkNumber;
-#X text 96 216 output various information on the masses;
-#X text 97 244 output the number of masses;
-#X text 102 527 output various information on the links;
-#X text 103 550 output the number of links;
+#X text 31 8 STATISTICS Messages;
+#X msg 26 216 massInfo \$1;
+#X msg 29 527 linkInfo \$1;
+#X msg 26 242 massNumber \$1;
+#X msg 29 548 linkNumber;
+#X text 176 216 output various information on the masses;
+#X text 177 244 output the number of masses;
+#X text 182 527 output various information on the links;
+#X text 183 550 output the number of links;
 #X restore 13 496 pd statistics _________;
 #X text 158 477 To send complex forces;
 #X text 157 498 To get statistical data of the simulation;

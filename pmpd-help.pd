@@ -1,31 +1,31 @@
-#N canvas 538 182 584 778 10;
-#X obj 4 369 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#N canvas 583 200 584 778 10;
+#X obj 4 368 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 729 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 5 728 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 8 6 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 8 5 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 14 389 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 14 388 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 14 644 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 14 643 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 4 587 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 586 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 4 622 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 621 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 7 76 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 7 75 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 679 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 5 678 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 699 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 5 698 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X text 12 76 Examples:;
-#X text 9 369 Inlets:;
-#X text 19 388 - Left:;
-#X text 10 586 Arguments:;
-#X text 11 622 Outlets:;
-#X text 19 679 See Also:;
-#X text 74 48 Full Name:;
+#X text 12 75 Examples:;
+#X text 9 368 Inlets:;
+#X text 19 387 - Left:;
+#X text 10 585 Arguments:;
+#X text 11 621 Outlets:;
+#X text 19 678 See Also:;
+#X text 74 47 Full Name:;
 #N canvas 56 110 262 70 Related_Objects 0;
 #X obj 3 10 cnv 15 250 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -34,7 +34,7 @@
 #X text 5 10 Externals and libraries;
 #X obj 44 37 pmpd2d;
 #X obj 140 37 pmpd3d;
-#X restore 122 736 pd Related_Objects;
+#X restore 122 735 pd Related_Objects;
 #N canvas 537 397 524 302 init 0;
 #X msg 89 187 Xmax 127 \, Xmin 0;
 #X obj 89 215 t a;
@@ -61,15 +61,15 @@ souple 3 2 1 0.5;
 #X connect 7 0 5 0;
 #X connect 8 0 1 0;
 #X connect 9 0 1 0;
-#X restore 17 156 pd init;
-#X obj 17 344 s \$0-out;
-#X obj 17 295 r \$0-in;
-#X obj 261 184 vsl 15 127 0 127 0 0 empty empty Drag-----> -70 60 1
+#X restore 17 155 pd init;
+#X obj 17 343 s \$0-out;
+#X obj 17 294 r \$0-in;
+#X obj 261 183 vsl 15 127 0 127 0 0 empty empty Drag-----> -70 60 1
 10 -262144 -1 -1 0 1;
-#X obj 292 184 vsl 15 127 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+#X obj 292 183 vsl 15 127 0 127 0 0 empty empty empty 0 -8 0 8 -262144
 -1 -1 0 1;
-#X obj 261 345 s \$0-in;
-#X msg 261 322 posX fix \$1;
+#X obj 261 344 s \$0-in;
+#X msg 261 321 posX fix \$1;
 #N canvas 561 581 355 193 compute 0;
 #X obj 159 37 inlet;
 #X obj 159 74 metro 20;
@@ -78,37 +78,36 @@ souple 3 2 1 0.5;
 #X connect 0 0 1 0;
 #X connect 1 0 3 0;
 #X connect 3 0 2 0;
-#X restore 17 224 pd compute;
-#X obj 17 207 tgl 15 0 empty empty ON/OFF 25 10 1 10 -262144 -1 -1
+#X restore 17 223 pd compute;
+#X obj 17 206 tgl 15 0 empty empty ON/OFF 25 10 1 10 -262144 -1 -1
 1 1;
-#X obj 261 107 r \$0-out;
-#X obj 17 139 bng 15 250 50 0 empty empty reset 25 10 1 10 -262144
+#X obj 261 106 r \$0-out;
+#X obj 17 138 bng 15 250 50 0 empty empty reset 25 10 1 10 -262144
 -1 -1;
-#X obj 261 131 route massesPosL;
-#X obj 311 184 vsl 15 127 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+#X obj 261 130 route massesPosL;
+#X obj 311 183 vsl 15 127 0 127 0 0 empty empty empty 0 -8 0 8 -262144
 -1 -1 0 1;
-#X obj 330 184 vsl 15 127 0 127 0 0 empty empty empty 0 -8 0 8 -262144
+#X obj 330 183 vsl 15 127 0 127 0 0 empty empty empty 0 -8 0 8 -262144
 -1 -1 0 1;
-#X obj 261 152 unpack f f f f;
-#X text 160 477 To set the model parameters after creation.;
-#X text 160 458 To create the model masses and links.;
-#X text 103 602 None;
-#X text 18 643 - Left:;
-#X text 101 644 Outputs the model parameters asked with the attributes
+#X obj 261 151 unpack f f f f;
+#X text 160 476 To set the model parameters after creation.;
+#X text 160 457 To create the model masses and links.;
+#X text 103 601 None;
+#X text 18 642 - Left:;
+#X text 101 643 Outputs the model parameters asked with the attributes
 messages.;
-#X text 101 420 Messages - Different messages are used to control the
+#X text 101 419 Messages - Different messages are used to control the
 msd object. They are of three types :;
-#X text 9 700 CATEGORY: control;
-#X text 111 679 01_msdtest.pd;
-#X obj 157 48 pmpd;
-#X text 12 8 HELP: pmpd;
-#X text 12 20 DESCRIPTION: physical modeling for pd \, based on msd.
+#X text 9 699 CATEGORY: control;
+#X text 111 678 01_msdtest.pd;
+#X text 12 7 HELP: pmpd;
+#X text 12 19 DESCRIPTION: physical modeling for pd \, based on msd.
 ;
-#X obj 17 319 pmpd;
-#X text 266 736 - Cyrille Henry \, 2011;
-#X text 283 752 based on MSD by Nicolas Montgermont;
-#X obj 17 187 loadbang;
-#N canvas 175 152 617 876 links_attributes 0;
+#X obj 17 318 pmpd;
+#X text 266 735 - Cyrille Henry \, 2011;
+#X text 283 751 based on MSD by Nicolas Montgermont;
+#X obj 17 186 loadbang;
+#N canvas 173 157 617 876 links_attributes 0;
 #X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 9 241 cnv 15 170 190 empty empty empty 20 12 0 14 -233017 -66577
@@ -186,8 +185,8 @@ on outlet No 1;
 filter on link Id is possible;
 #X msg 14 172 linkLength [\$1];
 #X text 216 174 linkLength symbolId number length;
-#X restore 12 517 pd links_attributes ___;
-#N canvas 155 136 997 789 dynamic 0;
+#X restore 12 516 pd links_attributes ___;
+#N canvas 153 141 997 789 dynamic 0;
 #X obj 5 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 10 85 cnv 15 130 650 empty empty empty 20 12 0 14 -233017 -66577
@@ -308,8 +307,8 @@ that amplifies forces that oppose to movment. Use at your own risk.
 #X text 602 209 Set initial length of link(s) / add value to link length
 ;
 #X text 639 255 [\$3] : optional multiplicator value to the table;
-#X restore 12 477 pd dynamic settings ___;
-#N canvas 573 185 571 697 creation____________ 0;
+#X restore 12 476 pd dynamic settings ___;
+#N canvas 569 195 571 697 creation____________ 0;
 #X obj 11 95 cnv 15 100 60 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 5 75 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -361,7 +360,7 @@ the model. Messages create links and masses or destroy them.;
 #X text 287 498 [\$7] : minimum lenght of link;
 #X text 288 515 [\$8] : maximum lenght of link;
 #X text 288 479 [\$6] : Power of the rigidity distance;
-#X restore 12 457 pd creation____________;
+#X restore 12 456 pd creation____________;
 #N canvas 50 82 901 640 More_Info 0;
 #X text 96 12 pmpd : mass - spring - damper model;
 #X obj 426 -5 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
@@ -569,8 +568,8 @@ one physical parameter \, the value of their mass. They can be mobile
 or fixed \, in this case forces applied to them automatically \, by
 links \, or manually \, by messages \, don't do anything.;
 #X connect 1 0 2 0;
-#X restore 18 735 pd More_Info;
-#N canvas 418 188 614 722 masses_attributes___ 0;
+#X restore 18 734 pd More_Info;
+#N canvas 416 193 614 722 masses_attributes___ 0;
 #X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 7 307 cnv 15 150 100 empty empty empty 20 12 0 14 -233017 -66577
@@ -639,8 +638,8 @@ and forces of masses.;
 #X text 200 502 \$1 = table name;
 #X text 197 660 \$1 (optional): Masses Id;
 #X text 197 676 \$2 (optional): Masses Id;
-#X restore 12 497 pd masses_attributes___;
-#N canvas 869 217 619 540 statistics 0;
+#X restore 12 496 pd masses_attributes___;
+#N canvas 867 222 619 540 statistics 0;
 #X obj 20 41 cnv 15 170 190 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 19 21 cnv 15 590 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -693,26 +692,26 @@ velocity;
 #X text 202 210 output the number of masses;
 #X text 208 457 output various information on the links;
 #X text 209 479 output the number of links;
-#X restore 12 537 pd statistics _________;
-#X text 161 539 To get statistical data of the simulation.;
-#X text 101 388 Bang - A bang at the left inlet computes the new model
+#X restore 12 536 pd statistics _________;
+#X text 161 538 To get statistical data of the simulation.;
+#X text 101 387 Bang - A bang at the left inlet computes the new model
 state based on previous time step.;
-#X text 160 498 To get the model parameters (masses).;
-#X text 161 518 To get the model parameters (links).;
-#X text 9 711 KEYWORDS: physical model \, mass \, spring \, damper
+#X text 160 497 To get the model parameters (masses).;
+#X text 161 517 To get the model parameters (links).;
+#X text 9 710 KEYWORDS: physical model \, mass \, spring \, damper
 \, link;
-#N canvas 435 485 725 566 tests 0;
+#N canvas 676 132 734 663 tests 0;
 #X obj 5 3 cnv 15 700 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text 17 2 TESTS Messages;
-#X obj 5 45 cnv 15 330 150 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 5 45 cnv 15 330 180 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X msg 16 50 testMass testId filterId filter_parametter ...;
 #X text 377 69 testMass testId mass_number;
 #X text 380 130 testMassL filterID 0/1 0/1 0/1 ...;
 #X msg 15 155 testMassT tab_name filterId filter_parametter ...;
 #X msg 14 99 testMassL testId filterId filter_parametter ....;
-#X text 52 203 masses test can be :;
+#X text 52 243 masses test can be :;
 #X text 339 47 output a message for every mass that passes all the
 tests:;
 #X text 344 99 output a list with 0 or 1 for every mass depending on
@@ -722,28 +721,28 @@ all tests;
 #X obj 4 24 cnv 15 700 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X text 17 24 masses :;
-#X obj 9 304 cnv 15 700 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 9 344 cnv 15 700 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X text 22 304 links :;
-#X obj 10 325 cnv 15 330 150 empty empty empty 20 12 0 14 -233017 -66577
+#X text 22 344 links :;
+#X obj 10 365 cnv 15 330 180 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X msg 17 334 testLink testId filterId filter_parametter ...;
-#X msg 16 384 testLinkL testId filterId filter_parametter ....;
-#X msg 17 435 testLinkT tab_name filterId filter_parametter ...;
-#X text 377 354 testLink testId mass_number;
-#X text 377 419 testLinkL filterID 0/1 0/1 0/1 ...;
-#X text 58 493 links test can be :;
-#X text 200 493 Id \$1 / forceSup \$1 / forceInf \$1 / forceXSup \$1
+#X msg 17 374 testLink testId filterId filter_parametter ...;
+#X msg 16 424 testLinkL testId filterId filter_parametter ....;
+#X msg 17 475 testLinkT tab_name filterId filter_parametter ...;
+#X text 377 394 testLink testId mass_number;
+#X text 377 459 testLinkL filterID 0/1 0/1 0/1 ...;
+#X text 58 583 links test can be :;
+#X text 200 583 Id \$1 / forceSup \$1 / forceInf \$1 / forceXSup \$1
 / forceXInf \$1 / forceYSup \$1 / forceYInf \$1 / lengthSup \$1 / lengthInf
 \$1 / lengthXSup \$1 / lengthXInf \$1 / lengthYSup \$1 / lengthYInf
 \$1 / connectedTo \$1 (symbol or float);
-#X text 345 334 output a message for every link that passes all the
+#X text 345 374 output a message for every link that passes all the
 tests:;
-#X text 346 387 output a list with 0 or 1 for every link depending
+#X text 346 427 output a list with 0 or 1 for every link depending
 on whether it passes all tests or not;
-#X text 346 438 Put in a table 0 or 1 depending on whether links pass
+#X text 346 478 Put in a table 0 or 1 depending on whether links pass
 all tests;
-#X text 196 201 Id \$1 / posXSup \$1 / posXInf \$1 / posYSup \$1 /
+#X text 196 241 Id \$1 / posXSup \$1 / posXInf \$1 / posYSup \$1 /
 posYInf \$1 / speedXSup \$1 / speedXInf \$1 / speedYSup \$1 / speedYInf
 \$1 / speedSup \$1 / speedInf \$1 / distanceCircleSup \$1 \$2 \$3 (centerX
 \, centerY \, distance) / distanceCircleInf \$1 \$2 \$3 (centerX \,
@@ -751,9 +750,17 @@ centerY \, distance) / massSup \$1 / massInf \$1 / forceSup \$1 / forceInf
 \$1 / forceXSup \$1 / forceXInf \$1 / forceYSup \$1 / forceYInf \$1
 / nbLinkInf \$1 / nbLinkSup \$1 / nbLinkEqual \$1 / nbLinkNameInf \$1
 \$2 / nbLinkNameSup \$1 \$2 / nbLinkNameEqual \$1 \$2, f 83;
-#X restore 12 557 pd tests ______________;
-#X text 164 559 To test specific parameters;
-#X connect 20 0 44 0;
+#X msg 15 205 testMassN massnumber filterId filter_parametter ...;
+#X text 346 207 output : testMassN \, mass_id \, mass_number \, 0 or
+1 (test result);
+#X msg 17 525 testLinkT link_number filterId filter_parametter ...
+;
+#X text 346 526 output : testLinkN \, link_id \, link_number \, 0 or
+1 (test result);
+#X restore 12 556 pd tests ______________;
+#X text 164 558 To test specific parameters;
+#X obj 157 47 pmpd;
+#X connect 20 0 43 0;
 #X connect 21 0 24 0;
 #X connect 24 0 23 0;
 #X connect 26 0 25 0;
@@ -764,5 +771,5 @@ centerY \, distance) / massSup \$1 / massInf \$1 / forceSup \$1 / forceInf
 #X connect 32 1 22 0;
 #X connect 32 2 30 0;
 #X connect 32 3 31 0;
-#X connect 44 0 19 0;
-#X connect 47 0 26 0;
+#X connect 43 0 19 0;
+#X connect 46 0 26 0;
