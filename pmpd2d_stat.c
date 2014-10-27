@@ -1108,7 +1108,7 @@ void pmpd2d_massNumber(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		j=0;
 		for(i=0; i < x->nb_mass; i++)
 		{
-            if (atom_getsymbolarg(0,argc,argv) == x->mass[j].Id) 
+            if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id) 
 			{
 				j++;
 			}
@@ -1133,7 +1133,7 @@ void pmpd2d_linkNumber(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		j=0;
 		for(i=0; i < x->nb_link; i++)
 		{
-            if (atom_getsymbolarg(0,argc,argv) == x->link[j].Id) 
+            if (atom_getsymbolarg(0,argc,argv) == x->link[i].Id) 
 			{
 				j++;
 			}	
