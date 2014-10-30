@@ -193,7 +193,25 @@ void pmpd2d_iLine(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 // --------------------------------------------------------
 
-void pmpd2d_iMatrix_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max, t_float zone_y_min, t_float zone_y_max, int taille_x, int taille_y, t_float K, t_word *tableX, t_word *tableY)
+void pmpd2d_iMatrix(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    
+    if (!((argc>=9) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) &&
+        (argv[3].a_type == A_FLOAT) && (argv[4].a_type == A_FLOAT) && (argv[5].a_type == A_FLOAT) && 
+        (argv[6].a_type == A_FLOAT) && (argv[7].a_type == A_FLOAT) &&  (argv[8].a_type == A_SYMBOL)) )
+	{
+		pd_error(x,"bad argument for iTable");
+		return;
+	}
+    if ((argc>=10) && (argv[9].a_type == A_SYMBOL)) 
+        pmpd2d_iMatrix_XY(x, s, argc, argv);
+    else
+        pmpd2d_iMatrix_delta(x, s, argc, argv);
+
+}
+
+
+void pmpd2d_iMatrix_XY_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max, t_float zone_y_min, t_float zone_y_max, int taille_x, int taille_y, t_float K, t_word *tableX, t_word *tableY)
 {
 	t_float Xtable, Ytable, Xindex, Yindex, force1, force2, force;
 	int index;
@@ -225,7 +243,7 @@ void pmpd2d_iMatrix_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max
 	}
 }
 
-void pmpd2d_iMatrix(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+void pmpd2d_iMatrix_XY(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	// Argument : 
 	// 0 : mass to apply this interactor
@@ -241,7 +259,7 @@ void pmpd2d_iMatrix(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     
     t_float Xmin, Xmax, Ymin, Ymax, K;
     int X, Y, i;
-    
+/*    
 	if (!((argc==10) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) &&
 		(argv[3].a_type == A_FLOAT) && (argv[4].a_type == A_FLOAT) && (argv[5].a_type == A_FLOAT) && 
 		(argv[6].a_type == A_FLOAT) && (argv[7].a_type == A_FLOAT) &&  (argv[8].a_type == A_SYMBOL) && (argv[9].a_type == A_SYMBOL) ) )
@@ -249,6 +267,7 @@ void pmpd2d_iMatrix(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		pd_error(x,"bad argument for iTable");
 		return;
 	}
+*/    
 	X = atom_getfloatarg(6, argc, argv);
 	Y = atom_getfloatarg(7, argc, argv);
 	X = max(2,X);
@@ -274,13 +293,100 @@ void pmpd2d_iMatrix(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 		if ( argv[0].a_type == A_FLOAT )
 		{
-			pmpd2d_iMatrix_i(x, (int)atom_getfloatarg(0,argc,argv), Xmin, Xmax, Ymin, Ymax, X, Y, K, vec1, vec2);
+			pmpd2d_iMatrix_XY_i(x, (int)atom_getfloatarg(0,argc,argv), Xmin, Xmax, Ymin, Ymax, X, Y, K, vec1, vec2);
 		}
 		else if ( argv[0].a_type == A_SYMBOL )
 		{	for (i=0; i < x->nb_mass; i++)
 			{	if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 				{
-					pmpd2d_iMatrix_i(x, i, Xmin, Xmax, Ymin, Ymax, X, Y, K, vec1, vec2);
+					pmpd2d_iMatrix_XY_i(x, i, Xmin, Xmax, Ymin, Ymax, X, Y, K, vec1, vec2);
+				}
+			}
+		}
+	}
+}
+
+// --------------------------------------------------------
+
+void pmpd2d_iMatrix_delta_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max, t_float zone_y_min, t_float zone_y_max, int taille_x, int taille_y, t_float K, t_word *tableX)
+{
+	t_float Xtable, Ytable, Xindex, Yindex, force1, force2, force;
+	int index;
+	 
+	if ( (x->mass[i].posX >= zone_x_min) && (x->mass[i].posX < zone_x_max) && (x->mass[i].posY >= zone_y_min) && (x->mass[i].posY < zone_y_max) )
+	{
+		Xtable = (x->mass[i].posX - zone_x_min) / (zone_x_max - zone_x_min);
+		Ytable = (x->mass[i].posY - zone_y_min) / (zone_y_max - zone_y_min);
+		Xtable = max(Xtable, 0);
+		Xtable = min(Xtable, 1);
+		Ytable = max(Ytable, 0);
+		Ytable = min(Ytable, 1);
+		Xtable *= taille_x - 1.001; //from [ 0 to table size - 1[
+		Ytable *= taille_y - 1.001; // taille_x must be > 1
+		index = (int)Xtable;
+		index += ((int)Ytable)*taille_x;
+		
+		force =  tableX[index].w_float - tableX[index+1].w_float;
+		x->mass[i].forceX += K * force;
+		
+		force =  tableX[index].w_float - tableX[index+taille_x].w_float;
+		x->mass[i].forceY += K * force;
+	}
+}
+
+void pmpd2d_iMatrix_delta(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+	// Argument : 
+	// 0 : mass to apply this interactor
+	// 1 : K;
+	// 2, 3 : Xmin, Xmax 
+	// 4, 5 : Ymin, Ymax physical location of the interator
+	// 6, 7 : matrix size
+	// 8, 9 : table name containing the matrix
+	
+	t_garray *a1, *a2;
+    int npoints1, npoints2;
+    t_word *vec1, *vec2;
+    
+    t_float Xmin, Xmax, Ymin, Ymax, K;
+    int X, Y, i;
+/*    
+	if (!((argc>=9) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) &&
+		(argv[3].a_type == A_FLOAT) && (argv[4].a_type == A_FLOAT) && (argv[5].a_type == A_FLOAT) && 
+		(argv[6].a_type == A_FLOAT) && (argv[7].a_type == A_FLOAT) &&  (argv[8].a_type == A_SYMBOL)) )
+	{
+		pd_error(x,"bad argument for iTable");
+		return;
+	}
+*/
+	X = atom_getfloatarg(6, argc, argv);
+	Y = atom_getfloatarg(7, argc, argv);
+	X = max(2,X);
+	Y = max(2,Y);
+
+	if (!(a1 = (t_garray *)pd_findbyclass(atom_getsymbolarg(8,argc,argv), garray_class)))
+		pd_error(x, "%s: no such array", atom_getsymbolarg(8,argc,argv)->s_name);
+	else if (!garray_getfloatwords(a1, &npoints1, &vec1))
+		pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(8,argc,argv)->s_name);
+	else if ( npoints1 < X * Y )  
+		pd_error(x, "not enough point in tables for iTable");
+	else
+	{
+		K = atom_getfloatarg(1, argc, argv);
+		Xmin = atom_getfloatarg(2, argc, argv);
+		Xmax = atom_getfloatarg(3, argc, argv);
+		Ymin = atom_getfloatarg(4, argc, argv);
+		Ymax = atom_getfloatarg(5, argc, argv);
+
+		if ( argv[0].a_type == A_FLOAT )
+		{
+			pmpd2d_iMatrix_delta_i(x, (int)atom_getfloatarg(0,argc,argv), Xmin, Xmax, Ymin, Ymax, X, Y, K, vec1);
+		}
+		else if ( argv[0].a_type == A_SYMBOL )
+		{	for (i=0; i < x->nb_mass; i++)
+			{	if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					pmpd2d_iMatrix_delta_i(x, i, Xmin, Xmax, Ymin, Ymax, X, Y, K, vec1);
 				}
 			}
 		}
