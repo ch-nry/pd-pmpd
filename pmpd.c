@@ -55,43 +55,43 @@ void pmpd_setup(void)
  Basic functions for creation of the structure
 */
     class_addbang(pmpd_class, pmpd_bang);
-    class_addmethod(pmpd_class, (t_method)pmpd_reset,           gensym("reset"), 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_mass,            gensym("mass"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_link,            gensym("link"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_tabLink,         gensym("tabLink"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_delLink,         gensym("delLink"), A_GIMME, 0);    
-    class_addmethod(pmpd_class, (t_method)pmpd_delMass,         gensym("delMass"), A_GIMME, 0);   
+    class_addmethod(pmpd_class, (t_method)pmpd_reset,                   gensym("reset"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_mass,                    gensym("mass"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_link,                    gensym("link"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_tabLink,                 gensym("tabLink"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_delLink,                 gensym("delLink"), A_GIMME, 0);    
+    class_addmethod(pmpd_class, (t_method)pmpd_delMass,                 gensym("delMass"), A_GIMME, 0);   
 
 /*    
  pmpd_set
  --
  Functions to modify the internal state of the pmpd object
 */
-    class_addmethod(pmpd_class, (t_method)pmpd_setK,            gensym("setK"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setD,            gensym("setD"), A_GIMME, 0);    
-    class_addmethod(pmpd_class, (t_method)pmpd_setPow,          gensym("setPow"), A_GIMME, 0);    
-    class_addmethod(pmpd_class, (t_method)pmpd_setD2,           gensym("setDEnv"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setL,            gensym("setL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_addL,            gensym("addL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setLCurrent,     gensym("setLCurrent"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setLKTab,        gensym("setLKTab"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setLDTab,        gensym("setLDTab"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setLinkId,       gensym("setLinkId"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setMassId,       gensym("setMassId"), A_GIMME, 0);  
-    class_addmethod(pmpd_class, (t_method)pmpd_setFixed,        gensym("setFixed"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setMobile,       gensym("setMobile"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setSpeedX,       gensym("setSpeed"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setSpeedX,       gensym("setSpeedX"), A_GIMME, 0);  
-    class_addmethod(pmpd_class, (t_method)pmpd_setForceX,       gensym("setForce"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setForceX,       gensym("setForceX"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_posX,            gensym("pos"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_posX,            gensym("posX"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_posX,            gensym("setPos"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_posX,            gensym("setPosX"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_overdamp,        gensym("setOverdamp"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setEnd1,		    gensym("setEnd1"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setEnd2,		    gensym("setEnd2"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setEnd,		    gensym("setEnd"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setK,                    gensym("setK"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setD,                    gensym("setD"), A_GIMME, 0);    
+    class_addmethod(pmpd_class, (t_method)pmpd_setPow,                  gensym("setPow"), A_GIMME, 0);    
+    class_addmethod(pmpd_class, (t_method)pmpd_setD2,                   gensym("setDEnv"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setL,                    gensym("setL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_addL,                    gensym("addL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setLCurrent,             gensym("setLCurrent"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setLKTab,                gensym("setLKTab"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setLDTab,                gensym("setLDTab"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setLinkId,               gensym("setLinkId"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setMassId,               gensym("setMassId"), A_GIMME, 0);  
+    class_addmethod(pmpd_class, (t_method)pmpd_setFixed,                gensym("setFixed"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setMobile,               gensym("setMobile"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setSpeedX,               gensym("setSpeed"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setSpeedX,               gensym("setSpeedX"), A_GIMME, 0);  
+    class_addmethod(pmpd_class, (t_method)pmpd_setForceX,               gensym("setForce"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setForceX,               gensym("setForceX"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_posX,                    gensym("pos"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_posX,                    gensym("posX"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_posX,                    gensym("setPos"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_posX,                    gensym("setPosX"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_overdamp,                gensym("setOverdamp"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setEnd1,		            gensym("setEnd1"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setEnd2,		            gensym("setEnd2"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setEnd,		            gensym("setEnd"), A_GIMME, 0);
 
 /*        
  pmpd_get
@@ -99,13 +99,13 @@ void pmpd_setup(void)
  Basic functions to output internal state of the object
  Output syntax : 1 line by element (mass/link)
 */
-    class_addmethod(pmpd_class, (t_method)pmpd_get,             gensym("get"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massPos,       	gensym("massPos"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massSpeed,    	gensym("massSpeed"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massForce,    	gensym("massForce"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkPos,     	gensym("linkPos"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkEnd,	        gensym("linkEnd"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkLength,	    gensym("linkLength"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_get,                     gensym("get"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massPos,       	        gensym("massPos"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massSpeed,    	        gensym("massSpeed"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massForce,    	        gensym("massForce"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkPos,     	        gensym("linkPos"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkEnd,	                gensym("linkEnd"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkLength,	            gensym("linkLength"), A_GIMME, 0);
 
 /*
  pmpd_list 
@@ -135,44 +135,44 @@ void pmpd_setup(void)
  Functions to copy the internal state of the object in arrays
  Output Syntax : none
 */
-    class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,      gensym("massesPosT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,   gensym("massesSpeedsT"),A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,   gensym("massesForcesT"),A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,      gensym("massesPosXT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,   gensym("massesSpeedsXT"),A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,   gensym("massesForcesXT"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,              gensym("massesPosT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,           gensym("massesSpeedsT"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,           gensym("massesForcesT"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,              gensym("massesPosXT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,           gensym("massesSpeedsXT"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,           gensym("massesForcesXT"),A_GIMME, 0);
 
-    class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,      gensym("massPosT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,   gensym("massSpeedT"),A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,   gensym("massForceT"),A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,      gensym("massPosXT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,   gensym("massSpeedXT"),A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,   gensym("massForceXT"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,              gensym("massPosT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,           gensym("massSpeedT"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,           gensym("massForceT"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesPosT,              gensym("massPosXT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsT,           gensym("massSpeedXT"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesT,           gensym("massForceXT"),A_GIMME, 0);
 
     class_addmethod(pmpd_class, (t_method)pmpd_linksPosT,               gensym("linksPosT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthT,           gensym("linksLengthT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedT,        gensym("linksPosSpeedT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedT,    gensym("linksLengthSpeedT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthT,            gensym("linksLengthT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedT,          gensym("linksPosSpeedT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedT,       gensym("linksLengthSpeedT"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linksPosT,               gensym("linksPosXT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthT,           gensym("linksLengthXT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedT,        gensym("linksPosSpeedXT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedT,    gensym("linksLengthSpeedXT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthT,            gensym("linksLengthXT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedT,          gensym("linksPosSpeedXT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedT,       gensym("linksLengthSpeedXT"), A_GIMME, 0);
 
     class_addmethod(pmpd_class, (t_method)pmpd_linksPosT,               gensym("linkPosT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthT,           gensym("linkLengthT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedT,        gensym("linkPosSpeedT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedT,    gensym("linkLengthSpeedT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthT,            gensym("linkLengthT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedT,          gensym("linkPosSpeedT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedT,       gensym("linkLengthSpeedT"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linksPosT,               gensym("linkPosXT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthT,           gensym("linkLengthXT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedT,        gensym("linkPosSpeedXT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedT,    gensym("linkLengthSpeedXT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthT,            gensym("linkLengthXT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedT,          gensym("linkPosSpeedXT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedT,       gensym("linkLengthSpeedXT"), A_GIMME, 0);
 
-    class_addmethod(pmpd_class, (t_method)pmpd_linkEndT,               gensym("linksEndT"),   A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkEnd1T,              gensym("linkEnd1T"),  A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkEnd2T,              gensym("linkEnd2T"),  A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkEndT,               gensym("linkEndXT"),  A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkEnd1T,              gensym("linkEnd1XT"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkEnd2T,              gensym("linkEnd2XT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkEndT,                gensym("linksEndT"),   A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkEnd1T,               gensym("linkEnd1T"),  A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkEnd2T,               gensym("linkEnd2T"),  A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkEndT,                gensym("linkEndXT"),  A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkEnd1T,               gensym("linkEnd1XT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkEnd2T,               gensym("linkEnd2XT"), A_GIMME, 0);
 
 /*
  pmpd_test
@@ -186,9 +186,10 @@ void pmpd_setup(void)
     class_addmethod(pmpd_class, (t_method)pmpd_testLinkT,       		gensym("testLinkT"), A_GIMME, 0); 
     class_addmethod(pmpd_class, (t_method)pmpd_testMassL,       		gensym("testMassL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_testLinkL,       		gensym("testLinkL"), A_GIMME, 0); 
-    class_addmethod(pmpd_class, (t_method)pmpd_testMassL,       		gensym("testMassN"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_testLinkL,       		gensym("testLinkN"), A_GIMME, 0); 
-
+    class_addmethod(pmpd_class, (t_method)pmpd_testMassN,       		gensym("testMassN"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_testLinkN,       		gensym("testLinkN"), A_GIMME, 0); 
+    class_addmethod(pmpd_class, (t_method)pmpd_testMassNumber,          gensym("testMassNumber"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_testLinkNumber,          gensym("testLinkNumber"), A_GIMME, 0); 
 /*    
  pmpd_stat
  --
@@ -209,35 +210,35 @@ void pmpd_setup(void)
     class_addmethod(pmpd_class, (t_method)pmpd_linkPosSpeedStd,        	gensym("linkPosSpeedStd"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linkLengthSpeedStd,		gensym("linkLengthSpeedStd"), A_GIMME, 0);
 
-    class_addmethod(pmpd_class, (t_method)pmpd_massInfo,       gensym("massInfo"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkInfo,       gensym("linkInfo"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massNumber,       gensym("massNumber"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkNumber,       gensym("linkNumber"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massInfo,                gensym("massInfo"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkInfo,                gensym("linkInfo"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massNumber,              gensym("massNumber"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkNumber,              gensym("linkNumber"), A_GIMME, 0);
 
 /*
  pmpd_various
  --
  Others
 */
-    class_addmethod(pmpd_class, (t_method)pmpd_infosL,          gensym("infosL"), 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_infosL,          gensym("print"), 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_forceX,          gensym("force"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_forceX,          gensym("forceX"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_minX,            gensym("Xmin"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_minX,            gensym("min"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_minX,            gensym("minX"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_maxX,            gensym("Xmax"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_maxX,            gensym("max"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_maxX,            gensym("maxX"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_infosL,                  gensym("infosL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_infosL,                  gensym("print"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_forceX,                  gensym("force"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_forceX,                  gensym("forceX"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_minX,                    gensym("Xmin"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_minX,                    gensym("min"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_minX,                    gensym("minX"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_maxX,                    gensym("Xmax"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_maxX,                    gensym("max"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_maxX,                    gensym("maxX"), A_DEFFLOAT, 0);
 
-    class_addmethod(pmpd_class, (t_method)pmpd_addPosX,         gensym("addPos"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_addPosX,         gensym("addPosX"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_addPosX,                 gensym("addPos"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_addPosX,                 gensym("addPosX"), A_GIMME, 0);
 
-    class_addmethod(pmpd_class, (t_method)pmpd_grabMass,        gensym("grabMass"), A_DEFFLOAT, A_DEFFLOAT, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_closestMass,     gensym("closestMass"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_closestMassN,     gensym("closestMassN"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massDistances,	gensym("massDistance"), A_GIMME, 0);  
-//    class_addmethod(pmpd_class, (t_method)pmpd_forcesXT,        gensym("forceXT"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_grabMass,                gensym("grabMass"), A_DEFFLOAT, A_DEFFLOAT, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_closestMass,             gensym("closestMass"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_closestMassN,            gensym("closestMassN"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massDistances,	        gensym("massDistance"), A_GIMME, 0);  
+//    class_addmethod(pmpd_class, (t_method)pmpd_forcesXT,              gensym("forceXT"), A_GIMME, 0);
 
 /*
  pmpd_deprecated
@@ -245,27 +246,27 @@ void pmpd_setup(void)
  Functions in which the output selector has been modified
  It is now the same as the input slector : all singular
 */
-    class_addmethod(pmpd_class, (t_method)pmpd_massesPosL,      gensym("massesPosL"), 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsL,   gensym("massesSpeedsL"), 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesL,   gensym("massesForcesL"), 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesPosL,      gensym("massesPosXL"), 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsL,   gensym("massesSpeedsXL"), 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesL,   gensym("massesForcesXL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesPosL,              gensym("massesPosL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsL,           gensym("massesSpeedsL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesL,           gensym("massesForcesL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesPosL,              gensym("massesPosXL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsL,           gensym("massesSpeedsXL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesL,           gensym("massesForcesXL"), 0);
 
     class_addmethod(pmpd_class, (t_method)pmpd_linksPosL,               gensym("linksPosL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthL,           gensym("linksLengthL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedL,        gensym("linksPosSpeedL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedL,    gensym("linksLengthSpeedL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthL,            gensym("linksLengthL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedL,          gensym("linksPosSpeedL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedL,       gensym("linksLengthSpeedL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linksPosL,               gensym("linksPosXL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthL,           gensym("linksLengthXL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedL,        gensym("linksPosSpeedXL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedL,    gensym("linksLengthSpeedXL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthL,            gensym("linksLengthXL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedL,          gensym("linksPosSpeedXL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedL,       gensym("linksLengthSpeedXL"), A_GIMME, 0);
 
-    class_addmethod(pmpd_class, (t_method)pmpd_massesPosMean,   gensym("massesPosMean"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesPosStd,    gensym("massesPosStd"),A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesMean,gensym("massesForcesMean"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesStd, gensym("massesForcesStd"),A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsMean,gensym("massesSpeedsMean"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsStd, gensym("massesSpeedsStd"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesPosMean,           gensym("massesPosMean"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesPosStd,            gensym("massesPosStd"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesMean,        gensym("massesForcesMean"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesForcesStd,         gensym("massesForcesStd"),A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsMean,        gensym("massesSpeedsMean"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsStd,         gensym("massesSpeedsStd"),A_GIMME, 0);
 }
 

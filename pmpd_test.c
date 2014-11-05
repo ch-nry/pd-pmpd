@@ -15,6 +15,11 @@ int test_1d_mass(int i, t_pmpd *x, int argc, t_atom *argv)
 				if ( x->mass[i].Id != atom_getsymbolarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
+            else if (atom_getsymbolarg(j,argc,argv) == gensym("mobile") )
+			{
+				if ( x->mass[i].mobile != atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				j+=2;
+			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("posXSup") )
 			{
 				if ( x->mass[i].posX < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
@@ -174,6 +179,11 @@ int test_1d_link(int i, t_pmpd *x, int argc, t_atom *argv)
 			if (atom_getsymbolarg(j,argc,argv) == gensym("Id") )
 			{
 				if ( x->link[i].Id != atom_getsymbolarg(j+1,argc,argv) ) { return(0); }
+				j+=2;
+			}			
+            else if (atom_getsymbolarg(j,argc,argv) == gensym("active") )
+			{
+				if ( x->link[i].active != atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceXSup") )
@@ -442,4 +452,52 @@ void pmpd_testMassN(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(std_out[2]),0);
 
     outlet_anything(x->main_outlet, gensym("testMassN"),3,std_out);
+}
+
+void pmpd_testLinkNumber(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_int i, tmp, nb;
+	t_atom std_out[2];
+
+	SETSYMBOL(&(std_out[0]),atom_getsymbolarg(0,argc,argv));
+
+    nb=0;
+	for (i=0; i < x->nb_link; i++)
+	{
+		tmp=test_link(i,x,argc,argv);
+		if (tmp == -1)
+		{	
+			break;
+		}
+		else if (tmp)
+		{
+            nb++;
+		}
+	}
+    SETFLOAT(&(std_out[1]),nb);
+    outlet_anything(x->main_outlet, gensym("testLinkNumber"),2,std_out);
+}
+
+void pmpd_testMassNumber(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+	t_int i, tmp, nb;
+	t_atom std_out[2];
+
+	SETSYMBOL(&(std_out[0]),atom_getsymbolarg(0,argc,argv));
+
+    nb = 0;
+	for (i=0; i < x->nb_mass; i++)
+	{
+		tmp=test_mass(i,x,argc,argv);
+		if (tmp == -1)
+		{	
+			break;
+		}
+		else if (tmp)
+		{
+            nb++;
+		}
+	}
+    SETFLOAT(&(std_out[1]),nb);
+	outlet_anything(x->main_outlet, gensym("testMassNumber"),2,std_out);
 }

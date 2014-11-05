@@ -250,9 +250,10 @@ pmpd2d_class = class_new(gensym("pmpd2d"),
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_testLinkT,       	gensym("testLinkT"), A_GIMME, 0); 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_testMassL,       	gensym("testMassL"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_testLinkL,       	gensym("testLinkL"), A_GIMME, 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_testMassL,       	gensym("testMassN"), A_GIMME, 0);
-    class_addmethod(pmpd2d_class, (t_method)pmpd2d_testLinkL,       	gensym("testLinkN"), A_GIMME, 0); 
-
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_testMassN,       	gensym("testMassN"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_testLinkN,       	gensym("testLinkN"), A_GIMME, 0); 
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_testMassNumber,      gensym("testMassNumber"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_testLinkNumber,      gensym("testLinkNumber"), A_GIMME, 0); 
 /*    
  pmpd2d_stat
  --
