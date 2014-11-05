@@ -192,25 +192,6 @@ void pmpd2d_iLine(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 }
 
 // --------------------------------------------------------
-
-void pmpd2d_iMatrix(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
-{
-    
-    if (!((argc>=9) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) &&
-        (argv[3].a_type == A_FLOAT) && (argv[4].a_type == A_FLOAT) && (argv[5].a_type == A_FLOAT) && 
-        (argv[6].a_type == A_FLOAT) && (argv[7].a_type == A_FLOAT) &&  (argv[8].a_type == A_SYMBOL)) )
-	{
-		pd_error(x,"bad argument for iTable");
-		return;
-	}
-    if ((argc>=10) && (argv[9].a_type == A_SYMBOL)) 
-        pmpd2d_iMatrix_XY(x, s, argc, argv);
-    else
-        pmpd2d_iMatrix_delta(x, s, argc, argv);
-
-}
-
-
 void pmpd2d_iMatrix_XY_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max, t_float zone_y_min, t_float zone_y_max, int taille_x, int taille_y, t_float K, t_word *tableX, t_word *tableY)
 {
 	t_float Xtable, Ytable, Xindex, Yindex, force1, force2, force;
@@ -306,8 +287,6 @@ void pmpd2d_iMatrix_XY(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
-// --------------------------------------------------------
-
 void pmpd2d_iMatrix_delta_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max, t_float zone_y_min, t_float zone_y_max, int taille_x, int taille_y, t_float K, t_word *tableX)
 {
 	t_float Xtable, Ytable, Xindex, Yindex, force1, force2, force;
@@ -392,3 +371,22 @@ void pmpd2d_iMatrix_delta(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		}
 	}
 }
+
+void pmpd2d_iMatrix(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    
+    if (!((argc>=9) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) &&
+        (argv[3].a_type == A_FLOAT) && (argv[4].a_type == A_FLOAT) && (argv[5].a_type == A_FLOAT) && 
+        (argv[6].a_type == A_FLOAT) && (argv[7].a_type == A_FLOAT) &&  (argv[8].a_type == A_SYMBOL)) )
+	{
+		pd_error(x,"bad argument for iTable");
+		return;
+	}
+    if ((argc>=10) && (argv[9].a_type == A_SYMBOL)) 
+        pmpd2d_iMatrix_XY(x, s, argc, argv);
+    else
+        pmpd2d_iMatrix_delta(x, s, argc, argv);
+
+}
+
+
