@@ -505,35 +505,64 @@ void pmpd2d_closestMassN(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else
         posY = 0;
 
-    for (i=0; i < nbout; i++) // on remplie avec les premiere données disponible
+    if ( (argc >= 4)  && (argv[3].a_type == A_SYMBOL) )
     {
-        list_index[i] = i;
-        list_distance[i] = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) ;
-    }
-
-    for (i=1; i < nbout; i++) // trie a bulle pour ordoner cela
-    {
-        for (j=0; j < nbout-i; j++)
+        for (i=0; i < nbout; i++) // on remplie avec les données fausse pour commancer
         {
-            bulle_order(list_index, list_distance, j);
-        } 
-    }
-  
-    for (i = nbout; i< x->nb_mass; i++) // on test le reste des masses
-    {
-        dist = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY);
-        if (dist < list_distance[0]) // cette mass doit rentrer dans la liste
+            list_index[i] = -1;
+            list_distance[i] = 1000000 ;
+        }
+        
+         for (i = 0; i< x->nb_mass; i++) // on test le reste des masses
         {
-            list_index[0] = i;
-            list_distance[0] = dist;
-            j = 0;
-            while ( (j < nbout-1) && bulle_order(list_index, list_distance, j) ) // on reordone la liste
+            if (atom_getsymbolarg(3,argc,argv) == x->mass[i].Id)
             {
-                j++;
+                dist = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY);
+                if (dist < list_distance[0]) // cette mass doit rentrer dans la liste
+                {
+                    list_index[0] = i;
+                    list_distance[0] = dist;
+                    j = 0;
+                    while ( (j < nbout-1) && bulle_order(list_index, list_distance, j) ) // on reordone la liste
+                    {
+                        j++;
+                    }
+                }
             }
         }
     }
-  
+    else
+    {
+        for (i=0; i < nbout; i++) // on remplie avec les premiere données disponible
+        {
+            list_index[i] = i;
+            list_distance[i] = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) ;
+        }
+    
+        for (i=1; i < nbout; i++) // trie a bulle pour ordoner cela
+        {
+            for (j=0; j < nbout-i; j++)
+            {
+                bulle_order(list_index, list_distance, j);
+            } 
+        }
+      
+        for (i = nbout; i< x->nb_mass; i++) // on test le reste des masses
+        {
+            dist = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY);
+            if (dist < list_distance[0]) // cette mass doit rentrer dans la liste
+            {
+                list_index[0] = i;
+                list_distance[0] = dist;
+                j = 0;
+                while ( (j < nbout-1) && bulle_order(list_index, list_distance, j) ) // on reordone la liste
+                {
+                    j++;
+                }
+            }
+        }
+     }     
+     
     for (i=0; i<nbout; i++)
     {
         SETFLOAT(&(std_out[2*i]), list_index[nbout-1-i]);
