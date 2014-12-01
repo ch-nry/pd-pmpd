@@ -347,7 +347,7 @@ void pmpd2d_testLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 	SETSYMBOL(&(std_out[0]),atom_getsymbolarg(0,argc,argv));
 
-	for (i=0; i < x->nb_link; i++)
+	for (i=x->nb_link-1; i >= 0; i--)
 	{
 		tmp=test_2d_link(i,x,argc,argv);
 		if (tmp == -1)
@@ -369,7 +369,7 @@ void pmpd2d_testMass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 	SETSYMBOL(&(std_out[0]),atom_getsymbolarg(0,argc,argv));
 
-	for (i=0; i < x->nb_mass; i++)
+	for (i=x->nb_mass-1; i >= 0; i--)
 	{
 		tmp=test_2d_mass(i,x,argc,argv);
 		if (tmp == -1)
