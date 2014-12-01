@@ -186,6 +186,16 @@ int test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 				if ( tmp != atom_getfloatarg(j+2,argc,argv) ) { return(0); }
 				j+=3;
 			}
+            else if ( atom_getsymbolarg(j,argc,argv) == gensym("numInf") )
+            {
+                if ( i >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				j+=2; 
+            }
+            else if ( atom_getsymbolarg(j,argc,argv) == gensym("numSup") )
+            {
+                if ( i < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				j+=2; 
+            }
 			else
 			{
 				pd_error(x, "Option \"%s\" not reconized, stoping test",atom_getsymbolarg(j,argc,argv)->s_name);
@@ -308,6 +318,16 @@ int test_2d_link(int i, t_pmpd2d *x, int argc, t_atom *argv)
 					j+=1;
 				}
 			}
+            else if ( atom_getsymbolarg(j,argc,argv) == gensym("numInf") )
+            {
+                if ( i >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				j+=2; 
+            }
+            else if ( atom_getsymbolarg(j,argc,argv) == gensym("numSup") )
+            {
+                if ( i < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				j+=2; 
+            }
 			else
 			{
 				pd_error(x,"Option \"%s\" not reconized, stoping test",atom_getsymbolarg(j,argc,argv)->s_name);
