@@ -1,4 +1,4 @@
-#N canvas 263 234 572 750 10;
+#N canvas 261 239 572 750 10;
 #X declare -lib Gem;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -506,7 +506,7 @@ filter on link id is possible;
 #X text 184 174 output a message for every link :;
 #X text 213 190 linkLength symbolId number lengthX lengthY length;
 #X restore 12 466 pd links_attributes ___;
-#N canvas 274 160 935 531 creation____________ 0;
+#N canvas 272 165 935 531 creation____________ 0;
 #X obj 5 75 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 5 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -577,7 +577,7 @@ the model. Messages create links and masses or destroy them.;
 links. They work as general links but their calculation is made following
 a vector.;
 #X restore 12 407 pd creation____________;
-#N canvas 92 162 1031 818 dynamic 0;
+#N canvas 90 90 1077 895 dynamic 0;
 #X obj 5 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 10 85 cnv 15 150 670 empty empty empty 20 12 0 14 -233017 -66577
@@ -706,6 +706,12 @@ uses this argument as the value applied to all masses (or links);
 #X msg 484 227 addL \$1 \$2 [\$3];
 #X text 611 207 Set initial lenght of link(s) / add value to link length
 ;
+#X text 529 822 Set messages can also accept 2 float for mass / link
+Id :;
+#X msg 603 841 setK 1 200 0.3;
+#X text 533 841 exemple :;
+#X text 536 863 will set rigidity of all link from number 1 to number
+200 to 0.3, f 65;
 #X restore 12 427 pd dynamic settings ___;
 #X text 112 658 54_pmpd2dtest.pd;
 #X obj 325 272 print;
