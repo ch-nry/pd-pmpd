@@ -16,11 +16,11 @@ void pmpd2d_setK(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_link-1, tmp));
+        tmp = max(0, min( x->nb_link, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_link-1, end));
+        end = max(tmp, min( x->nb_link, end));
         valeur = atom_getfloatarg(2, argc, argv);
-        for (i=tmp; i<=end; i++) 
+        for (i=tmp; i<end; i++) 
             x->link[i].K = valeur;
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
@@ -93,11 +93,11 @@ void pmpd2d_setD(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_link-1, tmp));
+        tmp = max(0, min( x->nb_link, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_link-1, end));
+        end = max(tmp, min( x->nb_link, end));
         valeur = atom_getfloatarg(2, argc, argv);
-        for (i=tmp; i<=end; i++) 
+        for (i=tmp; i<end; i++) 
             x->link[i].D = valeur;
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
@@ -171,11 +171,11 @@ void pmpd2d_setPow(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_link-1, tmp));
+        tmp = max(0, min( x->nb_link, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_link-1, end));
+        end = max(tmp, min( x->nb_link, end));
         valeur = atom_getfloatarg(2, argc, argv);
-        for (i=tmp; i<=end; i++) 
+        for (i=tmp; i<end; i++) 
             x->link[i].Pow = valeur;
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
@@ -248,11 +248,11 @@ void pmpd2d_setDEnv(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_mass-1, tmp));
+        tmp = max(0, min( x->nb_mass, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_mass-1, end));
+        end = max(tmp, min( x->nb_mass, end));
         valeur = atom_getfloatarg(2, argc, argv);
-        for (i=tmp; i<=end; i++) 
+        for (i=tmp; i<end; i++) 
             x->mass[i].D2 = valeur;
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
@@ -332,11 +332,11 @@ void pmpd2d_setDEnvOffset(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_mass-1, tmp));
+        tmp = max(0, min( x->nb_mass, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_mass-1, end));
+        end = max(tmp, min( x->nb_mass, end));
         valeur = atom_getfloatarg(2, argc, argv);
-        for (i=tmp; i<=end; i++) 
+        for (i=tmp; i<end; i++) 
             x->mass[i].D2offset = valeur;
     }
     else if (  (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
@@ -416,11 +416,11 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_link-1, tmp));
+        tmp = max(0, min( x->nb_link, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_link-1, end));
+        end = max(tmp, min( x->nb_link, end));
         valeur = atom_getfloatarg(2, argc, argv);
-        for (i=tmp; i<=end; i++) 
+        for (i=tmp; i<end; i++) 
             x->link[i].L = valeur;
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
@@ -509,11 +509,11 @@ void pmpd2d_addL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_link-1, tmp));
+        tmp = max(0, min( x->nb_link, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_link-1, end));
+        end = max(tmp, min( x->nb_link, end));
         valeur = atom_getfloatarg(2, argc, argv);
-        for (i=tmp; i<=end; i++) 
+        for (i=tmp; i<end; i++) 
             x->link[i].L += valeur;
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
@@ -649,12 +649,12 @@ void pmpd2d_setLKTab(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_link-1, tmp));
+        tmp = max(0, min( x->nb_link, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_link-1, end));
+        end = max(tmp, min( x->nb_link, end));
         valeur = atom_getfloatarg(2, argc, argv);
         if (valeur <=  0) valeur = 1;
-        for (i=tmp; i<=end; i++) 
+        for (i=tmp; i<end; i++) 
             x->link[i].K_L = valeur;
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
@@ -685,12 +685,12 @@ void pmpd2d_setLDTab(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_link-1, tmp));
+        tmp = max(0, min( x->nb_link, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_link-1, end));
+        end = max(tmp, min( x->nb_link, end));
         valeur = atom_getfloatarg(2, argc, argv);
         if (valeur <=  0) valeur = 1;
-        for (i=tmp; i<=end; i++) 
+        for (i=tmp; i<end; i++) 
             x->link[i].D_L = valeur;
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
@@ -718,10 +718,10 @@ void pmpd2d_setLinkId(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_link-1, tmp));
+        tmp = max(0, min( x->nb_link, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_link-1, end));
-        for (i=tmp; i<=end; i++) 
+        end = max(tmp, min( x->nb_link, end));
+        for (i=tmp; i<end; i++) 
             x->link[i].Id = atom_getsymbolarg(1, argc, argv);
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
@@ -749,10 +749,10 @@ void pmpd2d_setMassId(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_SYMBOL ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_mass-1, tmp));
+        tmp = max(0, min( x->nb_mass, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_mass-1, end));
-        for (i=tmp; i<=end; i++) 
+        end = max(tmp, min( x->nb_mass, end));
+        for (i=tmp; i<end; i++) 
             x->mass[i].Id = atom_getsymbolarg(1, argc, argv);
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
@@ -811,10 +811,10 @@ void pmpd2d_setMobile(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_mass-1, tmp));
+        tmp = max(0, min( x->nb_mass, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_mass-1, end));
-        for (i=tmp; i<=end; i++) 
+        end = max(tmp, min( x->nb_mass, end));
+        for (i=tmp; i<end; i++) 
             x->mass[i].mobile = 0;
     }
     else if ( (argc == 1) && (argv[0].a_type == A_SYMBOL ) )
@@ -1026,10 +1026,10 @@ void pmpd2d_setInactive(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_link-1, tmp));
+        tmp = max(0, min( x->nb_link, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_link-1, end));
-        for (i=tmp; i<=end; i++) 
+        end = max(tmp, min( x->nb_link, end));
+        for (i=tmp; i<end; i++) 
             x->link[i].active = 0;
     }
     else if ( (argc == 1) && ( argv[0].a_type == A_SYMBOL ) )
@@ -1311,11 +1311,11 @@ void pmpd2d_overdamp(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
         tmp = atom_getfloatarg(0, argc, argv);
-        tmp = max(0, min( x->nb_mass-1, tmp));
+        tmp = max(0, min( x->nb_mass, tmp));
         end = atom_getfloatarg(1, argc, argv);
-        end = max(tmp, min( x->nb_mass-1, end));
+        end = max(tmp, min( x->nb_mass, end));
         valeur = atom_getfloatarg(2, argc, argv);
-        for (i=tmp; i<=end; i++) 
+        for (i=tmp; i<end; i++) 
             x->mass[i].overdamp = valeur;
     }
 	else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )

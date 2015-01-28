@@ -69,14 +69,11 @@ void *pmpd2d_new()
 }
 
 void pmpd2d_bang(t_pmpd2d *x)
-{
-// this part is doing all the PM
+{ // this part is doing all the PM
     t_float F, L, Lx,Ly, Fx, Fy, tmp, tmpX, tmpY,speed;
     t_int i;
-    // post("bang");
 
-    for (i=0; i<x->nb_mass; i++)
-    // compute new masses position
+    for (i=0; i<x->nb_mass; i++) // compute new masses position
         if (x->mass[i].mobile > 0) // only if mobile
         {
 			// amplify force that opose to movement
@@ -125,9 +122,8 @@ void pmpd2d_bang(t_pmpd2d *x)
             }
         }
 
-    for (i=0; i<x->nb_link; i++)
-    { // compute link forces
-		if (x->link[i].active == 1)
+    for (i=0; i<x->nb_link; i++) // compute link forces
+		if (x->link[i].active > 0)
         {
             Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
             Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
@@ -165,7 +161,6 @@ void pmpd2d_bang(t_pmpd2d *x)
             }
             x->link[i].distance=L;
         }
-    }
 }
 
 void pmpd2d_mass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)

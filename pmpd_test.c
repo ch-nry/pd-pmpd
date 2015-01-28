@@ -464,7 +464,7 @@ void pmpd_testLinkNumber(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     nb=0;
 	for (i=0; i < x->nb_link; i++)
 	{
-		tmp=test_link(i,x,argc,argv);
+		tmp=test_1d_link(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;
@@ -488,7 +488,7 @@ void pmpd_testMassNumber(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     nb = 0;
 	for (i=0; i < x->nb_mass; i++)
 	{
-		tmp=test_mass(i,x,argc,argv);
+		tmp=test_1d_mass(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;

@@ -1,4 +1,4 @@
-#N canvas 261 239 572 750 10;
+#N canvas 257 249 572 750 10;
 #X declare -lib Gem;
 #X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -828,7 +828,7 @@ a table;
 #X text 794 523 \$3 : y position;
 #X text 794 537 \$4 : none or Id;
 #X restore 12 447 pd masses_attributes___;
-#N canvas 252 263 751 772 tests 0;
+#N canvas 120 246 751 772 tests 0;
 #X obj 5 3 cnv 15 700 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text 17 2 TESTS Messages;
@@ -866,7 +866,6 @@ tests:;
 on whether it passes all tests or not;
 #X text 346 508 Put in a table 0 or 1 depending on whether links pass
 all tests;
-#X msg 15 205 testMassN massnumber filterId filter_parametter ...;
 #X text 346 556 output : testLinkN \, link_id \, link_number \, 0 or
 1 (test result);
 #X text 346 207 output : testMassN \, mass_id \, mass_number \, 0 or
@@ -891,6 +890,8 @@ forceXSup \$1 / forceXInf \$1 / forceYSup \$1 / forceYInf \$1 / lengthSup
 #X text 347 247 output : testMassN \, testId \, float;
 #X text 347 597 output : testMassN \, testId \, float;
 #X msg 15 595 testLinkN testId filterId filter_parametter ...;
+#X msg 15 205 testMassN testId massnumber filterId filter_parametter
+...;
 #X restore 12 486 pd tests ______________;
 #N canvas 1081 499 709 556 interactors 0;
 #X obj 30 11 cnv 15 600 15 empty empty empty 20 12 0 14 -233017 -66577
