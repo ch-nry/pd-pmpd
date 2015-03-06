@@ -26,10 +26,10 @@ void pmpd2d_iCircle_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float r, t_flo
 	
 	if ( (distance>Rmin) && (distance<=Rmax) )
 	{
-		tmp = -pow_ch(K * distance, power);
+		tmp = -pow_ch(distance, power)*K;
 		x->mass[i].forceX += X * tmp;
 		x->mass[i].forceY += Y * tmp;
-		tmp = -pow_ch(Kt * distance, power);
+		tmp = -pow_ch(distance, power)*Kt;
 		x->mass[i].forceX += -Y * tmp;
 		x->mass[i].forceY += X * tmp;
 		
@@ -66,11 +66,11 @@ void pmpd2d_iCircle(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 	K = atom_getfloatarg(4, argc, argv);
 	power = atom_getfloatarg(5, argc, argv);
-	if (power == 0) power = 1;
+	//if (power == 0) power = 1;
 	
 	Kt = atom_getfloatarg(6, argc, argv);
 	powert = atom_getfloatarg(7, argc, argv);
-	if (powert == 0) powert = 1;
+	//if (powert == 0) powert = 1;
 	
 	Rmin = 0;
 	if ((argc>=9) && (argv[8].a_type == A_FLOAT)) { Rmin = (atom_getfloatarg(8,argc,argv));}
@@ -110,7 +110,7 @@ void pmpd2d_iLine_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float c, t_float
 
 	if ( (distance>Rmin) && (distance<=Rmax) )
 	{
-		force = -pow_ch(K * distance, power);
+		force = -pow_ch(distance, power)*K;
 		x->mass[i].forceX += a * force;
 		x->mass[i].forceY += b * force;
 	}
