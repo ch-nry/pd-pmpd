@@ -45,6 +45,50 @@ t_float tabread2(t_pmpd2d *x, t_float pos, t_symbol *array)
     return( pos); // si il y a un pb sur le tableau, on renvoie l'identité
 }
 
+t_float pow2(t_float x)
+{
+    return(x*x);
+}
+
+t_float getAngle_bug(t_pmpd2d *x, t_int mass1, t_int mass3, t_int mass2)
+{
+    t_float X12, X13, X23, Y12, Y13, Y23, D;
+    X12 = x->mass[mass1].posX - x->mass[mass2].posX;
+    Y12 = x->mass[mass1].posY - x->mass[mass2].posY;
+    X13 = x->mass[mass1].posX - x->mass[mass3].posX;
+    Y13 = x->mass[mass1].posY - x->mass[mass3].posY;
+    X23 = x->mass[mass2].posX - x->mass[mass3].posX;
+    Y23 = x->mass[mass2].posY - x->mass[mass3].posY;
+    
+    D = sqrt(X13*X13 + Y13*Y13) + sqrt(X23*X23 + Y23*Y23);
+    if (D =! 0)
+        return(acos((X13*X23 + Y13*Y23)/D));
+    else
+        return(0);
+}
+
+t_float getAngle(t_pmpd2d *x, t_int mass1, t_int mass2, t_int mass3)
+{
+    t_float A1, A2;
+    A1 = atan2( x->mass[mass1].posX - x->mass[mass2].posX, x->mass[mass1].posY - x->mass[mass2].posY);
+    A2 = atan2( x->mass[mass3].posX - x->mass[mass2].posX, x->mass[mass3].posY - x->mass[mass2].posY);
+    return(A2-A1);
+}
+
+t_float distance(t_pmpd2d *x, t_int mass1, t_int mass2)
+{
+    t_float X,Y;
+    X = x->mass[mass1].posX - x->mass[mass2].posX;
+    Y = x->mass[mass1].posY - x->mass[mass2].posY;
+    return(sqrt(X*X+Y*Y));
+}
+
+t_float mod2Pi(t_float angle)
+{
+    t_float tmp;
+    tmp = fmodf(angle-3.1415926, 6.2831852);
+    return(tmp > 0 ? tmp-3.1415926 : tmp+3.1415926); // TODO : mettre un vrai PI
+}
 void pmpd2d_reset(t_pmpd2d *x)
 {
     x->nb_link = 0;
@@ -70,10 +114,11 @@ void *pmpd2d_new()
 
 void pmpd2d_bang(t_pmpd2d *x)
 { // this part is doing all the PM
-    t_float F, L, Lx,Ly, Fx, Fy, tmp, tmpX, tmpY,speed;
+    t_float F, L, Dist, Lx,Ly, Fx, Fy, tmp, tmpX, tmpY,speed;
     t_int i;
 
     for (i=0; i<x->nb_mass; i++) // compute new masses position
+    {
         if (x->mass[i].mobile > 0) // only if mobile
         {
 			// amplify force that opose to movement
@@ -121,9 +166,13 @@ void pmpd2d_bang(t_pmpd2d *x)
                 x->mass[i].forceY += x->mass[i].D2offset * (x->mass[i].speedY/speed);
             }
         }
-
+    }
     for (i=0; i<x->nb_link; i++) // compute link forces
-		if (x->link[i].active > 0)
+	{
+        x->link[i].forceX = 0;
+        x->link[i].forceY = 0;
+ 
+        if ((x->link[i].active > 0) && (x->link[i].lType < 3))
         {
             Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
             Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
@@ -161,6 +210,40 @@ void pmpd2d_bang(t_pmpd2d *x)
             }
             x->link[i].distance=L;
         }
+        else if ((x->link[i].active > 0) && (x->link[i].lType == 3)) // hinge
+        {
+            L = getAngle(x, x->link[i].mass1->num, x->link[i].mass2->num, x->link[i].mass3->num);
+            L = mod2Pi(L);
+            if ( (L >= x->link[i].Lmin) && (L < x->link[i].Lmax)  && (L != 0))
+            {
+                F  = x->link[i].D *  (mod2Pi(L - x->link[i].distance)); 
+                F += x->link[i].K *  pow_ch( mod2Pi(L - x->link[i].L), x->link[i].Pow); // calcule du couple
+
+                // post("f=%f", mod2Pi(L - x->link[i].L));
+                Dist = distance(x, x->link[i].mass1->num, x->link[i].mass2->num);
+                tmp = F/Dist; // couple pour la mass 1
+                Fx = tmp * (x->link[i].mass1->posY - x->link[i].mass2->posY)/Dist;
+                Fy = tmp * (x->link[i].mass2->posX - x->link[i].mass1->posX)/Dist; // projection sur la normal a la liaison mass1 mass2
+                x->link[i].mass1->forceX += Fx;
+                x->link[i].mass1->forceY += Fy;
+                x->link[i].mass2->forceX -= Fx;
+                x->link[i].mass2->forceY -= Fy;
+                
+				x->link[i].forceX = Fx; // save for latter use
+				x->link[i].forceY = Fy; // que doit on faire ds ce cas la : quel est la valeur a sauver ds la cas d'un couple???
+                
+                Dist = distance(x, x->link[i].mass3->num, x->link[i].mass2->num);
+                F /= Dist;// pour la mass 2
+                Fx = F * (x->link[i].mass3->posY - x->link[i].mass2->posY)/Dist;
+                Fy = F * (x->link[i].mass2->posX - x->link[i].mass3->posX)/Dist; // projection sur la normal a la liaison mass2 mass3
+                x->link[i].mass3->forceX -= Fx;
+                x->link[i].mass3->forceY -= Fy;
+                x->link[i].mass2->forceX += Fx;
+                x->link[i].mass2->forceY += Fy;
+            }
+            x->link[i].distance=L; // sauvegarde de l'angle de la liaison
+        }
+    }
 }
 
 void pmpd2d_mass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
@@ -434,6 +517,58 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
                 }
             }   
         }
+    }
+}
+
+void pmpd2d_hinge(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
+{ // TODO : acept symbol ID for hinge creation
+    int mass1, mass2, mass3;
+    
+    x->link[x->nb_link].Id = gensym("hinge");
+    if ((argc > 0) &&  (argv[0].a_type == A_SYMBOL))
+		 x->link[x->nb_link].Id = atom_getsymbolarg(0,argc,argv);
+
+    mass1 = 0;    
+    if ((argc > 1) &&  (argv[1].a_type == A_FLOAT))
+        mass1 = atom_getfloatarg(1, argc, argv);
+
+    mass2 = 0;    
+    if ((argc > 2) &&  (argv[2].a_type == A_FLOAT))
+        mass2 = atom_getfloatarg(2, argc, argv);
+
+    mass3 = 0;    
+    if ((argc > 3) &&  (argv[3].a_type == A_FLOAT))
+        mass3 = atom_getfloatarg(3, argc, argv);
+
+    x->link[x->nb_link].K = 0;    
+    if ((argc > 4) &&  (argv[4].a_type == A_FLOAT))
+        x->link[x->nb_link].K = atom_getfloatarg(4, argc, argv);
+    
+    x->link[x->nb_link].D = 0;    
+    if ((argc > 5) &&  (argv[5].a_type == A_FLOAT))
+        x->link[x->nb_link].D = atom_getfloatarg(5, argc, argv);
+         
+    x->link[x->nb_link].active = 1;
+    x->link[x->nb_link].Pow = 1;
+    x->link[x->nb_link].Lmin = -4;
+    x->link[x->nb_link].Lmax = 4;
+
+
+    if ( (mass1 != mass2) && (mass2 != mass3) && (mass1 != mass3) \
+        && (mass1 < x->nb_mass) && (mass2 < x->nb_mass) && (mass3 < x->nb_mass))
+    {
+        x->link[x->nb_link].mass1 = &x->mass[mass1];
+        x->link[x->nb_link].mass2 = &x->mass[mass2];
+        x->link[x->nb_link].mass3 = &x->mass[mass3];
+        
+        x->link[x->nb_link].L = getAngle(x, mass1, mass2, mass3); // angle actuel : -pi a pi
+    
+        x->link[x->nb_link].distance = x->link[x->nb_link].L; // angle au repos = angle a l'initialisation
+        
+        x->link[x->nb_link].lType = 3;
+        
+        x->nb_link++ ;
+        x->nb_link = min (nb_max_link -1, x->nb_link );
     }
 }
 

@@ -24,17 +24,18 @@ typedef struct _mass {
 
 typedef struct _link {
     t_symbol *Id;
-    int lType;
+    int lType; // 0 pour un lien normal, 1 pour un tLink, 2 pour un tabLink, 3 pour un hinge
     struct _mass *mass1;
     struct _mass *mass2;
+    struct _mass *mass3; // seulement pour le hinge
     t_int active;
     t_float K;
     t_float D;
-    t_float L;
+    t_float L; // teta
     t_float Pow;
-    t_float Lmin;
-    t_float Lmax;
-    t_float distance;
+    t_float Lmin; // tetamin pour un hinge
+    t_float Lmax; // tetamax 
+    t_float distance; // angle de la charniere ds le cas d'un hinge
     t_float VX; // vecteur portant la liaison, si c'est le cas
     t_float VY;
     t_symbol *arrayK;

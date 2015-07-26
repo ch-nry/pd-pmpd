@@ -11,7 +11,7 @@ void pmpd2d_infosL(t_pmpd2d *x)
     }
 
     post("list of %d link", x->nb_link);
-    post("number, Id, active, mass1, mass2, K, D, Pow, L, Lmin, Lmax");
+    post("number, Id, active, mass1, mass2, [mass3], K, D, Pow, L, Lmin, Lmax");
     for(i=0; i < x->nb_link; i++)
     {
         switch(x->link[i].lType)
@@ -30,6 +30,11 @@ void pmpd2d_infosL(t_pmpd2d *x)
             post("tabLink %i: %s, %i, %i, %i, %f, %f, %s, %f, %s, %f", i, x->link[i].Id->s_name, x->link[i].active, \
                 x->link[i].mass1->num, x->link[i].mass2->num, x->link[i].K, x->link[i].D, \
                 x->link[i].arrayK->s_name, x->link[i].K_L, x->link[i].arrayD->s_name, x->link[i].D_L);
+            break;
+        case 3 :
+            post("hinge %i: %s, %i, %i, %i, %i, %f, %f, %f, %f, %f, %f, %f",i, x->link[i].Id->s_name, x->link[i].active, \
+                x->link[i].mass1->num, x->link[i].mass2->num, x->link[i].mass3->num, x->link[i].K, x->link[i].D, \
+                x->link[i].Pow, x->link[i].L, x->link[i].distance, x->link[i].Lmin, x->link[i].Lmax);
             break;
         }
     }

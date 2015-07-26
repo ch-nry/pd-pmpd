@@ -152,7 +152,6 @@ void pmpd2d_setD(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
-
 void pmpd2d_setPow(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp,  end, i, offset;

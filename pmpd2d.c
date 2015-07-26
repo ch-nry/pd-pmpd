@@ -59,6 +59,7 @@ pmpd2d_class = class_new(gensym("pmpd2d"),
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_reset,               gensym("reset"), 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_mass,                gensym("mass"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_link,                gensym("link"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_hinge,               gensym("hinge"), A_GIMME, 0);    
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_tLink,               gensym("tLink"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_tabLink,             gensym("tabLink"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_delLink,             gensym("delLink"), A_GIMME, 0);    
