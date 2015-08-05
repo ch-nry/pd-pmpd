@@ -31,11 +31,11 @@ typedef struct _link {
     t_int active;
     t_float K;
     t_float D;
-    t_float L; // teta
+    t_float L; // teta actuel
     t_float Pow;
     t_float Lmin; // tetamin pour un hinge
     t_float Lmax; // tetamax 
-    t_float distance; // angle de la charniere ds le cas d'un hinge
+    t_float distance; // angle force nul de la charniere ds le cas d'un hinge
     t_float VX; // vecteur portant la liaison, si c'est le cas
     t_float VY;
     t_symbol *arrayK;

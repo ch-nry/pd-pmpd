@@ -84,11 +84,12 @@ t_float distance(t_pmpd2d *x, t_int mass1, t_int mass2)
 }
 
 t_float mod2Pi(t_float angle)
-{
+{ // return an angle between -pi and pi
     t_float tmp;
     tmp = fmodf(angle-3.1415926, 6.2831852);
     return(tmp > 0 ? tmp-3.1415926 : tmp+3.1415926); // TODO : mettre un vrai PI
 }
+
 void pmpd2d_reset(t_pmpd2d *x)
 {
     x->nb_link = 0;

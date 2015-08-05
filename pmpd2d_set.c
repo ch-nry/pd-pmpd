@@ -413,7 +413,7 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         x->link[tmp].L = atom_getfloatarg(1, argc, argv);
     }
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
-    {
+    { // set a range of link to a specific value
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link, tmp));
         end = atom_getfloatarg(1, argc, argv);
@@ -449,7 +449,7 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
-    {
+    { // set a class of link to value from a table
 		K=1;
 		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
@@ -471,7 +471,7 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 		}
 	}
 	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
-	{
+	{ 
 		K=1;
 		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
 		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
@@ -484,7 +484,7 @@ void pmpd2d_setL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 			n=min(npoints,x->nb_link-atom_getfloatarg(1, argc, argv));
 			for (i=0; i < n; i++)
 			{
-					x->link[i+offset].L = K*vec[i].w_float;
+                x->link[i+offset].L = K*vec[i].w_float;
 			}
 		}
 	}
@@ -586,7 +586,7 @@ void pmpd2d_addL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd2d_setLCurrent(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i, end;
-    t_float valeur;
+    t_float valeur, tmp2;
 
     if ( ( argc == 1 ) && ( argv[0].a_type == A_FLOAT ) )
     { // set a link to it's current length
@@ -605,20 +605,35 @@ void pmpd2d_setLCurrent(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
-    { // set a link to a mix between it's curent length and it's size
+    { // set a link to a mix between it's current length and it's size
         i = atom_getfloatarg(0, argc, argv);
         i = max(0, min( x->nb_link-1, i));
-        x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
+        if (x->link[i].lType != 3) {
+            x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
+        }
+        else {
+            tmp2 = mod2Pi(x->link[i].L - x->link[i].distance);
+            x->link[i].L = mix(x->link[i].L,x->link[i].L-tmp2,atom_getfloatarg(1, argc, argv));
+        }
     }
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
-    {
+    { // set a range of link to a mix between  it's curent length and it's size
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
         end = atom_getfloatarg(1, argc, argv);
         end = max(tmp, min( x->nb_link-1, end));
         valeur = atom_getfloatarg(2, argc, argv);
         for (i=tmp; i<=end; i++) 
-            x->link[i].L = mix(x->link[i].L,x->link[i].distance,valeur);
+        {
+            //x->link[i].L = mix(x->link[i].L,x->link[i].distance,valeur);
+            if (x->link[i].lType != 3) {
+                x->link[i].L = mix(x->link[i].L,x->link[i].distance,valeur);
+            }
+            else {
+                tmp2 = mod2Pi(x->link[i].L- x->link[i].distance);
+                x->link[i].L = mix(x->link[i].L,x->link[i].L-tmp2,valeur);
+            }
+        }
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     { // set a class of link to a mix between it's curent length and it's size
@@ -626,7 +641,14 @@ void pmpd2d_setLCurrent(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
-                x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
+                // x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
+                if (x->link[i].lType != 3) {
+                    x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
+                }
+                else {
+                    tmp2 = mod2Pi(x->link[i].L- x->link[i].distance);
+                    x->link[i].L = mix(x->link[i].L,x->link[i].L-tmp2,atom_getfloatarg(1, argc, argv));
+                }
             }
         }
     }
