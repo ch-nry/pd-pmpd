@@ -102,6 +102,7 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_posX,            		gensym("setPosX"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_posY,            		gensym("setPosY"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_posZ,          		  	gensym("setPosZ"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_posSpherical,          	gensym("setPosSpherical"), A_GIMME, 0);    
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_overdamp,     		  	gensym("setOverdamp"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setEnd1,		 		  	gensym("setEnd1"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setEnd2,		 		  	gensym("setEnd2"), A_GIMME, 0);
@@ -189,6 +190,7 @@ void pmpd3d_setup(void)
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesZT,  		gensym("massesForcesZT"),A_GIMME, 0);
     
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosT,      		gensym("massPosT"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosSphericalT,     gensym("massPosSphericalT"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesSpeedsT,   		gensym("massSpeedT"),A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesForcesT,  	 		gensym("massForceT"),A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_massesPosXT,     		gensym("massPosXT"), A_GIMME, 0);

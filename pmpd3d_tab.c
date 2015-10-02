@@ -1,3 +1,7 @@
+#define car2sphR(z,x,y) (sqrt(x*x + y*y + z*z))
+#define car2sphTeta(z,x,y,r) (acos(z/r))
+#define car2sphPhy(z,x,y) (atan2(y,x))
+
 void pmpd3d_massesPosT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, j, vecsize;
@@ -45,6 +49,65 @@ void pmpd3d_massesPosT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
                     vec[i].w_float = x->mass[j].posY;
                     i++;
                     vec[i].w_float = x->mass[j].posZ;
+                    i++;
+                }
+                j++;
+            }
+            garray_redraw(a);
+        }
+    }
+}
+
+void pmpd3d_massesPosSphericalT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+    int i, j, vecsize;
+    t_garray *a;
+    t_word *vec;
+    t_float R;
+    
+    if ( (argc==1) && (argv[0].a_type == A_SYMBOL) ) // table name
+    {
+        t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+        if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+            pd_error(x, "%s: no such array", tab_name->s_name);
+        else if (!garray_getfloatwords(a, &vecsize, &vec))
+            pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+        else
+        {
+            int taille_max = x->nb_mass;
+            taille_max = min(taille_max, vecsize/3 );
+            for (i=0; i < taille_max ; i++)
+            {   
+                R = car2sphR(x->mass[i].posX, x->mass[i].posY, x->mass[i].posZ);
+                vec[3*i  ].w_float = R;
+                vec[3*i+1].w_float = car2sphTeta(x->mass[i].posX, x->mass[i].posY, x->mass[i].posZ, R);
+                vec[3*i+2].w_float = car2sphPhy(x->mass[i].posX, x->mass[i].posY, x->mass[i].posZ);
+            }
+            garray_redraw(a);
+        }
+    }
+    else 
+    if ( (argc==2) && (argv[0].a_type == A_SYMBOL) && (argv[1].a_type == A_SYMBOL) ) // mass Id; table name; 
+    {
+        t_symbol *tab_name = atom_getsymbolarg(0, argc, argv);
+        if (!(a = (t_garray *)pd_findbyclass(tab_name, garray_class)))
+            pd_error(x, "%s: no such array", tab_name->s_name);
+        else if (!garray_getfloatwords(a, &vecsize, &vec))
+            pd_error(x, "%s: bad template for tabwrite", tab_name->s_name);
+        else
+        {    
+            i = 0;
+            j = 0;
+            while ((i < vecsize-2) && (j < x->nb_mass))
+            {
+                if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
+                {
+                    R =  car2sphR(x->mass[j].posX, x->mass[j].posY, x->mass[j].posZ);
+                    vec[i].w_float = R;
+                    i++;
+                    vec[i].w_float = car2sphTeta(x->mass[j].posX, x->mass[j].posY, x->mass[j].posZ, R);
+                    i++;
+                    vec[i].w_float = car2sphPhy(x->mass[j].posX, x->mass[j].posY, x->mass[j].posZ);
                     i++;
                 }
                 j++;

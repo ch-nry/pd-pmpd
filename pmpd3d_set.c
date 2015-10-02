@@ -1,3 +1,7 @@
+#define sph2carX(r,phy,teta) (r * cos(teta))
+#define sph2carY(r,phy,teta) (r * sin(teta) * cos(phy))
+#define sph2carZ(r,phy,teta) (r * sin(teta) * sin(phy))
+
 void pmpd3d_setK(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i, offset;
@@ -1101,6 +1105,122 @@ void pmpd3d_pos(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 					x->mass[i+offset].posZ = K*vec[3*i+1].w_float;
                     x->mass[i+offset].speedZ = 0; 
                     x->mass[i+offset].forceZ = 0;                    
+			}
+		}
+	} 
+}
+
+void pmpd3d_posSpherical(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
+{
+// displace a mass to a certain position, using polar coordinat system
+	t_int tmp, i, offset;
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+    t_float K;
+    t_float r, phy, teta, X,Y,Z;
+
+	if ( (argc == 4) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
+	{
+		tmp = atom_getfloatarg(0, argc, argv);
+		tmp = max(0, min( x->nb_mass-1, tmp));
+        r = atom_getfloatarg(1, argc, argv);
+        teta = atom_getfloatarg(2, argc, argv);
+        phy = atom_getfloatarg(3, argc, argv);
+		x->mass[tmp].posX = sph2carX(r,phy,teta);
+        x->mass[tmp].speedX = 0;
+		x->mass[tmp].forceX = 0;
+        x->mass[tmp].posY = sph2carY(r,phy,teta);
+        x->mass[tmp].speedY = 0;
+		x->mass[tmp].forceY = 0;
+        x->mass[tmp].posZ = sph2carZ(r,phy,teta);
+        x->mass[tmp].speedZ = 0;
+		x->mass[tmp].forceZ = 0;
+	}
+	else if ( (argc == 4) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
+	{
+		for (i=0; i< x->nb_mass; i++)
+		{
+			if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+			{
+                r = atom_getfloatarg(1, argc, argv);
+                teta = atom_getfloatarg(2, argc, argv);
+                phy = atom_getfloatarg(3, argc, argv);
+				x->mass[i].posX = sph2carX(r,phy,teta);
+				x->mass[i].speedX = 0;
+				x->mass[i].forceX = 0;
+				x->mass[i].posY = sph2carY(r,phy,teta);
+				x->mass[i].speedY = 0;
+				x->mass[i].forceY = 0;
+				x->mass[i].posZ = sph2carX(r,phy,teta);
+				x->mass[i].speedZ = 0;
+				x->mass[i].forceZ = 0;
+			}
+		}
+	}
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+                    r = K*vec[n].w_float;
+                    n++;
+                    teta = K*vec[n].w_float;
+                    n++;
+                    phy = K*vec[n].w_float;
+                    n++;
+                    
+					x->mass[i].posX = sph2carX(r,phy,teta);
+                    x->mass[i].speedX = 0; 
+                    x->mass[i].forceX = 0;
+					x->mass[i].posY = sph2carY(r,phy,teta);
+                    x->mass[i].speedY = 0; 
+                    x->mass[i].forceY = 0;
+					x->mass[i].posZ = sph2carZ(r,phy,teta);
+                    x->mass[i].speedZ = 0; 
+                    x->mass[i].forceZ = 0;
+					if (n >= npoints +2) break;
+				}
+			}
+		}
+	}
+	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
+	{
+		K=1;
+		if ((argc >= 3) && ( argv[2].a_type == A_FLOAT )) K=atom_getfloatarg(2, argc, argv);
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			offset = atom_getfloatarg(0, argc, argv);
+			n=min((int)npoints/2,x->nb_mass-offset);
+			for (i=0; i < n; i++)
+			{
+                r = K*vec[3*i].w_float;
+                teta = K*vec[3*i+1].w_float;
+                phy = K*vec[3*i+1].w_float;
+                
+				x->mass[i+offset].posX = sph2carX(r,phy,teta);
+                x->mass[i+offset].speedX = 0; 
+                x->mass[i+offset].forceX = 0;
+				x->mass[i+offset].posY = sph2carY(r,phy,teta);
+                x->mass[i+offset].speedY = 0; 
+                x->mass[i+offset].forceY = 0; 
+				x->mass[i+offset].posZ = sph2carZ(r,phy,teta);
+                x->mass[i+offset].speedZ = 0; 
+                x->mass[i+offset].forceZ = 0;                    
 			}
 		}
 	} 
