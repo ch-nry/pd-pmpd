@@ -1152,7 +1152,7 @@ void pmpd3d_posSpherical(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				x->mass[i].posY = sph2carY(r,phy,teta);
 				x->mass[i].speedY = 0;
 				x->mass[i].forceY = 0;
-				x->mass[i].posZ = sph2carX(r,phy,teta);
+				x->mass[i].posZ = sph2carZ(r,phy,teta);
 				x->mass[i].speedZ = 0;
 				x->mass[i].forceZ = 0;
 			}
