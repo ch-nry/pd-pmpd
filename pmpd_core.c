@@ -105,8 +105,8 @@ void pmpd_bang(t_pmpd *x)
 		if (x->link[i].active == 1)
         {
             L = x->link[i].mass1->posX - x->link[i].mass2->posX;
-            absL = fabs(L);
-            if ( (absL >= x->link[i].Lmin) && (absL < x->link[i].Lmax)  && (L !=0))
+            //absL = fabs(L);
+            if ( (L >= x->link[i].Lmin) && (L < x->link[i].Lmax)  && (L !=0))
             {
                 if (x->link[i].lType == 2)
                 { // K et D viennent d'une table
@@ -116,7 +116,7 @@ void pmpd_bang(t_pmpd *x)
                 else
                 {            
                     F  = x->link[i].D * (L - x->link[i].distance) ;
-                    F += x->link[i].K *  sign_ch(L) * pow_ch( absL - x->link[i].L, x->link[i].Pow);
+                    F += x->link[i].K *  sign_ch(L- x->link[i].L) * pow_ch( fabs(L - x->link[i].L), x->link[i].Pow);
                 }
             
                 x->link[i].mass1->forceX -= F;
