@@ -47,7 +47,7 @@ void pmpd2d_setup(void)
 {
 pmpd2d_class = class_new(gensym("pmpd2d"),
     (t_newmethod)pmpd2d_new,
-    0, sizeof(t_pmpd2d),CLASS_DEFAULT, 0);
+    0, sizeof(t_pmpd2d),CLASS_DEFAULT, A_GIMME, 0);
 
 /*
  pmpd2d_core

@@ -52,17 +52,39 @@ void pmpd_reset(t_pmpd *x)
     x->minX = -1000000;
     x->maxX = 1000000;
     x->grab = 0;
+
 }
 
-void *pmpd_new()
+void *pmpd_new(t_symbol *s, int argc, t_atom *argv)
 {
+	t_float tmp;
     t_pmpd *x = (t_pmpd *)pd_new(pmpd_class);
 
     pmpd_reset(x);
     
     x->main_outlet=outlet_new(&x->x_obj, 0);
     // x->info_outlet=outlet_new(&x->x_obj, 0); // TODO
+    	
+    x->nb_max_mass = 10000;
+	x->nb_max_link = 10000;
 
+	if((argc >= 1) && (argv[0].a_type == A_FLOAT)){
+		tmp = atom_getfloatarg(0, argc, argv);
+		if (tmp >= 0) {
+			x->nb_max_mass = tmp;
+			x->nb_max_link = tmp;
+		}
+	}
+	if((argc >= 2) && (argv[1].a_type == A_FLOAT)){
+		tmp = atom_getfloatarg(1, argc, argv);
+		if (tmp >= 0) {
+			x->nb_max_link = tmp;
+		}
+	}
+	
+	x->mass = getbytes(sizeof(massStruct)*x->nb_max_mass);
+	x->link = getbytes(sizeof(linkStruct)*x->nb_max_link);
+	
     return (void *)x;
 }
 
@@ -132,6 +154,10 @@ void pmpd_bang(t_pmpd *x)
 void pmpd_mass(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 // t_symbol *Id, t_float mobile, t_float M, t_float posX)
 { // add a mass 
+	if ( x->nb_mass >= x->nb_max_mass) {
+		x->nb_mass = x->nb_max_mass-1; 
+		pd_error(x, "pmpd masses number exceeded, please increase max masses number");
+	}
     x->mass[x->nb_mass].Id = gensym("mass");
 	if ((argc >= 1) &&  (argv[0].a_type == A_SYMBOL))
 		x->mass[x->nb_mass].Id = atom_getsymbolarg(0,argc,argv);
@@ -152,7 +178,6 @@ void pmpd_mass(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	x->mass[x->nb_mass].D2 = 0;
 	x->mass[x->nb_mass].overdamp = 0;
 	x->nb_mass++ ;
-	x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
 }
 
 void pmpd_create_link(t_pmpd *x, t_symbol *Id, int mass1, int mass2, t_float K, t_float D, t_float Pow, t_float Lmin, t_float Lmax, t_int type)
@@ -160,6 +185,11 @@ void pmpd_create_link(t_pmpd *x, t_symbol *Id, int mass1, int mass2, t_float K, 
 
     if ((x->nb_mass>0) && (mass1 != mass2) && (mass1 >= 0) && (mass2 >= 0) && (mass1 < x->nb_mass) && (mass2 < x->nb_mass) )
     {
+		if ( x->nb_link >= x->nb_max_link) {
+			x->nb_link = x->nb_max_link-1; 
+			pd_error(x, "pmpd links number exceeded, please increase max links number");
+		}
+	
         x->link[x->nb_link].lType = type;
         x->link[x->nb_link].Id = Id;
         x->link[x->nb_link].active = 1;
@@ -175,7 +205,6 @@ void pmpd_create_link(t_pmpd *x, t_symbol *Id, int mass1, int mass2, t_float K, 
         x->link[x->nb_link].forceX = 0 ;
 
         x->nb_link++ ;
-        x->nb_link = min ( nb_max_link -1, x->nb_link );
     }
 }
 

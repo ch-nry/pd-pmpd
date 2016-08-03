@@ -1,24 +1,24 @@
-#N canvas 257 249 572 750 10;
+#N canvas 253 152 564 855 10;
 #X declare -lib Gem;
-#X obj 4 309 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 419 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 705 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 5 815 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 8 6 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 14 339 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 14 449 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 14 624 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 14 734 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 4 567 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 677 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 4 602 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 712 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 7 76 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 655 cnv 15 550 20 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 5 765 cnv 15 550 20 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 675 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 5 785 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #N canvas 460 50 901 640 More_Info 0;
 #X text 96 12 pmpd : mass - spring - damper model;
@@ -227,13 +227,13 @@ one physical parameter \, the value of their mass. They can be mobile
 or fixed \, in this case forces applied to them automatically \, by
 links \, or manually \, by messages \, don't do anything.;
 #X connect 1 0 2 0;
-#X restore 16 713 pd More_Info;
+#X restore 16 823 pd More_Info;
 #X text 12 76 Examples:;
-#X text 9 309 Inlets:;
-#X text 19 338 - Left:;
-#X text 10 566 Arguments:;
-#X text 11 602 Outlets:;
-#X text 19 657 See Also:;
+#X text 9 419 Inlets:;
+#X text 19 448 - Left:;
+#X text 10 676 Arguments:;
+#X text 11 712 Outlets:;
+#X text 19 767 See Also:;
 #X text 74 48 Full Name:;
 #N canvas 52 178 262 70 Related_Objects 0;
 #X obj 3 10 cnv 15 250 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -243,7 +243,7 @@ links \, or manually \, by messages \, don't do anything.;
 #X text 5 10 Externals and libraries;
 #X obj 44 37 pmpd;
 #X obj 141 39 pmpd3d;
-#X restore 122 713 pd Related_Objects;
+#X restore 122 823 pd Related_Objects;
 #N canvas 257 262 759 345 init 0;
 #X obj 89 215 t a;
 #X obj 89 33 loadbang;
@@ -291,16 +291,16 @@ links \, or manually \, by messages \, don't do anything.;
 #X obj 172 220 r \$0-out;
 #X obj 17 106 bng 15 250 50 0 empty empty reset 25 10 1 10 -262144
 -1 -1;
-#X text 162 428 To set the model parameters after creation.;
-#X text 162 407 To create the model masses and links.;
-#X text 103 582 None;
-#X text 18 623 - Left:;
-#X text 101 624 Outputs the model parameters asked with the attributes
+#X text 162 538 To set the model parameters after creation.;
+#X text 162 517 To create the model masses and links.;
+#X text 103 692 None;
+#X text 18 733 - Left:;
+#X text 101 734 Outputs the model parameters asked with the attributes
 messages.;
-#X text 101 370 Messages - Different messages are used to control the
+#X text 101 480 Messages - Different messages are used to control the
 pmpd object. They are of three types :;
-#X text 9 679 CATEGORY: control;
-#X text 10 689 KEYWORDS: physical model mass spring damper link;
+#X text 9 789 CATEGORY: control;
+#X text 10 799 KEYWORDS: physical model mass spring damper link;
 #X text 12 8 HELP: pmpd2d;
 #X obj 157 48 pmpd2d;
 #X obj 18 246 pmpd2d;
@@ -381,8 +381,8 @@ pmpd object. They are of three types :;
 #X text 169 171 3 Destroy the window -->;
 #X obj 172 244 route massesPos linksPosNo;
 #X text 11 19 DESCRIPTION: Physical modeling for Pd in 2d;
-#X text 265 709 - Cyrille Henry 2011;
-#X text 265 721 based on MSD by Nicolas Montgermont \, 2005;
+#X text 265 819 - Cyrille Henry 2011;
+#X text 265 831 based on MSD by Nicolas Montgermont \, 2005;
 #N canvas 610 270 1173 699 links_attributes 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -505,7 +505,7 @@ filter on link id is possible;
 #X msg 20 176 linkLength [\$1];
 #X text 184 174 output a message for every link :;
 #X text 213 190 linkLength symbolId number lengthX lengthY length;
-#X restore 12 466 pd links_attributes ___;
+#X restore 12 576 pd links_attributes ___;
 #N canvas 272 165 935 531 creation____________ 0;
 #X obj 5 75 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -576,7 +576,7 @@ the model. Messages create links and masses or destroy them.;
 #X text 472 99 In 2D (and 3D) there are two specials links : oriented
 links. They work as general links but their calculation is made following
 a vector.;
-#X restore 12 407 pd creation____________;
+#X restore 12 517 pd creation____________;
 #N canvas 90 90 1077 895 dynamic 0;
 #X obj 5 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -712,8 +712,8 @@ Id :;
 #X text 533 841 exemple :;
 #X text 536 863 will set rigidity of all link from number 1 to number
 200 to 0.3, f 65;
-#X restore 12 427 pd dynamic settings ___;
-#X text 112 658 54_pmpd2dtest.pd;
+#X restore 12 537 pd dynamic settings ___;
+#X text 112 768 54_pmpd2dtest.pd;
 #X obj 325 272 print;
 #N canvas 40 130 1153 632 masses_attributes___ 0;
 #X obj 5 75 cnv 15 500 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -827,7 +827,7 @@ a table;
 #X text 794 508 \$2 : x position;
 #X text 794 523 \$3 : y position;
 #X text 794 537 \$4 : none or Id;
-#X restore 12 447 pd masses_attributes___;
+#X restore 12 557 pd masses_attributes___;
 #N canvas 120 246 751 772 tests 0;
 #X obj 5 3 cnv 15 700 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -892,7 +892,7 @@ forceXSup \$1 / forceXInf \$1 / forceYSup \$1 / forceYInf \$1 / lengthSup
 #X msg 15 595 testLinkN testId filterId filter_parametter ...;
 #X msg 15 205 testMassN testId massnumber filterId filter_parametter
 ...;
-#X restore 12 486 pd tests ______________;
+#X restore 12 596 pd tests ______________;
 #N canvas 1081 499 709 556 interactors 0;
 #X obj 30 11 cnv 15 600 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -932,7 +932,7 @@ the pm world (Xmin \, Xmax \, Ymin \, Ymax);
 #X text 87 445 \$9 \$10 : table name (X and Y) containing matrix data
 ;
 #X text 367 351 create a one time spacial interaction on masses;
-#X restore 12 505 pd interactors ________;
+#X restore 12 615 pd interactors ________;
 #N canvas 888 243 584 585 statistics 0;
 #X obj 3 50 cnv 15 150 210 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -995,16 +995,26 @@ Norm);
 #X text 161 241 output the number of masses;
 #X text 165 525 output various information on the links;
 #X text 166 553 output the number of links;
-#X restore 12 525 pd statistics _________;
-#X text 164 507 To send complex forces;
-#X text 163 526 To get statistical data of the simulation;
-#X text 101 338 Bang - A bang at the left inlet computes the new model
+#X restore 12 635 pd statistics _________;
+#X text 164 617 To send complex forces;
+#X text 163 636 To get statistical data of the simulation;
+#X text 101 448 Bang - A bang at the left inlet computes the new model
 state based on previous time step.;
-#X text 164 488 To test specific parameters;
-#X text 163 448 To get the model parameters (masses).;
-#X text 163 468 To get the model parameters (links).;
+#X text 164 598 To test specific parameters;
+#X text 163 558 To get the model parameters (masses).;
+#X text 163 578 To get the model parameters (links).;
 #X text 290 97 you need GEM for this example.;
 #X obj 173 97 declare -lib Gem;
+#X obj 4 318 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+0;
+#X text 9 318 Arguments:;
+#X text 17 333 - Max number of masses that can be created;
+#X text 17 346 - Max number of link that can be created;
+#X text 17 360 When only 1 argument is provided \, it is used fir both
+mass and link maximum number, f 87;
+#X text 16 378 Default is 10000 mass and link. It should be OK for
+most uses \, but can be reduce to save memory \, or increase for more
+complex simulation, f 86;
 #X connect 21 0 37 0;
 #X connect 24 0 23 0;
 #X connect 25 0 47 0;

@@ -50,7 +50,7 @@ void pmpd3d_setup(void)
 {
  pmpd3d_class = class_new(gensym("pmpd3d"),
         (t_newmethod)pmpd3d_new,
-        0, sizeof(t_pmpd3d),CLASS_DEFAULT, 0);
+        0, sizeof(t_pmpd3d),CLASS_DEFAULT, A_GIMME, 0);
 /*
  pmpd3d_core
  --

@@ -1,31 +1,31 @@
-#N canvas 962 304 570 717 10;
+#N canvas 1168 170 563 822 10;
 #X declare -lib Gem;
-#X obj 4 289 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 409 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 664 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 5 784 cnv 15 550 30 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 8 6 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 14 309 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 14 429 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 14 583 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 14 703 cnv 15 75 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#X obj 4 526 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 646 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 4 561 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 4 681 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 7 76 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 614 cnv 15 550 20 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 5 734 cnv 15 550 20 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 634 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 5 754 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text 12 76 Examples:;
-#X text 9 289 Inlets:;
-#X text 19 308 - Left:;
-#X text 10 525 Arguments:;
-#X text 11 561 Outlets:;
-#X text 19 616 See Also:;
+#X text 9 409 Inlets:;
+#X text 19 428 - Left:;
+#X text 10 645 Arguments:;
+#X text 11 681 Outlets:;
+#X text 19 736 See Also:;
 #X text 74 48 Full Name:;
 #N canvas 52 179 262 70 Related_Objects 0;
 #X obj 3 10 cnv 15 250 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -35,18 +35,18 @@
 #X text 5 10 Externals and libraries;
 #X obj 44 37 pmpd;
 #X obj 141 39 pmpd2d;
-#X restore 122 673 pd Related_Objects;
-#X text 158 376 To create the model masses and links.;
-#X text 103 541 None;
-#X text 18 582 - Left:;
-#X text 101 583 Outputs the model parameters asked with the attributes
+#X restore 122 793 pd Related_Objects;
+#X text 158 496 To create the model masses and links.;
+#X text 103 661 None;
+#X text 18 702 - Left:;
+#X text 101 703 Outputs the model parameters asked with the attributes
 messages.;
-#X text 101 340 Messages - Different messages are used to control the
+#X text 101 460 Messages - Different messages are used to control the
 pmpd object. They are of three types :;
-#X text 9 638 CATEGORY: control;
-#X text 9 648 KEYWORDS: physical model mass spring damper link;
-#X text 265 668 - Cyrille Henry 2011;
-#X text 265 680 based on MSD by Nicolas Montgermont \, 2005;
+#X text 9 758 CATEGORY: control;
+#X text 9 768 KEYWORDS: physical model mass spring damper link;
+#X text 265 788 - Cyrille Henry 2011;
+#X text 265 800 based on MSD by Nicolas Montgermont \, 2005;
 #X text 12 8 HELP: pmpd3d;
 #X text 11 19 DESCRIPTION: Physical modeling for Pd in 3d;
 #X obj 157 48 pmpd3d;
@@ -126,9 +126,8 @@ mass mob 1 100 1 0 -1 \, mass mob 1 100 0 0 -1 \, mass mob 1 100 1
 #X connect 16 0 5 0;
 #X connect 16 1 6 0;
 #X restore 102 249 pd gemrender;
-#X obj 17 226 pmpd3d;
 #X text 417 226 2 Send forces;
-#X text 112 617 01_pmpd3dtest.pd;
+#X text 112 737 01_pmpd3dtest.pd;
 #N canvas 248 228 950 547 creation____________ 0;
 #X obj 5 75 cnv 15 450 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -199,7 +198,7 @@ the model. Messages create links and masses or destroy them.;
 #X text 476 102 In 2D (and 3D) there are two specials links : oriented
 links. They work as general links except their calculation is made
 following a vector.;
-#X restore 12 377 pd creation____________;
+#X restore 12 497 pd creation____________;
 #N canvas 60 189 1143 866 dynamic 0;
 #X obj 5 3 cnv 15 1050 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -337,8 +336,8 @@ uses this argument as the value applied to all masses (or links);
 #X text 683 266 [\$3] : optional multiplicator coef for table;
 #X text 657 213 Set initial lenght of link(s) / add value to link length
 ;
-#X restore 12 397 pd dynamic settings ___;
-#X text 158 397 To set the model parameters after creation.;
+#X restore 12 517 pd dynamic settings ___;
+#X text 158 517 To set the model parameters after creation.;
 #N canvas 147 279 1157 693 masses_attributes 0;
 #X obj 5 95 cnv 15 500 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -458,7 +457,7 @@ a list on outlet No 1;
 #X text 764 567 \$3 : y position;
 #X text 764 582 \$4 : z position;
 #X text 764 596 \$5 : none or Id;
-#X restore 12 417 pd masses_attributes __;
+#X restore 12 537 pd masses_attributes __;
 #N canvas 160 134 1167 755 links_attributes 0;
 #X obj 5 3 cnv 15 550 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -595,7 +594,7 @@ filter on link id is possible;
 #X text 188 185 output a message for every link :;
 #X text 188 200 linkLength symbolId number lengthX lengthY lengthZ
 length;
-#X restore 12 437 pd links_attributes ___;
+#X restore 12 557 pd links_attributes ___;
 #N canvas 26 50 901 640 More_Info 0;
 #X text 96 12 pmpd : mass - spring - damper model;
 #X obj 426 -5 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
@@ -803,7 +802,7 @@ the scalar product :;
 #X text 495 248 You can build specific links using different link messages
 defining the characteristic step by step.;
 #X connect 1 0 2 0;
-#X restore 14 671 pd More_Info;
+#X restore 14 791 pd More_Info;
 #X obj 225 247 print;
 #X obj 102 222 route massPos linkEnd;
 #X obj 318 186 loadbang;
@@ -819,7 +818,7 @@ defining the characteristic step by step.;
 #X connect 3 0 2 0;
 #X connect 4 0 2 0;
 #X restore 317 157 pd gemwin;
-#X obj 317 134 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 317 134 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 17 133 bng 15 250 50 0 empty empty reset 17 7 0 10 -262144 -1
 -1;
@@ -891,8 +890,8 @@ forceXSup \$1 / forceXInf \$1 / forceYSup \$1 / forceYInf \$1 / forceZSup
 #X text 347 247 output : testMassN \, testId \, float;
 #X text 347 617 output : testMassN \, testId \, float;
 #X msg 15 615 testLinkN testId filterId filter_parametter ...;
-#X restore 12 457 pd tests ______________;
-#X text 158 458 To test specific parametters;
+#X restore 12 577 pd tests ______________;
+#X text 158 578 To test specific parametters;
 #N canvas 401 550 627 463 interactors 0;
 #X obj 8 3 cnv 15 360 450 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -931,7 +930,7 @@ forceXSup \$1 / forceXInf \$1 / forceYSup \$1 / forceYInf \$1 / forceZSup
 #X text 377 190 add a plane interactor to masses;
 #X text 375 321 add a dpherical interactor to masses;
 #X text 54 228 \$2 \$3 \$4 : vector perpendicular to the plane;
-#X restore 12 476 pd interactors ________;
+#X restore 12 596 pd interactors ________;
 #N canvas 1010 212 621 608 statistics 0;
 #X obj 19 51 cnv 15 150 210 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -995,23 +994,34 @@ Z \, Norm);
 #X text 177 244 output the number of masses;
 #X text 182 527 output various information on the links;
 #X text 183 550 output the number of links;
-#X restore 13 496 pd statistics _________;
-#X text 158 477 To send complex forces;
-#X text 157 498 To get statistical data of the simulation;
-#X text 101 308 Bang - A bang at the left inlet computes the new model
+#X restore 13 616 pd statistics _________;
+#X text 158 597 To send complex forces;
+#X text 157 618 To get statistical data of the simulation;
+#X text 101 428 Bang - A bang at the left inlet computes the new model
 state based on previous time step.;
 #X text 135 98 you need GEM for this example.;
 #X obj 18 98 declare -lib Gem;
-#X text 158 418 To get the model parameters (masses).;
-#X text 158 438 To get the model parameters (links).;
-#X connect 32 0 37 0;
-#X connect 35 0 47 0;
-#X connect 37 0 31 0;
-#X connect 47 0 36 0;
-#X connect 47 1 36 1;
-#X connect 47 2 46 0;
-#X connect 48 0 53 0;
-#X connect 50 0 49 0;
-#X connect 51 0 30 0;
+#X text 158 538 To get the model parameters (masses).;
+#X text 158 558 To get the model parameters (links).;
+#X obj 4 298 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
+0;
+#X text 9 298 Arguments:;
+#X text 17 313 - Max number of masses that can be created;
+#X text 17 326 - Max number of link that can be created;
+#X text 17 340 When only 1 argument is provided \, it is used fir both
+mass and link maximum number, f 87;
+#X obj 17 226 pmpd3d 8 10;
+#X text 16 358 Default is 10000 mass and link. It should be OK for
+most uses \, but can be reduce to save memory \, or increase for more
+complex simulation, f 86;
+#X connect 32 0 70 0;
+#X connect 35 0 46 0;
+#X connect 46 0 36 0;
+#X connect 46 1 36 1;
+#X connect 46 2 45 0;
+#X connect 47 0 52 0;
+#X connect 49 0 48 0;
+#X connect 50 0 30 0;
+#X connect 52 0 33 0;
 #X connect 53 0 33 0;
-#X connect 54 0 33 0;
+#X connect 70 0 31 0;

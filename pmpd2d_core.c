@@ -101,14 +101,35 @@ void pmpd2d_reset(t_pmpd2d *x)
     x->grab = 0;
 }
 
-void *pmpd2d_new()
+void *pmpd2d_new(t_symbol *s, int argc, t_atom *argv)
 {
+	t_float tmp;
     t_pmpd2d *x = (t_pmpd2d *)pd_new(pmpd2d_class);
 
     pmpd2d_reset(x);
     
     x->main_outlet=outlet_new(&x->x_obj, 0);
     // x->info_outlet=outlet_new(&x->x_obj, 0); // TODO
+
+	x->nb_max_mass = 10000;
+	x->nb_max_link = 10000;
+	
+	if((argc >= 1) && (argv[0].a_type == A_FLOAT)){
+		tmp = atom_getfloatarg(0, argc, argv);
+		if (tmp >= 0) {
+			x->nb_max_mass = tmp;
+			x->nb_max_link = tmp;
+		}
+	}
+	if((argc >= 2) && (argv[1].a_type == A_FLOAT)){
+		tmp = atom_getfloatarg(1, argc, argv);
+		if (tmp >= 0) {
+			x->nb_max_link = tmp;
+		}
+	}
+	
+ 	x->mass = getbytes(sizeof(massStruct)*x->nb_max_mass);
+ 	x->link = getbytes(sizeof(linkStruct)*x->nb_max_link);
 
     return (void *)x;
 }
@@ -250,6 +271,12 @@ void pmpd2d_bang(t_pmpd2d *x)
 void pmpd2d_mass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 // t_symbol *Id, t_float mobile, t_float M, t_float posX, t_float posY)
 { // add a mass  
+	
+ 	if ( x->nb_mass >= x->nb_max_mass) {
+ 		x->nb_mass = x->nb_max_mass-1; 
+ 		pd_error(x, "pmpd2d masses number exceeded, please increase max masses number");
+ 	}
+
     x->mass[x->nb_mass].Id = gensym("mass");
 	if ((argc > 0) &&  (argv[0].a_type == A_SYMBOL))
 		x->mass[x->nb_mass].Id = atom_getsymbolarg(0,argc,argv);
@@ -276,7 +303,6 @@ void pmpd2d_mass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	x->mass[x->nb_mass].D2offset = 0;
 	x->mass[x->nb_mass].overdamp = 0;
 	x->nb_mass++ ;
-	x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
 }  
     
 void pmpd2d_create_link(t_pmpd2d *x, t_symbol *Id, int mass1, int mass2, t_float K, t_float D, t_float Pow, t_float Lmin, t_float Lmax, t_int type)
@@ -287,6 +313,11 @@ void pmpd2d_create_link(t_pmpd2d *x, t_symbol *Id, int mass1, int mass2, t_float
 
     if ((x->nb_mass>1) && (mass1 != mass2) && (mass1 >= 0) && (mass2 >= 0) && (mass1 < x->nb_mass) && (mass2 < x->nb_mass) )
     {
+		if ( x->nb_link >= x->nb_max_link) {
+ 			x->nb_link = x->nb_max_link-1; 
+ 			pd_error(x, "pmpd2d links number exceeded, please increase max links number");
+ 		}
+
         x->link[x->nb_link].lType = type;
         x->link[x->nb_link].Id = Id;
         x->link[x->nb_link].active = 1;
@@ -303,7 +334,6 @@ void pmpd2d_create_link(t_pmpd2d *x, t_symbol *Id, int mass1, int mass2, t_float
         x->link[x->nb_link].forceY = 0 ;
 
         x->nb_link++ ;
-        x->nb_link = min ( nb_max_link -1, x->nb_link );
     }
 }
 
@@ -378,7 +408,7 @@ void pmpd2d_tLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 { // add a link : Id, *mass1, *mass2, K, D, Vx, Vy, Pow, Lmin, Lmax;
 
     int i, j;
-    
+     	
     t_symbol *Id = atom_getsymbolarg(0,argc,argv);
     int mass1 = atom_getfloatarg(1, argc, argv);
     int mass2 = atom_getfloatarg(2, argc, argv);
@@ -541,23 +571,28 @@ void pmpd2d_hinge(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     if ((argc > 3) &&  (argv[3].a_type == A_FLOAT))
         mass3 = atom_getfloatarg(3, argc, argv);
 
-    x->link[x->nb_link].K = 0;    
-    if ((argc > 4) &&  (argv[4].a_type == A_FLOAT))
-        x->link[x->nb_link].K = atom_getfloatarg(4, argc, argv);
-    
-    x->link[x->nb_link].D = 0;    
-    if ((argc > 5) &&  (argv[5].a_type == A_FLOAT))
-        x->link[x->nb_link].D = atom_getfloatarg(5, argc, argv);
-         
-    x->link[x->nb_link].active = 1;
-    x->link[x->nb_link].Pow = 1;
-    x->link[x->nb_link].Lmin = -4;
-    x->link[x->nb_link].Lmax = 4;
-
-
     if ( (mass1 != mass2) && (mass2 != mass3) && (mass1 != mass3) \
         && (mass1 < x->nb_mass) && (mass2 < x->nb_mass) && (mass3 < x->nb_mass))
     {
+		
+		if ( x->nb_link >= x->nb_max_link) {
+ 			x->nb_link = x->nb_max_link-1; 
+ 			pd_error(x, "pmpd2d links number exceeded, please increase max links number");
+ 		}
+		
+		x->link[x->nb_link].K = 0;    
+		if ((argc > 4) &&  (argv[4].a_type == A_FLOAT))
+			x->link[x->nb_link].K = atom_getfloatarg(4, argc, argv);
+    
+		x->link[x->nb_link].D = 0;    
+		if ((argc > 5) &&  (argv[5].a_type == A_FLOAT))
+			x->link[x->nb_link].D = atom_getfloatarg(5, argc, argv);
+         
+		x->link[x->nb_link].active = 1;
+		x->link[x->nb_link].Pow = 1;
+		x->link[x->nb_link].Lmin = -4;
+		x->link[x->nb_link].Lmax = 4;
+    
         x->link[x->nb_link].mass1 = &x->mass[mass1];
         x->link[x->nb_link].mass2 = &x->mass[mass2];
         x->link[x->nb_link].mass3 = &x->mass[mass3];
@@ -569,7 +604,6 @@ void pmpd2d_hinge(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         x->link[x->nb_link].lType = 3;
         
         x->nb_link++ ;
-        x->nb_link = min (nb_max_link -1, x->nb_link );
     }
 }
 

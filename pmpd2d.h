@@ -1,5 +1,7 @@
-#define nb_max_link   5000000 
-#define nb_max_mass   5000000
+/*
+ *  pmpd2d.h
+ *  
+ */
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
@@ -20,7 +22,7 @@ typedef struct _mass {
     t_float D2offset;
     t_float overdamp;
     int num;
-} foo;
+} massStruct, *massPtr;
 
 typedef struct _link {
     t_symbol *Id;
@@ -44,16 +46,18 @@ typedef struct _link {
     t_float D_L; // longeur du tabeau D
     t_float forceX;
     t_float forceY;
-} foo1 ;
+} linkStruct, *linkPtr;
 
 typedef struct _pmpd2d {
-     t_object  x_obj;
-    struct _link link[nb_max_link];
-    struct _mass mass[nb_max_mass];
+    t_object  x_obj;
+    linkPtr link;
+    massPtr mass;
     t_outlet *main_outlet;
     t_outlet *info_outlet;
     int nb_link;
     int nb_mass;
+   	t_int nb_max_link;
+	t_int nb_max_mass;
     t_float minX, maxX, minY, maxY;
     t_int grab; // si on grab une mass ou pas
     t_int grab_nb; // la masse grabé

@@ -48,7 +48,7 @@ void pmpd_setup(void)
 {
  pmpd_class = class_new(gensym("pmpd"),
         (t_newmethod)pmpd_new,
-        0, sizeof(t_pmpd),CLASS_DEFAULT, 0);
+        0, sizeof(t_pmpd),CLASS_DEFAULT, A_GIMME, 0);
 /*
  pmpd_core
  --
