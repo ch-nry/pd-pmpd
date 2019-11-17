@@ -20,19 +20,8 @@
 #X connect 5 1 0 1;
 #X connect 6 0 10 0;
 #X connect 7 0 6 0;
-#X restore 94 239 pd cpu;
-#X floatatom 94 260 5 0 0 0 - - -;
-#X obj 15 235 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#N canvas 0 22 454 304 open 0;
-#X obj 21 63 stripdir;
-#X obj 21 40 openpanel;
-#X msg 21 88 \; pd open \$1 ./ 1 1 \;;
-#X obj 22 17 inlet;
-#X connect 0 0 2 0;
-#X connect 1 0 0 0;
-#X connect 3 0 1 0;
-#X restore 15 256 pd open;
+#X restore 17 243 pd cpu;
+#X floatatom 17 264 5 0 0 0 - - -;
 #X text 17 54 You are ready to try the examples patchs. Please do not
 run 2 examples in the same time (some use same send and receive names).
 ;
@@ -43,4 +32,3 @@ a number. Others files are abstractions used by these examples.;
 #X text 17 185 For big patch \, look at the cpu used \, you have to
 reduce the simulation speed if your computer is too slow.;
 #X connect 0 0 1 0;
-#X connect 2 0 3 0;

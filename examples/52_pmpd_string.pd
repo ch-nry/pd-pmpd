@@ -1,5 +1,5 @@
-#N canvas 516 84 620 260 10;
-#X declare -lib Gem;
+#N canvas 516 87 620 260 10;
+#X declare -lib Gem -path pmpd;
 #X obj 24 54 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262131 -1
 -1;
 #X text 49 54 reset;
@@ -329,7 +329,7 @@
 #X text 324 79 Send forces;
 #X text 323 150 global damping;
 #X text 23 196 COPYRIGHT : Nicolas Montgermont 2010;
-#X obj 178 9 declare -lib Gem;
+#X obj 144 7 declare -lib Gem -path pmpd;
 #X connect 0 0 2 0;
 #X connect 4 0 3 0;
 #X connect 5 0 12 0;

@@ -1,5 +1,5 @@
 #N canvas 44 91 528 221 10;
-#X declare -lib Gem;
+#X declare -lib Gem -path pmpd;
 #N canvas 860 482 341 435 creation 0;
 #X obj 46 380 s pd-new;
 #X msg 86 95 \; pd filename new ./ \; #N canvas \; #X pop 1 \;;
@@ -151,7 +151,7 @@
 #X text 144 29 Simulation of a continus line of vorticity (no damping
 fluid \, 2D mouvement);
 #X text 144 58 This create a Kevin-Helmoltz instability.;
-#X obj 10 2 declare -lib Gem;
+#X obj 10 2 declare -lib Gem -path pmpd;
 #X connect 2 0 4 0;
 #X connect 2 1 5 0;
 #X connect 3 0 8 0;

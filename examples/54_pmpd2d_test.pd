@@ -1,5 +1,5 @@
-#N canvas 778 84 626 507 10;
-#X declare -lib Gem;
+#N canvas 778 87 626 507 10;
+#X declare -lib Gem -path pmpd;
 #X obj 27 26 loadbang;
 #X obj 369 155 gemwin;
 #X msg 384 132 0 \, destroy;
@@ -134,7 +134,7 @@
 #X obj 53 397 pmpd2d;
 #X obj 366 244 route linksPosNo massesPos;
 #X text 53 452 copyright Nicolas Montgermont 2010;
-#X obj 372 54 declare -lib Gem;
+#X obj 372 54 declare -lib Gem -path pmpd;
 #X connect 0 0 6 0;
 #X connect 2 0 1 0;
 #X connect 4 0 6 0;

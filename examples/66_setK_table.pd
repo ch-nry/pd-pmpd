@@ -1,5 +1,6 @@
 #N canvas 111 480 772 393 10;
 #X declare -lib Gem -path ../;
+#X declare -path pmpd;
 #X obj 52 8 loadbang;
 #X obj 64 31 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
@@ -110,6 +111,7 @@ of each link;
 #X msg 146 52 setK tab_force K \, bang \, massPos mobil;
 #X msg 163 81 force mobil force;
 #X obj 54 -49 declare -lib Gem -path ../;
+#X obj 102 224 declare -path pmpd;
 #X connect 0 0 2 0;
 #X connect 1 0 2 0;
 #X connect 2 0 9 0;

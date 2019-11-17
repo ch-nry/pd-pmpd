@@ -1,5 +1,5 @@
 #N canvas 163 124 527 418 10;
-#X declare -lib Gem;
+#X declare -lib Gem -path pmpd;
 #X obj 20 164 t b b;
 #X obj 20 98 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -125,7 +125,7 @@ of the structure.;
 #X obj 45 263 iAmbient2D mass 0 -0.0005 0 0 0.03;
 #X obj 20 137 metro 5;
 #X text 366 158 <- 1;
-#X obj 10 2 declare -lib Gem;
+#X obj 10 2 declare -lib Gem -path pmpd;
 #X connect 0 0 4 0;
 #X connect 0 1 9 0;
 #X connect 0 1 8 0;

@@ -1,5 +1,5 @@
 #N canvas 358 91 770 697 10;
-#X declare -lib Gem;
+#X declare -lib Gem -path pmpd;
 #N canvas 150 74 837 606 array 0;
 #X obj 1893 163 outlet;
 #X obj 121 835 outlet;
@@ -747,7 +747,7 @@ you \, to accelerate the computing of the array.;
 #X msg 388 164 setD2 0.001;
 #X obj 16 144 s L;
 #X obj 41 144 s M;
-#X obj 10 2 declare -lib Gem;
+#X obj 10 2 declare -lib Gem -path pmpd;
 #X connect 0 0 44 0;
 #X connect 0 1 45 0;
 #X connect 1 0 50 0;

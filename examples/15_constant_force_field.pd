@@ -1,12 +1,12 @@
-#N canvas 36 91 795 432 12;
-#X declare -lib Gem;
-#X obj 16 104 t b b;
-#X obj 16 56 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
+#N canvas 1124 590 795 432 12;
+#X declare -path pmpd -lib Gem;
+#X obj 16 124 t b b;
+#X obj 16 76 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 94 57 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+#X obj 94 77 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
-#X msg 258 79 0 \, destroy;
-#X msg 224 54 reset \, create \, 1;
+#X msg 258 99 0 \, destroy;
+#X msg 224 74 reset \, create \, 1;
 #N canvas 510 193 970 698 structure 0;
 #X obj 124 314 pd_link \$0;
 #X obj 27 290 pd_mass -1 0 \$0;
@@ -177,9 +177,9 @@
 #X connect 40 0 25 0;
 #X connect 40 0 26 0;
 #X connect 40 0 27 0;
-#X restore 372 150 pd structure;
-#X msg 590 101 force2D 0 5;
-#X msg 646 127 force2D 5 0;
+#X restore 372 170 pd structure;
+#X msg 590 121 force2D 0 5;
+#X msg 646 147 force2D 5 0;
 #N canvas 623 135 504 293 init 0;
 #X msg 200 169 setK \$1;
 #X msg 274 143 setD \$1;
@@ -229,36 +229,36 @@
 #X connect 21 0 19 0;
 #X connect 22 0 19 0;
 #X connect 23 0 19 0;
-#X restore 372 123 pd init;
-#X obj 117 52 loadbang;
-#X msg 592 155 force2D 0 -5;
-#X msg 535 128 force2D -5 0;
-#X obj 51 181 s \$0-link;
-#X obj 16 209 s \$0-mass;
-#X obj 591 187 s \$0-mass;
-#X msg 145 108 reset;
-#X msg 119 132 resetL;
-#X msg 94 153 resetF;
-#X obj 94 81 t b b b;
-#X obj 223 176 color 1 0 0;
-#X obj 223 231 rectangle 2 1;
-#X obj 223 146 gemhead 40;
-#X obj 223 205 translateXYZ -2 -3 0;
-#X text 437 310 <- positive Y force : just in the red square;
-#X text 239 284 <- negative Y force (gravity) everywhere.;
-#X text 92 361 the red square is a place with force from bottom to
+#X restore 372 143 pd init;
+#X obj 117 72 loadbang;
+#X msg 592 175 force2D 0 -5;
+#X msg 535 148 force2D -5 0;
+#X obj 51 201 s \$0-link;
+#X obj 16 229 s \$0-mass;
+#X obj 591 207 s \$0-mass;
+#X msg 145 128 reset;
+#X msg 119 152 resetL;
+#X msg 94 173 resetF;
+#X obj 94 101 t b b b;
+#X obj 223 196 color 1 0 0;
+#X obj 223 251 rectangle 2 1;
+#X obj 223 166 gemhead 40;
+#X obj 223 225 translateXYZ -2 -3 0;
+#X text 437 330 <- positive Y force : just in the red square;
+#X text 239 304 <- negative Y force (gravity) everywhere.;
+#X text 92 381 the red square is a place with force from bottom to
 top. like a ball in wather.;
-#X obj 16 77 metro 50;
-#X obj 224 107 gemwin;
-#X obj 26 285 iAmbient2D \$0-mass 0 -1;
-#X obj 24 309 iAmbient2D \$0-mass 0 3 0 0 0 -4 0 -4 -2;
-#X text 285 -27 This is the same ball as prevuis exemple \, but in
-a differents context.;
-#X obj 646 72 loadbang;
-#X text 40 54 <- 1;
-#X text 359 55 <- 2;
-#X text 579 212 move the structure;
-#X obj 18 -12 declare -lib Gem;
+#X obj 16 97 metro 50;
+#X obj 224 127 gemwin;
+#X obj 26 305 iAmbient2D \$0-mass 0 -1;
+#X obj 24 329 iAmbient2D \$0-mass 0 3 0 0 0 -4 0 -4 -2;
+#X text 290 4 This is the same ball as prevuis exemple \, but in a
+differents context.;
+#X obj 646 92 loadbang;
+#X text 40 74 <- 1;
+#X text 359 75 <- 2;
+#X text 579 232 move the structure;
+#X obj 18 8 declare -path pmpd -lib Gem;
 #X connect 0 0 13 0;
 #X connect 0 1 12 0;
 #X connect 0 1 28 0;

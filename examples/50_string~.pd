@@ -1,5 +1,6 @@
 #N canvas 421 245 487 445 10;
-#X floatatom 32 12 0 0 0 0 - - -;
+#X declare -path pmpd;
+#X floatatom 32 62 0 0 0 0 - - -;
 #N canvas 0 0 454 304 cpu 0;
 #X obj 61 159 cputime;
 #X obj 61 19 loadbang;
@@ -20,16 +21,16 @@
 #X connect 5 1 0 1;
 #X connect 6 0 9 0;
 #X connect 7 0 6 0;
-#X restore 32 -14 pd cpu;
-#X obj 89 219 tabwrite~ array99;
-#X msg 80 14 \; pd dsp 1 \;;
-#X obj 80 -14 loadbang;
-#X obj 26 221 dac~;
-#X obj 27 171 hip~ 20;
+#X restore 32 36 pd cpu;
+#X obj 89 269 tabwrite~ array99;
+#X msg 80 64 \; pd dsp 1 \;;
+#X obj 80 36 loadbang;
+#X obj 26 271 dac~;
+#X obj 27 221 hip~ 20;
 #N canvas 0 0 450 300 (subpatch) 0;
 #X array array99 3000 float 0;
 #X coords 0 1 2999 -1 150 100 1;
-#X restore 49 257 graph;
+#X restore 49 307 graph;
 #N canvas 1 82 531 530 corde 0;
 #X obj 86 32 t b b b b;
 #X msg 143 71 reset;
@@ -86,19 +87,20 @@
 #X connect 22 0 23 0;
 #X connect 22 0 5 0;
 #X connect 23 0 22 1;
-#X restore 28 96 pd corde;
-#X obj 28 74 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+#X restore 28 146 pd corde;
+#X obj 28 124 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
-#X obj 89 193 metro 100;
-#X obj 89 167 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
+#X obj 89 243 metro 100;
+#X obj 89 217 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
-#X obj 115 170 loadbang;
-#X obj 28 122 pmpd~ 1 1;
-#X obj 45 74 loadbang;
-#X obj 111 97 line~;
-#X msg 111 71 0.05 \, 0 1;
-#X obj 28 146 *~ 0.7;
-#X text 190 70 <- send a force to a point of the string;
+#X obj 115 220 loadbang;
+#X obj 28 172 pmpd~ 1 1;
+#X obj 45 124 loadbang;
+#X obj 111 147 line~;
+#X msg 111 121 0.05 \, 0 1;
+#X obj 28 196 *~ 0.7;
+#X text 190 120 <- send a force to a point of the string;
+#X obj 206 44 declare -path pmpd;
 #X connect 1 0 0 0;
 #X connect 4 0 3 0;
 #X connect 6 0 2 0;

@@ -1,4 +1,5 @@
 #N canvas 640 304 796 716 10;
+#X declare -path pmpd;
 #X msg 99 332 setK hinge \$1;
 #X msg 129 384 setD hinge \$1;
 #X floatatom 99 308 5 0 0 0 - - -;
@@ -89,6 +90,7 @@ an angle between them;
 #X obj 232 393 / 360;
 #X obj 232 417 * 6.28;
 #X text 282 361 angle (in degree);
+#X obj 438 59 declare -path pmpd;
 #X connect 0 0 22 0;
 #X connect 1 0 22 0;
 #X connect 2 0 0 0;

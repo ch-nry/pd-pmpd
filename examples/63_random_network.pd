@@ -1,5 +1,5 @@
 #N canvas 454 264 543 322 10;
-#X declare -lib Gem -path ../;
+#X declare -lib Gem -path -path pmpd;
 #X obj 52 193 pmpd2d;
 #X obj 52 78 loadbang;
 #X obj 64 101 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
@@ -202,7 +202,7 @@ lenght of the link connected to this mass to curent length;
 #X msg 188 170 testMass mouse_move distanceCircleInf \$1 \$2 0.05;
 #X text 50 283 click and drag connection point with mouse to destrod
 the net;
-#X obj 56 21 declare -lib Gem -path ../;
+#X obj 56 21 declare -lib Gem -path -path pmpd;
 #X connect 0 0 11 0;
 #X connect 1 0 3 0;
 #X connect 2 0 3 0;

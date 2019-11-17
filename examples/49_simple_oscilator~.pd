@@ -1,4 +1,5 @@
 #N canvas 516 292 539 463 10;
+#X declare -path pmpd;
 #X obj 118 40 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
 #X obj 168 422 dac~;
@@ -215,6 +216,7 @@
 #X connect 7 0 3 0;
 #X connect 8 0 3 0;
 #X restore 137 100 pd simple_non_linear_oscilator _;
+#X obj 125 7 declare -path pmpd;
 #X connect 0 0 27 0;
 #X connect 2 0 4 2;
 #X connect 3 0 29 0;

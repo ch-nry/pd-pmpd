@@ -1,5 +1,5 @@
-#N canvas 570 84 686 162 10;
-#X declare -lib Gem;
+#N canvas 570 87 686 162 10;
+#X declare -lib Gem -path pmpd;
 #X obj 22 16 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
 #N canvas 596 150 954 737 synthese 0;
@@ -460,6 +460,6 @@
 #X text 196 94 Drag red masses for bass and white ones for high tones...
 ;
 #X text 196 17 Additive synthesis example;
-#X obj 198 122 declare -lib Gem;
+#X obj 198 122 declare -lib Gem -path pmpd;
 #X connect 0 0 3 0;
 #X connect 5 0 4 0;

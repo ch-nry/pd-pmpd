@@ -1,5 +1,5 @@
-#N canvas 423 82 515 653 12;
-#X declare -path ../;
+#N canvas 423 87 515 653 12;
+#X declare -path pmpd;
 #N canvas 50 112 623 384 read 0;
 #X text 412 312 ch20031213;
 #X text 30 25 The aim of this collection of objects is to create physical
@@ -22,7 +22,6 @@ the creation of "physical" structures. Such structures can then move
 physical equations used to define the objects.;
 #X text 29 395 You have to declare the path of the pmpd externals to
 use them \, for example:;
-#X obj 31 441 declare -path ../;
 #X text 34 30 Objects in this collection can be mass \, link and interactor
 \, in 1D \, 2D or 3D.;
 #X text 47 69 Masses (mass \, mass2D \, mass3D) are ponctual. They've
@@ -35,6 +34,7 @@ and output a force for each mass.;
 #X text 47 202 Interactors are a kind of link \, but influence a group
 of masses at once. They can be used for global interaction. We will
 look further into it later.;
+#X obj 31 441 declare -path pmpd;
 #X restore 69 344 pd basics;
 #N canvas 422 82 645 737 global_description 0;
 #X obj 35 149 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
@@ -89,19 +89,19 @@ mass.;
 #X msg 37 114 -1;
 #X msg 137 114 2;
 #X obj 15 16 loadbang;
-#X floatatom 37 185 5 0 0 0 - - -, f 5;
+#X floatatom 37 185 5 0 0 0 - - -;
 #X msg 106 390 1;
 #X msg 72 390 0;
 #X msg 39 390 -1;
 #X msg 139 390 2;
-#X floatatom 39 461 5 0 0 0 - - -, f 5;
-#X floatatom 37 325 5 0 0 0 - - -, f 5;
+#X floatatom 39 461 5 0 0 0 - - -;
+#X floatatom 37 325 5 0 0 0 - - -;
 #X msg 106 508 1;
 #X msg 72 508 0;
 #X msg 39 508 -1;
 #X msg 139 508 2;
-#X floatatom 39 579 5 0 0 0 - - -, f 5;
-#X floatatom 172 267 5 0 0 0 - - -, f 5;
+#X floatatom 39 579 5 0 0 0 - - -;
+#X floatatom 172 267 5 0 0 0 - - -;
 #X msg 104 264 1;
 #X msg 70 264 0;
 #X msg 37 264 -1;
@@ -190,14 +190,14 @@ previous links.;
 #X obj 10 200 cnv 15 15 15 Ma1 M1 empty 2 10 0 14 -1 -66577 0;
 #X obj 24 185 cnv 15 15 15 Ma3 M3 empty 2 10 0 14 -1 -66577 0;
 #X obj 39 172 cnv 15 15 15 Ma5 M5 empty 2 10 0 14 -1 -66577 0;
-#X obj 79 200 cnv 15 15 15 Ma9 M9 empty 2 10 0 14 -1 -66577 0;
+#X obj 80 199 cnv 15 15 15 Ma9 M9 empty 2 10 0 14 -1 -66577 0;
 #X obj 183 200 cnv 15 15 15 empty M29 empty 2 10 0 14 -1 -66577 0;
-#X obj 120 200 cnv 15 15 15 Ma2 M2 empty 2 10 0 14 -1 -66577 0;
-#X obj 120 160 cnv 15 15 15 Ma4 M4 empty 2 10 0 14 -1 -66577 0;
-#X obj 100 170 cnv 15 15 15 Ma6 M6 empty 2 10 0 14 -1 -66577 0;
-#X obj 79 160 cnv 15 15 15 Ma8 M8 empty 2 10 0 14 -1 -66577 0;
-#X obj 119 180 cnv 15 15 15 Ma11 M11 empty 2 10 0 14 -1 -66577 0;
-#X obj 80 180 cnv 15 15 15 Ma12 M12 empty 2 10 0 14 -1 -66577 0;
+#X obj 119 199 cnv 15 15 15 Ma2 M2 empty 2 10 0 14 -1 -66577 0;
+#X obj 120 159 cnv 15 15 15 Ma4 M4 empty 2 10 0 14 -1 -66577 0;
+#X obj 100 169 cnv 15 15 15 Ma6 M6 empty 2 10 0 14 -1 -66577 0;
+#X obj 79 159 cnv 15 15 15 Ma8 M8 empty 2 10 0 14 -1 -66577 0;
+#X obj 119 179 cnv 15 15 15 Ma11 M11 empty 2 10 0 14 -1 -66577 0;
+#X obj 80 179 cnv 15 15 15 Ma12 M12 empty 2 10 0 14 -1 -66577 0;
 #X obj 184 172 cnv 15 15 15 Ma14 M14 empty 2 10 0 14 -1 -66577 0;
 #X obj 198 187 cnv 15 15 15 Ma13 M13 empty 2 10 0 14 -1 -66577 0;
 #X obj 169 185 cnv 15 15 15 Ma15 M15 empty 2 10 0 14 -1 -66577 0;

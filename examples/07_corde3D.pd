@@ -1,5 +1,5 @@
 #N canvas 98 91 816 578 12;
-#X declare -lib Gem;
+#X declare -lib Gem -path pmpd;
 #N canvas 663 236 288 320 mass 0;
 #X obj 25 38 inlet;
 #X obj 25 99 outlet;
@@ -512,7 +512,7 @@ to all masss.;
 #X text 710 252 <- rotate the model in 3D;
 #X text 55 78 <- 1;
 #X text 289 255 <- 2;
-#X obj 74 21 declare -lib Gem;
+#X obj 74 21 declare -lib Gem -path pmpd;
 #X connect 0 0 1 1;
 #X connect 0 0 48 0;
 #X connect 1 1 0 0;

@@ -1,4 +1,5 @@
 #N canvas 928 576 807 445 10;
+#X declare -path pmpd;
 #N canvas 766 276 694 538 create_corde 0;
 #X obj 352 461 t a;
 #X msg 505 158 reset;
@@ -82,16 +83,16 @@
 #X obj 77 122 r \$0-pmpd;
 #N canvas 756 311 787 602 sound 0;
 #X obj 103 18 loadbang;
-#X floatatom 103 145 5 0 0 0 - - -, f 5;
-#X floatatom 317 147 5 0 0 0 - - -, f 5;
-#X floatatom 537 146 5 0 0 0 - - -, f 5;
+#X floatatom 103 145 5 0 0 0 - - -;
+#X floatatom 317 147 5 0 0 0 - - -;
+#X floatatom 537 146 5 0 0 0 - - -;
 #X obj 255 381 *~ 0.3;
 #X obj 235 405 hip~ 19;
 #X obj 426 378 *~ 0.3;
 #X obj 406 402 hip~ 19;
 #X obj 317 126 * 1.201;
 #X obj 537 126 * 1.424;
-#X floatatom 103 65 5 0 0 0 - - -, f 5;
+#X floatatom 103 65 5 0 0 0 - - -;
 #X obj 103 85 f;
 #X msg 103 41 55;
 #X obj 235 430 outlet~;
@@ -226,16 +227,17 @@
 #X msg 333 264 dsp 1;
 #X obj 381 295 s pd;
 #X msg 381 264 dsp 0;
-#X obj 314 51 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 314 51 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 314 180 route 1 0;
 #X text 86 43 reset;
 #X obj 66 168 pmpd --------;
 #X msg 674 352 setD souple \$1;
-#X floatatom 657 201 5 -1 1 0 - - -, f 5;
+#X floatatom 657 201 5 -1 1 0 - - -;
 #X msg 657 219 0 \$1;
 #X obj 579 333 / 500;
 #X obj 674 328 / 500;
+#X obj 528 28 declare -path pmpd;
 #X connect 0 0 45 0;
 #X connect 1 0 0 0;
 #X connect 2 0 25 0;

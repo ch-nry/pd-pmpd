@@ -1,5 +1,5 @@
 #N canvas 101 91 564 699 10;
-#X declare -lib Gem;
+#X declare -lib Gem -path pmpd;
 #X obj 19 175 t b b;
 #X obj 19 98 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -38,7 +38,7 @@ position of surch chaotic system.;
 #X text 287 634 change initial position of the mass;
 #X msg 331 296 setG -1e-06;
 #X msg 153 296 setG -1e-06;
-#X obj 10 2 declare -lib Gem;
+#X obj 10 2 declare -lib Gem -path pmpd;
 #X connect 0 0 2 0;
 #X connect 0 1 18 0;
 #X connect 0 1 23 0;

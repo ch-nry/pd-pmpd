@@ -1,4 +1,5 @@
 #N canvas 38 91 885 658 12;
+#X declare -path pmpd;
 #X obj 144 508 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
 -1 -1 6400 1;
 #X obj 162 508 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
@@ -105,6 +106,7 @@ interaction;
 #X text 103 65 this simulation provide a continus exitation \, like
 in a violon string exited with a bow.;
 #X text 49 117 <- 1;
+#X obj 555 35 declare -path pmpd;
 #X connect 6 0 8 0;
 #X connect 8 0 10 0;
 #X connect 8 1 9 0;

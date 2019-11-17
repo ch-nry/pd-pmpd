@@ -1,5 +1,5 @@
 #N canvas 180 145 749 504 10;
-#X declare -lib Gem;
+#X declare -lib Gem -path pmpd;
 #N canvas 289 242 849 567 array 0;
 #X obj 401 247 blob 62 1.39556 1 0;
 #X obj 28 386 lia3D link2 1 1 0 0.5;
@@ -663,7 +663,7 @@
 #X connect 15 0 6 0;
 #X restore 512 292 pd init;
 #X obj 31 456 iCylinder3D masse 0 0 1 0 0 -6 0 1.5 0 0.6;
-#X obj 10 2 declare -lib Gem;
+#X obj 10 2 declare -lib Gem -path pmpd;
 #X connect 1 0 27 0;
 #X connect 3 0 14 0;
 #X connect 4 0 31 0;

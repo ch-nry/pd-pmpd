@@ -1,5 +1,5 @@
-#N canvas 78 32 1011 625 10;
-#X declare -lib Gem -path ../;
+#N canvas 78 87 1011 625 10;
+#X declare -lib Gem -path pmpd;
 #N canvas 306 123 261 242 mass 0;
 #X obj 24 23 inlet;
 #X obj 24 83 outlet;
@@ -41,9 +41,9 @@
 #X msg 164 101 50;
 #X msg 205 101 1;
 #X msg 339 102 200;
-#X obj 791 95 world_light;
-#X obj 791 36 gemhead;
-#X obj 791 66 rotateXYZ;
+#X obj 825 95 world_light;
+#X obj 825 36 gemhead;
+#X obj 825 66 rotateXYZ;
 #X msg 439 229 force2D 0 1000;
 #X msg 205 150 setD \$1;
 #X obj 27 9 loadbang;
@@ -352,7 +352,6 @@
 #X obj 112 15 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
 #X text 624 118 <- 1;
-#X obj 791 13 declare -lib Gem -path ../;
 #X text 133 15 reset;
 #X text 436 37 Each mass is connected to the one on the left and the
 one on the right. The extrem left and right masses are fixed: they
@@ -362,6 +361,7 @@ to fixed points on the screen;
 string.;
 #X text 564 229 <- send Y force to all masses;
 #X text 564 258 <- send X force to all masses;
+#X obj 825 13 declare -lib Gem -path pmpd;
 #X connect 0 0 41 1;
 #X connect 0 0 42 0;
 #X connect 4 0 6 0;

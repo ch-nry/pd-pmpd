@@ -1,4 +1,5 @@
 #N canvas 30 152 1185 713 10;
+#X declare -path pmpd;
 #X obj 39 450 pmpd;
 #X msg 116 276 reset;
 #X obj 65 248 t b b b b;
@@ -165,6 +166,7 @@ kind of link :;
 #X text 83 77 - rigidity proportionnal to square root of elongation
 ;
 #X obj 434 15 loadbang;
+#X obj 650 56 declare -path pmpd;
 #X connect 0 0 7 0;
 #X connect 1 0 0 0;
 #X connect 2 0 62 0;

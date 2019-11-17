@@ -1,5 +1,5 @@
 #N canvas 1086 204 646 480 10;
-#X declare -lib Gem;
+#X declare -lib Gem -path pmpd;
 #N canvas 860 482 349 443 creation 0;
 #X obj 46 380 s pd-new;
 #X msg 86 95 \; pd filename new ./ \; #N canvas \; #X pop 1 \;;
@@ -316,7 +316,7 @@ force + some random mouving vortex);
 #X obj 248 383 smoke_vortex -0.003;
 #X obj 247 403 smoke_vortex -0.003;
 #X obj 247 423 smoke_vortex -0.003;
-#X obj 10 2 declare -lib Gem;
+#X obj 10 2 declare -lib Gem -path pmpd;
 #X connect 2 0 4 0;
 #X connect 2 1 5 0;
 #X connect 2 1 16 0;

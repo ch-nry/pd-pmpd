@@ -1,5 +1,5 @@
 #N canvas 53 91 600 601 12;
-#X declare -lib Gem;
+#X declare -lib Gem -path pmpd;
 #N canvas 623 135 520 309 init 0;
 #X msg 200 169 setK \$1;
 #X msg 274 143 setD \$1;
@@ -247,7 +247,7 @@ in 2 way : mass to link and link to mass).;
 #X text 30 887 If the line does not display corectly \, you sould upgrade
 GEM;
 #X text 192 204 <- create;
-#X obj 40 14 declare -lib Gem;
+#X obj 40 14 declare -lib Gem -path pmpd;
 #X connect 1 0 21 0;
 #X connect 1 1 18 0;
 #X connect 1 1 22 0;

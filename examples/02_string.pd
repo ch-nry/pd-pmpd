@@ -1,5 +1,5 @@
-#N canvas -1562 97 1178 774 10;
-#X declare -path ../;
+#N canvas 1 97 1178 774 10;
+#X declare -path pmpd;
 #X obj 379 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
 -1 -1 0 1;
 #X obj 397 253 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 -262144
@@ -121,7 +121,6 @@
 #X obj 894 522 bp~ 1380 5;
 #X obj 956 524 bp~ 3160 5;
 #X obj 1040 523 bp~ 6380 5;
-#X obj 610 29 declare -path ../;
 #X text 22 29 This is the first example of physical modeling: it computes
 an elastic string;
 #X text 602 67 <- metronome send bangs to masses and links and gives
@@ -134,6 +133,7 @@ properties close to an elastic string.;
 #X text 743 745 Sound synthesis engine 2;
 #X text 612 140 masses and links has to be computed one after the other.
 ;
+#X obj 611 25 declare -path pmpd;
 #X connect 0 0 31 0;
 #X connect 0 0 67 0;
 #X connect 1 0 35 0;

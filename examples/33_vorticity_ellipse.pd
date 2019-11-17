@@ -1,5 +1,5 @@
 #N canvas 67 91 579 244 10;
-#X declare -lib Gem;
+#X declare -lib Gem -path pmpd;
 #N canvas 860 482 333 427 creation 0;
 #X obj 46 380 s pd-new;
 #X msg 86 95 \; pd filename new ./ \; #N canvas \; #X pop 1 \;;
@@ -360,7 +360,7 @@
 ;
 #X text 120 40 This simulation nead lot's a masss \, and lot's of CPU.
 ;
-#X obj 10 2 declare -lib Gem;
+#X obj 10 2 declare -lib Gem -path pmpd;
 #X connect 1 0 3 0;
 #X connect 1 1 4 0;
 #X connect 2 0 13 0;

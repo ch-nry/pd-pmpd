@@ -1,5 +1,5 @@
 #N canvas 674 310 541 161 10;
-#X declare -lib Gem;
+#X declare -lib Gem -path pmpd;
 #X obj 18 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
 #X text 39 18 reset;
@@ -210,6 +210,6 @@ in "creation";
 #X connect 8 0 6 0;
 #X restore 18 107 pd compute;
 #X text 120 121 copyright Nicolas Montgermont 2010;
-#X obj 120 20 declare -lib Gem;
+#X obj 120 20 declare -lib Gem -path pmpd;
 #X connect 0 0 4 0;
 #X connect 3 0 2 0;

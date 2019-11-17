@@ -1,4 +1,5 @@
-#N canvas 392 22 616 594 10;
+#N canvas 392 87 616 594 10;
+#X declare -path pmpd;
 #X obj 20 33 loadbang;
 #X obj 401 197 print msd;
 #X obj 309 58 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
@@ -54,6 +55,7 @@
 #X obj 308 560 s \$0-pmpdin;
 #X obj 309 80 metro 20;
 #X text 23 566 COPYRIGHT : Nicolas Montgermont 2010;
+#X obj 138 41 declare -path pmpd;
 #X connect 0 0 23 0;
 #X connect 2 0 46 0;
 #X connect 4 0 23 0;
