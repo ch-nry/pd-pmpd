@@ -20,7 +20,7 @@
 0;
 #X obj 5 785 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
-#N canvas 460 50 901 640 More_Info 0;
+#N canvas 460 87 901 640 More_Info 0;
 #X text 96 12 pmpd : mass - spring - damper model;
 #X obj 426 -5 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
 -1;
@@ -1010,11 +1010,11 @@ state based on previous time step.;
 #X text 9 318 Arguments:;
 #X text 17 333 - Max number of masses that can be created;
 #X text 17 346 - Max number of link that can be created;
-#X text 17 360 When only 1 argument is provided \, it is used fir both
-mass and link maximum number, f 87;
 #X text 16 378 Default is 10000 mass and link. It should be OK for
 most uses \, but can be reduce to save memory \, or increase for more
 complex simulation, f 86;
+#X text 17 360 When only 1 argument is provided \, it is used for both
+mass and link maximum number, f 87;
 #X connect 21 0 37 0;
 #X connect 24 0 23 0;
 #X connect 25 0 47 0;
