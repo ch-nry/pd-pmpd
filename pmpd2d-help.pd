@@ -1,4 +1,4 @@
-#N canvas 253 152 564 855 10;
+#N canvas 795 152 564 855 10;
 #X declare -lib Gem;
 #X obj 4 419 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
@@ -577,7 +577,7 @@ the model. Messages create links and masses or destroy them.;
 links. They work as general links but their calculation is made following
 a vector.;
 #X restore 12 517 pd creation____________;
-#N canvas 90 90 1077 895 dynamic 0;
+#N canvas 705 115 1077 895 dynamic 0;
 #X obj 5 3 cnv 15 900 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X obj 10 85 cnv 15 150 670 empty empty empty 20 12 0 14 -233017 -66577
@@ -704,14 +704,13 @@ uses this argument as the value applied to all masses (or links);
 #X text 646 259 \$3 : optional multiplicator coeficient for the table
 ;
 #X msg 484 227 addL \$1 \$2 [\$3];
-#X text 611 207 Set initial lenght of link(s) / add value to link length
-;
 #X text 529 822 Set messages can also accept 2 float for mass / link
 Id :;
 #X msg 603 841 setK 1 200 0.3;
 #X text 533 841 exemple :;
 #X text 536 863 will set rigidity of all link from number 1 to number
 200 to 0.3, f 65;
+#X text 611 207 Set lenght of link(s) / add value to link length;
 #X restore 12 537 pd dynamic settings ___;
 #X text 112 768 54_pmpd2dtest.pd;
 #X obj 325 272 print;

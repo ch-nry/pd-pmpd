@@ -1,7 +1,7 @@
 #N canvas 577 126 563 865 10;
 #X obj 4 458 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 818 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
+#X obj 5 798 cnv 15 550 40 empty empty empty 20 12 0 14 -158509 -66577
 0;
 #X obj 8 5 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -15,16 +15,13 @@
 0;
 #X obj 7 75 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
 0;
-#X obj 5 768 cnv 15 550 15 empty empty empty 20 12 0 14 -158509 -66577
-0;
-#X obj 5 788 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
+#X obj 5 768 cnv 15 550 30 empty empty empty 20 12 0 14 -233017 -66577
 0;
 #X text 12 75 Examples:;
 #X text 9 458 Inlets:;
 #X text 19 477 - Left:;
 #X text 10 675 Arguments:;
 #X text 11 711 Outlets:;
-#X text 19 768 See Also:;
 #X text 74 47 Full Name:;
 #N canvas 56 110 262 70 Related_Objects 0;
 #X obj 3 10 cnv 15 250 15 empty empty empty 20 12 0 14 -158509 -66577
@@ -34,7 +31,7 @@
 #X text 5 10 Externals and libraries;
 #X obj 44 37 pmpd2d;
 #X obj 140 37 pmpd3d;
-#X restore 122 825 pd Related_Objects;
+#X restore 122 805 pd Related_Objects;
 #N canvas 537 397 524 302 init 0;
 #X msg 89 187 Xmax 127 \, Xmin 0;
 #X obj 89 215 t a;
@@ -98,14 +95,13 @@ souple 3 2 1 0.5;
 messages.;
 #X text 101 509 Messages - Different messages are used to control the
 msd object. They are of three types :;
-#X text 9 789 CATEGORY: control;
-#X text 111 768 01_msdtest.pd;
+#X text 9 769 CATEGORY: control;
 #X text 12 7 HELP: pmpd;
 #X text 12 19 DESCRIPTION: physical modeling for pd \, based on msd.
 ;
 #X obj 17 298 pmpd;
-#X text 266 825 - Cyrille Henry \, 2011;
-#X text 283 841 based on MSD by Nicolas Montgermont;
+#X text 266 805 - Cyrille Henry \, 2011;
+#X text 283 821 based on MSD by Nicolas Montgermont;
 #X obj 17 186 loadbang;
 #N canvas 173 157 617 876 links_attributes 0;
 #X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -568,7 +564,7 @@ one physical parameter \, the value of their mass. They can be mobile
 or fixed \, in this case forces applied to them automatically \, by
 links \, or manually \, by messages \, don't do anything.;
 #X connect 1 0 2 0;
-#X restore 18 824 pd More_Info;
+#X restore 18 804 pd More_Info;
 #N canvas 416 193 614 722 masses_attributes___ 0;
 #X obj 5 3 cnv 15 590 15 empty empty empty 20 12 0 14 -233017 -66577
 0;
@@ -698,7 +694,7 @@ velocity;
 state based on previous time step., f 73;
 #X text 160 587 To get the model parameters (masses).;
 #X text 161 607 To get the model parameters (links).;
-#X text 9 800 KEYWORDS: physical model \, mass \, spring \, damper
+#X text 9 780 KEYWORDS: physical model \, mass \, spring \, damper
 \, link;
 #N canvas 828 197 734 704 tests 0;
 #X obj 5 3 cnv 15 700 15 empty empty empty 20 12 0 14 -233017 -66577
@@ -776,16 +772,16 @@ mass and link maximum number, f 87;
 #X text 16 418 Default is 10000 mass and link. It should be OK for
 most uses \, but can be reduce to save memory \, or increase for more
 complex simulation, f 86;
-#X connect 20 0 43 0;
-#X connect 21 0 24 0;
+#X connect 18 0 40 0;
+#X connect 19 0 22 0;
+#X connect 22 0 21 0;
 #X connect 24 0 23 0;
-#X connect 26 0 25 0;
-#X connect 27 0 29 0;
-#X connect 28 0 18 0;
-#X connect 29 0 32 0;
-#X connect 32 0 21 0;
-#X connect 32 1 22 0;
-#X connect 32 2 30 0;
-#X connect 32 3 31 0;
-#X connect 43 0 19 0;
-#X connect 46 0 26 0;
+#X connect 25 0 27 0;
+#X connect 26 0 16 0;
+#X connect 27 0 30 0;
+#X connect 30 0 19 0;
+#X connect 30 1 20 0;
+#X connect 30 2 28 0;
+#X connect 30 3 29 0;
+#X connect 40 0 17 0;
+#X connect 43 0 24 0;
