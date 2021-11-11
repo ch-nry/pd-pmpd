@@ -26,11 +26,11 @@ static int makeseed3D(void)
     return (random_nextseed & 0x7fffffff);
 }
 
-static float random_bang3D(t_mass3D *x)
+static t_float random_bang3D(t_mass3D *x)
 {
     int nval;
     int range = 2000000;
-	float rnd;
+	t_float rnd;
 	unsigned int randval = x->x_state;
 	x->x_state = randval = randval * 472940017 + 832416023;
     nval = ((double)range) * ((double)randval)
