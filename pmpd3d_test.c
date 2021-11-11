@@ -1,4 +1,4 @@
-int test_3d_mass(int i, t_pmpd3d *x, int argc, t_atom *argv)
+int pmpd3d_test_3d_mass(int i, t_pmpd3d *x, int argc, t_atom *argv)
 {
 	t_float tmp;
 	t_int j = 1, k;
@@ -82,24 +82,24 @@ int test_3d_mass(int i, t_pmpd3d *x, int argc, t_atom *argv)
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedSup") )
 			{
-				if ( sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)+sqr(x->mass[i].speedZ)) < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				if ( sqrt(pmpd3d_sqr(x->mass[i].speedX)+pmpd3d_sqr(x->mass[i].speedY)+pmpd3d_sqr(x->mass[i].speedZ)) < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+= 2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedInf") )
 			{
-				if ( sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)+sqr(x->mass[i].speedZ)) >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				if ( sqrt(pmpd3d_sqr(x->mass[i].speedX)+pmpd3d_sqr(x->mass[i].speedY)+pmpd3d_sqr(x->mass[i].speedZ)) >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCircleInf"))
 			{ 
-				tmp = sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv))+sqr(x->mass[i].posZ - atom_getfloatarg(j+3,argc,argv));
-				if ( tmp >= sqr(atom_getfloatarg(j+4,argc,argv)) ) { return(0); }
+				tmp = pmpd3d_sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+pmpd3d_sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv))+pmpd3d_sqr(x->mass[i].posZ - atom_getfloatarg(j+3,argc,argv));
+				if ( tmp >= pmpd3d_sqr(atom_getfloatarg(j+4,argc,argv)) ) { return(0); }
 				j += 5;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCircleSup"))
 			{ 
-				tmp = sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv))+sqr(x->mass[i].posZ - atom_getfloatarg(j+3,argc,argv));
-				if ( tmp < sqr(atom_getfloatarg(j+4,argc,argv)) ) { return(0); }
+				tmp = pmpd3d_sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+pmpd3d_sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv))+pmpd3d_sqr(x->mass[i].posZ - atom_getfloatarg(j+3,argc,argv));
+				if ( tmp < pmpd3d_sqr(atom_getfloatarg(j+4,argc,argv)) ) { return(0); }
 				j += 5;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("massSup"))
@@ -114,13 +114,13 @@ int test_3d_mass(int i, t_pmpd3d *x, int argc, t_atom *argv)
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceSup") )
 			{
-				tmp  = sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ);
+				tmp  = pmpd3d_sqr(x->mass[i].forceX) + pmpd3d_sqr(x->mass[i].forceY) + pmpd3d_sqr(x->mass[i].forceZ);
 				if ( ( tmp < atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+= 2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceInf") )
 			{
-				tmp  = sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ);
+				tmp  = pmpd3d_sqr(x->mass[i].forceX) + pmpd3d_sqr(x->mass[i].forceY) + pmpd3d_sqr(x->mass[i].forceZ);
 				if ( ( tmp >= atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+= 2;
 			}
@@ -224,7 +224,7 @@ int test_3d_mass(int i, t_pmpd3d *x, int argc, t_atom *argv)
 	return(1);	
 }
 
-int test_3d_link(int i, t_pmpd3d *x, int argc, t_atom *argv)
+int pmpd3d_test_3d_link(int i, t_pmpd3d *x, int argc, t_atom *argv)
 {
 	t_int j;
 	t_float tmp, tmp2;
@@ -280,15 +280,15 @@ int test_3d_link(int i, t_pmpd3d *x, int argc, t_atom *argv)
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceSup") )
 			{
-				tmp = sqr(x->link[i].forceX) + sqr(x->link[i].forceY) + sqr(x->link[i].forceZ);
-				tmp2 = sqr(atom_getfloatarg(j+1,argc,argv));		
+				tmp = pmpd3d_sqr(x->link[i].forceX) + pmpd3d_sqr(x->link[i].forceY) + pmpd3d_sqr(x->link[i].forceZ);
+				tmp2 = pmpd3d_sqr(atom_getfloatarg(j+1,argc,argv));		
 				if ( tmp < tmp2 ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceInf") )
 			{
-				tmp = sqr(x->link[i].forceX) + sqr(x->link[i].forceY) + sqr(x->link[i].forceZ);
-				tmp2 = sqr(atom_getfloatarg(j+1,argc,argv));
+				tmp = pmpd3d_sqr(x->link[i].forceX) + pmpd3d_sqr(x->link[i].forceY) + pmpd3d_sqr(x->link[i].forceZ);
+				tmp2 = pmpd3d_sqr(atom_getfloatarg(j+1,argc,argv));
 				if ( tmp >= tmp2 ) { return(0); }
 				j+=2;
 			}
@@ -379,7 +379,7 @@ void pmpd3d_testLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 	for (i=0; i < x->nb_link; i++)
 	{
-		tmp=test_3d_link(i,x,argc,argv);
+		tmp=pmpd3d_test_3d_link(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;
@@ -401,7 +401,7 @@ void pmpd3d_testMass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 	for (i=0; i < x->nb_mass; i++)
 	{
-		tmp=test_3d_mass(i,x,argc,argv);
+		tmp=pmpd3d_test_3d_mass(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;
@@ -434,7 +434,7 @@ void pmpd3d_testLinkT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             
             for (i=0; i < taille_max; i++)
             {
-				tmp = test_3d_link(i,x,argc,argv);
+				tmp = pmpd3d_test_3d_link(i,x,argc,argv);
 				if (tmp == -1)
 				{	
 					break;
@@ -466,7 +466,7 @@ void pmpd3d_testMassT(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             
             for (i=0; i < taille_max; i++)
             {
-				tmp = test_3d_mass(i,x,argc,argv);
+				tmp = pmpd3d_test_3d_mass(i,x,argc,argv);
 				if (tmp == -1)
 				{
 					break;
@@ -485,7 +485,7 @@ void pmpd3d_testLinkL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
     for (i=0; i < x->nb_link;)
 	{
-		tmp=test_3d_link(i,x,argc,argv);
+		tmp=pmpd3d_test_3d_link(i,x,argc,argv);
 		if (tmp == -1)
 		{
 			break;
@@ -504,7 +504,7 @@ void pmpd3d_testMassL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
     for (i=0; i < x->nb_mass;)
 	{		
-		tmp=test_3d_mass(i,x,argc,argv);
+		tmp=pmpd3d_test_3d_mass(i,x,argc,argv);
 		if (tmp == -1)
 		{
 			break;
@@ -527,7 +527,7 @@ void pmpd3d_testLinkN(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     i = max(0,i);
     SETFLOAT(&(std_out[1]),i);
 
-    tmp=test_3d_link(i,x,argc,argv);
+    tmp=pmpd3d_test_3d_link(i,x,argc,argv);
     if (tmp == -1)
     {	
         return;
@@ -551,7 +551,7 @@ void pmpd3d_testMassN(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     i = max(0,i);
     SETFLOAT(&(std_out[1]),i);
 
-    tmp=test_3d_mass(i,x,argc,argv);
+    tmp=pmpd3d_test_3d_mass(i,x,argc,argv);
     if (tmp == -1)
     {	
         return;
@@ -574,7 +574,7 @@ void pmpd3d_testLinkNumber(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     nb=0;
 	for (i=0; i < x->nb_link; i++)
 	{
-		tmp=test_3d_link(i,x,argc,argv);
+		tmp=pmpd3d_test_3d_link(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;
@@ -598,7 +598,7 @@ void pmpd3d_testMassNumber(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     nb = 0;
 	for (i=0; i < x->nb_mass; i++)
 	{
-		tmp=test_3d_mass(i,x,argc,argv);
+		tmp=pmpd3d_test_3d_mass(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;

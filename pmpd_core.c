@@ -2,27 +2,27 @@
  *  pmpd_core.c
  */
 
-t_float sign_ch(t_float v)
+inline t_float pmpd_sign(t_float v)
 {
     return v > 0 ? 1 : -1;
 }
 
-t_float pow_ch(t_float x, t_float y)
+inline t_float pmpd_pow(t_float x, t_float y)
 {
     return x > 0 ? pow(x,y) : -pow(-x,y);
 }
 
-t_float sqr(t_float x)
+inline t_float pmpd_sqr(t_float x)
 {
     return x*x ;
 }
 
-t_float mix(t_float X, t_float Y, t_float mix)
+inline t_float pmpd_mix(t_float X, t_float Y, t_float pmpd_mix)
 {
-    return (1-mix)*X + mix*Y ;
+    return (1-pmpd_mix)*X + pmpd_mix*Y ;
 }
 
-t_float tabread2(t_pmpd *x, t_float pos, t_symbol *array)
+t_float pmpd_tabread2(t_pmpd *x, t_float pos, t_symbol *array)
 {
     t_garray *a;
     int npoints;
@@ -38,9 +38,9 @@ t_float tabread2(t_pmpd *x, t_float pos, t_symbol *array)
         posx = fabs(pos)*npoints;
         int n=posx;
         if (n >= npoints - 1) 
-            return (sign_ch(pos)*vec[npoints-1].w_float);
-        float fract = posx-n;
-        return (sign_ch(pos) * ( fract*vec[n+1].w_float+(1-fract)*vec[n].w_float));
+            return (pmpd_sign(pos)*vec[npoints-1].w_float);
+        t_float fract = posx-n;
+        return (pmpd_sign(pos) * ( fract*vec[n+1].w_float+(1-fract)*vec[n].w_float));
     }
     return( pos); // si il y a un pb sur le tableau, on renvoie l'identité
 }
@@ -132,13 +132,13 @@ void pmpd_bang(t_pmpd *x)
             {
                 if (x->link[i].lType == 2)
                 { // K et D viennent d'une table
-                    F  = x->link[i].D * tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
-                    F += x->link[i].K * tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
+                    F  = x->link[i].D * pmpd_tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
+                    F += x->link[i].K * pmpd_tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
                 }
                 else
                 {            
                     F  = x->link[i].D * (L - x->link[i].distance) ;
-                    F += x->link[i].K *  sign_ch(L- x->link[i].L) * pow_ch( fabs(L - x->link[i].L), x->link[i].Pow);
+                    F += x->link[i].K *  pmpd_sign(L- x->link[i].L) * pmpd_pow( fabs(L - x->link[i].L), x->link[i].Pow);
                 }
             
                 x->link[i].mass1->forceX -= F;

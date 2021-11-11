@@ -3,27 +3,27 @@
  */
 
 
-t_float sign_ch(t_float v)
+inline t_float pmpd3d_sign(t_float v)
 {
     return v > 0 ? 1 : -1;
 }
 
-t_float sqr(t_float x)
+inline t_float pmpd3d_sqr(t_float x)
 {
     return x*x ;
 }
 
-t_float pow_ch(t_float x, t_float y)
+inline t_float pmpd3d_pow(t_float x, t_float y)
 {
     return x > 0 ? pow(x,y) : -pow(-x,y);
 }
 
-t_float mix(t_float X, t_float Y, t_float mix)
+inline t_float pmpd3d_mix(t_float X, t_float Y, t_float pmpd3d_mix)
 {
-    return (1-mix)*X + mix*Y ;
+    return (1-pmpd3d_mix)*X + pmpd3d_mix*Y ;
 }
 
-t_float tabread2(t_pmpd3d *x, t_float pos, t_symbol *array)
+t_float pmpd3d_tabread2(t_pmpd3d *x, t_float pos, t_symbol *array)
 {
     t_garray *a;
     int npoints;
@@ -39,9 +39,9 @@ t_float tabread2(t_pmpd3d *x, t_float pos, t_symbol *array)
         posx = fabs(pos)*npoints;
         int n=posx;
         if (n >= npoints - 1) 
-            return (sign_ch(pos)*vec[npoints-1].w_float);
-        float fract = posx-n;
-        return (sign_ch(pos) * ( fract*vec[n+1].w_float+(1-fract)*vec[n].w_float));
+            return (pmpd3d_sign(pos)*vec[npoints-1].w_float);
+        t_float fract = posx-n;
+        return (pmpd3d_sign(pos) * ( fract*vec[n+1].w_float+(1-fract)*vec[n].w_float));
     }
     return( pos); // si il y a un pb sur le tableau, on renvoie l'identité
 }
@@ -166,19 +166,19 @@ void pmpd3d_bang(t_pmpd3d *x)
 			Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
 			Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
 			Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
-			L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
+			L = sqrt( pmpd3d_sqr(Lx) + pmpd3d_sqr(Ly) + pmpd3d_sqr(Lz) );
 			
 			if ( (L >= x->link[i].Lmin) && (L < x->link[i].Lmax)  && (L != 0))
 			{
 				if (x->link[i].lType == 2)
 				{ // K et D viennent d'une table
-					F  = x->link[i].D * tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
-					F += x->link[i].K * tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
+					F  = x->link[i].D * pmpd3d_tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
+					F += x->link[i].K * pmpd3d_tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
 				}
 				else
 				{            
 					F  = x->link[i].D * (L - x->link[i].distance) ;
-					F += x->link[i].K *  pow_ch( L - x->link[i].L, x->link[i].Pow);
+					F += x->link[i].K *  pmpd3d_pow( L - x->link[i].L, x->link[i].Pow);
 				}
 				
 				Fx = F * Lx/L;
@@ -264,8 +264,8 @@ void pmpd3d_create_link(t_pmpd3d *x, t_symbol *Id, int mass1, int mass2, t_float
         x->link[x->nb_link].mass2 = &x->mass[mass2];
         x->link[x->nb_link].K = K;
         x->link[x->nb_link].D = D;
-        x->link[x->nb_link].L = sqrt(sqr(x->mass[mass1].posX - x->mass[mass2].posX) + 
-									 sqr(x->mass[mass1].posY - x->mass[mass2].posY) + sqr(x->mass[mass1].posZ - x->mass[mass2].posZ));
+        x->link[x->nb_link].L = sqrt(pmpd3d_sqr(x->mass[mass1].posX - x->mass[mass2].posX) + 
+									 pmpd3d_sqr(x->mass[mass1].posY - x->mass[mass2].posY) + pmpd3d_sqr(x->mass[mass1].posZ - x->mass[mass2].posZ));
         x->link[x->nb_link].Pow = Pow;
         x->link[x->nb_link].Lmin = Lmin;
         x->link[x->nb_link].Lmax = Lmax;
@@ -358,7 +358,7 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     t_float vecteurX = atom_getfloatarg(5, argc, argv);
     t_float vecteurY = atom_getfloatarg(6, argc, argv);
     t_float vecteurZ = atom_getfloatarg(7, argc, argv);
-    t_float vecteur = sqrt( sqr(vecteurX) + sqr(vecteurY) + sqr(vecteurZ) );
+    t_float vecteur = sqrt( pmpd3d_sqr(vecteurX) + pmpd3d_sqr(vecteurY) + pmpd3d_sqr(vecteurZ) );
     vecteurX /= vecteur;
     vecteurY /= vecteur;
     vecteurZ /= vecteur;

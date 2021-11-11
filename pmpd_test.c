@@ -1,4 +1,4 @@
-int test_1d_mass(int i, t_pmpd *x, int argc, t_atom *argv)
+int pmpd_test_1d_mass(int i, t_pmpd *x, int argc, t_atom *argv)
 {
 	t_float tmp;
 	t_int j = 1, k;
@@ -52,14 +52,14 @@ int test_1d_mass(int i, t_pmpd *x, int argc, t_atom *argv)
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceInf"))
 			{ 
-				tmp = sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv));
-				if ( tmp >= sqr(atom_getfloatarg(j+2,argc,argv)) ) { return(0); }
+				tmp = pmpd_sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv));
+				if ( tmp >= pmpd_sqr(atom_getfloatarg(j+2,argc,argv)) ) { return(0); }
 				j += 3;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceSup"))
 			{ 
-				tmp = sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv));
-				if ( tmp < sqr(atom_getfloatarg(j+4,argc,argv)) ) { return(0); }
+				tmp = pmpd_sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv));
+				if ( tmp < pmpd_sqr(atom_getfloatarg(j+4,argc,argv)) ) { return(0); }
 				j += 3;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("massSup"))
@@ -162,7 +162,7 @@ int test_1d_mass(int i, t_pmpd *x, int argc, t_atom *argv)
 	return(1);	
 }
 
-int test_1d_link(int i, t_pmpd *x, int argc, t_atom *argv)
+int pmpd_test_1d_link(int i, t_pmpd *x, int argc, t_atom *argv)
 {
 	t_int j;
 	t_float tmp;
@@ -269,7 +269,7 @@ void pmpd_testLink(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 
 	for (i=0; i < x->nb_link; i++)
 	{
-		tmp=test_1d_link(i,x,argc,argv);
+		tmp=pmpd_test_1d_link(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;
@@ -291,7 +291,7 @@ void pmpd_testMass(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 
 	for (i=0; i < x->nb_mass; i++)
 	{
-		tmp=test_1d_mass(i,x,argc,argv);
+		tmp=pmpd_test_1d_mass(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;
@@ -324,7 +324,7 @@ void pmpd_testLinkT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             
             for (i=0; i < taille_max; i++)
             {
-				tmp = test_1d_link(i,x,argc,argv);
+				tmp = pmpd_test_1d_link(i,x,argc,argv);
 				if (tmp == -1)
 				{	
 					break;
@@ -356,7 +356,7 @@ void pmpd_testMassT(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             
             for (i=0; i < taille_max; i++)
             {
-				tmp = test_1d_mass(i,x,argc,argv);
+				tmp = pmpd_test_1d_mass(i,x,argc,argv);
 				if (tmp == -1)
 				{
 					break;
@@ -375,7 +375,7 @@ void pmpd_testLinkL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 
     for (i=0; i < x->nb_link;)
 	{
-		tmp=test_1d_link(i,x,argc,argv);
+		tmp=pmpd_test_1d_link(i,x,argc,argv);
 		if (tmp == -1)
 		{
 			break;
@@ -394,7 +394,7 @@ void pmpd_testMassL(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 
     for (i=0; i < x->nb_mass;)
 	{		
-		tmp=test_1d_mass(i,x,argc,argv);
+		tmp=pmpd_test_1d_mass(i,x,argc,argv);
 		if (tmp == -1)
 		{
 			break;
@@ -417,7 +417,7 @@ void pmpd_testLinkN(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     i = max(0,i);
     SETFLOAT(&(std_out[1]),i);
 
-    tmp=test_1d_link(i,x,argc,argv);
+    tmp=pmpd_test_1d_link(i,x,argc,argv);
     if (tmp == -1)
     {	
         return;
@@ -441,7 +441,7 @@ void pmpd_testMassN(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     i = max(0,i);
     SETFLOAT(&(std_out[1]),i);
 
-    tmp=test_1d_mass(i,x,argc,argv);
+    tmp=pmpd_test_1d_mass(i,x,argc,argv);
     if (tmp == -1)
     {	
         return;
@@ -464,7 +464,7 @@ void pmpd_testLinkNumber(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     nb=0;
 	for (i=0; i < x->nb_link; i++)
 	{
-		tmp=test_1d_link(i,x,argc,argv);
+		tmp=pmpd_test_1d_link(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;
@@ -488,7 +488,7 @@ void pmpd_testMassNumber(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     nb = 0;
 	for (i=0; i < x->nb_mass; i++)
 	{
-		tmp=test_1d_mass(i,x,argc,argv);
+		tmp=pmpd_test_1d_mass(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;

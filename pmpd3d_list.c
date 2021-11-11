@@ -447,7 +447,7 @@ void pmpd3d_massPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     if (argc==0) 
     {
 		for (i=0; i< x->nb_mass; i++) {
-			SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].posX)+sqr(x->mass[i].posY)+sqr(x->mass[i].posZ)));
+			SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[i].posX)+pmpd3d_sqr(x->mass[i].posY)+pmpd3d_sqr(x->mass[i].posZ)));
 		}
     outlet_anything(x->main_outlet, gensym("massPosNormL"),x->nb_mass , pos_list);
     }
@@ -459,7 +459,7 @@ void pmpd3d_massPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {            
 			if (atom_getsymbolarg(0,argc,argv) == x->mass[j].Id) 
 			{
-				SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[j].posX)+sqr(x->mass[j].posY)+sqr(x->mass[j].posZ)));
+				SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[j].posX)+pmpd3d_sqr(x->mass[j].posY)+pmpd3d_sqr(x->mass[j].posZ)));
                 i++;
             }
             j++;
@@ -469,7 +469,7 @@ void pmpd3d_massPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
 		i=(int)atom_getfloatarg(0, argc, argv);
-		SETFLOAT(&(pos_list[0]),sqrt(sqr(x->mass[i].posX)+sqr(x->mass[i].posY)+sqr(x->mass[i].posZ)));
+		SETFLOAT(&(pos_list[0]),sqrt(pmpd3d_sqr(x->mass[i].posX)+pmpd3d_sqr(x->mass[i].posY)+pmpd3d_sqr(x->mass[i].posZ)));
         outlet_anything(x->main_outlet, gensym("massPosNormL"),1 , pos_list);        
     }
 }
@@ -483,7 +483,7 @@ void pmpd3d_massForceNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     {
 		for (i=0; i< x->nb_mass; i++) 
 		{
-			SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].forceX)+sqr(x->mass[i].forceY)+sqr(x->mass[i].forceZ)));
+			SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[i].forceX)+pmpd3d_sqr(x->mass[i].forceY)+pmpd3d_sqr(x->mass[i].forceZ)));
 		}
     outlet_anything(x->main_outlet, gensym("massForceNormL"),x->nb_mass , pos_list);
     }
@@ -495,7 +495,7 @@ void pmpd3d_massForceNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {            
 			if (atom_getsymbolarg(0,argc,argv) == x->mass[j].Id) 
 			{
-				SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[j].forceX)+sqr(x->mass[j].forceY)+sqr(x->mass[j].forceZ)));
+				SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[j].forceX)+pmpd3d_sqr(x->mass[j].forceY)+pmpd3d_sqr(x->mass[j].forceZ)));
                 i++;
             }
             j++;
@@ -505,7 +505,7 @@ void pmpd3d_massForceNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
 		i=(int)atom_getfloatarg(0, argc, argv);
-        SETFLOAT(&(pos_list[0]),sqrt(sqr(x->mass[i].forceX)+sqr(x->mass[i].forceY)+sqr(x->mass[i].forceZ)));
+        SETFLOAT(&(pos_list[0]),sqrt(pmpd3d_sqr(x->mass[i].forceX)+pmpd3d_sqr(x->mass[i].forceY)+pmpd3d_sqr(x->mass[i].forceZ)));
         outlet_anything(x->main_outlet, gensym("massForceNormL"),1 , pos_list);        
     }
 }
@@ -519,7 +519,7 @@ void pmpd3d_massSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     {
 		for (i=0; i< x->nb_mass; i++) 
 		{
-			SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)+sqr(x->mass[i].speedZ)));
+			SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[i].speedX)+pmpd3d_sqr(x->mass[i].speedY)+pmpd3d_sqr(x->mass[i].speedZ)));
 		}
     outlet_anything(x->main_outlet, gensym("massSpeedNormL"),x->nb_mass , pos_list);
     }
@@ -531,7 +531,7 @@ void pmpd3d_massSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {            
 			if (atom_getsymbolarg(0,argc,argv) == x->mass[j].Id) 
 			{
-				SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[j].speedX)+sqr(x->mass[j].speedY)+sqr(x->mass[j].speedZ)));
+				SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[j].speedX)+pmpd3d_sqr(x->mass[j].speedY)+pmpd3d_sqr(x->mass[j].speedZ)));
                 i++;
             }
             j++;
@@ -541,7 +541,7 @@ void pmpd3d_massSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     else if ((argc==1) && (argv[0].a_type == A_FLOAT)) 
     {
 		i=(int)atom_getfloatarg(0, argc, argv);
-        SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)+sqr(x->mass[i].speedZ)));
+        SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[i].speedX)+pmpd3d_sqr(x->mass[i].speedY)+pmpd3d_sqr(x->mass[i].speedZ)));
         outlet_anything(x->main_outlet, gensym("massSpeedNormL"),1 , pos_list);        
     }
 }
@@ -1040,9 +1040,9 @@ void pmpd3d_linkPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		for (i=0; i < x->nb_link; i++)
 		{
 			SETFLOAT(&(pos_list[i]),sqrt( \
-                            sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + \
-                            sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + \
-                            sqr((x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2) ));
+                            pmpd3d_sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + \
+                            pmpd3d_sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + \
+                            pmpd3d_sqr((x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2) ));
 		}
 		outlet_anything(x->main_outlet, gensym("linkPosNormL"),x->nb_link , pos_list);
 	}
@@ -1055,9 +1055,9 @@ void pmpd3d_linkPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			if (atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
 				SETFLOAT(&(pos_list[j]),sqrt( \
-                            sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + \
-                            sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + \
-                            sqr((x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2) ));
+                            pmpd3d_sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + \
+                            pmpd3d_sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + \
+                            pmpd3d_sqr((x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2) ));
 				j++;
             }
         }
@@ -1075,9 +1075,9 @@ void pmpd3d_linkLengthNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		for (i=0; i < x->nb_link; i++)
 		{
 			SETFLOAT(&(pos_list[i]),sqrt( \
-                            sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
-                            sqr(x->link[i].mass2->posY - x->link[i].mass1->posY) + \
-                            sqr(x->link[i].mass2->posZ - x->link[i].mass1->posZ) ));
+                            pmpd3d_sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
+                            pmpd3d_sqr(x->link[i].mass2->posY - x->link[i].mass1->posY) + \
+                            pmpd3d_sqr(x->link[i].mass2->posZ - x->link[i].mass1->posZ) ));
 		}
 		outlet_anything(x->main_outlet, gensym("linkLengthNormL"),x->nb_link , pos_list);
 	}
@@ -1090,9 +1090,9 @@ void pmpd3d_linkLengthNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			if (atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
 				SETFLOAT(&(pos_list[j]),sqrt( \
-                            sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
-                            sqr(x->link[i].mass2->posY - x->link[i].mass1->posY) + \
-                            sqr(x->link[i].mass2->posZ - x->link[i].mass1->posZ) ));
+                            pmpd3d_sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
+                            pmpd3d_sqr(x->link[i].mass2->posY - x->link[i].mass1->posY) + \
+                            pmpd3d_sqr(x->link[i].mass2->posZ - x->link[i].mass1->posZ) ));
 
 				j++;
 			}
@@ -1111,9 +1111,9 @@ void pmpd3d_linkPosSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		for (i=0; i < x->nb_link; i++)
 		{
 			SETFLOAT(&(pos_list[i]),sqrt( \
-                            sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
-                            sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
-                            sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
+                            pmpd3d_sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
+                            pmpd3d_sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
+                            pmpd3d_sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
 		}
 		outlet_anything(x->main_outlet, gensym("linkPosSpeedNormL"),x->nb_link , pos_list);
 	}
@@ -1126,9 +1126,9 @@ void pmpd3d_linkPosSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			if (atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
 				SETFLOAT(&(pos_list[j]),sqrt( \
-                            sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
-                            sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
-                            sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
+                            pmpd3d_sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
+                            pmpd3d_sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
+                            pmpd3d_sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
                 j++;
             }
         }
@@ -1146,9 +1146,9 @@ void pmpd3d_linkLengthSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *arg
 		for (i=0; i < x->nb_link; i++)
 		{
 			SETFLOAT(&(pos_list[i]),sqrt( \
-                            sqr(x->link[i].mass2->speedX - x->link[i].mass1->speedX) + \
-                            sqr(x->link[i].mass2->speedY - x->link[i].mass1->speedY) + \
-                            sqr(x->link[i].mass2->speedZ - x->link[i].mass1->speedZ) ));
+                            pmpd3d_sqr(x->link[i].mass2->speedX - x->link[i].mass1->speedX) + \
+                            pmpd3d_sqr(x->link[i].mass2->speedY - x->link[i].mass1->speedY) + \
+                            pmpd3d_sqr(x->link[i].mass2->speedZ - x->link[i].mass1->speedZ) ));
 		}
 		outlet_anything(x->main_outlet, gensym("linkLengthSpeedNormL"),x->nb_link , pos_list);
 	}
@@ -1161,9 +1161,9 @@ void pmpd3d_linkLengthSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *arg
 			if (atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
 				SETFLOAT(&(pos_list[j]),sqrt( \
-                            sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
-                            sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
-                            sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
+                            pmpd3d_sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
+                            pmpd3d_sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
+                            pmpd3d_sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
 				j++;
 			}
         }

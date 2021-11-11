@@ -609,11 +609,11 @@ void pmpd2d_setLCurrent(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         i = atom_getfloatarg(0, argc, argv);
         i = max(0, min( x->nb_link-1, i));
         if (x->link[i].lType != 3) {
-            x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
+            x->link[i].L = pmpd2d_mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
         }
         else {
-            tmp2 = mod2Pi(x->link[i].L - x->link[i].distance);
-            x->link[i].L = mix(x->link[i].L,x->link[i].L-tmp2,atom_getfloatarg(1, argc, argv));
+            tmp2 = pmpd2d_mod2Pi(x->link[i].L - x->link[i].distance);
+            x->link[i].L = pmpd2d_mix(x->link[i].L,x->link[i].L-tmp2,atom_getfloatarg(1, argc, argv));
         }
     }
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
@@ -625,13 +625,13 @@ void pmpd2d_setLCurrent(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         valeur = atom_getfloatarg(2, argc, argv);
         for (i=tmp; i<=end; i++) 
         {
-            //x->link[i].L = mix(x->link[i].L,x->link[i].distance,valeur);
+            //x->link[i].L = pmpd2d_mix(x->link[i].L,x->link[i].distance,valeur);
             if (x->link[i].lType != 3) {
-                x->link[i].L = mix(x->link[i].L,x->link[i].distance,valeur);
+                x->link[i].L = pmpd2d_mix(x->link[i].L,x->link[i].distance,valeur);
             }
             else {
-                tmp2 = mod2Pi(x->link[i].L- x->link[i].distance);
-                x->link[i].L = mix(x->link[i].L,x->link[i].L-tmp2,valeur);
+                tmp2 = pmpd2d_mod2Pi(x->link[i].L- x->link[i].distance);
+                x->link[i].L = pmpd2d_mix(x->link[i].L,x->link[i].L-tmp2,valeur);
             }
         }
     }
@@ -641,13 +641,13 @@ void pmpd2d_setLCurrent(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
-                // x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
+                // x->link[i].L = pmpd2d_mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
                 if (x->link[i].lType != 3) {
-                    x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
+                    x->link[i].L = pmpd2d_mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
                 }
                 else {
-                    tmp2 = mod2Pi(x->link[i].L- x->link[i].distance);
-                    x->link[i].L = mix(x->link[i].L,x->link[i].L-tmp2,atom_getfloatarg(1, argc, argv));
+                    tmp2 = pmpd2d_mod2Pi(x->link[i].L- x->link[i].distance);
+                    x->link[i].L = pmpd2d_mix(x->link[i].L,x->link[i].L-tmp2,atom_getfloatarg(1, argc, argv));
                 }
             }
         }
@@ -988,10 +988,10 @@ void pmpd2d_setForceY(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd2d_setActivei(t_pmpd2d *x, int i)
 {
-	float Lx, Ly, L;
+	t_float Lx, Ly, L;
 	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
 	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
-	L = sqrt( sqr(Lx) + sqr(Ly) );
+	L = sqrt( pmpd2d_sqr(Lx) + pmpd2d_sqr(Ly) );
 	x->link[i].distance = L; 
 	x->link[i].active = 1;
 }
@@ -1375,12 +1375,12 @@ void pmpd2d_overdamp(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd2d_setConnection1i(t_pmpd2d *x, int i, int j)
 {
-	float Lx, Ly, L;
+	t_float Lx, Ly, L;
 
 	x->link[i].mass1=&x->mass[max(0, min( x->nb_mass-1, j))];
 	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
 	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
-	L = sqrt( sqr(Lx) + sqr(Ly) );
+	L = sqrt( pmpd2d_sqr(Lx) + pmpd2d_sqr(Ly) );
 	x->link[i].distance = L; 
 }
 
@@ -1409,12 +1409,12 @@ void pmpd2d_setEnd1(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd2d_setConnection2i(t_pmpd2d *x, int i, int j)
 {
-	float Lx, Ly, L;
+	t_float Lx, Ly, L;
 
 	x->link[i].mass2=&x->mass[max(0, min( x->nb_mass-1, j))];
 	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
 	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
-	L = sqrt( sqr(Lx) + sqr(Ly) );
+	L = sqrt( pmpd2d_sqr(Lx) + pmpd2d_sqr(Ly) );
 	x->link[i].distance = L; 
 }
 
@@ -1443,14 +1443,14 @@ void pmpd2d_setEnd2(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd2d_setConnectioni(t_pmpd2d *x, int i, int j, int k)
 {
-	float Lx, Ly, L;
+	t_float Lx, Ly, L;
 
 	x->link[i].mass1=&x->mass[max(0, min( x->nb_mass-1, j))];
 	x->link[i].mass2=&x->mass[max(0, min( x->nb_mass-1, k))];
 
 	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
 	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
-	L = sqrt( sqr(Lx) + sqr(Ly) );
+	L = sqrt( pmpd2d_sqr(Lx) + pmpd2d_sqr(Ly) );
 	x->link[i].distance = L; 
 }
 

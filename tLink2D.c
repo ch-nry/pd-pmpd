@@ -77,7 +77,7 @@ void tLink2D_bang(t_tLink2D *x)
 
   if ((x->position2Dx2-x->position2Dx1) != 0)
   {
-	  orientation = 180/3.14159 * atan((float)(x->position2Dy2 - x->position2Dy1)/(x->position2Dx2 - x->position2Dx1));
+	  orientation = 180/3.14159 * atan(x->position2Dy2 - x->position2Dy1)/(x->position2Dx2 - x->position2Dx1);
 		  if ((x->position2Dx2 - x->position2Dx1)<0)
 			  orientation +=180;
 		  if (orientation<0)

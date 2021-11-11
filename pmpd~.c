@@ -99,11 +99,11 @@ static int makeseed_pmpd_tilde(void)
     return (random_nextseed & 0x7fffffff);
 }
 
-static float random_bang_pmpd_tilde(t_pmpd_tilde *x)
+static t_float random_bang_pmpd_tilde(t_pmpd_tilde *x)
 {
     int nval;
     int range = 2000000;
-	float rnd;
+	t_float rnd;
 	unsigned int randval = x->x_state;
 	x->x_state = randval = randval * 472940017 + 832416023;
     nval = ((double)range) * ((double)randval)

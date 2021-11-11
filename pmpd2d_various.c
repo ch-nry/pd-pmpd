@@ -301,10 +301,10 @@ void pmpd2d_grabMass(t_pmpd2d *x, t_float posX, t_float posY, t_float grab)
     {
         x->grab=1;
         x->grab_nb= 0;
-        dist = sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY);
+        dist = pmpd2d_sqr(x->mass[0].posX - posX) + pmpd2d_sqr(x->mass[0].posY - posY);
         for (i=1; i<x->nb_mass; i++)
         {
-            tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY);
+            tmp = pmpd2d_sqr(x->mass[i].posX - posX) + pmpd2d_sqr(x->mass[i].posY - posY);
             if (tmp < dist)
             {
                 dist = tmp;
@@ -333,12 +333,12 @@ void pmpd2d_closestMass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)// t_fl
         //t_symbol *mass_name = atom_getsymbolarg(2, argc, argv);
         if ((x->nb_mass > 0))
         {
-            dist = 1000000000;//sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY);
+            dist = 1000000000;//pmpd2d_sqr(x->mass[0].posX - posX) + pmpd2d_sqr(x->mass[0].posY - posY);
             for (i=0; i<x->nb_mass; i++)
             {
                 if (atom_getsymbolarg(2,argc,argv) == x->mass[i].Id)
                 {
-                    tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY);
+                    tmp = pmpd2d_sqr(x->mass[i].posX - posX) + pmpd2d_sqr(x->mass[i].posY - posY);
                     if (tmp < dist)
                     {
                         dist = tmp;
@@ -352,10 +352,10 @@ void pmpd2d_closestMass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)// t_fl
         if ((x->nb_mass > 0))
         {
             x->grab_nb= 0;
-            dist = sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY);
+            dist = pmpd2d_sqr(x->mass[0].posX - posX) + pmpd2d_sqr(x->mass[0].posY - posY);
             for (i=1; i<x->nb_mass; i++)
             {
-                tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY);
+                tmp = pmpd2d_sqr(x->mass[i].posX - posX) + pmpd2d_sqr(x->mass[i].posY - posY);
                 if (tmp < dist)
                 {
                     dist = tmp;
@@ -380,7 +380,7 @@ void pmpd2d_massDistances_f_f(t_pmpd2d *x, t_int i, t_int j)
 
 	dx = x->mass[i].posX - x->mass[j].posX;
 	dy = x->mass[i].posY - x->mass[j].posY;
-	dist = sqr(dx) + sqr(dy);
+	dist = pmpd2d_sqr(dx) + pmpd2d_sqr(dy);
 	dist = sqrt(dist);
 
 	SETFLOAT(&(to_out[0]), i);
@@ -388,7 +388,7 @@ void pmpd2d_massDistances_f_f(t_pmpd2d *x, t_int i, t_int j)
 	SETFLOAT(&(to_out[2]), dx);
 	SETFLOAT(&(to_out[3]), dy);
 	SETFLOAT(&(to_out[4]), dist);
-	outlet_anything(x->main_outlet, gensym("distance"), 5, to_out);
+	outlet_anything(x->main_outlet, gensym("pmpd2d_distance"), 5, to_out);
 }
 
 void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
@@ -467,7 +467,7 @@ void pmpd2d_massDistances(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
-int bulle_order(t_int *listIndex, t_float *listDistance, t_int index)
+inline int pmpd2d_bulle_order(t_int *listIndex, t_float *listDistance, t_int index)
 {
     t_int tmpI;
     t_float tmpD;
@@ -491,7 +491,7 @@ void pmpd2d_closestMassN(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	t_int i, j, nbout, list_index[x->nb_mass];
     t_float list_distance[x->nb_mass];
 	t_atom std_out[x->nb_mass * 2];
-	t_float posX, posY, posZ;
+	t_float posX, posY;
 
 	if ( (argc >= 1)  && (argv[0].a_type == A_FLOAT) )
         nbout = atom_getfloatarg(0, argc, argv);
@@ -522,13 +522,13 @@ void pmpd2d_closestMassN(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(3,argc,argv) == x->mass[i].Id)
             {
-                dist = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY);
+                dist = pmpd2d_sqr(x->mass[i].posX - posX) + pmpd2d_sqr(x->mass[i].posY - posY);
                 if (dist < list_distance[0]) // cette mass doit rentrer dans la liste
                 {
                     list_index[0] = i;
                     list_distance[0] = dist;
                     j = 0;
-                    while ( (j < nbout-1) && bulle_order(list_index, list_distance, j) ) // on reordone la liste
+                    while ( (j < nbout-1) && pmpd2d_bulle_order(list_index, list_distance, j) ) // on reordone la liste
                     {
                         j++;
                     }
@@ -541,26 +541,26 @@ void pmpd2d_closestMassN(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         for (i=0; i < nbout; i++) // on remplie avec les premiere données disponible
         {
             list_index[i] = i;
-            list_distance[i] = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) ;
+            list_distance[i] = pmpd2d_sqr(x->mass[i].posX - posX) + pmpd2d_sqr(x->mass[i].posY - posY) ;
         }
     
         for (i=1; i < nbout; i++) // trie a bulle pour ordoner cela
         {
             for (j=0; j < nbout-i; j++)
             {
-                bulle_order(list_index, list_distance, j);
+                pmpd2d_bulle_order(list_index, list_distance, j);
             } 
         }
       
         for (i = nbout; i< x->nb_mass; i++) // on test le reste des masses
         {
-            dist = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY);
+            dist = pmpd2d_sqr(x->mass[i].posX - posX) + pmpd2d_sqr(x->mass[i].posY - posY);
             if (dist < list_distance[0]) // cette mass doit rentrer dans la liste
             {
                 list_index[0] = i;
                 list_distance[0] = dist;
                 j = 0;
-                while ( (j < nbout-1) && bulle_order(list_index, list_distance, j) ) // on reordone la liste
+                while ( (j < nbout-1) && pmpd2d_bulle_order(list_index, list_distance, j) ) // on reordone la liste
                 {
                     j++;
                 }

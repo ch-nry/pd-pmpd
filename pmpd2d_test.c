@@ -1,4 +1,4 @@
-int test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
+int pmpd2d_test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 {
 // TODO : check arg number and type befor using them
 
@@ -64,24 +64,24 @@ int test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedSup") )
 			{
-				if ( sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)) < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				if ( sqrt(pmpd2d_sqr(x->mass[i].speedX)+pmpd2d_sqr(x->mass[i].speedY)) < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+= 2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedInf") )
 			{
-				if ( sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)) >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				if ( sqrt(pmpd2d_sqr(x->mass[i].speedX)+pmpd2d_sqr(x->mass[i].speedY)) >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCircleInf"))
 			{ 
-				tmp = sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv));
-				if ( tmp >= sqr(atom_getfloatarg(j+3,argc,argv)) ) { return(0); }
+				tmp = pmpd2d_sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+pmpd2d_sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv));
+				if ( tmp >= pmpd2d_sqr(atom_getfloatarg(j+3,argc,argv)) ) { return(0); }
 				j += 5;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCircleSup"))
 			{ 
-				tmp = sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv));
-				if ( tmp < sqr(atom_getfloatarg(j+3,argc,argv)) ) { return(0); }
+				tmp = pmpd2d_sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+pmpd2d_sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv));
+				if ( tmp < pmpd2d_sqr(atom_getfloatarg(j+3,argc,argv)) ) { return(0); }
 				j += 5;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("massSup"))
@@ -96,13 +96,13 @@ int test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceSup") )
 			{
-				tmp  = sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) ;
+				tmp  = pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY) ;
 				if ( ( tmp < atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+= 2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceInf") )
 			{
-				tmp  = sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) ;
+				tmp  = pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY) ;
 				if ( ( tmp >= atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+= 2;
 			}
@@ -206,7 +206,7 @@ int test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 	return(1);	
 }
 
-int test_2d_link(int i, t_pmpd2d *x, int argc, t_atom *argv)
+int pmpd2d_test_2d_link(int i, t_pmpd2d *x, int argc, t_atom *argv)
 {
 	t_int j;
 	t_float tmp, tmp2;
@@ -257,15 +257,15 @@ int test_2d_link(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceSup") )
 			{
-				tmp = sqr(x->link[i].forceX) + sqr(x->link[i].forceY);
-				tmp2 = sqr(atom_getfloatarg(j+1,argc,argv));		
+				tmp = pmpd2d_sqr(x->link[i].forceX) + pmpd2d_sqr(x->link[i].forceY);
+				tmp2 = pmpd2d_sqr(atom_getfloatarg(j+1,argc,argv));		
 				if ( tmp < tmp2 ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceInf") )
 			{
-				tmp = sqr(x->link[i].forceX) + sqr(x->link[i].forceY);
-				tmp2 = sqr(atom_getfloatarg(j+1,argc,argv));
+				tmp = pmpd2d_sqr(x->link[i].forceX) + pmpd2d_sqr(x->link[i].forceY);
+				tmp2 = pmpd2d_sqr(atom_getfloatarg(j+1,argc,argv));
 				if ( tmp >= tmp2 ) { return(0); }
 				j+=2;
 			}
@@ -349,7 +349,7 @@ void pmpd2d_testLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 	for (i=x->nb_link-1; i >= 0; i--)
 	{
-		tmp=test_2d_link(i,x,argc,argv);
+		tmp=pmpd2d_test_2d_link(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;
@@ -371,7 +371,7 @@ void pmpd2d_testMass(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 	for (i=x->nb_mass-1; i >= 0; i--)
 	{
-		tmp=test_2d_mass(i,x,argc,argv);
+		tmp=pmpd2d_test_2d_mass(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;
@@ -404,7 +404,7 @@ void pmpd2d_testLinkT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             
             for (i=0; i < taille_max; i++)
             {
-				tmp = test_2d_link(i,x,argc,argv);
+				tmp = pmpd2d_test_2d_link(i,x,argc,argv);
 				if (tmp == -1)
 				{	
 					break;
@@ -436,7 +436,7 @@ void pmpd2d_testMassT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             
             for (i=0; i < taille_max; i++)
             {
-				tmp = test_2d_mass(i,x,argc,argv);
+				tmp = pmpd2d_test_2d_mass(i,x,argc,argv);
 				if (tmp == -1)
 				{
 					break;
@@ -455,7 +455,7 @@ void pmpd2d_testLinkL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
     for (i=0; i < x->nb_link;)
 	{
-		tmp=test_2d_link(i,x,argc,argv);
+		tmp=pmpd2d_test_2d_link(i,x,argc,argv);
 		if (tmp == -1)
 		{
 			break;
@@ -474,7 +474,7 @@ void pmpd2d_testMassL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
     for (i=0; i < x->nb_mass;)
 	{		
-		tmp=test_2d_mass(i,x,argc,argv);
+		tmp=pmpd2d_test_2d_mass(i,x,argc,argv);
 		if (tmp == -1)
 		{
 			break;
@@ -497,7 +497,7 @@ void pmpd2d_testLinkN(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     i = max(0,i);
     SETFLOAT(&(std_out[1]),i);
 
-    tmp=test_2d_link(i,x,argc,argv);
+    tmp=pmpd2d_test_2d_link(i,x,argc,argv);
     if (tmp == -1)
     {	
         return;
@@ -521,7 +521,7 @@ void pmpd2d_testMassN(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     i = max(0,i);
     SETFLOAT(&(std_out[1]),i);
 
-    tmp=test_2d_mass(i,x,argc,argv);
+    tmp=pmpd2d_test_2d_mass(i,x,argc,argv);
     if (tmp == -1)
     {	
         return;
@@ -544,7 +544,7 @@ void pmpd2d_testLinkNumber(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     nb=0;
 	for (i=0; i < x->nb_link; i++)
 	{
-		tmp=test_2d_link(i,x,argc,argv);
+		tmp=pmpd2d_test_2d_link(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;
@@ -568,7 +568,7 @@ void pmpd2d_testMassNumber(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     nb = 0;
 	for (i=0; i < x->nb_mass; i++)
 	{
-		tmp=test_2d_mass(i,x,argc,argv);
+		tmp=pmpd2d_test_2d_mass(i,x,argc,argv);
 		if (tmp == -1)
 		{	
 			break;

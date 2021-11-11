@@ -388,10 +388,10 @@ void pmpd3d_grabMass(t_pmpd3d *x, t_float posX, t_float posY, t_float posZ, t_fl
 	{
 		x->grab=1;
 		x->grab_nb= 0;
-		dist = sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY) + sqr(x->mass[0].posZ - posZ);
+		dist = pmpd3d_sqr(x->mass[0].posX - posX) + pmpd3d_sqr(x->mass[0].posY - posY) + pmpd3d_sqr(x->mass[0].posZ - posZ);
 		for (i=1; i<x->nb_mass; i++)
 		{
-			tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) + sqr(x->mass[i].posZ - posZ);
+			tmp = pmpd3d_sqr(x->mass[i].posX - posX) + pmpd3d_sqr(x->mass[i].posY - posY) + pmpd3d_sqr(x->mass[i].posZ - posZ);
 			if (tmp < dist)
 			{
 				dist = tmp;
@@ -422,12 +422,12 @@ void pmpd3d_closestMass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		//t_symbol *mass_name = atom_getsymbolarg(2, argc, argv);
 		if ((x->nb_mass > 0))
 		{
-			dist = 1000000000;//sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY);
+			dist = 1000000000;//pmpd3d_sqr(x->mass[0].posX - posX) + pmpd3d_sqr(x->mass[0].posY - posY);
 			for (i=0; i<x->nb_mass; i++)
 			{
 				if (atom_getsymbolarg(3,argc,argv) == x->mass[i].Id)
 				{
-					tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) + sqr(x->mass[i].posZ - posZ);
+					tmp = pmpd3d_sqr(x->mass[i].posX - posX) + pmpd3d_sqr(x->mass[i].posY - posY) + pmpd3d_sqr(x->mass[i].posZ - posZ);
 					if (tmp < dist)
 					{
 						dist = tmp;
@@ -441,10 +441,10 @@ void pmpd3d_closestMass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		if ((x->nb_mass > 0))
 		{
 			x->grab_nb= 0;
-			dist = sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY) + sqr(x->mass[0].posZ - posZ);
+			dist = pmpd3d_sqr(x->mass[0].posX - posX) + pmpd3d_sqr(x->mass[0].posY - posY) + pmpd3d_sqr(x->mass[0].posZ - posZ);
 			for (i=1; i<x->nb_mass; i++)
 			{
-				tmp = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) + sqr(x->mass[i].posZ - posZ);
+				tmp = pmpd3d_sqr(x->mass[i].posX - posX) + pmpd3d_sqr(x->mass[i].posY - posY) + pmpd3d_sqr(x->mass[i].posZ - posZ);
 				if (tmp < dist)
 				{
 					dist = tmp;
@@ -470,7 +470,7 @@ void pmpd3d_massDistances_f_f(t_pmpd3d *x, t_int i, t_int j)
 	dx = x->mass[i].posX - x->mass[j].posX;
 	dy = x->mass[i].posY - x->mass[j].posY;
 	dz = x->mass[i].posZ - x->mass[j].posZ;
-	dist = sqr(dx) + sqr(dy) + sqr(dz);
+	dist = pmpd3d_sqr(dx) + pmpd3d_sqr(dy) + pmpd3d_sqr(dz);
 	dist = sqrt(dist);
 
 	SETFLOAT(&(to_out[0]), i);
@@ -558,7 +558,7 @@ void pmpd3d_massDistances(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
-int bulle_order(t_int *listIndex, t_float *listDistance, t_int index)
+inline int pmpd3d_bulle_order(t_int *listIndex, t_float *listDistance, t_int index)
 {
     t_int tmpI;
     t_float tmpD;
@@ -609,26 +609,26 @@ void pmpd3d_closestMassN(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     for (i=0; i < nbout; i++) // on remplie avec les premiere données disponible
     {
         list_index[i] = i;
-        list_distance[i] = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) + sqr(x->mass[i].posZ - posZ);
+        list_distance[i] = pmpd3d_sqr(x->mass[i].posX - posX) + pmpd3d_sqr(x->mass[i].posY - posY) + pmpd3d_sqr(x->mass[i].posZ - posZ);
     }
 
     for (i=1; i < nbout; i++) //trie a bulle pour ordoner cela
     {
         for (j=0; j < nbout-i; j++)
         {
-            bulle_order(list_index, list_distance, j);
+            pmpd3d_bulle_order(list_index, list_distance, j);
         } 
     }
   
     for (i = nbout; i< x->nb_mass; i++) // on test le reste des masses
     {
-        dist = sqr(x->mass[i].posX - posX) + sqr(x->mass[i].posY - posY) + sqr(x->mass[i].posZ - posZ);
+        dist = pmpd3d_sqr(x->mass[i].posX - posX) + pmpd3d_sqr(x->mass[i].posY - posY) + pmpd3d_sqr(x->mass[i].posZ - posZ);
         if (dist < list_distance[0]) // cette mass doit rentrer dans la liste
         {
             list_index[0] = i;
             list_distance[0] = dist;
             j = 0;
-            while ( (j<nbout-1) && bulle_order(list_index, list_distance, j) ) // on reordone la liste
+            while ( (j<nbout-1) && pmpd3d_bulle_order(list_index, list_distance, j) ) // on reordone la liste
             {
                 j++;
             }

@@ -116,7 +116,7 @@ void pmpd2d_massesPosNormL(t_pmpd2d *x)
 
     for (i=0; i < x->nb_mass; i++)
     {
-        SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].posX)+sqr(x->mass[i].posY)));
+        SETFLOAT(&(pos_list[i]),sqrt(pmpd2d_sqr(x->mass[i].posX)+pmpd2d_sqr(x->mass[i].posY)));
     }
     outlet_anything(x->main_outlet, gensym("massesPosNormL"),x->nb_mass , pos_list);
 }
@@ -128,7 +128,7 @@ void pmpd2d_massesForcesNormL(t_pmpd2d *x)
 
     for (i=0; i< x->nb_mass; i++)
     {
-        SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].forceX)+sqr(x->mass[i].forceY)));
+        SETFLOAT(&(pos_list[i]),sqrt(pmpd2d_sqr(x->mass[i].forceX)+pmpd2d_sqr(x->mass[i].forceY)));
     }
     outlet_anything(x->main_outlet, gensym("massesForcesNormL"),x->nb_mass , pos_list);
 }
@@ -140,7 +140,7 @@ void pmpd2d_massesSpeedsNormL(t_pmpd2d *x)
 
     for (i=0; i< x->nb_mass; i++)
     {
-        SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)));
+        SETFLOAT(&(pos_list[i]),sqrt(pmpd2d_sqr(x->mass[i].speedX)+pmpd2d_sqr(x->mass[i].speedY)));
     }
     outlet_anything(x->main_outlet, gensym("massesSpeedsNormL"),x->nb_mass , pos_list);
 }
@@ -164,7 +164,7 @@ void pmpd2d_massesPosMean(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             { 
                 sommeX += x->mass[i].posX;
                 sommeY += x->mass[i].posY;
-                somme +=  sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY)); // distance au centre
+                somme +=  sqrt(pmpd2d_sqr(x->mass[i].posX) + pmpd2d_sqr(x->mass[i].posY)); // pmpd2d_distance au centre
                 j++;
             }
         }
@@ -175,7 +175,7 @@ void pmpd2d_massesPosMean(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
                 sommeX += x->mass[i].posX;
                 sommeY += x->mass[i].posY;
-                somme +=  sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY)); // distance au centre
+                somme +=  sqrt(pmpd2d_sqr(x->mass[i].posX) + pmpd2d_sqr(x->mass[i].posY)); // pmpd2d_distance au centre
                 j++;
         }
     }    
@@ -214,7 +214,7 @@ void pmpd2d_massesPosStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             { 
                 sommeX += x->mass[i].posX;
                 sommeY += x->mass[i].posY;
-                somme +=  sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY)); // distance au centre
+                somme +=  sqrt(pmpd2d_sqr(x->mass[i].posX) + pmpd2d_sqr(x->mass[i].posY)); // pmpd2d_distance au centre
                 j++;
             }
         }
@@ -225,9 +225,9 @@ void pmpd2d_massesPosStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
             { 
-                stdX += sqr(x->mass[i].posX-sommeX);
-                stdY += sqr(x->mass[i].posY-sommeY);
-                std  +=  sqr(sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY))-somme);
+                stdX += pmpd2d_sqr(x->mass[i].posX-sommeX);
+                stdY += pmpd2d_sqr(x->mass[i].posY-sommeY);
+                std  +=  pmpd2d_sqr(sqrt(pmpd2d_sqr(x->mass[i].posX) + pmpd2d_sqr(x->mass[i].posY))-somme);
             }
         }        
     }
@@ -237,7 +237,7 @@ void pmpd2d_massesPosStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             sommeX += x->mass[i].posX;
             sommeY += x->mass[i].posY;
-            somme +=  sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY)); // distance au centre
+            somme +=  sqrt(pmpd2d_sqr(x->mass[i].posX) + pmpd2d_sqr(x->mass[i].posY)); // pmpd2d_distance au centre
             j++;
         }
         sommeX /= j;
@@ -245,9 +245,9 @@ void pmpd2d_massesPosStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         somme /= j;
         for (i=0; i< x->nb_mass; i++)
         {
-            stdX += sqr(x->mass[i].posX-sommeX);
-            stdY += sqr(x->mass[i].posY-sommeY);
-            std  += sqr(sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY))-somme);
+            stdX += pmpd2d_sqr(x->mass[i].posX-sommeX);
+            stdY += pmpd2d_sqr(x->mass[i].posY-sommeY);
+            std  += pmpd2d_sqr(sqrt(pmpd2d_sqr(x->mass[i].posX) + pmpd2d_sqr(x->mass[i].posY))-somme);
         }
     }    
     
@@ -281,7 +281,7 @@ void pmpd2d_massesForcesMean(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             { 
                 sommeX += x->mass[i].forceX;
                 sommeY += x->mass[i].forceY;
-                somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY)); // distance au centre
+                somme +=  sqrt(pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY)); // pmpd2d_distance au centre
                 j++;
             }
         }
@@ -292,7 +292,7 @@ void pmpd2d_massesForcesMean(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
                 sommeX += x->mass[i].forceX;
                 sommeY += x->mass[i].forceY;
-                somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY)); // distance au centre
+                somme +=  sqrt(pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY)); // pmpd2d_distance au centre
                 j++;
         }
     }    
@@ -331,7 +331,7 @@ void pmpd2d_massesForcesStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             { 
                 sommeX += x->mass[i].forceX;
                 sommeY += x->mass[i].forceY;
-                somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY)); // distance au centre
+                somme +=  sqrt(pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY)); // pmpd2d_distance au centre
                 j++;
             }
         }
@@ -342,9 +342,9 @@ void pmpd2d_massesForcesStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
             { 
-                stdX += sqr(x->mass[i].forceX-sommeX);
-                stdY += sqr(x->mass[i].forceY-sommeY);
-                std  +=  sqr(sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY))-somme);
+                stdX += pmpd2d_sqr(x->mass[i].forceX-sommeX);
+                stdY += pmpd2d_sqr(x->mass[i].forceY-sommeY);
+                std  +=  pmpd2d_sqr(sqrt(pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY))-somme);
             }
         }        
     }
@@ -354,7 +354,7 @@ void pmpd2d_massesForcesStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             sommeX += x->mass[i].forceX;
             sommeY += x->mass[i].forceY;
-            somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY)); // distance au centre
+            somme +=  sqrt(pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY)); // pmpd2d_distance au centre
             j++;
         }
         sommeX /= j;
@@ -362,9 +362,9 @@ void pmpd2d_massesForcesStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         somme /= j;
         for (i=0; i< x->nb_mass; i++)
         {
-            stdX += sqr(x->mass[i].forceX-sommeX);
-            stdY += sqr(x->mass[i].forceY-sommeY);
-            std  += sqr(sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY))-somme);
+            stdX += pmpd2d_sqr(x->mass[i].forceX-sommeX);
+            stdY += pmpd2d_sqr(x->mass[i].forceY-sommeY);
+            std  += pmpd2d_sqr(sqrt(pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY))-somme);
         }
     }    
     
@@ -398,7 +398,7 @@ void pmpd2d_massesSpeedsMean(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             { 
                 sommeX += x->mass[i].speedX;
                 sommeY += x->mass[i].speedY;
-                somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY)); // distance au centre
+                somme +=  sqrt(pmpd2d_sqr(x->mass[i].speedX) + pmpd2d_sqr(x->mass[i].speedY)); // pmpd2d_distance au centre
                 j++;
             }
         }
@@ -409,7 +409,7 @@ void pmpd2d_massesSpeedsMean(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
                 sommeX += x->mass[i].speedX;
                 sommeY += x->mass[i].speedY;
-                somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY)); // distance au centre
+                somme +=  sqrt(pmpd2d_sqr(x->mass[i].speedX) + pmpd2d_sqr(x->mass[i].speedY)); // pmpd2d_distance au centre
                 j++;
         }
     }    
@@ -448,7 +448,7 @@ void pmpd2d_massesSpeedsStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             { 
                 sommeX += x->mass[i].speedX;
                 sommeY += x->mass[i].speedY;
-                somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY)); // distance au centre
+                somme +=  sqrt(pmpd2d_sqr(x->mass[i].speedX) + pmpd2d_sqr(x->mass[i].speedY)); // pmpd2d_distance au centre
                 j++;
             }
         }
@@ -459,9 +459,9 @@ void pmpd2d_massesSpeedsStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
             { 
-                stdX += sqr(x->mass[i].speedX-sommeX);
-                stdY += sqr(x->mass[i].speedY-sommeY);
-                std  +=  sqr(sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY))-somme);
+                stdX += pmpd2d_sqr(x->mass[i].speedX-sommeX);
+                stdY += pmpd2d_sqr(x->mass[i].speedY-sommeY);
+                std  +=  pmpd2d_sqr(sqrt(pmpd2d_sqr(x->mass[i].speedX) + pmpd2d_sqr(x->mass[i].speedY))-somme);
             }
         }        
     }
@@ -471,7 +471,7 @@ void pmpd2d_massesSpeedsStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             sommeX += x->mass[i].speedX;
             sommeY += x->mass[i].speedY;
-            somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY)); // distance au centre
+            somme +=  sqrt(pmpd2d_sqr(x->mass[i].speedX) + pmpd2d_sqr(x->mass[i].speedY)); // pmpd2d_distance au centre
             j++;
         }
         sommeX /= j;
@@ -479,9 +479,9 @@ void pmpd2d_massesSpeedsStd(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         somme /= j;
         for (i=0; i< x->nb_mass; i++)
         {
-            stdX += sqr(x->mass[i].speedX-sommeX);
-            stdY += sqr(x->mass[i].speedY-sommeY);
-            std  += sqr(sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY))-somme);
+            stdX += pmpd2d_sqr(x->mass[i].speedX-sommeX);
+            stdY += pmpd2d_sqr(x->mass[i].speedY-sommeY);
+            std  += pmpd2d_sqr(sqrt(pmpd2d_sqr(x->mass[i].speedX) + pmpd2d_sqr(x->mass[i].speedY))-somme);
         }
     }    
     
@@ -654,8 +654,8 @@ void pmpd2d_linksPosNormL(t_pmpd2d *x)
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),sqrt( \
-                            sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + \
-                            sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) ));
+                            pmpd2d_sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + \
+                            pmpd2d_sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) ));
     }
     outlet_anything(x->main_outlet, gensym("linksPosNormL"),x->nb_link , pos_list);
 }
@@ -668,8 +668,8 @@ void pmpd2d_linksLengthNormL(t_pmpd2d *x)
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),sqrt( \
-                            sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
-                            sqr(x->link[i].mass2->posY - x->link[i].mass1->posY)  ));
+                            pmpd2d_sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
+                            pmpd2d_sqr(x->link[i].mass2->posY - x->link[i].mass1->posY)  ));
     }
     outlet_anything(x->main_outlet, gensym("linksLengthNormL"),x->nb_link , pos_list);
 }
@@ -682,8 +682,8 @@ void pmpd2d_linksPosSpeedNormL(t_pmpd2d *x)
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),sqrt( \
-                            sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
-                            sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2)  ));
+                            pmpd2d_sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
+                            pmpd2d_sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2)  ));
     }
     outlet_anything(x->main_outlet, gensym("linksPosSpeedNormL"),x->nb_link , pos_list);
 }
@@ -696,8 +696,8 @@ void pmpd2d_linksLengthSpeedNormL(t_pmpd2d *x)
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),sqrt( \
-                            sqr(x->link[i].mass2->speedX - x->link[i].mass1->speedX) + \
-                            sqr(x->link[i].mass2->speedY - x->link[i].mass1->speedY) ));
+                            pmpd2d_sqr(x->link[i].mass2->speedX - x->link[i].mass1->speedX) + \
+                            pmpd2d_sqr(x->link[i].mass2->speedY - x->link[i].mass1->speedY) ));
     }
     outlet_anything(x->main_outlet, gensym("linksLengthSpeedNormL"),x->nb_link , pos_list);
 }

@@ -477,7 +477,7 @@ void pmpd2d_massesPosNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             taille_max = min(taille_max, vecsize);
             for (i=0; i < taille_max ; i++)
             {
-                vec[i].w_float = sqrt(sqr(x->mass[i].posX)+sqr(x->mass[i].posY));
+                vec[i].w_float = sqrt(pmpd2d_sqr(x->mass[i].posX)+pmpd2d_sqr(x->mass[i].posY));
             }
             garray_redraw(a);
         }
@@ -498,7 +498,7 @@ void pmpd2d_massesPosNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
                 {
-                    vec[i].w_float = sqrt(sqr(x->mass[j].posX)+sqr(x->mass[j].posY));
+                    vec[i].w_float = sqrt(pmpd2d_sqr(x->mass[j].posX)+pmpd2d_sqr(x->mass[j].posY));
                     i++;
                 }
                 j++;
@@ -528,7 +528,7 @@ void pmpd2d_massesSpeedsNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             taille_max = min(taille_max, vecsize);
             for (i=0; i < taille_max ; i++)
             {
-                vec[i].w_float = sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY));
+                vec[i].w_float = sqrt(pmpd2d_sqr(x->mass[i].speedX)+pmpd2d_sqr(x->mass[i].speedY));
             }
             garray_redraw(a);
         }
@@ -549,7 +549,7 @@ void pmpd2d_massesSpeedsNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
                 {
-                    vec[i].w_float = sqrt(sqr(x->mass[j].speedX)+sqr(x->mass[j].speedY));
+                    vec[i].w_float = sqrt(pmpd2d_sqr(x->mass[j].speedX)+pmpd2d_sqr(x->mass[j].speedY));
                     i++;
                 }
                 j++;
@@ -578,7 +578,7 @@ void pmpd2d_massesForcesNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             taille_max = min(taille_max, vecsize);
             for (i=0; i < taille_max ; i++)
             {
-                vec[i].w_float = sqrt(sqr(x->mass[i].forceX)+sqr(x->mass[i].forceY));
+                vec[i].w_float = sqrt(pmpd2d_sqr(x->mass[i].forceX)+pmpd2d_sqr(x->mass[i].forceY));
             }
             garray_redraw(a);
         }
@@ -599,7 +599,7 @@ void pmpd2d_massesForcesNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if (atom_getsymbolarg(1,argc,argv) == x->mass[j].Id)
                 {
-                    vec[i].w_float = sqrt(sqr(x->mass[j].forceX)+sqr(x->mass[j].forceY));
+                    vec[i].w_float = sqrt(pmpd2d_sqr(x->mass[j].forceX)+pmpd2d_sqr(x->mass[j].forceY));
                     i++;
                 }
                 j++;
@@ -1244,8 +1244,8 @@ void pmpd2d_linksPosNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             for (i=0; i < taille_max ; i++)
             {
                 vec[i].w_float = sqrt( \
-                            sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + \
-                            sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) );
+                            pmpd2d_sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + \
+                            pmpd2d_sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) );
             }
             garray_redraw(a);
         }
@@ -1267,8 +1267,8 @@ void pmpd2d_linksPosNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
                 if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
                 {
                     vec[j].w_float = sqrt( \
-                            sqr((x->link[j].mass1->posX + x->link[j].mass2->posX)/2) + \
-                            sqr((x->link[j].mass1->posY + x->link[j].mass2->posY)/2) );
+                            pmpd2d_sqr((x->link[j].mass1->posX + x->link[j].mass2->posX)/2) + \
+                            pmpd2d_sqr((x->link[j].mass1->posY + x->link[j].mass2->posY)/2) );
                     i++;
                 }
                 j++;
@@ -1298,8 +1298,8 @@ void pmpd2d_linksLengthNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             for (i=0; i < taille_max ; i++)
             {
                 vec[i].w_float = sqrt( \
-                            sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
-                            sqr(x->link[i].mass2->posY - x->link[i].mass1->posY) );
+                            pmpd2d_sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
+                            pmpd2d_sqr(x->link[i].mass2->posY - x->link[i].mass1->posY) );
             }
             garray_redraw(a);
         }
@@ -1321,8 +1321,8 @@ void pmpd2d_linksLengthNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
                 if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
                 {
                     vec[i].w_float = sqrt( \
-                            sqr(x->link[j].mass2->posX - x->link[j].mass1->posX) + \
-                            sqr(x->link[j].mass2->posY - x->link[j].mass1->posY) );
+                            pmpd2d_sqr(x->link[j].mass2->posX - x->link[j].mass1->posX) + \
+                            pmpd2d_sqr(x->link[j].mass2->posY - x->link[j].mass1->posY) );
                     i++;
                 }
                 j++;
@@ -1352,8 +1352,8 @@ void pmpd2d_linksPosSpeedNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             for (i=0; i < taille_max ; i++)
             {
                 vec[i].w_float = sqrt( \
-                            sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
-                            sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) );
+                            pmpd2d_sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
+                            pmpd2d_sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) );
             }
             garray_redraw(a);
         }
@@ -1375,8 +1375,8 @@ void pmpd2d_linksPosSpeedNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
                 if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
                 {
                     vec[i].w_float = sqrt( \
-                            sqr((x->link[j].mass1->speedX + x->link[j].mass2->speedX)/2) + \
-                            sqr((x->link[j].mass1->speedY + x->link[j].mass2->speedY)/2) );
+                            pmpd2d_sqr((x->link[j].mass1->speedX + x->link[j].mass2->speedX)/2) + \
+                            pmpd2d_sqr((x->link[j].mass1->speedY + x->link[j].mass2->speedY)/2) );
                     i++;
                 }
                 j++;
@@ -1406,8 +1406,8 @@ void pmpd2d_linksLengthSpeedNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *ar
             for (i=0; i < taille_max ; i++)
             {
                 vec[i].w_float = sqrt( \
-                            sqr(x->link[i].mass2->speedX - x->link[i].mass1->speedX) + \
-                            sqr(x->link[i].mass2->speedY - x->link[i].mass1->speedY) );
+                            pmpd2d_sqr(x->link[i].mass2->speedX - x->link[i].mass1->speedX) + \
+                            pmpd2d_sqr(x->link[i].mass2->speedY - x->link[i].mass1->speedY) );
             }
             garray_redraw(a);
         }
@@ -1429,8 +1429,8 @@ void pmpd2d_linksLengthSpeedNormT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *ar
                 if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
                 {
                     vec[i].w_float = sqrt( \
-                            sqr(x->link[j].mass2->speedX - x->link[j].mass1->speedX) + \
-                            sqr(x->link[j].mass2->speedY - x->link[j].mass1->speedY) );
+                            pmpd2d_sqr(x->link[j].mass2->speedX - x->link[j].mass1->speedX) + \
+                            pmpd2d_sqr(x->link[j].mass2->speedY - x->link[j].mass1->speedY) );
                     i++;
                 }
                 j++;
@@ -1936,7 +1936,7 @@ void pmpd2d_linkEndNormeForce(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             taille_max = min(taille_max, vecsize/2 );
             for (i=0; i < taille_max ; i++)
             {
-                tmp = sqrt(sqr(x->link[i].forceX) + sqr(x->link[i].forceY));
+                tmp = sqrt(pmpd2d_sqr(x->link[i].forceX) + pmpd2d_sqr(x->link[i].forceY));
                 vec[2*i  ].w_float = -tmp;
                 vec[2*i+1].w_float = tmp;
             }
@@ -1959,7 +1959,7 @@ void pmpd2d_linkEndNormeForce(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             {
                 if (atom_getsymbolarg(1,argc,argv) == x->link[j].Id)
                 {
-                    tmp = sqrt(sqr(x->link[j].forceX) + sqr(x->link[j].forceY));
+                    tmp = sqrt(pmpd2d_sqr(x->link[j].forceX) + pmpd2d_sqr(x->link[j].forceY));
                     vec[i].w_float = -tmp;
                     i++;
                     vec[i].w_float = tmp;

@@ -58,7 +58,7 @@ void pmpd_massPosStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
             { 
-                stdX += sqr(x->mass[i].posX-sommeX);
+                stdX += pmpd_sqr(x->mass[i].posX-sommeX);
             }
         }        
     }
@@ -72,7 +72,7 @@ void pmpd_massPosStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         sommeX /= j;
         for (i=0; i< x->nb_mass; i++)
         {
-            stdX += sqr(x->mass[i].posX-sommeX);
+            stdX += pmpd_sqr(x->mass[i].posX-sommeX);
         }
     }    
     
@@ -141,7 +141,7 @@ void pmpd_massForceStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
             { 
-                stdX += sqr(x->mass[i].forceX-sommeX);
+                stdX += pmpd_sqr(x->mass[i].forceX-sommeX);
             }
         }        
     }
@@ -155,7 +155,7 @@ void pmpd_massForceStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         sommeX /= j;
         for (i=0; i< x->nb_mass; i++)
         {
-            stdX += sqr(x->mass[i].forceX-sommeX);
+            stdX += pmpd_sqr(x->mass[i].forceX-sommeX);
         }
     }    
     
@@ -228,7 +228,7 @@ void pmpd_massSpeedStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
             { 
-                stdX += sqr(x->mass[i].speedX-sommeX);
+                stdX += pmpd_sqr(x->mass[i].speedX-sommeX);
             }
         }        
     }
@@ -242,7 +242,7 @@ void pmpd_massSpeedStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         sommeX /= j;
         for (i=0; i< x->nb_mass; i++)
         {
-            stdX += sqr(x->mass[i].speedX-sommeX);
+            stdX += pmpd_sqr(x->mass[i].speedX-sommeX);
         }
     }    
     
@@ -452,7 +452,7 @@ void pmpd_linkPosStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             { 
-                stdX += sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2 - sommeX);
+                stdX += pmpd_sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2 - sommeX);
                 j+=1;
             }
         }
@@ -461,7 +461,7 @@ void pmpd_linkPosStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     {
         for (i=0; i< x->nb_link; i++)
         {
-            stdX += sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2 - sommeX);
+            stdX += pmpd_sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2 - sommeX);
             j+=1;
         }
     }        
@@ -522,8 +522,8 @@ void pmpd_linkLengthStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             { 
-                stdX += sqr((x->link[i].mass1->posX - x->link[i].mass2->posX)-sommeX);
-                std  += sqr(x->link[i].distance - somme);
+                stdX += pmpd_sqr((x->link[i].mass1->posX - x->link[i].mass2->posX)-sommeX);
+                std  += pmpd_sqr(x->link[i].distance - somme);
                 j+=1;
             }
         }
@@ -532,8 +532,8 @@ void pmpd_linkLengthStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     {
         for (i=0; i< x->nb_link; i++)
         {
-            stdX += sqr((x->link[i].mass1->posX - x->link[i].mass2->posX) - sommeX);
-            std  += sqr(x->link[i].distance - somme);
+            stdX += pmpd_sqr((x->link[i].mass1->posX - x->link[i].mass2->posX) - sommeX);
+            std  += pmpd_sqr(x->link[i].distance - somme);
             j+=1;
         }
     }   
@@ -590,7 +590,7 @@ void pmpd_linkPosSpeedStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             { 
-                stdX += sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2-sommeX);
+                stdX += pmpd_sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2-sommeX);
                 j++;
             }
         }
@@ -599,7 +599,7 @@ void pmpd_linkPosSpeedStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     {
         for (i=0; i< x->nb_link; i++)
         {
-            stdX += sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2-sommeX);
+            stdX += pmpd_sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2-sommeX);
             j++;
         }
     }     
@@ -655,7 +655,7 @@ void pmpd_linkLengthSpeedStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         {
             if (atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             { 
-                stdX += sqr(fabs(x->link[i].mass1->speedX - x->link[i].mass2->speedX) - sommeX);
+                stdX += pmpd_sqr(fabs(x->link[i].mass1->speedX - x->link[i].mass2->speedX) - sommeX);
 				j++;
             }
         }
@@ -664,7 +664,7 @@ void pmpd_linkLengthSpeedStd(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     {
         for (i=0; i< x->nb_link; i++)
         {
-            stdX += sqr(fabs(x->link[i].mass1->speedX - x->link[i].mass2->speedX) - sommeX);
+            stdX += pmpd_sqr(fabs(x->link[i].mass1->speedX - x->link[i].mass2->speedX) - sommeX);
 			j++;
         }
     }

@@ -605,18 +605,18 @@ void pmpd3d_setLCurrent(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
-    { // set a link to a mix between it's curent length and it's size
+    { // set a link to a pmpd3d_mix between it's curent length and it's size
         i = atom_getfloatarg(0, argc, argv);
         i = max(0, min( x->nb_link-1, i));
-        x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
+        x->link[i].L = pmpd3d_mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
-    { // set a class of link to a mix between it's curent length and it's size
+    { // set a class of link to a pmpd3d_mix between it's curent length and it's size
         for (i=0; i< x->nb_link; i++)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
             {
-                x->link[i].L = mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
+                x->link[i].L = pmpd3d_mix(x->link[i].L,x->link[i].distance,atom_getfloatarg(1, argc, argv));
             }
         }
     }
@@ -942,11 +942,11 @@ void pmpd3d_setForceZ(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		
 void pmpd3d_setActivei(t_pmpd3d *x, int i)
 {
-	float Lx, Ly,Lz, L;
+	t_float Lx, Ly,Lz, L;
 	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
 	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
 	Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
-	L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
+	L = sqrt( pmpd3d_sqr(Lx) + pmpd3d_sqr(Ly) + pmpd3d_sqr(Lz) );
 	x->link[i].distance = L; 
 	x->link[i].active = 1;
 }
@@ -1506,13 +1506,13 @@ void pmpd3d_overdamp(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_setConnection1i(t_pmpd3d *x, int i, int j)
 {
-	float Lx, Ly,Lz, L;
+	t_float Lx, Ly,Lz, L;
 
 	x->link[i].mass1=&x->mass[max(0, min( x->nb_mass-1, j))];
 	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
 	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
 	Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
-	L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
+	L = sqrt( pmpd3d_sqr(Lx) + pmpd3d_sqr(Ly) + pmpd3d_sqr(Lz) );
 	x->link[i].distance = L; 
 }
 
@@ -1541,13 +1541,13 @@ void pmpd3d_setEnd1(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_setConnection2i(t_pmpd3d *x, int i, int j)
 {
-	float Lx, Ly,Lz, L;
+	t_float Lx, Ly,Lz, L;
 
 	x->link[i].mass2=&x->mass[max(0, min( x->nb_mass-1, j))];
 	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
 	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
 	Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
-	L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
+	L = sqrt( pmpd3d_sqr(Lx) + pmpd3d_sqr(Ly) + pmpd3d_sqr(Lz) );
 	x->link[i].distance = L; 
 }
 
@@ -1576,7 +1576,7 @@ void pmpd3d_setEnd2(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_setConnectioni(t_pmpd3d *x, int i, int j, int k)
 {
-	float Lx, Ly,Lz, L;
+	t_float Lx, Ly,Lz, L;
 
 	x->link[i].mass1=&x->mass[max(0, min( x->nb_mass-1, j))];
 	x->link[i].mass2=&x->mass[max(0, min( x->nb_mass-1, k))];
@@ -1584,7 +1584,7 @@ void pmpd3d_setConnectioni(t_pmpd3d *x, int i, int j, int k)
 	Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
 	Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
 	Lz = x->link[i].mass1->posZ - x->link[i].mass2->posZ;
-	L = sqrt( sqr(Lx) + sqr(Ly) + sqr(Lz) );
+	L = sqrt( pmpd3d_sqr(Lx) + pmpd3d_sqr(Ly) + pmpd3d_sqr(Lz) );
 	x->link[i].distance = L; 
 }
 

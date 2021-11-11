@@ -155,7 +155,7 @@ void pmpd3d_massesPosNormL(t_pmpd3d *x)
 
     for (i=0; i < x->nb_mass; i++)
     {
-        SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].posX)+sqr(x->mass[i].posY)+sqr(x->mass[i].posZ)));
+        SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[i].posX)+pmpd3d_sqr(x->mass[i].posY)+pmpd3d_sqr(x->mass[i].posZ)));
     }
     outlet_anything(x->main_outlet, gensym("massesPosNormL"),x->nb_mass , pos_list);
 }
@@ -167,7 +167,7 @@ void pmpd3d_massesForcesNormL(t_pmpd3d *x)
 
     for (i=0; i< x->nb_mass; i++)
     {
-        SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].forceX)+sqr(x->mass[i].forceY)+sqr(x->mass[i].forceZ)));
+        SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[i].forceX)+pmpd3d_sqr(x->mass[i].forceY)+pmpd3d_sqr(x->mass[i].forceZ)));
     }
     outlet_anything(x->main_outlet, gensym("massesForcesNormL"),x->nb_mass , pos_list);
 }
@@ -179,7 +179,7 @@ void pmpd3d_massesSpeedsNormL(t_pmpd3d *x)
 
     for (i=0; i< x->nb_mass; i++)
     {
-        SETFLOAT(&(pos_list[i]),sqrt(sqr(x->mass[i].speedX)+sqr(x->mass[i].speedY)+sqr(x->mass[i].speedZ)));
+        SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[i].speedX)+pmpd3d_sqr(x->mass[i].speedY)+pmpd3d_sqr(x->mass[i].speedZ)));
     }
     outlet_anything(x->main_outlet, gensym("massesSpeedsNormL"),x->nb_mass , pos_list);
 }
@@ -206,7 +206,7 @@ void pmpd3d_massesPosMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				sommeX += x->mass[i].posX;
 				sommeY += x->mass[i].posY;
 				sommeZ += x->mass[i].posZ;
-				somme +=  sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY) + sqr(x->mass[i].posZ)); // distance au centre
+				somme +=  sqrt(pmpd3d_sqr(x->mass[i].posX) + pmpd3d_sqr(x->mass[i].posY) + pmpd3d_sqr(x->mass[i].posZ)); // distance au centre
 				j++;
 			}
 		}
@@ -218,7 +218,7 @@ void pmpd3d_massesPosMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				sommeX += x->mass[i].posX;
 				sommeY += x->mass[i].posY;
 				sommeZ += x->mass[i].posZ;
-				somme +=  sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY) + sqr(x->mass[i].posZ)); // distance au centre
+				somme +=  sqrt(pmpd3d_sqr(x->mass[i].posX) + pmpd3d_sqr(x->mass[i].posY) + pmpd3d_sqr(x->mass[i].posZ)); // distance au centre
 				j++;
 		}
 	}	
@@ -262,7 +262,7 @@ void pmpd3d_massesPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				sommeX += x->mass[i].posX;
 				sommeY += x->mass[i].posY;
 				sommeZ += x->mass[i].posZ;
-				somme +=  sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY) + sqr(x->mass[i].posZ)); // distance au centre
+				somme +=  sqrt(pmpd3d_sqr(x->mass[i].posX) + pmpd3d_sqr(x->mass[i].posY) + pmpd3d_sqr(x->mass[i].posZ)); // distance au centre
 				j++;
 			}
 		}
@@ -274,10 +274,10 @@ void pmpd3d_massesPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
 			if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 			{ 
-				stdX += sqr(x->mass[i].posX-sommeX);
-				stdY += sqr(x->mass[i].posY-sommeY);
-				stdZ += sqr(x->mass[i].posZ-sommeZ);
-				std  +=  sqr(sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY) + sqr(x->mass[i].posZ))-somme);
+				stdX += pmpd3d_sqr(x->mass[i].posX-sommeX);
+				stdY += pmpd3d_sqr(x->mass[i].posY-sommeY);
+				stdZ += pmpd3d_sqr(x->mass[i].posZ-sommeZ);
+				std  +=  pmpd3d_sqr(sqrt(pmpd3d_sqr(x->mass[i].posX) + pmpd3d_sqr(x->mass[i].posY) + pmpd3d_sqr(x->mass[i].posZ))-somme);
 			}
 		}		
     }
@@ -288,7 +288,7 @@ void pmpd3d_massesPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			sommeX += x->mass[i].posX;
 			sommeY += x->mass[i].posY;
 			sommeZ += x->mass[i].posZ;
-			somme +=  sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY) + sqr(x->mass[i].posZ)); // distance au centre
+			somme +=  sqrt(pmpd3d_sqr(x->mass[i].posX) + pmpd3d_sqr(x->mass[i].posY) + pmpd3d_sqr(x->mass[i].posZ)); // distance au centre
 			j++;
 		}
 		sommeX /= j;
@@ -297,10 +297,10 @@ void pmpd3d_massesPosStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		somme /= j;
 		for (i=0; i< x->nb_mass; i++)
         {
-			stdX += sqr(x->mass[i].posX-sommeX);
-			stdY += sqr(x->mass[i].posY-sommeY);
-			stdZ += sqr(x->mass[i].posZ-sommeZ);
-			std  += sqr(sqrt(sqr(x->mass[i].posX) + sqr(x->mass[i].posY) + sqr(x->mass[i].posZ))-somme);
+			stdX += pmpd3d_sqr(x->mass[i].posX-sommeX);
+			stdY += pmpd3d_sqr(x->mass[i].posY-sommeY);
+			stdZ += pmpd3d_sqr(x->mass[i].posZ-sommeZ);
+			std  += pmpd3d_sqr(sqrt(pmpd3d_sqr(x->mass[i].posX) + pmpd3d_sqr(x->mass[i].posY) + pmpd3d_sqr(x->mass[i].posZ))-somme);
 		}
 	}	
 	
@@ -338,7 +338,7 @@ void pmpd3d_massesForcesMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				sommeX += x->mass[i].forceX;
 				sommeY += x->mass[i].forceY;
 				sommeZ += x->mass[i].forceZ;
-				somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ)); // force total
+				somme +=  sqrt(pmpd3d_sqr(x->mass[i].forceX) + pmpd3d_sqr(x->mass[i].forceY) + pmpd3d_sqr(x->mass[i].forceZ)); // force total
 				j++;
 			}
 		}
@@ -350,7 +350,7 @@ void pmpd3d_massesForcesMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				sommeX += x->mass[i].forceX;
 				sommeY += x->mass[i].forceY;
 				sommeZ += x->mass[i].forceZ;
-				somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ)); // force
+				somme +=  sqrt(pmpd3d_sqr(x->mass[i].forceX) + pmpd3d_sqr(x->mass[i].forceY) + pmpd3d_sqr(x->mass[i].forceZ)); // force
 				j++;
 		}
 	}	
@@ -394,7 +394,7 @@ void pmpd3d_massesForcesStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				sommeX += x->mass[i].forceX;
 				sommeY += x->mass[i].forceY;
 				sommeZ += x->mass[i].forceZ;
-				somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ)); // force
+				somme +=  sqrt(pmpd3d_sqr(x->mass[i].forceX) + pmpd3d_sqr(x->mass[i].forceY) + pmpd3d_sqr(x->mass[i].forceZ)); // force
 				j++;
 			}
 		}
@@ -406,10 +406,10 @@ void pmpd3d_massesForcesStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
 			if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 			{ 
-				stdX += sqr(x->mass[i].forceX-sommeX);
-				stdY += sqr(x->mass[i].forceY-sommeY);
-				stdZ += sqr(x->mass[i].forceZ-sommeZ);
-				std  +=  sqr(sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ))-somme);
+				stdX += pmpd3d_sqr(x->mass[i].forceX-sommeX);
+				stdY += pmpd3d_sqr(x->mass[i].forceY-sommeY);
+				stdZ += pmpd3d_sqr(x->mass[i].forceZ-sommeZ);
+				std  +=  pmpd3d_sqr(sqrt(pmpd3d_sqr(x->mass[i].forceX) + pmpd3d_sqr(x->mass[i].forceY) + pmpd3d_sqr(x->mass[i].forceZ))-somme);
 			}
 		}		
     }
@@ -420,7 +420,7 @@ void pmpd3d_massesForcesStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			sommeX += x->mass[i].forceX;
 			sommeY += x->mass[i].forceY;
 			sommeZ += x->mass[i].forceZ;
-			somme +=  sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ)); 
+			somme +=  sqrt(pmpd3d_sqr(x->mass[i].forceX) + pmpd3d_sqr(x->mass[i].forceY) + pmpd3d_sqr(x->mass[i].forceZ)); 
 			j++;
 		}
 		sommeX /= j;
@@ -429,10 +429,10 @@ void pmpd3d_massesForcesStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		somme /= j;
 		for (i=0; i< x->nb_mass; i++)
         {
-			stdX += sqr(x->mass[i].forceX-sommeX);
-			stdY += sqr(x->mass[i].forceY-sommeY);
-			stdZ += sqr(x->mass[i].forceZ-sommeZ);
-			std  += sqr(sqrt(sqr(x->mass[i].forceX) + sqr(x->mass[i].forceY) + sqr(x->mass[i].forceZ))-somme);
+			stdX += pmpd3d_sqr(x->mass[i].forceX-sommeX);
+			stdY += pmpd3d_sqr(x->mass[i].forceY-sommeY);
+			stdZ += pmpd3d_sqr(x->mass[i].forceZ-sommeZ);
+			std  += pmpd3d_sqr(sqrt(pmpd3d_sqr(x->mass[i].forceX) + pmpd3d_sqr(x->mass[i].forceY) + pmpd3d_sqr(x->mass[i].forceZ))-somme);
 		}
 	}	
 	
@@ -470,7 +470,7 @@ void pmpd3d_massesSpeedsMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				sommeX += x->mass[i].speedX;
 				sommeY += x->mass[i].speedY;
 				sommeZ += x->mass[i].speedZ;
-				somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ)); // speed total
+				somme +=  sqrt(pmpd3d_sqr(x->mass[i].speedX) + pmpd3d_sqr(x->mass[i].speedY) + pmpd3d_sqr(x->mass[i].speedZ)); // speed total
 				j++;
 			}
 		}
@@ -482,7 +482,7 @@ void pmpd3d_massesSpeedsMean(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				sommeX += x->mass[i].speedX;
 				sommeY += x->mass[i].speedY;
 				sommeZ += x->mass[i].speedZ;
-				somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ)); // speed
+				somme +=  sqrt(pmpd3d_sqr(x->mass[i].speedX) + pmpd3d_sqr(x->mass[i].speedY) + pmpd3d_sqr(x->mass[i].speedZ)); // speed
 				j++;
 		}
 	}	
@@ -526,7 +526,7 @@ void pmpd3d_massesSpeedsStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 				sommeX += x->mass[i].speedX;
 				sommeY += x->mass[i].speedY;
 				sommeZ += x->mass[i].speedZ;
-				somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ)); // speed
+				somme +=  sqrt(pmpd3d_sqr(x->mass[i].speedX) + pmpd3d_sqr(x->mass[i].speedY) + pmpd3d_sqr(x->mass[i].speedZ)); // speed
 				j++;
 			}
 		}
@@ -538,10 +538,10 @@ void pmpd3d_massesSpeedsStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         {
 			if (atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
 			{ 
-				stdX += sqr(x->mass[i].speedX-sommeX);
-				stdY += sqr(x->mass[i].speedY-sommeY);
-				stdZ += sqr(x->mass[i].speedZ-sommeZ);
-				std  +=  sqr(sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ))-somme);
+				stdX += pmpd3d_sqr(x->mass[i].speedX-sommeX);
+				stdY += pmpd3d_sqr(x->mass[i].speedY-sommeY);
+				stdZ += pmpd3d_sqr(x->mass[i].speedZ-sommeZ);
+				std  +=  pmpd3d_sqr(sqrt(pmpd3d_sqr(x->mass[i].speedX) + pmpd3d_sqr(x->mass[i].speedY) + pmpd3d_sqr(x->mass[i].speedZ))-somme);
 			}
 		}		
     }
@@ -552,7 +552,7 @@ void pmpd3d_massesSpeedsStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			sommeX += x->mass[i].speedX;
 			sommeY += x->mass[i].speedY;
 			sommeZ += x->mass[i].speedZ;
-			somme +=  sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ)); 
+			somme +=  sqrt(pmpd3d_sqr(x->mass[i].speedX) + pmpd3d_sqr(x->mass[i].speedY) + pmpd3d_sqr(x->mass[i].speedZ)); 
 			j++;
 		}
 		sommeX /= j;
@@ -561,10 +561,10 @@ void pmpd3d_massesSpeedsStd(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		somme /= j;
 		for (i=0; i< x->nb_mass; i++)
         {
-			stdX += sqr(x->mass[i].speedX-sommeX);
-			stdY += sqr(x->mass[i].speedY-sommeY);
-			stdZ += sqr(x->mass[i].speedZ-sommeZ);
-			std  += sqr(sqrt(sqr(x->mass[i].speedX) + sqr(x->mass[i].speedY) + sqr(x->mass[i].speedZ))-somme);
+			stdX += pmpd3d_sqr(x->mass[i].speedX-sommeX);
+			stdY += pmpd3d_sqr(x->mass[i].speedY-sommeY);
+			stdZ += pmpd3d_sqr(x->mass[i].speedZ-sommeZ);
+			std  += pmpd3d_sqr(sqrt(pmpd3d_sqr(x->mass[i].speedX) + pmpd3d_sqr(x->mass[i].speedY) + pmpd3d_sqr(x->mass[i].speedZ))-somme);
 		}
 	}	
 	
@@ -792,9 +792,9 @@ void pmpd3d_linksPosNormL(t_pmpd3d *x)
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),sqrt( \
-							sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + \
-							sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + \
-							sqr((x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2) ));
+							pmpd3d_sqr((x->link[i].mass1->posX + x->link[i].mass2->posX)/2) + \
+							pmpd3d_sqr((x->link[i].mass1->posY + x->link[i].mass2->posY)/2) + \
+							pmpd3d_sqr((x->link[i].mass1->posZ + x->link[i].mass2->posZ)/2) ));
     }
     outlet_anything(x->main_outlet, gensym("linksPosNormL"),x->nb_link , pos_list);
 }
@@ -807,9 +807,9 @@ void pmpd3d_linksLengthNormL(t_pmpd3d *x)
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),sqrt( \
-							sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
-							sqr(x->link[i].mass2->posY - x->link[i].mass1->posY) + \
-							sqr(x->link[i].mass2->posZ - x->link[i].mass1->posZ) ));
+							pmpd3d_sqr(x->link[i].mass2->posX - x->link[i].mass1->posX) + \
+							pmpd3d_sqr(x->link[i].mass2->posY - x->link[i].mass1->posY) + \
+							pmpd3d_sqr(x->link[i].mass2->posZ - x->link[i].mass1->posZ) ));
     }
     outlet_anything(x->main_outlet, gensym("linksLengthNormL"),x->nb_link , pos_list);
 }
@@ -822,9 +822,9 @@ void pmpd3d_linksPosSpeedNormL(t_pmpd3d *x)
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),sqrt( \
-							sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
-							sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
-							sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
+							pmpd3d_sqr((x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2) + \
+							pmpd3d_sqr((x->link[i].mass1->speedY + x->link[i].mass2->speedY)/2) + \
+							pmpd3d_sqr((x->link[i].mass1->speedZ + x->link[i].mass2->speedZ)/2) ));
     }
     outlet_anything(x->main_outlet, gensym("linksPosSpeedNormL"),x->nb_link , pos_list);
 }
@@ -837,9 +837,9 @@ void pmpd3d_linksLengthSpeedNormL(t_pmpd3d *x)
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),sqrt( \
-							sqr(x->link[i].mass2->speedX - x->link[i].mass1->speedX) + \
-							sqr(x->link[i].mass2->speedY - x->link[i].mass1->speedY) + \
-							sqr(x->link[i].mass2->speedZ - x->link[i].mass1->speedZ) ));
+							pmpd3d_sqr(x->link[i].mass2->speedX - x->link[i].mass1->speedX) + \
+							pmpd3d_sqr(x->link[i].mass2->speedY - x->link[i].mass1->speedY) + \
+							pmpd3d_sqr(x->link[i].mass2->speedZ - x->link[i].mass1->speedZ) ));
     }
     outlet_anything(x->main_outlet, gensym("linksLengthSpeedNormL"),x->nb_link , pos_list);
 }

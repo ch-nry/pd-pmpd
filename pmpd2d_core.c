@@ -2,27 +2,27 @@
  *  pmpd2d_core.c
  */
 
-t_float sign_ch(t_float v)
+inline t_float pmpd2d_sign(t_float v)
 {
     return v > 0 ? 1 : -1;
 }
 
-t_float sqr(t_float x)
+inline t_float pmpd2d_sqr(t_float x)
 {
     return x*x ;
 }
 
-t_float pow_ch(t_float x, t_float y)
+inline t_float pmpd2d_pow(t_float x, t_float y)
 {
     return x > 0 ? pow(x,y) : -pow(-x,y);
 }
 
-t_float mix(t_float X, t_float Y, t_float mix)
+inline t_float pmpd2d_mix(t_float X, t_float Y, t_float pmpd2d_mix)
 {
-    return (1-mix)*X + mix*Y ;
+    return (1-pmpd2d_mix)*X + pmpd2d_mix*Y ;
 }
 
-t_float tabread2(t_pmpd2d *x, t_float pos, t_symbol *array)
+inline t_float pmpd2d_tabread2(t_pmpd2d *x, t_float pos, t_symbol *array)
 {
     t_garray *a;
     int npoints;
@@ -38,36 +38,14 @@ t_float tabread2(t_pmpd2d *x, t_float pos, t_symbol *array)
         posx = fabs(pos)*npoints;
         int n=posx;
         if (n >= npoints - 1) 
-            return (sign_ch(pos)*vec[npoints-1].w_float);
-        float fract = posx-n;
-        return (sign_ch(pos) * ( fract*vec[n+1].w_float+(1-fract)*vec[n].w_float));
+            return (pmpd2d_sign(pos)*vec[npoints-1].w_float);
+        t_float fract = posx-n;
+        return (pmpd2d_sign(pos) * ( fract*vec[n+1].w_float+(1-fract)*vec[n].w_float));
     }
     return( pos); // si il y a un pb sur le tableau, on renvoie l'identité
 }
 
-t_float pow2(t_float x)
-{
-    return(x*x);
-}
-
-t_float getAngle_bug(t_pmpd2d *x, t_int mass1, t_int mass3, t_int mass2)
-{
-    t_float X12, X13, X23, Y12, Y13, Y23, D;
-    X12 = x->mass[mass1].posX - x->mass[mass2].posX;
-    Y12 = x->mass[mass1].posY - x->mass[mass2].posY;
-    X13 = x->mass[mass1].posX - x->mass[mass3].posX;
-    Y13 = x->mass[mass1].posY - x->mass[mass3].posY;
-    X23 = x->mass[mass2].posX - x->mass[mass3].posX;
-    Y23 = x->mass[mass2].posY - x->mass[mass3].posY;
-    
-    D = sqrt(X13*X13 + Y13*Y13) + sqrt(X23*X23 + Y23*Y23);
-    if (D =! 0)
-        return(acos((X13*X23 + Y13*Y23)/D));
-    else
-        return(0);
-}
-
-t_float getAngle(t_pmpd2d *x, t_int mass1, t_int mass2, t_int mass3)
+inline t_float pmpd2d_getAngle(t_pmpd2d *x, t_int mass1, t_int mass2, t_int mass3)
 {
     t_float A1, A2;
     A1 = atan2( x->mass[mass1].posX - x->mass[mass2].posX, x->mass[mass1].posY - x->mass[mass2].posY);
@@ -75,7 +53,7 @@ t_float getAngle(t_pmpd2d *x, t_int mass1, t_int mass2, t_int mass3)
     return(A2-A1);
 }
 
-t_float distance(t_pmpd2d *x, t_int mass1, t_int mass2)
+inline t_float pmpd2d_distance(t_pmpd2d *x, t_int mass1, t_int mass2)
 {
     t_float X,Y;
     X = x->mass[mass1].posX - x->mass[mass2].posX;
@@ -83,7 +61,7 @@ t_float distance(t_pmpd2d *x, t_int mass1, t_int mass2)
     return(sqrt(X*X+Y*Y));
 }
 
-t_float mod2Pi(t_float angle)
+inline t_float pmpd2d_mod2Pi(t_float angle)
 { // return an angle between -pi and pi
     t_float tmp;
     tmp = fmodf(angle-3.1415926, 6.2831852);
@@ -198,19 +176,19 @@ void pmpd2d_bang(t_pmpd2d *x)
         {
             Lx = x->link[i].mass1->posX - x->link[i].mass2->posX;
             Ly = x->link[i].mass1->posY - x->link[i].mass2->posY;
-            L = sqrt( sqr(Lx) + sqr(Ly) );
+            L = sqrt( pmpd2d_sqr(Lx) + pmpd2d_sqr(Ly) );
         
             if ( (L >= x->link[i].Lmin) && (L < x->link[i].Lmax)  && (L != 0))
             {
                 if (x->link[i].lType == 2)
                 { // K et D viennent d'une table
-                    F  = x->link[i].D * tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
-                    F += x->link[i].K * tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
+                    F  = x->link[i].D * pmpd2d_tabread2(x, (L - x->link[i].distance) / x->link[i].D_L, x->link[i].arrayD);
+                    F += x->link[i].K * pmpd2d_tabread2(x, L / x->link[i].K_L, x->link[i].arrayK);
                 }
                 else
                 {            
                     F  = x->link[i].D * (L - x->link[i].distance) ;
-                    F += x->link[i].K *  pow_ch( L - x->link[i].L, x->link[i].Pow);
+                    F += x->link[i].K *  pmpd2d_pow( L - x->link[i].L, x->link[i].Pow);
                 }
 
                 Fx = F * Lx/L;
@@ -234,15 +212,15 @@ void pmpd2d_bang(t_pmpd2d *x)
         }
         else if ((x->link[i].active > 0) && (x->link[i].lType == 3)) // hinge
         {
-            L = getAngle(x, x->link[i].mass1->num, x->link[i].mass2->num, x->link[i].mass3->num);
-            L = mod2Pi(L);
+            L = pmpd2d_getAngle(x, x->link[i].mass1->num, x->link[i].mass2->num, x->link[i].mass3->num);
+            L = pmpd2d_mod2Pi(L);
             if ( (L >= x->link[i].Lmin) && (L < x->link[i].Lmax)  && (L != 0))
             {
-                F  = x->link[i].D *  (mod2Pi(L - x->link[i].distance)); 
-                F += x->link[i].K *  pow_ch( mod2Pi(L - x->link[i].L), x->link[i].Pow); // calcule du couple
+                F  = x->link[i].D *  (pmpd2d_mod2Pi(L - x->link[i].distance)); 
+                F += x->link[i].K *  pmpd2d_pow( pmpd2d_mod2Pi(L - x->link[i].L), x->link[i].Pow); // calcule du couple
 
-                // post("f=%f", mod2Pi(L - x->link[i].L));
-                Dist = distance(x, x->link[i].mass1->num, x->link[i].mass2->num);
+                // post("f=%f", pmpd2d_mod2Pi(L - x->link[i].L));
+                Dist = pmpd2d_distance(x, x->link[i].mass1->num, x->link[i].mass2->num);
                 tmp = F/Dist; // couple pour la mass 1
                 Fx = tmp * (x->link[i].mass1->posY - x->link[i].mass2->posY)/Dist;
                 Fy = tmp * (x->link[i].mass2->posX - x->link[i].mass1->posX)/Dist; // projection sur la normal a la liaison mass1 mass2
@@ -254,7 +232,7 @@ void pmpd2d_bang(t_pmpd2d *x)
 				x->link[i].forceX = Fx; // save for latter use
 				x->link[i].forceY = Fy; // que doit on faire ds ce cas la : quel est la valeur a sauver ds la cas d'un couple???
                 
-                Dist = distance(x, x->link[i].mass3->num, x->link[i].mass2->num);
+                Dist = pmpd2d_distance(x, x->link[i].mass3->num, x->link[i].mass2->num);
                 F /= Dist;// pour la mass 2
                 Fx = F * (x->link[i].mass3->posY - x->link[i].mass2->posY)/Dist;
                 Fy = F * (x->link[i].mass2->posX - x->link[i].mass3->posX)/Dist; // projection sur la normal a la liaison mass2 mass3
@@ -325,7 +303,7 @@ void pmpd2d_create_link(t_pmpd2d *x, t_symbol *Id, int mass1, int mass2, t_float
         x->link[x->nb_link].mass2 = &x->mass[mass2];
         x->link[x->nb_link].K = K;
         x->link[x->nb_link].D = D;
-        x->link[x->nb_link].L = sqrt(sqr(x->mass[mass1].posX - x->mass[mass2].posX) + sqr(x->mass[mass1].posY - x->mass[mass2].posY));
+        x->link[x->nb_link].L = sqrt(pmpd2d_sqr(x->mass[mass1].posX - x->mass[mass2].posX) + pmpd2d_sqr(x->mass[mass1].posY - x->mass[mass2].posY));
         x->link[x->nb_link].Pow = Pow;
         x->link[x->nb_link].Lmin = Lmin;
         x->link[x->nb_link].Lmax = Lmax;
@@ -416,7 +394,7 @@ void pmpd2d_tLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     t_float D = atom_getfloatarg(4, argc, argv);
     t_float vecteurX = atom_getfloatarg(5, argc, argv);
     t_float vecteurY = atom_getfloatarg(6, argc, argv);
-    t_float vecteur = sqrt( sqr(vecteurX) + sqr(vecteurY) );
+    t_float vecteur = sqrt( pmpd2d_sqr(vecteurX) + pmpd2d_sqr(vecteurY) );
     vecteurX /= vecteur;
     vecteurY /= vecteur;
     t_float Pow = 1; 
@@ -597,7 +575,7 @@ void pmpd2d_hinge(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         x->link[x->nb_link].mass2 = &x->mass[mass2];
         x->link[x->nb_link].mass3 = &x->mass[mass3];
         
-        x->link[x->nb_link].L = getAngle(x, mass1, mass2, mass3); // angle actuel : -pi a pi
+        x->link[x->nb_link].L = pmpd2d_getAngle(x, mass1, mass2, mass3); // angle actuel : -pi a pi
     
         x->link[x->nb_link].distance = x->link[x->nb_link].L; // angle au repos = angle a l'initialisation
         

@@ -148,7 +148,7 @@ void pmpd_closestMass(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         //t_symbol *mass_name = atom_getsymbolarg(2, argc, argv);
         if ((x->nb_mass > 0))
         {
-            dist = 1000000000;//sqr(x->mass[0].posX - posX) + sqr(x->mass[0].posY - posY);
+            dist = 1000000000;//pmpd_sqr(x->mass[0].posX - posX) + pmpd_sqr(x->mass[0].posY - posY);
             for (i=0; i<x->nb_mass; i++)
             {
                 if (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)
@@ -274,7 +274,7 @@ void pmpd_massDistances(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
-int bulle_order(t_int *listIndex, t_float *listDistance, t_int index)
+inline int pmpd_bulle_order(t_int *listIndex, t_float *listDistance, t_int index)
 {
     t_int tmpI;
     t_float tmpD;
@@ -322,7 +322,7 @@ void pmpd_closestMassN(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     {
         for (j=0; j < nbout-i; j++)
         {
-            bulle_order(list_index, list_distance, j);
+            pmpd_bulle_order(list_index, list_distance, j);
         } 
     }
   
@@ -334,7 +334,7 @@ void pmpd_closestMassN(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             list_index[0] = i;
             list_distance[0] = dist;
             j = 0;
-            while ( (j<nbout-1) && bulle_order(list_index, list_distance, j) ) // on reordone la liste
+            while ( (j<nbout-1) && pmpd_bulle_order(list_index, list_distance, j) ) // on reordone la liste
             {
                 j++;
             }

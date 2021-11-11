@@ -2,13 +2,13 @@
 
 void pmpd2d_iCircle_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float r, t_float K, t_float power, t_float Kt, t_float powert, t_float Rmin, t_float Rmax)
 {
-	t_float distance, X, Y, rayon, tmp;
+	t_float pmpd2d_distance, X, Y, rayon, tmp;
 
 	X = x->mass[i].posX - a;
 	Y = x->mass[i].posY - b;
 
-	rayon = sqrt ( sqr(X) + sqr(Y) );
-	distance = rayon - r;
+	rayon = sqrt ( pmpd2d_sqr(X) + pmpd2d_sqr(Y) );
+	pmpd2d_distance = rayon - r;
 	
 	if (rayon != 0)
 	{
@@ -22,14 +22,14 @@ void pmpd2d_iCircle_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float r, t_flo
 	}
 	
 // X, Y : vecteur unitaire normal au cercle
-// rayon : distance au centre.
+// rayon : pmpd2d_distance au centre.
 	
-	if ( (distance>Rmin) && (distance<=Rmax) )
+	if ( (pmpd2d_distance>Rmin) && (pmpd2d_distance<=Rmax) )
 	{
-		tmp = -pow_ch(distance, power)*K;
+		tmp = -pmpd2d_pow(pmpd2d_distance, power)*K;
 		x->mass[i].forceX += X * tmp;
 		x->mass[i].forceY += Y * tmp;
-		tmp = -pow_ch(distance, power)*Kt;
+		tmp = -pmpd2d_pow(pmpd2d_distance, power)*Kt;
 		x->mass[i].forceX += -Y * tmp;
 		x->mass[i].forceY += X * tmp;
 		
@@ -104,13 +104,13 @@ void pmpd2d_iCircle(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd2d_iLine_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float c, t_float K, t_float power, t_float Rmin, t_float Rmax)
 {
-    t_float distance, force;
+    t_float pmpd2d_distance, force;
 
-    distance = (a * x->mass[i].posX)  + (b * x->mass[i].posY) + c;
+    pmpd2d_distance = (a * x->mass[i].posX)  + (b * x->mass[i].posY) + c;
 
-	if ( (distance>Rmin) && (distance<=Rmax) )
+	if ( (pmpd2d_distance>Rmin) && (pmpd2d_distance<=Rmax) )
 	{
-		force = -pow_ch(distance, power)*K;
+		force = -pmpd2d_pow(pmpd2d_distance, power)*K;
 		x->mass[i].forceX += a * force;
 		x->mass[i].forceY += b * force;
 	}

@@ -8,7 +8,7 @@ void pmpd3d_iCylinder_i(t_pmpd3d *x, int i, t_float xc, t_float yc, t_float zc, 
 	Yb = x->mass[i].posY -yc - profondeur * b;
 	Zb = x->mass[i].posZ -zc - profondeur * c;
 
-	rayon = sqrt ( sqr(Xb) + sqr(Yb)  + sqr(Zb) );
+	rayon = sqrt ( pmpd3d_sqr(Xb) + pmpd3d_sqr(Yb)  + pmpd3d_sqr(Zb) );
 	distance = R - rayon;
 	
 	if (rayon != 0)
@@ -34,12 +34,12 @@ void pmpd3d_iCylinder_i(t_pmpd3d *x, int i, t_float xc, t_float yc, t_float zc, 
 	
 	if ( (rayon>Rmin) && (rayon<=Rmax) )
 	{
-		tmp = pow_ch(K * distance, power);
+		tmp = pmpd3d_pow(K * distance, power);
 		x->mass[i].forceX += Xb * tmp;
 		x->mass[i].forceY += Yb * tmp;
 		x->mass[i].forceZ += Zb * tmp;
 
-		tmp =  pow_ch(Kt * distance, powert);
+		tmp =  pmpd3d_pow(Kt * distance, powert);
 		x->mass[i].forceX += Xt * tmp;
 		x->mass[i].forceY += Yt * tmp;
 		x->mass[i].forceZ += Zt * tmp;
@@ -138,7 +138,7 @@ void pmpd3d_iPlane_i(t_pmpd3d *x, int i, t_float a, t_float b, t_float c, t_floa
 
 	if ((profondeur <= Pmax) && (profondeur > Pmin) )
 	{
-		force = K * pow_ch(-profondeur, power);
+		force = K * pmpd3d_pow(-profondeur, power);
 		
 		x->mass[i].forceX += a * force;
 		x->mass[i].forceY += b * force;
@@ -229,7 +229,7 @@ void pmpd3d_iSphere_i(t_pmpd3d *x, int i, t_float a, t_float b, t_float c, t_flo
 	Y = x->mass[i].posY - b;
 	Z = x->mass[i].posZ - c;
 
-	rayon = sqrt ( sqr(X) + sqr(Y)  + sqr(Z) );
+	rayon = sqrt ( pmpd3d_sqr(X) + pmpd3d_sqr(Y)  + pmpd3d_sqr(Z) );
 	distance = r - rayon;
 	
 	if (rayon != 0)
@@ -250,7 +250,7 @@ void pmpd3d_iSphere_i(t_pmpd3d *x, int i, t_float a, t_float b, t_float c, t_flo
 	
 	if ( (rayon>Rmin) && (rayon<=Rmax) )
 	{
-		tmp = pow_ch(K * distance, power);
+		tmp = pmpd3d_pow(K * distance, power);
 		x->mass[i].forceX += X * tmp;
 		x->mass[i].forceY += Y * tmp;
 		x->mass[i].forceZ += Z * tmp;
