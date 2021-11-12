@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  PD_VERSION: 0.51-4
+
 jobs:
       
   build_ubuntu:
@@ -15,7 +18,7 @@ jobs:
       with:
         submodules: true
     - name: Clone Pure-Data
-      run: git clone --depth=1 https://github.com/pure-data/pure-data.git
+      run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
     
     - name: Install Dependencies
       run: |
@@ -41,7 +44,7 @@ jobs:
         submodules: true
 
     - name: Clone Pure-Data
-      run: git clone --depth=1 https://github.com/pure-data/pure-data.git
+      run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
 
     - name: Install Dependencies
       run: |
@@ -66,12 +69,14 @@ jobs:
       with:
         submodules: true
 
-    - name: Clone Pure-Data
-      run: git clone --depth=1 https://github.com/pure-data/pure-data.git
+    - name: Download Pure-Data Binaries
+      run: |
+        Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${env:PD_VERSION}.msw.zip" pd-${env:PD_VERSION}.msw.zip
+        ExpandArchive -Path pd-${env:PD_VERSION}.msw.zip -DestinationPath .
 
     - name: Build
       run: |
-        cmake -S . -B build
+        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib"
         cmake --build build
         cmake --build build --target install
 

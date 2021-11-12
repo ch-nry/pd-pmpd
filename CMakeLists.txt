@@ -2,6 +2,10 @@ cmake_minimum_required (VERSION 3.14)
 project(pd-pmpd C)
 
 set(PUREDATA_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/pure-data/src" CACHE PATH "Path to folder containing m_pd.h" )
+if(WIN32)
+  set(PUREDATA_LIB "${CMAKE_SOURCE_DIR}/pure-data/bin/pd.lib" CACHE PATH "Path to pd.lib for Windows")
+endif()
+
 include_directories(${PUREDATA_INCLUDE_DIRS})
 
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -50,6 +54,10 @@ foreach(SOURCE IN LISTS SOURCES)
   get_filename_component(OBJECT_NAME ${SOURCE} NAME_WLE)
   string(REPLACE "~" "_tilde" PMPD_TARGET ${OBJECT_NAME})
   add_library(${PMPD_TARGET} SHARED ${SOURCE})
+
+  if(WIN32)
+    target_link_libraries(${PROJECT_NAME} PRIVATE "${PUREDATA_LIB}")
+  endif()
 
   # set library binary file name and extension
   set_target_properties(${PMPD_TARGET}
