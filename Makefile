@@ -1,448 +1,170 @@
-## Pd library template version 1.0.14
-# For instructions on how to use this template, see:
-#  http://puredata.info/docs/developer/MakefileTemplate
-LIBRARY_NAME = pmpd
+# Makefile to build class 'helloworld' for Pure Data.
+# Needs Makefile.pdlibbuilder as helper makefile for platform-dependent build
+# settings and rules.
 
-# add your .c source files, one object per file, to the SOURCES
-# variable, help files will be included automatically, and for GUI
-# objects, the matching .tcl file too
-SOURCES = iAmbient2D.c iAmbient3D.c iCircle2D.c iCircle3D.c iCylinder3D.c iLine2D.c iPlane3D.c iSeg2D.c iSphere3D.c link.c link2D.c link3D.c mass.c mass2D.c mass3D.c pmpd.c pmpd2d.c pmpd3d.c pmpd~.c tCircle2D.c tCircle3D.c tCube3D.c tCylinder3D.c tLine2D.c tLink2D.c tLink3D.c tPlane3D.c tSeg2D.c tSphere3D.c tSquare2D.c
+# library name
+lib.name = pmpd
 
-# list all pd objects (i.e. myobject.pd) files here, and their helpfiles will
-# be included automatically
-PDOBJECTS = 
+# input source file (class name == source file basename)
+class.sources = \
+iAmbient2D.c \
+iAmbient3D.c \
+iCircle2D.c \
+iCircle3D.c \
+iCylinder3D.c \
+iLine2D.c \
+iPlane3D.c \
+iSeg2D.c \
+iSphere3D.c \
+link.c \
+link2D.c \
+link3D.c \
+mass.c \
+mass2D.c \
+mass3D.c \
+pmpd.c \
+pmpd2d.c \
+pmpd3d.c \
+pmpd~.c \
+tCircle2D.c \
+tCircle3D.c \
+tCube3D.c \
+tCylinder3D.c \
+tLine2D.c \
+tLink2D.c \
+tLink3D.c \
+tPlane3D.c \
+tSeg2D.c \
+tSphere3D.c \
+tSquare2D.c
 
-# example patches and related files, in the 'examples' subfolder
-EXAMPLES = 00_pmpd.pd 01_basics.pd 02_string.pd 03_chaos2D.pd 04_3D_exemple.pd 05_corde2D.pd 06_pyramide3D.pd 07_corde3D.pd 08_ball2D.pd 09_tutorial2D.pd 10_game.pd 11_comportement.pd 12_exitation.pd 13_plane3D.pd 14_MP_curve3d.pd 15_constant_force_field.pd 16_name_and_interactors.pd 17_rnd_mouvmnt_and_obstacles.pd 18_flipper.pd 19_vertex.pd 20_moving_vertex.pd 21_fluid_circulation_cylinder.pd 22_gaz_molecules.pd 23_test.pd 24_sand.pd 25_sand2.pd 26_sand3.pd 27_tLia.pd 28_Lia.pd 29_aglom.pd 30_falling_aglom.pd 31_paste.pd 32_Kelvin_Helmoltz_instability.pd 33_vorticity_ellipse.pd 34_cigarette_smoke.pd 35_gravitation.pd 36_3D_interactors.pd 37_hollywood_planette_explosion.pd 38_elastique_membrane_on_a_sphere.pd 39_blob.pd 40_i3D.pd 41_morfing.pd 42_tentacule.pd 43_game.pd 44_flag.pd 45_newWave.pd 46_non_linear.pd 47_scann_synth.pd 48_pmpd~.pd 49_simple_oscilator~.pd 50_string~.pd 51_pmpd_test.pd 52_pmpd_string.pd 53_pmpd_wave.pd 54_pmpd2d_test.pd 55_pmpd2d_additive.pd 56_pmpd2d_ball.pd 57_pmpd2d_gravitation.pd 58_pmpd2d_sand.pd 59_pmpd3d_test.pd 60_draw_link_force.pd 61_draw_link_force_2d.pd 62_NL.pd 63_random_network.pd 64_distordable_object.pd 65_2d_interactors.pd 66_setK_table.pd aglom.pd aglom2.pd aglom3.pd aglom4.pd blob.pd ch_gemwin.pd ch_uzi.pd constructor.pd explose1.pd explose2.pd fluide_mass.pd fluide_mass2.pd fluide_mass3.pd fluide_mass4.pd fluide_mass5.pd fluide_mass6.pd fluide_masse.pd fluide_masse2.pd fluide_masse3.pd fluide_masse4.pd fluide_masse5.pd fluide_masse6.pd game_line.pd gemLia.pd gemLia2.pd gemMasse.pd gemMasse2.pd gemMasse3.pd i3D.pd i3D2.pd mass_link.pd mass_link2.pd mass_link3.pd mountain.pd pd_lia.pd pd_lia2.pd pd_link.pd pd_link2.pd pd_mass.pd pd_mass2.pd pd_masse.pd pd_masse2.pd rain.pd rain1.pd sand.pd smoke.pd smoke1.pd smoke_vortex.pd tut_link.pd tut_mass.pd tut_masse.pd vortex.pd vortex2.pd sound_sable.pd
-
-# manuals and related files, in the 'manual' subfolder
-MANUAL = pmpd.pdf pmpd.sxw
-
-# if you want to include any other files in the source and binary tarballs,
-# list them here.  This can be anything from header files, test patches,
-# documentation, etc.  README.txt and LICENSE.txt are required and therefore
-# automatically included
-EXTRA_DIST = 
-
-# unit tests and related files here, in the 'unittests' subfolder
-UNITTESTS = 
-
-
-
-#------------------------------------------------------------------------------#
-#
-# things you might need to edit if you are using other C libraries
-#
-#------------------------------------------------------------------------------#
-
-ALL_CFLAGS = -I"$(PD_INCLUDE)"
-ALL_LDFLAGS =  
-SHARED_LDFLAGS =
-ALL_LIBS = 
-
-
-#------------------------------------------------------------------------------#
-#
-# you shouldn't need to edit anything below here, if we did it right :)
-#
-#------------------------------------------------------------------------------#
-
-# these can be set from outside without (usually) breaking the build
-CFLAGS =  -W -g 
-LDFLAGS =
-LIBS =
-
-# get library version from meta file
-LIBRARY_VERSION = $(shell sed -n 's|^\#X text [0-9][0-9]* [0-9][0-9]* VERSION \(.*\);|\1|p' $(LIBRARY_NAME)-meta.pd)
-
-ALL_CFLAGS += -DPD -DVERSION='"$(LIBRARY_VERSION)"'
-
-PD_INCLUDE = $(PD_PATH)/include/pd
-# where to install the library, overridden below depending on platform
-prefix = /usr/local
-libdir = $(prefix)/lib
-pkglibdir = $(libdir)/pd-externals
-objectsdir = $(pkglibdir)
-
-INSTALL = install
-INSTALL_PROGRAM = $(INSTALL) -p -m 644
-INSTALL_DATA = $(INSTALL) -p -m 644
-INSTALL_DIR     = $(INSTALL) -p -m 755 -d
-
-ALLSOURCES := $(SOURCES) $(SOURCES_android) $(SOURCES_cygwin) $(SOURCES_macosx) \
-	         $(SOURCES_iphoneos) $(SOURCES_linux) $(SOURCES_windows)
-
-DISTDIR=$(LIBRARY_NAME)-$(LIBRARY_VERSION)
-ORIGDIR=pd-$(LIBRARY_NAME:~=)_$(LIBRARY_VERSION)
-
-UNAME := $(shell uname -s)
-ifeq ($(UNAME),Darwin)
-  CPU := $(shell uname -p)
-  ifeq ($(CPU),arm) # iPhone/iPod Touch
-    SOURCES += $(SOURCES_iphoneos)
-    EXTENSION = pd_darwin
-    SHARED_EXTENSION = dylib
-    OS = iphoneos
-    PD_PATH = /Applications/Pd-extended.app/Contents/Resources
-    IPHONE_BASE=/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin
-    CC=$(IPHONE_BASE)/gcc
-    CPP=$(IPHONE_BASE)/cpp
-    CXX=$(IPHONE_BASE)/g++
-    ISYSROOT = -isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS3.0.sdk
-    IPHONE_CFLAGS = -miphoneos-version-min=3.0 $(ISYSROOT) -arch armv6
-    OPT_CFLAGS = -fast -funroll-loops -fomit-frame-pointer
-    ALL_CFLAGS := $(IPHONE_CFLAGS) $(ALL_CFLAGS)
-    ALL_LDFLAGS += -arch armv6 -bundle -undefined dynamic_lookup $(ISYSROOT)
-    SHARED_LDFLAGS += -arch armv6 -dynamiclib -undefined dynamic_lookup $(ISYSROOT)
-    ALL_LIBS += -lc $(LIBS_iphoneos)
-    STRIP = strip -x
-    DISTBINDIR=$(DISTDIR)-$(OS)
-  else # Mac OS X
-    SOURCES += $(SOURCES_macosx)
-    EXTENSION = pd_darwin
-    SHARED_EXTENSION = dylib
-    OS = macosx
-    PD_PATH = /Applications/Pd-extended.app/Contents/Resources
-    OPT_CFLAGS = -ftree-vectorize -fast
-# build universal 32-bit on 10.4 and 32/64 on newer
-    ifeq ($(shell uname -r | sed 's|\([0-9][0-9]*\)\.[0-9][0-9]*\.[0-9][0-9]*|\1|'), 8)
-      FAT_FLAGS = -arch ppc -arch i386 -mmacosx-version-min=10.4
-    else
-      SOURCES += $(SOURCES_iphoneos)
-# Starting with Xcode 4.0, the PowerPC compiler is not installed by default
-      ifeq ($(wildcard /usr/llvm-gcc-4.2/libexec/gcc/powerpc*), )
-        FAT_FLAGS = -arch i386 -arch x86_64 -mmacosx-version-min=10.5
-      else
-        FAT_FLAGS = -arch ppc -arch i386 -arch x86_64 -mmacosx-version-min=10.4
-      endif
-    endif
-    ALL_CFLAGS += $(FAT_FLAGS) -fPIC -I/sw/include
-    # if the 'pd' binary exists, check the linking against it to aid with stripping
-    BUNDLE_LOADER = $(shell test ! -e $(PD_PATH)/bin/pd || echo -bundle_loader $(PD_PATH)/bin/pd)
-    ALL_LDFLAGS += $(FAT_FLAGS) -headerpad_max_install_names -bundle $(BUNDLE_LOADER) \
-	-undefined dynamic_lookup -L/sw/lib
-    SHARED_LDFLAGS += $(FAT_FLAGS) -dynamiclib -undefined dynamic_lookup \
-	-install_name @loader_path/$(SHARED_LIB) -compatibility_version 1 -current_version 1.0
-    ALL_LIBS += -lc $(LIBS_macosx)
-    STRIP = strip -x
-    DISTBINDIR=$(DISTDIR)-$(OS)
-# install into ~/Library/Pd on Mac OS X since /usr/local isn't used much
-    pkglibdir=$(HOME)/Library/Pd
-  endif
-endif
-# Tho Android uses Linux, we use this fake uname to provide an easy way to
-# setup all this things needed to cross-compile for Android using the NDK
-ifeq ($(UNAME),ANDROID)
-  CPU := arm
-  SOURCES += $(SOURCES_android)
-  EXTENSION = so
-  SHARED_EXTENSION = so
-  OS = android
-  PD_PATH = /usr
-  NDK_BASE := /usr/local/android-ndk
-  NDK_PLATFORM_LEVEL ?= 5
-  NDK_ABI=arm
-  NDK_SYSROOT=$(NDK_BASE)/platforms/android-$(NDK_PLATFORM_LEVEL)/arch-$(NDK_ABI)
-  NDK_UNAME := $(shell uname -s | tr '[A-Z]' '[a-z]')
-  NDK_COMPILER_VERSION=4.6
-  NDK_TOOLCHAIN=$(wildcard $(NDK_BASE)/toolchains/$(NDK_ABI)*-$(NDK_COMPILER_VERSION)/prebuilt/$(NDK_UNAME)-x86_64)
-  CC := $(wildcard $(NDK_TOOLCHAIN)/bin/*-linux-android*-gcc) --sysroot=$(NDK_SYSROOT)
-  OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
-  CFLAGS += 
-  LDFLAGS += -rdynamic -shared
-  SHARED_LDFLAGS += -Wl,-soname,$(SHARED_LIB) -shared
-  LIBS += -lc $(LIBS_android)
-  STRIP := $(wildcard $(NDK_TOOLCHAIN)/bin/$(NDK_ABI)-linux-android*-strip) --strip-unneeded -R .note -R .comment
-  DISTBINDIR=$(DISTDIR)-$(OS)-$(shell uname -m)
-endif
-ifeq ($(UNAME),Linux)
-  CPU := $(shell uname -m)
-  SOURCES += $(SOURCES_linux)
-  EXTENSION = pd_linux
-  SHARED_EXTENSION = so
-  OS = linux
-  PD_PATH = /usr
-  OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
-  ALL_CFLAGS += -fPIC
-  ALL_LDFLAGS += -rdynamic -shared -fPIC -Wl,-rpath,"\$$ORIGIN",--enable-new-dtags
-  SHARED_LDFLAGS += -Wl,-soname,$(SHARED_LIB) -shared
-  ALL_LIBS += -lc $(LIBS_linux)
-  STRIP = strip --strip-unneeded -R .note -R .comment
-  DISTBINDIR=$(DISTDIR)-$(OS)-$(shell uname -m)
-endif
-ifeq ($(UNAME),GNU)
-  # GNU/Hurd, should work like GNU/Linux for basically all externals
-  CPU := $(shell uname -m)
-  SOURCES += $(SOURCES_linux)
-  EXTENSION = pd_linux
-  SHARED_EXTENSION = so
-  OS = linux
-  PD_PATH = /usr
-  OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
-  ALL_CFLAGS += -fPIC
-  ALL_LDFLAGS += -rdynamic -shared -fPIC -Wl,-rpath,"\$$ORIGIN",--enable-new-dtags
-  SHARED_LDFLAGS += -shared -Wl,-soname,$(SHARED_LIB)
-  ALL_LIBS += -lc $(LIBS_linux)
-  STRIP = strip --strip-unneeded -R .note -R .comment
-  DISTBINDIR=$(DISTDIR)-$(OS)-$(shell uname -m)
-endif
-ifeq ($(UNAME),GNU/kFreeBSD)
-  # Debian GNU/kFreeBSD, should work like GNU/Linux for basically all externals
-  CPU := $(shell uname -m)
-  SOURCES += $(SOURCES_linux)
-  EXTENSION = pd_linux
-  SHARED_EXTENSION = so
-  OS = linux
-  PD_PATH = /usr
-  OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
-  ALL_CFLAGS += -fPIC
-  ALL_LDFLAGS += -rdynamic -shared -fPIC -Wl,-rpath,"\$$ORIGIN",--enable-new-dtags
-  SHARED_LDFLAGS += -shared -Wl,-soname,$(SHARED_LIB)
-  ALL_LIBS += -lc $(LIBS_linux)
-  STRIP = strip --strip-unneeded -R .note -R .comment
-  DISTBINDIR=$(DISTDIR)-$(OS)-$(shell uname -m)
-endif
-ifeq (CYGWIN,$(findstring CYGWIN,$(UNAME)))
-  CPU := $(shell uname -m)
-  SOURCES += $(SOURCES_cygwin)
-  EXTENSION = dll
-  SHARED_EXTENSION = dll
-  OS = cygwin
-  PD_PATH = $(shell cygpath $$PROGRAMFILES)/pd
-  OPT_CFLAGS = -O6 -funroll-loops -fomit-frame-pointer
-  ALL_CFLAGS += 
-  ALL_LDFLAGS += -rdynamic -shared -L"$(PD_PATH)/src" -L"$(PD_PATH)/bin"
-  SHARED_LDFLAGS += -shared -Wl,-soname,$(SHARED_LIB)
-  ALL_LIBS += -lc -lpd $(LIBS_cygwin)
-  STRIP = strip --strip-unneeded -R .note -R .comment
-  DISTBINDIR=$(DISTDIR)-$(OS)
-endif
-ifeq (MINGW,$(findstring MINGW,$(UNAME)))
-  CPU := $(shell uname -m)
-  SOURCES += $(SOURCES_windows)
-  EXTENSION = dll
-  SHARED_EXTENSION = dll
-  OS = windows
-  PD_PATH = $(shell cd "$$PROGRAMFILES/pd" && pwd)
-  # MinGW doesn't seem to include cc so force gcc
-  CC=gcc
-  OPT_CFLAGS = -O3 -funroll-loops -fomit-frame-pointer
-  ALL_CFLAGS += -mms-bitfields
-  ALL_LDFLAGS += -s -shared -Wl,--enable-auto-import
-  SHARED_LDFLAGS += -shared
-  ALL_LIBS += -L"$(PD_PATH)/src" -L"$(PD_PATH)/bin" -L"$(PD_PATH)/obj" \
-	-lpd -lwsock32 -lkernel32 -luser32 -lgdi32 -liberty $(LIBS_windows)
-  STRIP = strip --strip-unneeded -R .note -R .comment
-  DISTBINDIR=$(DISTDIR)-$(OS)
-endif
-
-# in case somebody manually set the HELPPATCHES above
-HELPPATCHES ?= $(SOURCES:.c=-help.pd) $(PDOBJECTS:.pd=-help.pd)
-
-ALL_CFLAGS := $(ALL_CFLAGS) $(CFLAGS) $(OPT_CFLAGS)
-ALL_LDFLAGS := $(LDFLAGS) $(ALL_LDFLAGS)
-ALL_LIBS := $(LIBS) $(ALL_LIBS)
-
-SHARED_SOURCE ?= $(wildcard lib$(LIBRARY_NAME).c)
-SHARED_HEADER ?= $(shell test ! -e $(LIBRARY_NAME).h || echo $(LIBRARY_NAME).h)
-SHARED_LIB ?= $(SHARED_SOURCE:.c=.$(SHARED_EXTENSION))
-SHARED_TCL_LIB = $(wildcard lib$(LIBRARY_NAME).tcl)
-
-.PHONY = install libdir_install single_install install-doc install-examples install-manual install-unittests clean distclean dist etags $(LIBRARY_NAME)
-
-all: $(SOURCES:.c=.$(EXTENSION)) $(SHARED_LIB)
-
-%.o: %.c
-	$(CC) $(ALL_CFLAGS) -o "$*.o" -c "$*.c"
-
-%.$(EXTENSION): %.o $(SHARED_LIB)
-	$(CC) $(ALL_LDFLAGS) -o "$*.$(EXTENSION)" "$*.o"  $(ALL_LIBS) $(SHARED_LIB)
-	chmod a-x "$*.$(EXTENSION)"
-
-# this links everything into a single binary file
-$(LIBRARY_NAME): $(SOURCES:.c=.o) $(LIBRARY_NAME).o lib$(LIBRARY_NAME).o
-	$(CC) $(ALL_LDFLAGS) -o $(LIBRARY_NAME).$(EXTENSION) $(SOURCES:.c=.o) \
-		$(LIBRARY_NAME).o lib$(LIBRARY_NAME).o $(ALL_LIBS)
-	chmod a-x $(LIBRARY_NAME).$(EXTENSION)
-
-$(SHARED_LIB): $(SHARED_SOURCE:.c=.o)
-	$(CC) $(SHARED_LDFLAGS) -o $(SHARED_LIB) $(SHARED_SOURCE:.c=.o) $(ALL_LIBS)
-
-install: libdir_install
-
-# The meta and help files are explicitly installed to make sure they are
-# actually there.  Those files are not optional, then need to be there.
-libdir_install: $(SOURCES:.c=.$(EXTENSION)) $(SHARED_LIB) install-doc install-examples install-manual install-unittests
-	$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	$(INSTALL_DATA) $(LIBRARY_NAME)-meta.pd \
-		$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	test -z "$(strip $(SOURCES))" || (\
-		$(INSTALL_PROGRAM) $(SOURCES:.c=.$(EXTENSION)) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME) && \
-		$(STRIP) $(addprefix $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/,$(SOURCES:.c=.$(EXTENSION))))
-	test -z "$(strip $(SHARED_LIB))" || \
-		$(INSTALL_DATA) $(SHARED_LIB) \
-			$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	test -z "$(strip $(wildcard $(SOURCES:.c=.tcl)))" || \
-		$(INSTALL_DATA) $(wildcard $(SOURCES:.c=.tcl)) \
-			$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	test -z "$(strip $(PDOBJECTS))" || \
-		$(INSTALL_DATA) $(PDOBJECTS) \
-			$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	test -z "$(strip $(SHARED_TCL_LIB))" || \
-		$(INSTALL_DATA) $(SHARED_TCL_LIB) \
-			$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-
-# install library linked as single binary
-single_install: $(LIBRARY_NAME) install-doc install-examples install-manual install-unittests
-	$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	$(INSTALL_PROGRAM) $(LIBRARY_NAME).$(EXTENSION) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	$(STRIP) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/$(LIBRARY_NAME).$(EXTENSION)
-
-install-doc:
-	$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	test -z "$(strip $(SOURCES) $(PDOBJECTS))" || \
-		$(INSTALL_DATA) $(HELPPATCHES) \
-			$(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)
-	$(INSTALL_DATA) README.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/README.txt
-	$(INSTALL_DATA) LICENSE.txt $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/LICENSE.txt
-
-install-examples:
-	test -z "$(strip $(EXAMPLES))" || \
-		$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/examples && \
-		for file in $(EXAMPLES); do \
-			$(INSTALL_DATA) examples/$$file $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/examples; \
-		done
-
-install-manual:
-	test -z "$(strip $(MANUAL))" || \
-		$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/manual && \
-		for file in $(MANUAL); do \
-			$(INSTALL_DATA) manual/$$file $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/manual; \
-		done
-
-install-unittests:
-	test -z "$(strip $(UNITTESTS))" || \
-		$(INSTALL_DIR) $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/unittests && \
-		for file in $(UNITTESTS); do \
-			$(INSTALL_DATA) unittests/$$file $(DESTDIR)$(objectsdir)/$(LIBRARY_NAME)/unittests; \
-		done
-
-clean:
-	-rm -f -- $(SOURCES:.c=.o) $(SOURCES_LIB:.c=.o) $(SHARED_SOURCE:.c=.o)
-	-rm -f -- $(SOURCES:.c=.$(EXTENSION))
-	-rm -f -- $(LIBRARY_NAME).o
-	-rm -f -- $(LIBRARY_NAME).$(EXTENSION)
-	-rm -f -- $(SHARED_LIB)
-
-distclean: clean
-	-rm -f -- $(DISTBINDIR).tar.gz
-	-rm -rf -- $(DISTBINDIR)
-	-rm -f -- $(DISTDIR).tar.gz
-	-rm -rf -- $(DISTDIR)
-	-rm -f -- $(ORIGDIR).tar.gz
-	-rm -rf -- $(ORIGDIR)
+# all extra files to be included in binary distribution of the library
+datafiles = \
+examples/00_pmpd.pd \
+examples/01_basics.pd \
+examples/02_string.pd \
+examples/03_chaos2D.pd \
+examples/04_3D_exemple.pd \
+examples/05_corde2D.pd \
+examples/06_pyramide3D.pd \
+examples/07_corde3D.pd \
+examples/08_ball2D.pd \
+examples/09_tutorial2D.pd \
+examples/10_game.pd \
+examples/11_comportement.pd \
+examples/12_exitation.pd \
+examples/13_plane3D.pd \
+examples/14_MP_curve3d.pd \
+examples/15_constant_force_field.pd \
+examples/16_name_and_interactors.pd \
+examples/17_rnd_mouvmnt_and_obstacles.pd \
+examples/18_flipper.pd \
+examples/19_vertex.pd \
+examples/20_moving_vertex.pd \
+examples/21_fluid_circulation_cylinder.pd \
+examples/22_gaz_molecules.pd \
+examples/23_test.pd \
+examples/24_sand.pd \
+examples/25_sand2.pd \
+examples/26_sand3.pd \
+examples/27_tLia.pd \
+examples/28_Lia.pd \
+examples/29_aglom.pd \
+examples/30_falling_aglom.pd \
+examples/31_paste.pd \
+examples/32_Kelvin_Helmoltz_instability.pd \
+examples/33_vorticity_ellipse.pd \
+examples/34_cigarette_smoke.pd \
+examples/35_gravitation.pd \
+examples/36_3D_interactors.pd \
+examples/37_hollywood_planette_explosion.pd \
+examples/38_elastique_membrane_on_a_sphere.pd \
+examples/39_blob.pd \
+examples/40_i3D.pd \
+examples/41_morfing.pd \
+examples/42_tentacule.pd \
+examples/43_game.pd \
+examples/44_flag.pd \
+examples/45_newWave.pd \
+examples/46_non_linear.pd \
+examples/47_scann_synth.pd \
+examples/48_pmpd~.pd \
+examples/49_simple_oscilator~.pd \
+examples/50_string~.pd \
+examples/51_pmpd_test.pd \
+examples/52_pmpd_string.pd \
+examples/53_pmpd_wave.pd \
+examples/54_pmpd2d_test.pd \
+examples/55_pmpd2d_additive.pd \
+examples/56_pmpd2d_ball.pd \
+examples/57_pmpd2d_gravitation.pd \
+examples/58_pmpd2d_sand.pd \
+examples/59_pmpd3d_test.pd \
+examples/60_draw_link_force.pd \
+examples/61_draw_link_force_2d.pd \
+examples/62_NL.pd \
+examples/63_random_network.pd \
+examples/64_distordable_object.pd \
+examples/65_2d_interactors.pd \
+examples/66_setK_table.pd \
+examples/aglom.pd \
+examples/aglom2.pd \
+examples/aglom3.pd \
+examples/aglom4.pd \
+examples/blob.pd \
+examples/ch_gemwin.pd \
+examples/ch_uzi.pd \
+examples/constructor.pd \
+examples/explose1.pd \
+examples/explose2.pd \
+examples/fluide_mass.pd \
+examples/fluide_mass2.pd \
+examples/fluide_mass3.pd \
+examples/fluide_mass4.pd \
+examples/fluide_mass5.pd \
+examples/fluide_mass6.pd \
+examples/fluide_masse.pd \
+examples/fluide_masse2.pd \
+examples/fluide_masse3.pd \
+examples/fluide_masse4.pd \
+examples/fluide_masse5.pd \
+examples/fluide_masse6.pd \
+examples/game_line.pd \
+examples/gemLia.pd \
+examples/gemLia2.pd \
+examples/gemMasse.pd \
+examples/gemMasse2.pd \
+examples/gemMasse3.pd \
+examples/i3D.pd \
+examples/i3D2.pd \
+examples/mass_link.pd \
+examples/mass_link2.pd \
+examples/mass_link3.pd \
+examples/mountain.pd \
+examples/pd_lia.pd \
+examples/pd_lia2.pd \
+examples/pd_link.pd \
+examples/pd_link2.pd \
+examples/pd_mass.pd \
+examples/pd_mass2.pd \
+examples/pd_masse.pd \
+examples/pd_masse2.pd \
+examples/rain.pd \
+examples/rain1.pd \
+examples/sand.pd \
+examples/smoke.pd \
+examples/smoke1.pd \
+examples/smoke_vortex.pd \
+examples/tut_link.pd \
+examples/tut_mass.pd \
+examples/tut_masse.pd \
+examples/vortex.pd \
+examples/vortex2.pd \
+examples/sound_sable.pd \
+manual/pmpd.pdf \
+manual/pmpd.sxw
 
 
-$(DISTBINDIR):
-	$(INSTALL_DIR) $(DISTBINDIR)
-
-libdir: all $(DISTBINDIR)
-	$(INSTALL_DATA) $(LIBRARY_NAME)-meta.pd  $(DISTBINDIR)
-	$(INSTALL_DATA) $(SOURCES) $(SHARED_SOURCE) $(SHARED_HEADER) $(DISTBINDIR)
-	$(INSTALL_DATA) $(HELPPATCHES) $(DISTBINDIR)
-	test -z "$(strip $(EXTRA_DIST))" || \
-		$(INSTALL_DATA) $(EXTRA_DIST)    $(DISTBINDIR)
-#	tar --exclude-vcs -czpf $(DISTBINDIR).tar.gz $(DISTBINDIR)
-
-$(DISTDIR):
-	$(INSTALL_DIR) $(DISTDIR)
-
-$(ORIGDIR):
-	$(INSTALL_DIR) $(ORIGDIR)
-
-dist: $(DISTDIR)
-	$(INSTALL_DATA) Makefile  $(DISTDIR)
-	$(INSTALL_DATA) README.txt $(DISTDIR)
-	$(INSTALL_DATA) LICENSE.txt $(DISTDIR)
-	$(INSTALL_DATA) $(LIBRARY_NAME)-meta.pd  $(DISTDIR)
-	test -z "$(strip $(ALLSOURCES))" || \
-		$(INSTALL_DATA) $(ALLSOURCES)  $(DISTDIR)
-	test -z "$(strip $(wildcard $(ALLSOURCES:.c=.tcl)))" || \
-		$(INSTALL_DATA) $(wildcard $(ALLSOURCES:.c=.tcl))  $(DISTDIR)
-	test -z "$(strip $(wildcard $(LIBRARY_NAME).c))" || \
-		$(INSTALL_DATA) $(LIBRARY_NAME).c  $(DISTDIR)
-	test -z "$(strip $(SHARED_HEADER))" || \
-		$(INSTALL_DATA) $(SHARED_HEADER)  $(DISTDIR)
-	test -z "$(strip $(SHARED_SOURCE))" || \
-		$(INSTALL_DATA) $(SHARED_SOURCE)  $(DISTDIR)
-	test -z "$(strip $(SHARED_TCL_LIB))" || \
-		$(INSTALL_DATA) $(SHARED_TCL_LIB)  $(DISTDIR)
-	test -z "$(strip $(PDOBJECTS))" || \
-		$(INSTALL_DATA) $(PDOBJECTS)  $(DISTDIR)
-	test -z "$(strip $(HELPPATCHES))" || \
-		$(INSTALL_DATA) $(HELPPATCHES) $(DISTDIR)
-	test -z "$(strip $(EXTRA_DIST))" || \
-		$(INSTALL_DATA) $(EXTRA_DIST)    $(DISTDIR)
-	test -z "$(strip $(EXAMPLES))" || \
-		$(INSTALL_DIR) $(DISTDIR)/examples && \
-		for file in $(EXAMPLES); do \
-			$(INSTALL_DATA) examples/$$file $(DISTDIR)/examples; \
-		done
-	test -z "$(strip $(MANUAL))" || \
-		$(INSTALL_DIR) $(DISTDIR)/manual && \
-		for file in $(MANUAL); do \
-			$(INSTALL_DATA) manual/$$file $(DISTDIR)/manual; \
-		done
-	test -z "$(strip $(UNITTESTS))" || \
-		$(INSTALL_DIR) $(DISTDIR)/unittests && \
-		for file in $(UNITTESTS); do \
-			$(INSTALL_DATA) unittests/$$file $(DISTDIR)/unittests; \
-		done
-	tar --exclude-vcs -czpf $(DISTDIR).tar.gz $(DISTDIR)
-
-# make a Debian source package
-dpkg-source:
-	debclean
-	make distclean dist
-	mv $(DISTDIR) $(ORIGDIR)
-	tar --exclude-vcs -czpf ../$(ORIGDIR).orig.tar.gz $(ORIGDIR)
-	rm -f -- $(DISTDIR).tar.gz
-	rm -rf -- $(DISTDIR) $(ORIGDIR)
-	cd .. && dpkg-source -b $(LIBRARY_NAME)
-
-etags: TAGS
-
-TAGS: $(wildcard $(PD_INCLUDE)/*.h) $(SOURCES) $(SHARED_SOURCE) $(SHARED_HEADER)
-	etags $(wildcard $(PD_INCLUDE)/*.h)
-	etags -a *.h $(SOURCES) $(SHARED_SOURCE) $(SHARED_HEADER)
-	etags -a --language=none --regex="/proc[ \t]+\([^ \t]+\)/\1/" *.tcl
-
-showsetup:
-	@echo "CC: $(CC)"
-	@echo "CFLAGS: $(CFLAGS)"
-	@echo "LDFLAGS: $(LDFLAGS)"
-	@echo "LIBS: $(LIBS)"
-	@echo "ALL_CFLAGS: $(ALL_CFLAGS)"
-	@echo "ALL_LDFLAGS: $(ALL_LDFLAGS)"
-	@echo "ALL_LIBS: $(ALL_LIBS)"
-	@echo "PD_INCLUDE: $(PD_INCLUDE)"
-	@echo "PD_PATH: $(PD_PATH)"
-	@echo "objectsdir: $(objectsdir)"
-	@echo "LIBRARY_NAME: $(LIBRARY_NAME)"
-	@echo "LIBRARY_VERSION: $(LIBRARY_VERSION)"
-	@echo "SOURCES: $(SOURCES)"
-	@echo "SHARED_HEADER: $(SHARED_HEADER)"
-	@echo "SHARED_SOURCE: $(SHARED_SOURCE)"
-	@echo "SHARED_LIB: $(SHARED_LIB)"
-	@echo "SHARED_TCL_LIB: $(SHARED_TCL_LIB)"
-	@echo "PDOBJECTS: $(PDOBJECTS)"
-	@echo "ALLSOURCES: $(ALLSOURCES)"
-	@echo "ALLSOURCES TCL: $(wildcard $(ALLSOURCES:.c=.tcl))"
-	@echo "UNAME: $(UNAME)"
-	@echo "CPU: $(CPU)"
-	@echo "pkglibdir: $(pkglibdir)"
-	@echo "DISTDIR: $(DISTDIR)"
-	@echo "ORIGDIR: $(ORIGDIR)"
-	@echo "NDK_TOOLCHAIN: $(NDK_TOOLCHAIN)"
-	@echo "NDK_BASE: $(NDK_BASE)"
-	@echo "NDK_SYSROOT: $(NDK_SYSROOT)"
+# include Makefile.pdlibbuilder from submodule directory 'pd-lib-builder'
+PDLIBBUILDER_DIR=pd-lib-builder/
+include $(PDLIBBUILDER_DIR)/Makefile.pdlibbuilder
