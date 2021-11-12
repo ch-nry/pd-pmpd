@@ -308,7 +308,7 @@ void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 		x->nb_NLlink = min ( nb_max_link -1, x->nb_NLlink );
 	}
 	else
-	error("wrong argument number for NLlink");
+	pd_error((t_object*)x,"wrong argument number for NLlink");
 }
 
 void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence)
