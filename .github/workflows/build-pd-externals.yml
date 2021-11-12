@@ -53,9 +53,13 @@ jobs:
     - name: clone Pure-Data
       run: git clone --depth=1 https://github.com/pure-data/pure-data.git
     - name: make
-      run: $env:PDDIR="pure-data" make
+      run: |
+        $env:PDDIR="pure-data" 
+        make
     - name: install
-      run: $env:PDLIBDIR="package" make install
+      run: |
+        $env:PDLIBDIR="package" 
+        make install
     - name: Archive Package
       uses: actions/upload-artifact@v2
       with:
