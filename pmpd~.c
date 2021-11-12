@@ -270,7 +270,7 @@ void pmpd_tilde_mass(t_pmpd_tilde *x, t_float M, t_float posX)
 	x->mass[x->nb_mass].forceX = 0;
 
 	x->nb_mass++ ;
-	if (x->nb_mass == nb_max_mass) error("to many mass");
+	if (x->nb_mass == nb_max_mass) pd_error((t_object*)x, "to many mass");
 	x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
 }
 
@@ -284,7 +284,7 @@ void pmpd_tilde_link(t_pmpd_tilde *x, t_float mass_1, t_float mass_2, t_float K1
 	x->link[x->nb_link].D1 = D1;
 
 	x->nb_link++ ;
-	if (x->nb_link == nb_max_link) error("to many link");
+	if (x->nb_link == nb_max_link) pd_error((t_object*)x,"to many link");
 	x->nb_link = min ( nb_max_link -1, x->nb_link );
 }
 
@@ -304,7 +304,7 @@ void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 		x->NLlink[x->nb_NLlink].Lmax = atom_getfloatarg(7, argc, argv);
 
 		x->nb_NLlink++ ;
-		if (x->nb_NLlink == nb_max_link) error("to many NLlink");
+		if (x->nb_NLlink == nb_max_link) pd_error((t_object*)x,"to many NLlink");
 		x->nb_NLlink = min ( nb_max_link -1, x->nb_NLlink );
 	}
 	else
@@ -320,7 +320,7 @@ void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float
 	x->inPos[x->nb_inPos].influence = influence;
 
 	x->nb_inPos++;
-	if (x->nb_inPos == nb_max_in) error("to many inPos");
+	if (x->nb_inPos == nb_max_in) pd_error((t_object*)x,"to many inPos");
 	x->nb_inPos = min ( nb_max_in - 1, x->nb_inPos );
 }
 void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence)
@@ -332,7 +332,7 @@ void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_flo
 	x->inForce[x->nb_inForce].influence = influence;
 
 	x->nb_inForce++;
-	if (x->nb_inForce == nb_max_in) error("to many inForce");
+	if (x->nb_inForce == nb_max_in) pd_error((t_object*)x,"to many inForce");
 	x->nb_inForce = min ( nb_max_in - 1, x->nb_inForce );
 }
 
@@ -345,7 +345,7 @@ void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_flo
 	x->outPos[x->nb_outPos].influence = influence;
 
 	x->nb_outPos++ ;
-	if (x->nb_outPos == nb_max_out) error("to many outPos");
+	if (x->nb_outPos == nb_max_out) pd_error((t_object*)x,"to many outPos");
 	x->nb_outPos = min ( nb_max_out - 1, x->nb_outPos );
 }
 
@@ -358,7 +358,7 @@ void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_f
 	x->outSpeed[x->nb_outSpeed].influence = influence;
 
 	x->nb_outSpeed++ ;
-	if (x->nb_outSpeed == nb_max_out) error("to many outSpeed");
+	if (x->nb_outSpeed == nb_max_out) pd_error((t_object*)x,"to many outSpeed");
 	x->nb_outSpeed = min ( nb_max_out - 1, x->nb_outSpeed );
 }
 
