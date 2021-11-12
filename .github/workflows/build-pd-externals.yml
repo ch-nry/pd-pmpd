@@ -51,7 +51,7 @@ jobs:
       run: |
         cmake -S . -B build -G Ninja
         cmake --build build
-        cmake --build build --target install    - name: install
+        cmake --build build --target install  
    
     - name: Archive Package
       uses: actions/upload-artifact@v2
