@@ -56,7 +56,7 @@ foreach(SOURCE IN LISTS SOURCES)
   add_library(${PMPD_TARGET} SHARED ${SOURCE})
 
   if(WIN32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE "${PUREDATA_LIB}")
+    target_link_libraries(${PMPD_TARGET} PRIVATE "${PUREDATA_LIB}")
   endif()
 
   # set library binary file name and extension
