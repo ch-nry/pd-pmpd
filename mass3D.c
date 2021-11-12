@@ -462,7 +462,7 @@ void mass3D_inter_ambient(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 	}
 	else
 	{
-		error("bad ambient interraction message");
+		pd_error((t_object*)x,"bad ambient interraction message");
 	}
 }
 
@@ -557,7 +557,7 @@ void mass3D_inter_plane(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 	}	
 	else
 	{
-		error("bad plane interraction message");
+		pd_error((t_object*)x,"bad plane interraction message");
 	}
 }
 
@@ -670,7 +670,7 @@ t_float posx1, posy1, posz1, Nx, Ny, Nz, distance, Dmax, tmp;
 	}
 	else
 	{
-		error("bad interact_3D_sphere message");
+		pd_error((t_object*)x,"bad interact_3D_sphere message");
 	}
 }
 
@@ -763,7 +763,7 @@ void mass3D_inter_circle(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 	}	
 	else
 	{
-		error("bad circle interraction message");
+		pd_error((t_object*)x,"bad circle interraction message");
 	}
 }
 
@@ -935,7 +935,7 @@ void mass3D_inter_cylinder(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 	}	
 	else
 	{
-		error("bad cylinder interraction message");
+		pd_error((t_object*)x,"bad cylinder interraction message");
 	}
 }
 

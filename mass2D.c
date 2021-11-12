@@ -339,7 +339,7 @@ void mass2D_inter_ambient(t_mass2D *x, t_symbol *s, int argc, t_atom *argv)
 	}
 	else
 	{
-		error("bad ambient interraction message");
+		pd_error((t_object*)x,"bad ambient interraction message");
 	}
 }
 
@@ -440,7 +440,7 @@ t_float profondeur;
 	}
 	else
 	{
-		error("bad interact_2D_segment message");
+		pd_error((t_object*)x,"bad interact_2D_segment message");
 	}
 }
 
@@ -517,7 +517,7 @@ t_float profondeur;
 	}
 	else
 	{
-		error("bad interact_2D_line message");
+		pd_error((t_object*)x,"bad interact_2D_line message");
 	}
 }
 
@@ -680,7 +680,7 @@ t_float ftx=0;
 	}
 	else
 	{
-		error("bad interact_2D_circle message");
+		pd_error((t_object*)x,"bad interact_2D_circle message");
 	}
 }
 
