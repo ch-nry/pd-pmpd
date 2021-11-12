@@ -71,7 +71,7 @@ jobs:
 
     - name: Download Pure-Data Binaries
       run: |
-        Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${env:PD_VERSION}.msw.zip" "pd-${env:PD_VERSION}.msw.zip"
+        Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${env:PD_VERSION}.msw.zip" -OutFile "pd-${env:PD_VERSION}.msw.zip"
         ExpandArchive -Path "pd-${env:PD_VERSION}.msw.zip" -DestinationPath .
 
     - name: Build
