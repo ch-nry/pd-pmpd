@@ -558,7 +558,7 @@ void pmpd3d_massDistances(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 }
 
-inline int pmpd3d_bulle_order(t_int *listIndex, t_float *listDistance, t_int index)
+static inline int pmpd3d_bulle_order(t_int *listIndex, t_float *listDistance, t_int index)
 {
     t_int tmpI;
     t_float tmpD;

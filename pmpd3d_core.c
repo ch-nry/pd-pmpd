@@ -2,23 +2,22 @@
  *  pmpd3d_core.c
  */
 
-
-inline t_float pmpd3d_sign(t_float v)
+static inline t_float pmpd3d_sign(t_float v)
 {
     return v > 0 ? 1 : -1;
 }
 
-inline t_float pmpd3d_sqr(t_float x)
+static inline t_float pmpd3d_sqr(t_float x)
 {
     return x*x ;
 }
 
-inline t_float pmpd3d_pow(t_float x, t_float y)
+static inline t_float pmpd3d_pow(t_float x, t_float y)
 {
     return x > 0 ? pow(x,y) : -pow(-x,y);
 }
 
-inline t_float pmpd3d_mix(t_float X, t_float Y, t_float pmpd3d_mix)
+static inline t_float pmpd3d_mix(t_float X, t_float Y, t_float pmpd3d_mix)
 {
     return (1-pmpd3d_mix)*X + pmpd3d_mix*Y ;
 }

@@ -2,22 +2,22 @@
  *  pmpd_core.c
  */
 
-inline t_float pmpd_sign(t_float v)
+static inline t_float pmpd_sign(t_float v)
 {
     return v > 0 ? 1 : -1;
 }
 
-inline t_float pmpd_pow(t_float x, t_float y)
+static inline t_float pmpd_pow(t_float x, t_float y)
 {
     return x > 0 ? pow(x,y) : -pow(-x,y);
 }
 
-inline t_float pmpd_sqr(t_float x)
+static inline t_float pmpd_sqr(t_float x)
 {
     return x*x ;
 }
 
-inline t_float pmpd_mix(t_float X, t_float Y, t_float pmpd_mix)
+static inline t_float pmpd_mix(t_float X, t_float Y, t_float pmpd_mix)
 {
     return (1-pmpd_mix)*X + pmpd_mix*Y ;
 }

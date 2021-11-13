@@ -2,27 +2,27 @@
  *  pmpd2d_core.c
  */
 
-inline t_float pmpd2d_sign(t_float v)
+static inline t_float pmpd2d_sign(t_float v)
 {
     return v > 0 ? 1 : -1;
 }
 
-inline t_float pmpd2d_sqr(t_float x)
+static inline t_float pmpd2d_sqr(t_float x)
 {
     return x*x ;
 }
 
-inline t_float pmpd2d_pow(t_float x, t_float y)
+static inline t_float pmpd2d_pow(t_float x, t_float y)
 {
     return x > 0 ? pow(x,y) : -pow(-x,y);
 }
 
-inline t_float pmpd2d_mix(t_float X, t_float Y, t_float pmpd2d_mix)
+static inline t_float pmpd2d_mix(t_float X, t_float Y, t_float pmpd2d_mix)
 {
     return (1-pmpd2d_mix)*X + pmpd2d_mix*Y ;
 }
 
-inline t_float pmpd2d_tabread2(t_pmpd2d *x, t_float pos, t_symbol *array)
+static inline t_float pmpd2d_tabread2(t_pmpd2d *x, t_float pos, t_symbol *array)
 {
     t_garray *a;
     int npoints;
@@ -45,7 +45,7 @@ inline t_float pmpd2d_tabread2(t_pmpd2d *x, t_float pos, t_symbol *array)
     return( pos); // si il y a un pb sur le tableau, on renvoie l'identité
 }
 
-inline t_float pmpd2d_getAngle(t_pmpd2d *x, t_int mass1, t_int mass2, t_int mass3)
+static inline t_float pmpd2d_getAngle(t_pmpd2d *x, t_int mass1, t_int mass2, t_int mass3)
 {
     t_float A1, A2;
     A1 = atan2( x->mass[mass1].posX - x->mass[mass2].posX, x->mass[mass1].posY - x->mass[mass2].posY);
@@ -53,7 +53,7 @@ inline t_float pmpd2d_getAngle(t_pmpd2d *x, t_int mass1, t_int mass2, t_int mass
     return(A2-A1);
 }
 
-inline t_float pmpd2d_distance(t_pmpd2d *x, t_int mass1, t_int mass2)
+static inline t_float pmpd2d_distance(t_pmpd2d *x, t_int mass1, t_int mass2)
 {
     t_float X,Y;
     X = x->mass[mass1].posX - x->mass[mass2].posX;
@@ -61,7 +61,7 @@ inline t_float pmpd2d_distance(t_pmpd2d *x, t_int mass1, t_int mass2)
     return(sqrt(X*X+Y*Y));
 }
 
-inline t_float pmpd2d_mod2Pi(t_float angle)
+static inline t_float pmpd2d_mod2Pi(t_float angle)
 { // return an angle between -pi and pi
     t_float tmp;
     tmp = fmodf(angle-3.1415926, 6.2831852);
