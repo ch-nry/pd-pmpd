@@ -1,37 +1,43 @@
 void pmpd_massesPosL(t_pmpd *x)
 {
     int i;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = (t_atom*)malloc(x->nb_mass * sizeof(t_atom));
 
     for (i=0; i < x->nb_mass; i++)
     {
         SETFLOAT(&(pos_list[i]),x->mass[i].posX);
     }
     outlet_anything(x->main_outlet, gensym("massesPosL"),x->nb_mass , pos_list);
+
+    free(pos_list);
 }
 
 void pmpd_massesForcesL(t_pmpd *x)
 {
     int i;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = (t_atom*)malloc(x->nb_mass * sizeof(t_atom));
 
     for (i=0; i< x->nb_mass; i++)
     {
         SETFLOAT(&(pos_list[i]),x->mass[i].forceX);
     }
     outlet_anything(x->main_outlet, gensym("massesForcesL"),x->nb_mass , pos_list);
+
+    free(pos_list);
 }
 
 void pmpd_massesSpeedsL(t_pmpd *x)
 {
     int i;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = (t_atom*)malloc(x->nb_mass * sizeof(t_atom));
 
     for (i=0; i< x->nb_mass; i++)
     {
         SETFLOAT(&(pos_list[i]),x->mass[i].speedX);
     }
     outlet_anything(x->main_outlet, gensym("massesSpeedsL"),x->nb_mass , pos_list);
+
+    free(pos_list);
 }
 
 // --------------------------------------------
@@ -39,49 +45,57 @@ void pmpd_massesSpeedsL(t_pmpd *x)
 void pmpd_linksPosL(t_pmpd *x)
 {
     int i;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = (t_atom*)malloc(x->nb_link * sizeof(t_atom));
 
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),(x->link[i].mass1->posX + x->link[i].mass2->posX)/2);
     }
     outlet_anything(x->main_outlet, gensym("linksPosXL"),x->nb_link , pos_list);
+
+    free(pos_list);
 }
 
 void pmpd_linksLengthL(t_pmpd *x)
 {
     int i;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = (t_atom*)malloc(x->nb_link * sizeof(t_atom));
 
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),x->link[i].mass2->posX - x->link[i].mass1->posX);
     }
     outlet_anything(x->main_outlet, gensym("linksLengthXL"),x->nb_link , pos_list);
+
+    free(pos_list);
 }
 
 void pmpd_linksPosSpeedL(t_pmpd *x)
 {
     int i;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = (t_atom*)malloc(x->nb_link * sizeof(t_atom));
 
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),(x->link[i].mass1->speedX + x->link[i].mass2->speedX)/2);
     }
     outlet_anything(x->main_outlet, gensym("linksPosSpeedXL"),x->nb_link , pos_list);
+
+    free(pos_list);
 }
 
 void pmpd_linksLengthSpeedL(t_pmpd *x)
 {
     int i;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = (t_atom*)malloc(x->nb_link * sizeof(t_atom));
 
     for (i=0; i < x->nb_link; i++)
     {
         SETFLOAT(&(pos_list[i]),x->link[i].mass2->speedX - x->link[i].mass1->speedX);
     }
     outlet_anything(x->main_outlet, gensym("linksLengthSpeedXL"),x->nb_link , pos_list);
+
+    free(pos_list);
 }
 
 // --------------------------------------------

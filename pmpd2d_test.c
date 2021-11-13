@@ -451,7 +451,7 @@ void pmpd2d_testMassT(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd2d_testLinkL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, tmp;
-    t_atom list[x->nb_link+1];
+    t_atom* list = (t_atom*)malloc((x->nb_link +1) * sizeof(t_atom));
 
     for (i=0; i < x->nb_link;)
 	{
@@ -465,12 +465,14 @@ void pmpd2d_testLinkL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 	SETSYMBOL(&(list[0]),atom_getsymbolarg(0,argc,argv));
 	outlet_anything(x->main_outlet, gensym("testLinkL"),i+1 , list);
+
+	free(list);
 }
 
 void pmpd2d_testMassL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i, tmp;
-    t_atom list[x->nb_mass+1];
+    t_atom* list = (t_atom*)malloc((x->nb_mass +1) * sizeof(t_atom));
 
     for (i=0; i < x->nb_mass;)
 	{		
@@ -484,6 +486,8 @@ void pmpd2d_testMassL(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	}
 	SETSYMBOL(&(list[0]),atom_getsymbolarg(0,argc,argv));
 	outlet_anything(x->main_outlet, gensym("testMassL"),i+1 , list);
+
+	free(list);
 }
 
 void pmpd2d_testLinkN(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)

@@ -1,7 +1,7 @@
 void pmpd3d_massPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[3*x->nb_mass];
+    t_atom* pos_list = malloc(3*x->nb_mass * sizeof(t_atom));
     
     if (argc==0) 
     {
@@ -38,13 +38,15 @@ void pmpd3d_massPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 			
         outlet_anything(x->main_outlet, gensym("massPosL"),3 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massForceL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[3*x->nb_mass];
- 
+    t_atom* pos_list = malloc(3*x->nb_mass * sizeof(t_atom));
+
     if (argc==0) 
     {
         for (i=0; i< x->nb_mass; i++) {
@@ -79,12 +81,14 @@ void pmpd3d_massForceL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         
         outlet_anything(x->main_outlet, gensym("massForceL"),3 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[3*x->nb_mass];
+    t_atom* pos_list = malloc(3*x->nb_mass * sizeof(t_atom));
 	
     if (argc==0) 
     {
@@ -120,12 +124,14 @@ void pmpd3d_massSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         
         outlet_anything(x->main_outlet, gensym("massSpeedL"),3 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
     
     if (argc==0) 
     {
@@ -155,12 +161,14 @@ void pmpd3d_massPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].posX);
         outlet_anything(x->main_outlet, gensym("massPosXL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massForceXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
  
     if (argc==0) 
     {
@@ -190,12 +198,14 @@ void pmpd3d_massForceXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].forceX);
         outlet_anything(x->main_outlet, gensym("massForceXL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
 	
     if (argc==0) 
     {
@@ -225,12 +235,14 @@ void pmpd3d_massSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].speedX);
         outlet_anything(x->main_outlet, gensym("massSpeedXL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
     
     if (argc==0) 
     {
@@ -260,12 +272,14 @@ void pmpd3d_massPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].posY);
         outlet_anything(x->main_outlet, gensym("massPosYL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massForceYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
  
     if (argc==0) 
     {
@@ -295,12 +309,14 @@ void pmpd3d_massForceYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].forceY);
         outlet_anything(x->main_outlet, gensym("massForceYL"),1 , pos_list);        
     }
+    
+    free(pos_list);
 }
 
 void pmpd3d_massSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
 	
     if (argc==0) 
     {
@@ -330,12 +346,14 @@ void pmpd3d_massSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].speedY);
         outlet_anything(x->main_outlet, gensym("massSpeedYL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
     
     if (argc==0) 
     {
@@ -365,12 +383,14 @@ void pmpd3d_massPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].posZ);
         outlet_anything(x->main_outlet, gensym("massPosZL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massForceZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
  
     if (argc==0) 
     {
@@ -400,12 +420,14 @@ void pmpd3d_massForceZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].forceZ);
         outlet_anything(x->main_outlet, gensym("massForceZL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
 	
     if (argc==0) 
     {
@@ -435,6 +457,8 @@ void pmpd3d_massSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[0]),x->mass[(int)atom_getfloatarg(0, argc, argv)].speedZ);
         outlet_anything(x->main_outlet, gensym("massSpeedZL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 // ---------------------------------------------------------------------
@@ -442,7 +466,7 @@ void pmpd3d_massSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_massPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
     
     if (argc==0) 
     {
@@ -472,12 +496,14 @@ void pmpd3d_massPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		SETFLOAT(&(pos_list[0]),sqrt(pmpd3d_sqr(x->mass[i].posX)+pmpd3d_sqr(x->mass[i].posY)+pmpd3d_sqr(x->mass[i].posZ)));
         outlet_anything(x->main_outlet, gensym("massPosNormL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massForceNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {   
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
     
     if (argc==0) 
     {
@@ -508,12 +534,14 @@ void pmpd3d_massForceNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[0]),sqrt(pmpd3d_sqr(x->mass[i].forceX)+pmpd3d_sqr(x->mass[i].forceY)+pmpd3d_sqr(x->mass[i].forceZ)));
         outlet_anything(x->main_outlet, gensym("massForceNormL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_massSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_mass];
+    t_atom* pos_list = malloc(x->nb_mass * sizeof(t_atom));
     
     if (argc==0) 
     {
@@ -544,6 +572,8 @@ void pmpd3d_massSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         SETFLOAT(&(pos_list[i]),sqrt(pmpd3d_sqr(x->mass[i].speedX)+pmpd3d_sqr(x->mass[i].speedY)+pmpd3d_sqr(x->mass[i].speedZ)));
         outlet_anything(x->main_outlet, gensym("massSpeedNormL"),1 , pos_list);        
     }
+
+    free(pos_list);
 }
 
 // ---------------------------------------------------------------------
@@ -551,7 +581,7 @@ void pmpd3d_massSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_linkPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[3*x->nb_link];
+    t_atom* pos_list = malloc(3 * x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -579,12 +609,14 @@ void pmpd3d_linkPosL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
   		outlet_anything(x->main_outlet, gensym("linkPosL"), 3*j, pos_list);   
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkLengthL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[3*x->nb_link];
+    t_atom* pos_list = malloc(3 * x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -612,12 +644,14 @@ void pmpd3d_linkLengthL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
   		outlet_anything(x->main_outlet, gensym("linkLengthL"), 3*j, pos_list);   
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkPosSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[3*x->nb_link];
+    t_atom* pos_list = malloc(3 * x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -645,12 +679,14 @@ void pmpd3d_linkPosSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkPosSpeedL"),3*j , pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkLengthSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[3*x->nb_link];
+    t_atom* pos_list = malloc(3 * x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -678,12 +714,14 @@ void pmpd3d_linkLengthSpeedL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkLengthSpeedL"),3*j , pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -707,12 +745,14 @@ void pmpd3d_linkPosXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkPosXL"),j , pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkLengthXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -736,12 +776,14 @@ void pmpd3d_linkLengthXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkLengthXL"),j , pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkPosSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -765,12 +807,14 @@ void pmpd3d_linkPosSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkPosSpeedXL"),j , pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkLengthSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -794,12 +838,14 @@ void pmpd3d_linkLengthSpeedXL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkLengthSpeedXL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -823,12 +869,14 @@ void pmpd3d_linkPosYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkPosYL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkLengthYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -852,12 +900,14 @@ void pmpd3d_linkLengthYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkLengthYL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkPosSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -881,12 +931,14 @@ void pmpd3d_linkPosSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkPosSpeedYL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkLengthSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -910,12 +962,14 @@ void pmpd3d_linkLengthSpeedYL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkLengthSpeedYL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -939,12 +993,14 @@ void pmpd3d_linkPosZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkPosZL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkLengthZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -968,12 +1024,14 @@ void pmpd3d_linkLengthZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkLengthZL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkPosSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -997,12 +1055,14 @@ void pmpd3d_linkPosSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkPosSpeedZL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkLengthSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -1026,6 +1086,8 @@ void pmpd3d_linkLengthSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkLengthSpeedZL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 // ---------------------------------------------------------------------
@@ -1033,7 +1095,7 @@ void pmpd3d_linkLengthSpeedZL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_linkPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -1062,13 +1124,15 @@ void pmpd3d_linkPosNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
 		outlet_anything(x->main_outlet, gensym("linkPosNormL"), j, pos_list);
-    }		
+    }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkLengthNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -1099,12 +1163,14 @@ void pmpd3d_linkLengthNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkLengthNormL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkPosSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -1134,12 +1200,14 @@ void pmpd3d_linkPosSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
         }
 		outlet_anything(x->main_outlet, gensym("linkPosSpeedNormL"), j, pos_list);
     }
+
+    free(pos_list);
 }
 
 void pmpd3d_linkLengthSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
     int i,j;
-    t_atom pos_list[x->nb_link];
+    t_atom* pos_list = malloc(x->nb_link * sizeof(t_atom));
 
     if (argc==0)
     {
@@ -1169,4 +1237,6 @@ void pmpd3d_linkLengthSpeedNormL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *arg
         }
 		outlet_anything(x->main_outlet, gensym("linkLengthSpeedNormL"), j, pos_list);
     }
+
+    free(pos_list);
 }

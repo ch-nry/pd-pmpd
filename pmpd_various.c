@@ -295,9 +295,10 @@ inline int pmpd_bulle_order(t_int *listIndex, t_float *listDistance, t_int index
 void pmpd_closestMassN(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_float dist;
-	t_int i, j, nbout, list_index[x->nb_mass];
-    t_float list_distance[x->nb_mass];
-	t_atom std_out[x->nb_mass * 2];
+	t_int i, j, nbout;
+    t_int* list_index = (t_int*) malloc(x->nb_mass * sizeof(t_int));
+    t_float* list_distance = (t_float*) malloc(x->nb_mass * sizeof(t_atom));
+	t_atom* std_out = (t_atom*)malloc(x->nb_mass * 2 * sizeof(t_atom));
 	t_float posX;
 
 	if ( (argc >= 1)  && (argv[0].a_type == A_FLOAT) )
