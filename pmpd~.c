@@ -9,10 +9,10 @@
 // It can be used for particular physical modeling and for modal sound synthesis
 //////////////////////////////////////////////////////////////////////
 
+#include <stdio.h>
+#include <math.h>
 
 #include "m_pd.h"
-#include "stdio.h"
-#include "math.h"
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 

@@ -27,11 +27,11 @@
 ----------------------------------------------------------------------------
 */
 
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
 #include "m_pd.h"
-#include "stdio.h"
-#include "math.h"
 
 #include "pmpd3d.h"
 #include "pmpd3d_core.c"
