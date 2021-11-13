@@ -34,7 +34,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: pmpd
-        path: package/pmpd
+        path: build/package/pmpd
     
   build_macos:
     runs-on: macos-latest
@@ -60,7 +60,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: pmpd
-        path: package/pmpd
+        path: build/package/pmpd
 
   build_windows:
     runs-on: windows-latest
@@ -84,7 +84,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: pmpd
-        path: package/pmpd
+        path: build/package/pmpd
         
   package_release:
     runs-on: ubuntu-latest
