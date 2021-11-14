@@ -209,7 +209,7 @@ void *link3D_new(t_symbol *s, t_floatarg l, t_floatarg K, t_floatarg D, t_floata
   return (void *)x;
 }
 
-void link3D_setup(void) 
+__declspec(dllexport) void link3D_setup(void)
 {
 
   link3D_class = class_new(gensym("link3D"),

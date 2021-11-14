@@ -122,7 +122,7 @@ void *tLink3D_new(t_symbol *s)
   return (x);
 }
 
-void tLink3D_setup(void) 
+__declspec(dllexport) void tLink3D_setup(void)
 {
 
   tLink3D_class = class_new(gensym("tLink3D"),

@@ -221,7 +221,7 @@ void *iSphere3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void iSphere3D_setup(void) 
+__declspec(dllexport) void iSphere3D_setup(void)
 {
 
   iSphere3D_class = class_new(gensym("iSphere3D"),

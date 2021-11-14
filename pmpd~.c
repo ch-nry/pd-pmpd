@@ -397,7 +397,7 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 	return (void *)x;
 }
 
-void pmpd_tilde_setup(void) {
+__declspec(dllexport) void pmpd_tilde_setup(void) {
 	pmpd_tilde_class = class_new(gensym("pmpd~"), (t_newmethod)pmpd_tilde_new, 0, sizeof(t_pmpd_tilde), CLASS_DEFAULT, A_GIMME, 0);
 
 	CLASS_MAINSIGNALIN(pmpd_tilde_class, t_pmpd_tilde, f);

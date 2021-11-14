@@ -184,7 +184,7 @@ void *link2D_new(t_symbol *s, t_floatarg l, t_floatarg K, t_floatarg D, t_floata
   return (x);
 }
 
-void link2D_setup(void)
+__declspec(dllexport) void link2D_setup(void)
 {
 
   link2D_class = class_new(gensym("link2D"),

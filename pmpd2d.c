@@ -45,7 +45,7 @@
 #include "pmpd2d_various.c"
 #include "pmpd2d_deprecated.c"
 
-void pmpd2d_setup(void) 
+__declspec(dllexport) void pmpd2d_setup(void)
 {
 pmpd2d_class = class_new(gensym("pmpd2d"),
     (t_newmethod)pmpd2d_new,

@@ -1,3 +1,4 @@
+
 #include "m_pd.h"
 #include <math.h>
 
@@ -163,7 +164,7 @@ void *mass_new(t_symbol *s, t_floatarg M, t_floatarg X)
   return (void *)x;
 }
 
-void mass_setup(void) 
+__declspec(dllexport) void mass_setup(void)
 {
 
   mass_class = class_new(gensym("mass"),

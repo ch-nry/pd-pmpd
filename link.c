@@ -137,7 +137,7 @@ void *linkKD_new(t_symbol *s, t_floatarg L, t_floatarg K, t_floatarg D, t_floata
   return (void *)x;
 }
 
-void link_setup(void)
+__declspec(dllexport) void link_setup(void)
 {
   linkKD_class = class_new(gensym("link"),
         (t_newmethod)linkKD_new,

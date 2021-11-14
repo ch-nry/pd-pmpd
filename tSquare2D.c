@@ -71,7 +71,7 @@ void *tSquare2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void tSquare2D_setup(void) 
+__declspec(dllexport) void tSquare2D_setup(void)
 {
 
   tSquare2D_class = class_new(gensym("tSquare2D"),

@@ -91,7 +91,7 @@ void *tCube3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void tCube3D_setup(void) 
+__declspec(dllexport) void tCube3D_setup(void)
 {
 
   tCube3D_class = class_new(gensym("tCube3D"),

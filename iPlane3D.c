@@ -164,7 +164,7 @@ void *iPlane3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void iPlane3D_setup(void) 
+__declspec(dllexport) void iPlane3D_setup(void)
 {
 
   iPlane3D_class = class_new(gensym("iPlane3D"),

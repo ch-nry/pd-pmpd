@@ -182,7 +182,7 @@ void *iCircle3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void iCircle3D_setup(void) 
+__declspec(dllexport) void iCircle3D_setup(void)
 {
   iCircle3D_class = class_new(gensym("iCircle3D"),
         (t_newmethod)iCircle3D_new,

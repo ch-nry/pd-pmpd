@@ -118,7 +118,7 @@ void *tSeg2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void tSeg2D_setup(void) 
+__declspec(dllexport) void tSeg2D_setup(void)
 {
 
   tSeg2D_class = class_new(gensym("tSeg2D"),

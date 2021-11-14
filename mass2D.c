@@ -770,7 +770,7 @@ static void mass2D_free(t_mass2D *x)
     pd_unbind(&x->x_obj.ob_pd, x->x_sym);
 }
 
-void mass2D_setup(void) 
+__declspec(dllexport) void mass2D_setup(void)
 {
 
   mass2D_class = class_new(gensym("mass2D"),

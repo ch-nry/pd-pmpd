@@ -174,7 +174,7 @@ void *iAmbient2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void iAmbient2D_setup(void) 
+__declspec(dllexport) void iAmbient2D_setup(void)
 {
   iAmbient2D_class = class_new(gensym("iAmbient2D"),
         (t_newmethod)iAmbient2D_new,

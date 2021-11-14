@@ -45,8 +45,7 @@
 #include "pmpd3d_various.c"
 #include "pmpd3d_deprecated.c"
 
-
-void pmpd3d_setup(void) 
+__declspec(dllexport) void pmpd3d_setup(void)
 {
  pmpd3d_class = class_new(gensym("pmpd3d"),
         (t_newmethod)pmpd3d_new,

@@ -149,7 +149,7 @@ void *iSeg2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void iSeg2D_setup(void) 
+__declspec(dllexport) void iSeg2D_setup(void)
 {
 
   iSeg2D_class = class_new(gensym("iSeg2D"),

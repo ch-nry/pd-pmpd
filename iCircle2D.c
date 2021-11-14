@@ -242,7 +242,7 @@ void *iCircle2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void iCircle2D_setup(void) 
+__declspec(dllexport) void iCircle2D_setup(void)
 {
 
   iCircle2D_class = class_new(gensym("iCircle2D"),

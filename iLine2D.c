@@ -151,7 +151,7 @@ void *iLine2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void iLine2D_setup(void) 
+__declspec(dllexport) void iLine2D_setup(void)
 {
 
   iLine2D_class = class_new(gensym("iLine2D"),

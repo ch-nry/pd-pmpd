@@ -149,7 +149,7 @@ void *tPlane3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void tPlane3D_setup(void) 
+__declspec(dllexport) void tPlane3D_setup(void)
 {
 
   tPlane3D_class = class_new(gensym("tPlane3D"),

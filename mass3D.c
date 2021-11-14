@@ -1048,7 +1048,7 @@ static void mass3D_free(t_mass3D *x)
 }
 
 
-void mass3D_setup(void) 
+__declspec(dllexport) void mass3D_setup(void)
 {
 
   mass3D_class = class_new(gensym("mass3D"),

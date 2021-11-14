@@ -105,7 +105,7 @@ void *tSphere3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void tSphere3D_setup(void) 
+__declspec(dllexport) void tSphere3D_setup(void)
 {
 
   tSphere3D_class = class_new(gensym("tSphere3D"),

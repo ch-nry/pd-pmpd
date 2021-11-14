@@ -116,7 +116,7 @@ void *tLine2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void tLine2D_setup(void) 
+__declspec(dllexport) void tLine2D_setup(void)
 {
 
   tLine2D_class = class_new(gensym("tLine2D"),

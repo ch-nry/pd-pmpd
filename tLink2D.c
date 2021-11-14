@@ -126,7 +126,7 @@ void *tLink2D_new(t_symbol *s)
   return (x);
 }
 
-void tLink2D_setup(void) 
+__declspec(dllexport) void tLink2D_setup(void)
 {
 
   tLink2D_class = class_new(gensym("tLink2D"),

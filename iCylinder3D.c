@@ -254,7 +254,7 @@ void *iCylinder3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-void iCylinder3D_setup(void) 
+__declspec(dllexport) void iCylinder3D_setup(void)
 {
 
   iCylinder3D_class = class_new(gensym("iCylinder3D"),
