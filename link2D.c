@@ -1,5 +1,5 @@
 #include "m_pd.h"
-#include "math.h"
+#include <math.h>
 
 static t_class *link2D_class;
 
@@ -184,7 +184,7 @@ void *link2D_new(t_symbol *s, t_floatarg l, t_floatarg K, t_floatarg D, t_floata
   return (x);
 }
 
-void link2D_setup(void) 
+void link2D_setup(void)
 {
 
   link2D_class = class_new(gensym("link2D"),
@@ -193,7 +193,7 @@ void link2D_setup(void)
 		sizeof(t_link2D),
         CLASS_DEFAULT, A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 
-  class_addcreator((t_newmethod)link2D_new, gensym("lia2D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+  class_addcreator((t_newmethod)link2D_new, gensym("lia2D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 
   class_addbang(link2D_class, link2D_bang);
   class_addmethod(link2D_class, (t_method)link2D_reset, gensym("reset"), 0);

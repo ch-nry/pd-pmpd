@@ -1,5 +1,5 @@
 #include "m_pd.h"
-#include "math.h"
+#include <math.h>
 
 static t_class *iSeg2D_class;
 

@@ -1,5 +1,5 @@
 #include "m_pd.h"
-#include "math.h"
+#include <math.h>
 
 static t_class *iLine2D_class;
 

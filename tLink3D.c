@@ -1,5 +1,5 @@
 #include "m_pd.h"
-#include "math.h"
+#include <math.h>
 
 static t_class *tLink3D_class;
 
