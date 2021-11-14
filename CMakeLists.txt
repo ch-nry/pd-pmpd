@@ -87,9 +87,11 @@ foreach(SOURCE IN LISTS SOURCES)
                   GROUP_READ GROUP_EXECUTE
                   WORLD_READ WORLD_EXECUTE
   )
+
+install(FILES "${OBJECT_NAME}-help.pd" DESTINATION pmpd)
 endforeach()
 
-install(DIRECTORY examples/ DESTINATION pmpd
+install(DIRECTORY examples/ DESTINATION pmpd/examples
         FILES_MATCHING PATTERN "*.pd")
 
 install(FILES 

@@ -30,7 +30,6 @@
 #X text 190 675 15 : X displacement field;
 #X text 189 696 16 : Y displacement field;
 #X text 189 719 17 : Z displacement field;
-#X msg 72 202 setFXY 0 0 0;
 #X text 222 168 this is the mass name interacting with this object.
 you can also conect the output of this object to a mass \, to allow
 an interaction with this mass.;
@@ -56,6 +55,7 @@ will not interact with this object.;
 in the interactor field.;
 #X text 217 398 maximum amplitude of a random force applied to masses
 (X \, Y and Z amplitude).;
+#X msg 72 202 setFXYZ 0 0 0;
 #X connect 1 0 13 0;
 #X connect 2 0 13 0;
 #X connect 3 0 13 0;
@@ -72,4 +72,4 @@ in the interactor field.;
 #X connect 16 0 13 0;
 #X connect 17 0 13 0;
 #X connect 18 0 13 0;
-#X connect 31 0 13 0;
+#X connect 45 0 13 0;
