@@ -349,6 +349,10 @@ void pmpd_closestMassN(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
     }
 
 	outlet_anything(x->main_outlet, gensym("closestMassN"),2*nbout,std_out);
+
+    free(list_index);
+    free(list_distance);
+    free(std_out);
 }
 
 
