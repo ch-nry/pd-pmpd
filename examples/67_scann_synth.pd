@@ -1,5 +1,6 @@
-#N canvas 928 576 807 445 10;
+#N canvas 918 566 807 445 10;
 #X declare -path pmpd;
+#X declare -lib Gem;
 #N canvas 766 276 694 538 create_corde 0;
 #X obj 352 461 t a;
 #X msg 505 158 reset;
@@ -215,9 +216,9 @@
 #X msg 577 353 setK souple \$1;
 #X obj 577 314 + 1;
 #X obj 605 152 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+-1 -1 7100 1;
 #X obj 577 152 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 0 1;
+-1 -1 4300 1;
 #X msg 314 209 reset \, create \, 1;
 #X obj 674 373 s \$0-pmpd;
 #X obj 577 373 s \$0-pmpd;
@@ -227,7 +228,7 @@
 #X msg 333 264 dsp 1;
 #X obj 381 295 s pd;
 #X msg 381 264 dsp 0;
-#X obj 314 51 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 314 51 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 314 180 route 1 0;
 #X text 86 43 reset;
@@ -238,6 +239,8 @@
 #X obj 579 333 / 500;
 #X obj 674 328 / 500;
 #X obj 528 28 declare -path pmpd;
+#X obj 526 56 declare -lib Gem;
+#X text 697 199 <------;
 #X connect 0 0 45 0;
 #X connect 1 0 0 0;
 #X connect 2 0 25 0;
