@@ -65,6 +65,12 @@ foreach(SOURCE IN LISTS SOURCES)
       PREFIX ""
       OUTPUT_NAME "${OBJECT_NAME}")
 
+  set_target_properties(${PMPD_TARGET} PROPERTIES
+      C_VISIBILITY_PRESET hidden
+      CXX_VISIBILITY_PRESET hidden
+      VISIBILITY_INLINES_HIDDEN 1
+      )
+
   set_target_properties(${PMPD_TARGET} PROPERTIES DEFINE_SYMBOL "PMPD_EXPORTS")
 
   if(APPLE)
