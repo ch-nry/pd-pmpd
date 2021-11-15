@@ -13,7 +13,6 @@
 #X msg 120 610 on;
 #X msg 119 635 loadbang;
 #X obj 31 678 mass3D;
-#X msg 120 514 force3D $f1 $f2 $f3;
 #X msg 120 154 setM 1;
 #X msg 121 190 setX 0 \, setY 0 \, setZ 0;
 #X msg 116 271 setXmin -10000 \, setXmax 10000 \, setYmin -10000 \,
@@ -60,19 +59,20 @@ and the weight of the mass.;
 #X text 156 76 M is positive. Negative values produce non physical
 behaviours;
 #X text 281 97 1 : Name;
+#X msg 120 514 force3D 0 0 0;
 #X connect 7 0 13 0;
 #X connect 8 0 13 0;
 #X connect 9 0 13 0;
 #X connect 10 0 13 0;
 #X connect 11 0 13 0;
 #X connect 12 0 13 0;
-#X connect 13 0 19 0;
-#X connect 13 1 24 0;
-#X connect 13 2 23 0;
+#X connect 13 0 18 0;
+#X connect 13 1 23 0;
+#X connect 13 2 22 0;
 #X connect 14 0 13 0;
 #X connect 15 0 13 0;
 #X connect 16 0 13 0;
 #X connect 17 0 13 0;
-#X connect 18 0 13 0;
+#X connect 20 0 13 0;
 #X connect 21 0 13 0;
-#X connect 22 0 13 0;
+#X connect 49 0 13 0;
