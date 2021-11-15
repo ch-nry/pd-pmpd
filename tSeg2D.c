@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *tSeg2D_class;
 
 typedef struct _tSeg2D {
@@ -118,7 +120,7 @@ void *tSeg2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-__declspec(dllexport) void tSeg2D_setup(void)
+PMPD_EXPORT void tSeg2D_setup(void)
 {
 
   tSeg2D_class = class_new(gensym("tSeg2D"),

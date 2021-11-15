@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *iAmbient3D_class;
 
 typedef struct _iAmbient3D {
@@ -226,7 +228,7 @@ void *iAmbient3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-__declspec(dllexport) void iAmbient3D_setup(void)
+PMPD_EXPORT void iAmbient3D_setup(void)
 {
 
   iAmbient3D_class = class_new(gensym("iAmbient3D"),

@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *linkKD_class;
 
 typedef struct _linkKD {
@@ -137,7 +139,7 @@ void *linkKD_new(t_symbol *s, t_floatarg L, t_floatarg K, t_floatarg D, t_floata
   return (void *)x;
 }
 
-__declspec(dllexport) void link_setup(void)
+PMPD_EXPORT void link_setup(void)
 {
   linkKD_class = class_new(gensym("link"),
         (t_newmethod)linkKD_new,

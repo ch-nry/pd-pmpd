@@ -6,7 +6,7 @@ if(WIN32)
   set(PUREDATA_LIB "${CMAKE_SOURCE_DIR}/pure-data/bin/pd.lib" CACHE PATH "Path to pd.lib for Windows")
 endif()
 
-include_directories(${PUREDATA_INCLUDE_DIRS})
+include_directories(${PUREDATA_INCLUDE_DIRS} ${CMAKE_BINARY_DIR})
 
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   SET(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/package" CACHE PATH "Package destination folder" FORCE)
@@ -88,8 +88,11 @@ foreach(SOURCE IN LISTS SOURCES)
                   WORLD_READ WORLD_EXECUTE
   )
 
-install(FILES "${OBJECT_NAME}-help.pd" DESTINATION pmpd)
+  install(FILES "${OBJECT_NAME}-help.pd" DESTINATION pmpd)
 endforeach()
+
+include(GenerateExportHeader)
+generate_export_header(pmpd)
 
 install(DIRECTORY examples/ DESTINATION pmpd/examples
         FILES_MATCHING PATTERN "*.pd")

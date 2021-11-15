@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *iCircle2D_class;
 
 typedef struct _iCircle2D {
@@ -242,7 +244,7 @@ void *iCircle2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-__declspec(dllexport) void iCircle2D_setup(void)
+PMPD_EXPORT void iCircle2D_setup(void)
 {
 
   iCircle2D_class = class_new(gensym("iCircle2D"),

@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
 
@@ -770,7 +772,7 @@ static void mass2D_free(t_mass2D *x)
     pd_unbind(&x->x_obj.ob_pd, x->x_sym);
 }
 
-__declspec(dllexport) void mass2D_setup(void)
+PMPD_EXPORT void mass2D_setup(void)
 {
 
   mass2D_class = class_new(gensym("mass2D"),
