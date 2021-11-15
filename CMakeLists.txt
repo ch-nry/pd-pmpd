@@ -118,5 +118,6 @@ install(DIRECTORY examples/ DESTINATION pmpd/examples
 install(FILES 
   manual/pmpd.pdf
   manual/pmpd.sxw
+  LICENSE.txt
   DESTINATION pmpd
 )
