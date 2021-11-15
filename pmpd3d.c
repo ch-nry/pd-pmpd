@@ -33,6 +33,8 @@
 
 #include "m_pd.h"
 
+#include "pmpd_export.h"
+
 #include "pmpd3d.h"
 #include "pmpd3d_core.c"
 #include "pmpd3d_set.c"
@@ -45,7 +47,7 @@
 #include "pmpd3d_various.c"
 #include "pmpd3d_deprecated.c"
 
-__declspec(dllexport) void pmpd3d_setup(void)
+PMPD_EXPORT void pmpd3d_setup(void)
 {
  pmpd3d_class = class_new(gensym("pmpd3d"),
         (t_newmethod)pmpd3d_new,

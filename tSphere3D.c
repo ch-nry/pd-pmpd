@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *tSphere3D_class;
 
 typedef struct _tSphere3D {
@@ -105,7 +107,7 @@ void *tSphere3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-__declspec(dllexport) void tSphere3D_setup(void)
+PMPD_EXPORT void tSphere3D_setup(void)
 {
 
   tSphere3D_class = class_new(gensym("tSphere3D"),

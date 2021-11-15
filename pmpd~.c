@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "pmpd_export.h"
+
 #include "m_pd.h"
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
@@ -397,7 +399,7 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 	return (void *)x;
 }
 
-__declspec(dllexport) void pmpd_tilde_setup(void) {
+PMPD_EXPORT void pmpd_tilde_setup(void) {
 	pmpd_tilde_class = class_new(gensym("pmpd~"), (t_newmethod)pmpd_tilde_new, 0, sizeof(t_pmpd_tilde), CLASS_DEFAULT, A_GIMME, 0);
 
 	CLASS_MAINSIGNALIN(pmpd_tilde_class, t_pmpd_tilde, f);

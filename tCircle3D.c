@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *tCircle3D_class;
 
 typedef struct _tCircle3D {
@@ -167,7 +169,7 @@ void *tCircle3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-__declspec(dllexport) void tCircle3D_setup(void)
+PMPD_EXPORT void tCircle3D_setup(void)
 {
 
   tCircle3D_class = class_new(gensym("tCircle3D"),

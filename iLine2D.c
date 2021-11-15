@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *iLine2D_class;
 
 typedef struct _iLine2D {
@@ -151,7 +153,7 @@ void *iLine2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-__declspec(dllexport) void iLine2D_setup(void)
+PMPD_EXPORT void iLine2D_setup(void)
 {
 
   iLine2D_class = class_new(gensym("iLine2D"),

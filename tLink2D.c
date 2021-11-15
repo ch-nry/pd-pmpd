@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *tLink2D_class;
 
 typedef struct _tLink2D {
@@ -126,7 +128,7 @@ void *tLink2D_new(t_symbol *s)
   return (x);
 }
 
-__declspec(dllexport) void tLink2D_setup(void)
+PMPD_EXPORT void tLink2D_setup(void)
 {
 
   tLink2D_class = class_new(gensym("tLink2D"),

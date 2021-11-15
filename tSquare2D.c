@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *tSquare2D_class;
 
 typedef struct _tSquare2D {
@@ -71,7 +73,7 @@ void *tSquare2D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-__declspec(dllexport) void tSquare2D_setup(void)
+PMPD_EXPORT void tSquare2D_setup(void)
 {
 
   tSquare2D_class = class_new(gensym("tSquare2D"),

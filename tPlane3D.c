@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *tPlane3D_class;
 
 typedef struct _tPlane3D {
@@ -149,7 +151,7 @@ void *tPlane3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-__declspec(dllexport) void tPlane3D_setup(void)
+PMPD_EXPORT void tPlane3D_setup(void)
 {
 
   tPlane3D_class = class_new(gensym("tPlane3D"),

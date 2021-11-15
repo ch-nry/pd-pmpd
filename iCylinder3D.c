@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 static t_class *iCylinder3D_class;
 
 typedef struct _iCylinder3D {
@@ -254,7 +256,7 @@ void *iCylinder3D_new(t_symbol *s, int argc, t_atom *argv)
   return (x);
 }
 
-__declspec(dllexport) void iCylinder3D_setup(void)
+PMPD_EXPORT void iCylinder3D_setup(void)
 {
 
   iCylinder3D_class = class_new(gensym("iCylinder3D"),

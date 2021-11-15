@@ -33,6 +33,8 @@
 
 #include "m_pd.h"
 
+#include "pmpd_export.h"
+
 #include "pmpd2d.h"
 #include "pmpd2d_core.c"
 #include "pmpd2d_set.c"
@@ -45,7 +47,7 @@
 #include "pmpd2d_various.c"
 #include "pmpd2d_deprecated.c"
 
-__declspec(dllexport) void pmpd2d_setup(void)
+PMPD_EXPORT void pmpd2d_setup(void)
 {
 pmpd2d_class = class_new(gensym("pmpd2d"),
     (t_newmethod)pmpd2d_new,

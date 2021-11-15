@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include <math.h>
 
+#include "pmpd_export.h"
+
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
 
@@ -1048,7 +1050,7 @@ static void mass3D_free(t_mass3D *x)
 }
 
 
-__declspec(dllexport) void mass3D_setup(void)
+PMPD_EXPORT void mass3D_setup(void)
 {
 
   mass3D_class = class_new(gensym("mass3D"),
