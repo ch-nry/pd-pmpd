@@ -1,3 +1,11 @@
+from version 0.11 to version 0.12
+- new buils system (thankx Avilleret)
+- internal code modification, clean, and optimisation
+- various debug in help and examples
+- lot's of other things that I forget about
+- possibilities to fix the maximum number of link and mass, for memory management purpose
+
+
 from version 0.10 to version 0.11
 
 - code refactorisation
