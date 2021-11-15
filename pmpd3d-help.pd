@@ -1010,11 +1010,11 @@ state based on previous time step.;
 #X text 17 326 - Max number of link that can be created;
 #X text 17 340 When only 1 argument is provided \, it is used fir both
 mass and link maximum number, f 87;
-#X obj 17 226 pmpd3d 8 10;
 #X text 16 358 Default is 10000 mass and link. It should be OK for
 most uses \, but can be reduce to save memory \, or increase for more
 complex simulation, f 86;
-#X connect 32 0 70 0;
+#X obj 17 226 pmpd3d 8 50;
+#X connect 32 0 71 0;
 #X connect 35 0 46 0;
 #X connect 46 0 36 0;
 #X connect 46 1 36 1;
@@ -1024,4 +1024,4 @@ complex simulation, f 86;
 #X connect 50 0 30 0;
 #X connect 52 0 33 0;
 #X connect 53 0 33 0;
-#X connect 70 0 31 0;
+#X connect 71 0 31 0;

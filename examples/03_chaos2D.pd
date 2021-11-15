@@ -1,5 +1,5 @@
 #N canvas 173 87 902 582 12;
-#X declare -path pmpd;
+#X declare -lib Gem -path pmpd;
 #X obj 16 98 t b b;
 #X obj 16 50 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
 ;
@@ -138,7 +138,7 @@ care of numerical instability (especially with fast movement);
 #X text 303 181 K;
 #X text 377 181 D;
 #X text 451 180 M;
-#X obj 460 13 declare -path pmpd;
+#X obj 460 13 declare -lib Gem -path pmpd;
 #X connect 0 0 31 0;
 #X connect 0 1 30 0;
 #X connect 1 0 5 0;

@@ -3,16 +3,14 @@
 #X text 92 309 elongation speed of the link;
 #X text 172 258 position of the center of the link;
 #X text 157 283 orientation of the link;
-#X msg 66 205 position3D $f1 $f2 $f3;
 #X msg 65 126 bang;
 #X text 229 204 position of mass 2;
-#X msg 65 175 position3D $f1 $f2 $f3;
 #X obj 66 259 unpack s f f f;
 #X obj 27 232 tLink3D;
 #X obj 53 284 unpack s f f f;
 #X floatatom 40 309 5 0 0 0 - - -;
 #X floatatom 27 332 5 0 0 0 - - -;
-#N canvas 431 222 749 537 gem 0;
+#N canvas 840 264 749 537 gem 0;
 #X floatatom -52 158 5 0 0 0 - - -;
 #X floatatom -10 158 5 0 0 0 - - -;
 #X floatatom 32 158 5 0 0 0 - - -;
@@ -131,10 +129,12 @@
 #X text 230 123 computes and outputs forces according to the last masses
 positions.;
 #X text 227 31 outputs informations about a tested link.;
-#X connect 4 0 9 1;
-#X connect 5 0 9 0;
-#X connect 7 0 9 0;
-#X connect 9 0 12 0;
-#X connect 9 1 11 0;
-#X connect 9 2 10 0;
-#X connect 9 3 8 0;
+#X msg 65 175 position3D 0 0 0;
+#X msg 66 205 position3D 0 0 0;
+#X connect 4 0 7 0;
+#X connect 7 0 10 0;
+#X connect 7 1 9 0;
+#X connect 7 2 8 0;
+#X connect 7 3 6 0;
+#X connect 17 0 7 0;
+#X connect 18 0 7 1;
