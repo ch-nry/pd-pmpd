@@ -163,7 +163,8 @@ jobs:
       - name: Create Deken Package
         shell: bash
         run: |
-          echo Credentials : ${DEKEN_USERNAME} ${DEKEN_PASSWORD}
+          env | grep DEKEN
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
           SLUG=${SHORT//\//_} # replace '/' with '_'
+          docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD --volume ${PWD}/pmpd:/pmpd registry.git.iem.at/pd/deken env | grep DEKEN
           docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD --volume ${PWD}/pmpd:/pmpd registry.git.iem.at/pd/deken deken upload -v "${SLUG}" /pmpd
