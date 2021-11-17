@@ -1,5 +1,7 @@
 name: Build Pure-Data externals
 
+on: [push, pull_request]
+
 env:
   PD_VERSION: 0.51-4
 
