@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *iAmbient3D_class;
 
@@ -252,6 +253,11 @@ PMPD_EXPORT void iAmbient3D_setup(void)
         (t_newmethod)iAmbient3D_new,
         0, sizeof(t_iAmbient3D),
         CLASS_DEFAULT, A_GIMME, 0);
+
+  if(!iAmbient3D_class)
+    return;
+
+  verbose(4, "iAmbient3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iAmbient3D_new, gensym("pmpd.iAmbient3D"), A_GIMME, 0);
 

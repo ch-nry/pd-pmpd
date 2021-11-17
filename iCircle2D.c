@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *iCircle2D_class;
 
@@ -268,6 +269,11 @@ PMPD_EXPORT void iCircle2D_setup(void)
         (t_newmethod)iCircle2D_new,
         0, sizeof(t_iCircle2D),
         CLASS_DEFAULT, A_GIMME, 0);
+
+  if(!iCircle2D_class)
+    return;
+
+  verbose(4, "iCircle2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iCircle2D_new, gensym("pmpd.iCircle2D"),  A_GIMME, 0);
  

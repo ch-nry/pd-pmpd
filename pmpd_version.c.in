@@ -1,0 +1,18 @@
+#define GIT_SHA "@GIT_SHA@"
+#define GIT_DATE "@GIT_DATE@"
+#define GIT_TAG "@GIT_TAG@"
+
+const char* pmpd_sha()
+{
+  return GIT_SHA;
+}
+
+const char* pmpd_date()
+{
+  return GIT_DATE;
+}
+
+const char* pmpd_tag()
+{
+  return GIT_TAG;
+}

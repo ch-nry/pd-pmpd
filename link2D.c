@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *link2D_class;
 
@@ -211,6 +212,11 @@ PMPD_EXPORT void link2D_setup(void)
         (t_method)link2D_free, 
 		sizeof(t_link2D),
         CLASS_DEFAULT, A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+
+  if(!link2D_class)
+      return;
+
+  verbose(4, "link2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)link2D_new, gensym("lia2D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 

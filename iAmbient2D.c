@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *iAmbient2D_class;
 
@@ -199,6 +200,11 @@ PMPD_EXPORT void iAmbient2D_setup(void)
         (t_newmethod)iAmbient2D_new,
         0, sizeof(t_iAmbient2D),
         CLASS_DEFAULT, A_GIMME, 0);
+
+  if(!iAmbient2D_class)
+      return;
+
+  verbose(4, "iAmbient2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iAmbient2D_new, gensym("pmpd.iAmbient2D"), A_GIMME, 0);
 

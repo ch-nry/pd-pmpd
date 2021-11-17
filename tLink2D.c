@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *tLink2D_class;
 
@@ -154,8 +155,12 @@ PMPD_EXPORT void tLink2D_setup(void)
 		sizeof(t_tLink2D),
         CLASS_DEFAULT, A_DEFSYM, 0);
 
-  class_addcreator((t_newmethod)tLink2D_new, gensym("tLia2D"), A_DEFSYM, 0);
+  if(!tLink2D_class)
+    return;
 
+  verbose(4, "tLink2D version %s (%s)", pmpd_tag(), pmpd_sha());
+
+  class_addcreator((t_newmethod)tLink2D_new, gensym("tLia2D"), A_DEFSYM, 0);
 
   class_addbang(tLink2D_class, tLink2D_bang);
 

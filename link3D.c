@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *link3D_class;
 
@@ -236,6 +237,11 @@ PMPD_EXPORT void link3D_setup(void)
         (t_method)link3D_free,
 		sizeof(t_link3D),
         CLASS_DEFAULT, A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT,  A_DEFFLOAT, 0);
+
+  if(!link3D_class)
+      return;
+
+  verbose(4, "link3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)link3D_new, gensym("lia3D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 

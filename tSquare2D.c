@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *tSquare2D_class;
 
@@ -97,6 +98,11 @@ PMPD_EXPORT void tSquare2D_setup(void)
         (t_newmethod)tSquare2D_new,
         0, sizeof(t_tSquare2D),
         CLASS_DEFAULT, A_GIMME, 0);
+
+  if(!tSquare2D_class)
+      return;
+
+  verbose(4, "tSquare2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tSquare2D_new, gensym("pmpd.tSquare2D"), A_GIMME, 0);
 

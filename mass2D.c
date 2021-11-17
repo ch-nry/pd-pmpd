@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
@@ -796,6 +797,11 @@ PMPD_EXPORT void mass2D_setup(void)
         (t_newmethod)mass2D_new,
         (t_method)mass2D_free, sizeof(t_mass2D),
         CLASS_DEFAULT, A_GIMME, 0);
+
+  if(!mass2D_class)
+      return;
+
+  verbose(4, "mass2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)mass2D_new, gensym("masse2D"), A_GIMME, 0);
 

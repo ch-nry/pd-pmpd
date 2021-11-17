@@ -20,6 +20,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
@@ -191,6 +192,12 @@ PMPD_EXPORT void mass_setup(void)
         (t_method)mass_free,
 		sizeof(t_mass),
         CLASS_DEFAULT, A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT,0);
+
+  if(!mass_class)
+      return;
+
+  verbose(4, "mass version %s (%s)", pmpd_tag(), pmpd_sha());
+
   class_addcreator((t_newmethod)mass_new, gensym("masse"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT,0);
   class_addfloat(mass_class, mass_float);
   class_addbang(mass_class, mass_bang);

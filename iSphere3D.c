@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *iSphere3D_class;
 
@@ -247,6 +248,11 @@ PMPD_EXPORT void iSphere3D_setup(void)
         (t_newmethod)iSphere3D_new,
         0, sizeof(t_iSphere3D),
         CLASS_DEFAULT, A_GIMME, 0);
+
+  if(!iSphere3D_class)
+      return;
+
+  verbose(4, "iSphere3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iSphere3D_new, gensym("pmpd.iSphere3D"),  A_GIMME, 0);
  

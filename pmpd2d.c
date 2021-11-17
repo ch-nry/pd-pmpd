@@ -34,6 +34,7 @@
 #include "m_pd.h"
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 #include "pmpd2d.h"
 #include "pmpd2d_core.c"
@@ -52,6 +53,11 @@ PMPD_EXPORT void pmpd2d_setup(void)
 pmpd2d_class = class_new(gensym("pmpd2d"),
     (t_newmethod)pmpd2d_new,
     0, sizeof(t_pmpd2d),CLASS_DEFAULT, A_GIMME, 0);
+
+    if(!pmpd2d_class)
+        return;
+
+    verbose(4, "pmpd2d version %s (%s)", pmpd_tag(), pmpd_sha());
 
 /*
  pmpd2d_core

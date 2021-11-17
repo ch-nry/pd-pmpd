@@ -34,6 +34,7 @@
 #include "m_pd.h"
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 #include "pmpd3d.h"
 #include "pmpd3d_core.c"
@@ -52,6 +53,11 @@ PMPD_EXPORT void pmpd3d_setup(void)
  pmpd3d_class = class_new(gensym("pmpd3d"),
         (t_newmethod)pmpd3d_new,
         0, sizeof(t_pmpd3d),CLASS_DEFAULT, A_GIMME, 0);
+
+    if(!pmpd3d_class)
+        return;
+
+    verbose(4, "pmpd3d version %s (%s)", pmpd_tag(), pmpd_sha());
 /*
  pmpd3d_core
  --

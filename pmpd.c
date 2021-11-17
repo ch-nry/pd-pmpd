@@ -51,6 +51,7 @@
 #include "m_pd.h"
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 #include "pmpd.h"
 #include "pmpd_core.c"
@@ -68,6 +69,12 @@ PMPD_EXPORT void pmpd_setup(void)
  pmpd_class = class_new(gensym("pmpd"),
         (t_newmethod)pmpd_new,
         0, sizeof(t_pmpd),CLASS_DEFAULT, A_GIMME, 0);
+
+    if(!pmpd_class)
+      return;
+
+    verbose(4, "pmpd version %s (%s)", pmpd_tag(), pmpd_sha());
+
 /*
  pmpd_core
  --

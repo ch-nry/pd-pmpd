@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
@@ -1075,6 +1076,11 @@ PMPD_EXPORT void mass3D_setup(void)
         (t_method)mass3D_free,
 		sizeof(t_mass3D),
         CLASS_DEFAULT, A_GIMME, 0);
+
+  if(!mass3D_class)
+      return;
+
+  verbose(4, "mass3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)mass3D_new, gensym("masse3D"), A_GIMME, 0);
 

@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *linkKD_class;
 
@@ -163,6 +164,11 @@ PMPD_EXPORT void link_setup(void)
         (t_method)linkKD_free,
 		sizeof(t_linkKD),
         CLASS_DEFAULT, A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+
+  if(!linkKD_class)
+    return;
+
+  verbose(4, "link version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)linkKD_new, gensym("lia"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 

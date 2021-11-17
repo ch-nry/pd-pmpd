@@ -16,6 +16,14 @@ if("${CMAKE_C_COMPILER_ID}" MATCHES "Clang$")
   set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
 endif()
 
+# Get git info
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
+include(git_info)
+get_commit_sha(GIT_SHA)
+get_commit_date(GIT_DATE)
+get_tag(GIT_TAG)
+configure_file("${CMAKE_SOURCE_DIR}/pmpd_version.c.in" "${CMAKE_BINARY_DIR}/pmpd_version.c" @ONLY)
+
 set(SOURCES
   iAmbient2D.c
   iAmbient3D.c
@@ -53,7 +61,8 @@ foreach(SOURCE IN LISTS SOURCES)
   message(STATUS "Processing ${SOURCE}")
   get_filename_component(OBJECT_NAME ${SOURCE} NAME_WLE)
   string(REPLACE "~" "_tilde" PMPD_TARGET ${OBJECT_NAME})
-  add_library(${PMPD_TARGET} SHARED ${SOURCE})
+
+  add_library(${PMPD_TARGET} SHARED ${SOURCE} pmpd_version.h "${CMAKE_BINARY_DIR}/pmpd_version.c")
 
   if(WIN32)
     target_link_libraries(${PMPD_TARGET} PRIVATE "${PUREDATA_LIB}")

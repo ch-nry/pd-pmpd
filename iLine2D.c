@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *iLine2D_class;
 
@@ -177,6 +178,11 @@ PMPD_EXPORT void iLine2D_setup(void)
         (t_newmethod)iLine2D_new,
         0, sizeof(t_iLine2D),
         CLASS_DEFAULT, A_GIMME, 0);
+
+  if(!iLine2D_class)
+      return;
+
+  verbose(4, "iLine2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iLine2D_new, gensym("pmpd.iLine2D"),  A_GIMME, 0);
  

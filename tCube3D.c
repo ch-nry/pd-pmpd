@@ -19,6 +19,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 static t_class *tCube3D_class;
 
@@ -117,6 +118,11 @@ PMPD_EXPORT void tCube3D_setup(void)
         (t_newmethod)tCube3D_new,
         0, sizeof(t_tCube3D),
         CLASS_DEFAULT, A_GIMME, 0);
+
+  if(!tCube3D_class)
+      return;
+
+  verbose(4, "tCube3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tCube3D_new, gensym("pmpd.tCube3D"), A_GIMME, 0);
 

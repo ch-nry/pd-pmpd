@@ -30,6 +30,7 @@
 #include <math.h>
 
 #include "pmpd_export.h"
+#include "pmpd_version.h"
 
 #include "m_pd.h"
 
@@ -418,6 +419,11 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 PMPD_EXPORT void pmpd_tilde_setup(void) {
 	pmpd_tilde_class = class_new(gensym("pmpd~"), (t_newmethod)pmpd_tilde_new, 0, sizeof(t_pmpd_tilde), CLASS_DEFAULT, A_GIMME, 0);
+
+    if(!pmpd_tilde_class)
+        return;
+
+    verbose(4, "pmpd~ version %s (%s)", pmpd_tag(), pmpd_sha());
 
 	CLASS_MAINSIGNALIN(pmpd_tilde_class, t_pmpd_tilde, f);
 
