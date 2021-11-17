@@ -26,7 +26,7 @@ jobs:
     
     - name: Build
       run: |
-        cmake -S . -B build -G Ninja
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
         cmake --build build
         cmake --build build --target install
 
@@ -52,7 +52,7 @@ jobs:
 
     - name: Build
       run: |
-        cmake -S . -B build -G Ninja
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
         cmake --build build
         cmake --build build --target install  
    
@@ -77,8 +77,8 @@ jobs:
     - name: Build
       run: |
         cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib"
-        cmake --build build
-        cmake --build build --target install
+        cmake --build build --configuration Release
+        cmake --build build --configuration Release --target install
 
     - name: Archive Package
       uses: actions/upload-artifact@v2
@@ -118,8 +118,9 @@ jobs:
         export LD_LIBRARY_PATH=/opt/cross-pi-gcc/lib:${LD_LIBRARY_PATH}
 
         cmake -B build -S ${GITHUB_WORKSPACE} \
-            -DCMAKE_TOOLCHAIN_FILE="${GITHUB_WORKSPACE}/cmake/toolchain/arm-linux-gnueabihf.cmake" \
-            -DCMAKE_BUILD_TYPE=Release
+            -DCMAKE_TOOLCHAIN_FILE="${GITHUB_WORKSPACE}/arm-linux-gnueabihf.cmake" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -GNinja
         cmake --build build
         cmake --build build --target install
 
