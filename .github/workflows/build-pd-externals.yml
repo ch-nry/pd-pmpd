@@ -142,6 +142,7 @@ jobs:
         export LD_LIBRARY_PATH=/opt/cross-pi-gcc/lib:${LD_LIBRARY_PATH}
 
         cmake -B build -S ${GITHUB_WORKSPACE} \
+            -DCMAKE_C_FLAGS="-marm" \
             -DCMAKE_TOOLCHAIN_FILE="${GITHUB_WORKSPACE}/arm-linux-gnueabihf.cmake" \
             -DCMAKE_BUILD_TYPE=Release \
             -GNinja
