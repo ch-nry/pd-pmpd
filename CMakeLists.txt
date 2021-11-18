@@ -128,5 +128,6 @@ install(FILES
   manual/pmpd.pdf
   manual/pmpd.sxw
   LICENSE.txt
+  README.md
   DESTINATION pmpd
 )
