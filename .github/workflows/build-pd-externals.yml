@@ -67,12 +67,12 @@ jobs:
 
     - name: Download Pure-Data Binaries
       run: |
-        Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${env:PD_VERSION}-i386.msw.zip" -OutFile "pd-${env:PD_VERSION}.msw.zip"
-        Expand-Archive -Path "pd-${env:PD_VERSION}.msw.zip" -DestinationPath .
+        Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${env:PD_VERSION}-i386.msw.zip" -OutFile "pd-${env:PD_VERSION}-i386.msw.zip"
+        Expand-Archive -Path "pd-${env:PD_VERSION}-i386.msw.zip" -DestinationPath .
 
     - name: Build
       run: |
-        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 16 2019" -A Win32
+        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}-i386/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}-i386/bin/pd.lib" -G "Visual Studio 16 2019" -A Win32
         cmake --build build --config Release
         cmake --build build --config Release --target install
 
