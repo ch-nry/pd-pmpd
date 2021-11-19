@@ -1,6 +1,7 @@
 #!/bin/bash
 
-SOURCE_FOLDER=/pmpd
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+SOURCE_FOLDER=${SCRIPT_DIR}
 BUILD_FOLDER=${SOURCE_FOLDER}/build
 
 cmake -S ${SOURCE_FOLDER} -B ${BUILD_FOLDER} -G Ninja -DCMAKE_TOOLCHAIN_FILE="${SOURCE_FOLDER}/arm-linux-gnueabihf.cmake"
