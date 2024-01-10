@@ -198,7 +198,7 @@ t_int *pmpd_tilde_perform(t_int *w)
 			// a mass does not move if M=0 (i.e : invM = 0)
 				x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
 				x->mass[i].forceX = 0;
-				x->mass[i].forceX = random_bang_pmpd_tilde(x) * 1e-25; 
+				x->mass[i].forceX = 0; //random_bang_pmpd_tilde(x) * 1e-25; 
 					// only used for denormal problem
 					// -ffast-math -O6 does not solve the problem
 				x->mass[i].posX += x->mass[i].speedX ;
