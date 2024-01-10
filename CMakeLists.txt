@@ -44,6 +44,7 @@ set(SOURCES
   pmpd2d.c
   pmpd3d.c
   pmpd~.c
+  pmpd2d~.c
   tCircle2D.c
   tCircle3D.c
   tCube3D.c
