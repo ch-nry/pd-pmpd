@@ -254,18 +254,31 @@ void pmpd_tilde_float(t_pmpd_tilde *x, t_float force)
 		x->mass[i].forceX += force;
 }
 
-void pmpd_tilde_forceX(t_pmpd_tilde *x, t_float nbr_mass, t_float force)
+void pmpd_tilde_forceX(t_pmpd_tilde *x, t_int nbr_mass, t_float force)
 {
 // add a force to a specific mass
-	nbr_mass = max(0, min( x->nb_mass, (int)nbr_mass));
-	x->mass[(int)nbr_mass].forceX += force;
+	if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass) ) x->mass[nbr_mass].forceX += force;
 }
 
-void pmpd_tilde_posX(t_pmpd_tilde *x, t_float nbr_mass, t_float posX)
+void pmpd_tilde_posX(t_pmpd_tilde *x, t_int nbr_mass, t_float posX)
 {
 // move a mass to a certain position
-	nbr_mass = max(0, min( x->nb_mass, (int)nbr_mass));
-	x->mass[(int)nbr_mass].posX = posX;
+	if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass) )  x->mass[nbr_mass].posX = posX;
+}
+
+void pmpd_tilde_setM(t_pmpd_tilde *x, t_float nbr_mass, t_float M)
+{
+	if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass) && (M>0)) x->mass[nbr_mass].invM = 1./M;
+}
+
+void pmpd_tilde_setK(t_pmpd_tilde *x, t_int nbr_link, t_float K)
+{
+	if( (nbr_link >= 0) && (nbr_mass < x->nb_link) ) x->link[nbr_link].K1 = K;
+}
+
+void pmpd_tilde_setD(t_pmpd_tilde *x, t_int nbr_link, t_float D)
+{
+	if( (nbr_link >= 0) && (nbr_mass < x->nb_link) ) x->link[nbr_link].D1 = D;
 }
 
 
