@@ -42,52 +42,52 @@
 
 static t_class *pmpd_tilde_class;
 
-typedef struct _mass {
+struct _mass {
 	t_float invM;
 	t_float speedX;
 	t_float posX;
 	t_float forceX;
-} foo;
+} ;
 
-typedef struct _link {
+struct _link {
 	struct _mass *mass1;
 	struct _mass *mass2;
 	t_float K1, D1; 
-} foo1 ;
+} ;
 
-typedef struct _NLlink {
+struct _NLlink {
 	struct _mass *mass1;
 	struct _mass *mass2;
 	t_float K1, D1,L0,Lmin, Lmax, Pow; 
-} foo1b ;
+} ;
 
-typedef struct _inPos {
+struct _inPos {
 	// in en position
 	t_int nbr_inlet;
 	struct _mass *mass1;
 	t_float influence;
-} foo2;
+} ;
 
-typedef struct _inForce {
+struct _inForce {
 	// in en force
 	t_int nbr_inlet;
 	struct _mass *mass1;
 	t_float influence;
-} foo3;
+} ;
 
-typedef struct _outPos {
+struct _outPos {
 	// out en position
 	t_int nbr_outlet;
 	struct _mass *mass1;
 	t_float influence;
-} foo4;
+} ;
 
-typedef struct _outSpeed {
+struct _outSpeed {
 	// out en vitesse
 	t_int nbr_outlet;
 	struct _mass *mass1;
 	t_float influence;
-} foo5;
+} ;
 
 typedef struct _pmpd_tilde {
 	t_object  x_obj;
@@ -240,10 +240,6 @@ void pmpd_tilde_dsp(t_pmpd_tilde *x, t_signal **sp)
 
 void pmpd_tilde_bang(t_pmpd_tilde *x)
 {
-// add a unity force to all masses
-	int i;
-	for (i=0;i < x->nb_mass; i++)
-		x->mass[i].forceX += 1;
 }
 
 void pmpd_tilde_float(t_pmpd_tilde *x, t_float force)
