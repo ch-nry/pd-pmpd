@@ -114,40 +114,13 @@ jobs:
     - name: Clone Pure-Data
       run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
 
-    - name: Install Sysroot and Cross Build Dependencies
+    - name: Install Dependencies
       run: |
-        sudo apt-get update -yqq 
-        sudo apt-get upgrade -yqq
-        sudo apt-get install -yqq build-essential g++ ninja-build wget
+        sudo apt-get update && sudo apt-get upgrade -yqq
+        sudo apt-get update && DEBIAN_FRONTEND=noninteractive sudo apt-get install -yqq git build-essential cmake gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf ninja-build puredata
 
-        wget -nv https://www.dropbox.com/s/lwchd3va49sd43p/gcc-8.2.0-rpi.tar.bz2
-        tar xf gcc-8.2.0-rpi.tar.bz2
-        sudo mv cross-pi-gcc-8.2.0/ /opt/
-        sudo ln -s /opt/cross-pi-gcc-8.2.0 /opt/cross-pi-gcc
-
-        sudo ln -s /usr/include/arm-linux-gnueabihf/sys /usr/include/sys
-        sudo ln -s /usr/include/arm-linux-gnueabihf/bits /usr/include/bits
-        sudo ln -s /usr/include/arm-linux-gnueabihf/gnu /usr/include/gnu
-        sudo ln -s /usr/include/arm-linux-gnueabihf/asm /usr/include/asm
-        sudo ln -s /usr/lib/arm-linux-gnueabihf/crti.o /usr/lib/crti.o
-        sudo ln -s /usr/lib/arm-linux-gnueabihf/crt1.o /usr/lib/crt1.o
-        sudo ln -s /usr/lib/arm-linux-gnueabihf/crtn.o /usr/lib/crtn.o
     - name: Build
-      run: |
-        export CTEST_OUTPUT_ON_FAILURE=1
-        export RPI_ROOT_PATH=/opt/cross-pi-gcc-8.2.0
-        export PKG_CONFIG_SYSROOT_DIR=$RPI_ROOT_PATH
-        export PKG_CONFIG_LIBDIR=${RPI_ROOT_PATH}/usr/lib/pkgconfig:${RPI_ROOT_PATH}/usr/share/pkgconfig:${RPI_ROOT_PATH}/usr/lib/arm-linux-gnueabihf/pkgconfig/
-        export PATH=/opt/cross-pi-gcc/bin:${PATH}
-        export LD_LIBRARY_PATH=/opt/cross-pi-gcc/lib:${LD_LIBRARY_PATH}
-
-        cmake -B build -S ${GITHUB_WORKSPACE} \
-            -DCMAKE_C_FLAGS="-marm" \
-            -DCMAKE_TOOLCHAIN_FILE="${GITHUB_WORKSPACE}/arm-linux-gnueabihf.cmake" \
-            -DCMAKE_BUILD_TYPE=Release \
-            -GNinja
-        cmake --build build
-        cmake --build build --target install
+      run: ./cross_compile_rpi.sh
 
     - name: Archive Package
       uses: actions/upload-artifact@v2
