@@ -14,17 +14,13 @@
 //    You should have received a copy of the GNU General Public License
 //    along with pmpd software. If not, see <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------- 
-
-//////////////////////////////////////////////////////////////////////
-// this is the standard blablabla 
-// made for pd
-// Gnu Public Licence
-// cyrille.henry@la-kitchen.fr
 //
+// pmpd = physical modeling for pure data
+// ch@chnry.net
 // pmpd~
 // The same than pmpd, but with audio data for input and output
-// It can be used for particular physical modeling and for modal sound synthesis
-//////////////////////////////////////////////////////////////////////
+// It can be used for particular physical modeling and for sound synthesis
+
 
 #include <stdio.h>
 #include <math.h>

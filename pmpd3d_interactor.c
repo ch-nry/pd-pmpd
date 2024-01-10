@@ -14,6 +14,10 @@
 //    You should have received a copy of the GNU General Public License
 //    along with pmpd software. If not, see <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------- 
+//
+// pmpd = physical modeling for pure data
+// ch@chnry.net
+
 
 void pmpd3d_iCylinder_i(t_pmpd3d *x, int i, t_float xc, t_float yc, t_float zc, t_float a, t_float b, t_float c, t_float d, t_float R, t_float K, t_float power, t_float Kt, t_float powert, t_float Rmin, t_float Rmax)
 {

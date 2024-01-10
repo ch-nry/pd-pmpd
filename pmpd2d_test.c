@@ -14,6 +14,10 @@
 //    You should have received a copy of the GNU General Public License
 //    along with pmpd software. If not, see <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------- 
+//
+// pmpd = physical modeling for pure data
+// ch@chnry.net
+
 
 int pmpd2d_test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 {

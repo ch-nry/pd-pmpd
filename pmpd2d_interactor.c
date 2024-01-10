@@ -14,7 +14,9 @@
 //    You should have received a copy of the GNU General Public License
 //    along with pmpd software. If not, see <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------- 
-
+//
+// pmpd = physical modeling for pure data
+// ch@chnry.net
 
 
 void pmpd2d_iCircle_i(t_pmpd2d *x, int i, t_float a, t_float b, t_float r, t_float K, t_float power, t_float Kt, t_float powert, t_float Rmin, t_float Rmax)

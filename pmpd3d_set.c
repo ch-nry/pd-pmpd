@@ -14,6 +14,10 @@
 //    You should have received a copy of the GNU General Public License
 //    along with pmpd software. If not, see <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------- 
+//
+// pmpd = physical modeling for pure data
+// ch@chnry.net
+
 
 #define sph2carX(r,phy,teta) (r * cos(teta))
 #define sph2carY(r,phy,teta) (r * sin(teta) * cos(phy))

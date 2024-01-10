@@ -14,6 +14,10 @@
 //    You should have received a copy of the GNU General Public License
 //    along with pmpd software. If not, see <http://www.gnu.org/licenses/>.
 // -------------------------------------------------------------------------- 
+//
+// pmpd = physical modeling for pure data
+// ch@chnry.net
+
 
 void pmpd_massPosMean(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
