@@ -71,6 +71,7 @@ PMPD_EXPORT void pmpd3d_setup(void)
 */
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setK,            		gensym("setK"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setD,            		gensym("setD"), A_GIMME, 0);
+    class_addmethod(pmpd3d_class, (t_method)pmpd3d_setM,                    gensym("setM"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setPow,            		gensym("setPow"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setDEnv,         		gensym("setDEnv"), A_GIMME, 0);
     class_addmethod(pmpd3d_class, (t_method)pmpd3d_setDEnvOffset,   		gensym("setDEnvOffset"), A_GIMME, 0);

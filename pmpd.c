@@ -69,7 +69,8 @@ PMPD_EXPORT void pmpd_setup(void)
  Functions to modify the internal state of the pmpd object
 */
     class_addmethod(pmpd_class, (t_method)pmpd_setK,                    gensym("setK"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_setD,                    gensym("setD"), A_GIMME, 0);    
+    class_addmethod(pmpd_class, (t_method)pmpd_setD,                    gensym("setD"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_setM,                    gensym("setM"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_setPow,                  gensym("setPow"), A_GIMME, 0);    
     class_addmethod(pmpd_class, (t_method)pmpd_setD2,                   gensym("setDEnv"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_setL,                    gensym("setL"), A_GIMME, 0);

@@ -75,6 +75,7 @@ pmpd2d_class = class_new(gensym("pmpd2d"),
 
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setK,                gensym("setK"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setD,                gensym("setD"), A_GIMME, 0);
+    class_addmethod(pmpd2d_class, (t_method)pmpd2d_setM,                gensym("setM"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setPow,              gensym("setPow"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setDEnv,             gensym("setDEnv"), A_GIMME, 0);
     class_addmethod(pmpd2d_class, (t_method)pmpd2d_setDEnvOffset,       gensym("setDEnvOffset"), A_GIMME, 0);

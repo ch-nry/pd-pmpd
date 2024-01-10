@@ -551,6 +551,69 @@ void pmpd_setMassId(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
 }
+
+void pmpd_setM(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
+{
+// change the weight of masses
+    int tmp, i, offset;
+    t_garray *a;
+    int npoints, n;
+    t_word *vec;
+
+    if ( ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) )
+    {
+        tmp = atom_getfloatarg(0, argc, argv);
+        tmp = max(0, min( x->nb_mass-1, tmp));
+        if(atom_getfloatarg(1, argc, argv) > 0) x->mass[tmp].invM = 1./atom_getfloatarg(1, argc, argv);
+    }
+    if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
+    {
+        for (i=0; i< x->nb_mass; i++)
+        {
+            if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+            {
+        		if(atom_getfloatarg(1, argc, argv) > 0) x->mass[tmp].invM = 1./atom_getfloatarg(1, argc, argv);
+            }
+        }
+    }
+    else if ( (argc >= 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_SYMBOL ) )
+    {
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			n=0;
+			for (i=0; i < x->nb_mass; i++)
+			{
+				if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
+				{
+					if(vec[n].w_float > 0) x->mass[i].invM = 1./vec[n].w_float;
+					n++;
+					if (n >= npoints) break;
+				}
+			}
+		}
+	}
+	else if ( (argc >= 2) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_SYMBOL ) )
+	{
+		if (!(a = (t_garray *)pd_findbyclass(atom_getsymbolarg(1,argc,argv), garray_class)))
+			pd_error(x, "%s: no such array", atom_getsymbolarg(1,argc,argv)->s_name);
+		else if (!garray_getfloatwords(a, &npoints, &vec))
+			pd_error(x, "%s: bad template for tabLink", atom_getsymbolarg(1,argc,argv)->s_name);
+		else
+		{
+			offset = atom_getfloatarg(0, argc, argv);
+			n=min(npoints,x->nb_mass-offset);
+			for (i=0; i < n; i++)
+			{
+				if(vec[i].w_float > 0) x->mass[i+offset].invM = 1./vec[i].w_float;
+			}
+		}
+	} 
+}
+
 void pmpd_setFixed(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
