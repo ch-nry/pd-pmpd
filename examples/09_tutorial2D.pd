@@ -1,12 +1,12 @@
-#N canvas 53 91 600 601 12;
+#N canvas 165 94 544 849 12;
 #X declare -lib Gem -path pmpd;
 #N canvas 623 135 520 309 init 0;
 #X msg 200 169 setK \$1;
 #X msg 274 143 setD \$1;
 #X msg 416 115 setM \$1;
-#X floatatom 200 94 5 -10 200 0 - - -;
-#X floatatom 274 92 5 0 0 0 - - -;
-#X floatatom 416 92 5 0 0 0 - - -;
+#X floatatom 200 94 5 -10 200 0 - - - 0;
+#X floatatom 274 92 5 0 0 0 - - - 0;
+#X floatatom 416 92 5 0 0 0 - - - 0;
 #X obj 416 143 s mass;
 #X obj 200 143 / 10;
 #X obj 200 117 + 1;
@@ -15,7 +15,7 @@
 #X msg 274 68 25;
 #X msg 416 66 50;
 #X obj 49 50 loadbang;
-#X floatatom 341 92 5 0 0 0 - - -;
+#X floatatom 341 92 5 0 0 0 - - - 0;
 #X obj 341 116 / 10;
 #X msg 341 143 setD2 \$1;
 #X msg 341 68 1;
@@ -56,10 +56,8 @@
 #X connect 24 0 19 0;
 #X restore 171 64 pd init;
 #X obj 42 92 t b b;
-#X obj 42 44 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
-#X obj 329 22 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 42 44 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
+#X obj 329 22 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X msg 75 231 0 \, destroy;
 #X obj 41 259 gemwin;
 #X msg 41 206 reset \, create \, 1;
@@ -200,52 +198,38 @@
 #X connect 39 0 4 0;
 #X connect 39 0 7 1;
 #X connect 39 0 19 1;
-#X restore 417 325 pd structure;
+#X restore 48 327 pd structure;
 #X obj 329 45 loadbang;
-#X msg 244 270 force2D 0 2;
-#X msg 190 295 force2D -2 0;
-#X msg 247 322 force2D 0 -2;
-#X msg 301 294 force2D 2 0;
+#X msg 245 243 force2D 0 2;
+#X msg 191 268 force2D -2 0;
+#X msg 248 295 force2D 0 -2;
+#X msg 302 267 force2D 2 0;
 #X obj 329 74 t b b b;
 #X msg 380 99 reset;
 #X msg 355 124 resetL;
 #X msg 329 152 resetF;
 #X obj 42 65 metro 50;
 #X msg 54 150 force2D 0 -0.1;
-#X obj 171 43 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#X obj 246 354 s tut_mass;
+#X obj 171 43 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
+#X obj 247 327 s tut_mass;
 #X obj 42 178 s tut_mass;
 #X obj 77 117 s tut_link;
-#X text 39 403 You can use this exemple to try to make you own structure.
-;
-#X text 58 506 Go to pd structure;
-#X text 59 526 Remove everything;
-#X text 41 427 look at the structure \, and look a the patch : a link
-is corespnding to a segment \, and a maase is a white sphere;
-#X text 41 462 everyting is here to make a 2D structure easilly;
-#X text 40 486 to make your own strucute :;
-#X text 59 546 put "tut_mass" object in the screen where you want to
-put your mass in the gem windows.;
-#X text 58 658 create a "tut_link" object for each link you whant to
-put in the structure.;
-#X text 60 726 The structure is ready. you should now do the initialisation
-part :;
+#X text 43 360 You can use this exemple to try to make you own structure.;
+#X text 62 463 Go to pd structure;
+#X text 63 483 Remove everything;
+#X text 45 384 look at the structure \, and look a the patch : a link is corespnding to a segment \, and a maase is a white sphere;
+#X text 45 419 everyting is here to make a 2D structure easilly;
+#X text 44 443 to make your own strucute :;
+#X text 63 503 put "tut_mass" object in the screen where you want to put your mass in the gem windows.;
+#X text 62 615 create a "tut_link" object for each link you whant to put in the structure.;
+#X text 64 683 The structure is ready. you should now do the initialisation part :;
 #X text 225 40 <- init;
 #X text 375 20 <- reset;
-#X text 59 763 click on pd init : this will give a minimal and maximal
-position to the mass. (for them to stay on the screen).;
-#X text 60 806 click on reset : this will tell the link to learn there
-good initial lenght \, reset forces etc...;
-#X text 59 584 when all mass are there \, you can specifie them ther
-initial position : edit "tut_mass" object and add 2 float corresponding
-to ther X and Y position in the GEM screen. (should be about from -4
-to 4);
-#X text 59 694 connect them to the mass (link and masss as to be connected
-in 2 way : mass to link and link to mass).;
-#X text 61 846 now \, you are ready for toggle the metro on...;
-#X text 30 887 If the line does not display corectly \, you sould upgrade
-GEM;
+#X text 63 720 click on pd init : this will give a minimal and maximal position to the mass. (for them to stay on the screen).;
+#X text 64 763 click on reset : this will tell the link to learn there good initial lenght \, reset forces etc...;
+#X text 63 541 when all mass are there \, you can specifie them ther initial position : edit "tut_mass" object and add 2 float corresponding to ther X and Y position in the GEM screen. (should be about from -4 to 4);
+#X text 63 651 connect them to the mass (link and masss as to be connected in 2 way : mass to link and link to mass).;
+#X text 65 803 now \, you are ready for toggle the metro on...;
 #X text 192 204 <- create;
 #X obj 40 14 declare -lib Gem -path pmpd;
 #X connect 1 0 21 0;

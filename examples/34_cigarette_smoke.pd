@@ -5,8 +5,7 @@
 #X msg 86 95 \; pd filename new ./ \; #N canvas \; #X pop 1 \;;
 #X msg 46 350 menuclose;
 #X obj 43 47 sel 0 1;
-#X obj 43 29 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
+#X obj 43 29 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
 #X obj 61 72 t b b;
 #X obj 107 272 * 20;
 #X obj 82 272 * 20;
@@ -286,27 +285,22 @@
 #X obj 4980 4980 smoke1 249;
 #X restore 428 196 pd pool;
 #X obj 41 192 t b b;
-#X obj 40 115 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
+#X obj 40 115 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
 #X obj 41 236 s mass;
 #X obj 66 217 s link;
-#X text 73 112 <- begin (change the metro speed for slow computer)
-;
-#X floatatom 83 135 5 0 0 0 - - -;
+#X text 73 112 <- begin (change the metro speed for slow computer);
+#X floatatom 83 135 5 0 0 0 - - - 0;
 #X msg 265 175 0 \, destroy;
 #X obj 232 201 gemwin;
 #X obj 140 270 s reset_smoke;
 #X obj 324 235 s reset_all;
-#X obj 324 210 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#X obj 40 167 metro 20;
+#X obj 324 210 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X msg 232 155 reset \, create \, 1;
 #X obj 123 175 metro 50;
 #X obj 113 355 iAmbient2D mass 0 0.0007 0.0002 0.0002;
 #X obj 116 383 smoke_vortex 0.003;
 #X text 173 53 Cigarettes smoke simulation;
-#X text 115 75 Each particules are in some kind of turbulent wind (vertical
-force + some random mouving vortex);
+#X text 115 75 Each particules are in some kind of turbulent wind (vertical force + some random mouving vortex);
 #X text 345 154 <- create;
 #X obj 123 198 f;
 #X obj 123 220 + 1;
@@ -317,18 +311,19 @@ force + some random mouving vortex);
 #X obj 247 403 smoke_vortex -0.003;
 #X obj 247 423 smoke_vortex -0.003;
 #X obj 10 2 declare -lib Gem -path pmpd;
+#X obj 40 167 metro 10;
 #X connect 2 0 4 0;
 #X connect 2 1 5 0;
-#X connect 2 1 16 0;
-#X connect 3 0 13 0;
-#X connect 3 0 15 0;
-#X connect 7 0 13 1;
+#X connect 2 1 15 0;
+#X connect 3 0 14 0;
+#X connect 3 0 29 0;
+#X connect 7 0 29 1;
 #X connect 8 0 9 0;
 #X connect 12 0 11 0;
-#X connect 13 0 2 0;
-#X connect 14 0 9 0;
-#X connect 15 0 21 0;
+#X connect 13 0 9 0;
+#X connect 14 0 20 0;
+#X connect 20 0 21 0;
 #X connect 21 0 22 0;
-#X connect 22 0 23 0;
-#X connect 23 0 21 1;
-#X connect 23 0 10 0;
+#X connect 22 0 20 1;
+#X connect 22 0 10 0;
+#X connect 29 0 2 0;

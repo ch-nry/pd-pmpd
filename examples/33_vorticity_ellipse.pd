@@ -1,12 +1,11 @@
-#N canvas 67 91 579 244 10;
+#N canvas 500 382 579 244 10;
 #X declare -lib Gem -path pmpd;
 #N canvas 860 482 333 427 creation 0;
 #X obj 46 380 s pd-new;
 #X msg 86 95 \; pd filename new ./ \; #N canvas \; #X pop 1 \;;
 #X msg 46 350 menuclose;
 #X obj 43 47 sel 0 1;
-#X obj 43 29 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
+#X obj 43 29 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
 #X obj 61 72 t b b;
 #X obj 107 272 * 20;
 #X obj 82 272 * 20;
@@ -30,12 +29,11 @@
 #X connect 11 1 8 0;
 #X restore 427 187 pd creation pool;
 #X obj 42 157 t b b;
-#X obj 42 80 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
+#X obj 42 80 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
 #X obj 42 201 s mass;
 #X obj 67 182 s link;
 #X text 74 77 <- begin (change the metro speed for slow computer);
-#X floatatom 91 96 5 0 0 0 - - -;
+#X floatatom 91 96 5 0 0 0 - - - 0;
 #X msg 180 146 0 \, destroy;
 #X obj 145 174 gemwin;
 #N canvas 790 67 586 510 pool 0;
@@ -355,17 +353,15 @@
 #X obj 277 171 s mass2;
 #X msg 278 150 bang;
 #X msg 145 121 reset \, view 0 0 -10 0 0 0 0 1 0 \, create \, 1;
-#X obj 42 131 metro 100;
-#X text 121 23 simulation of a continus elipse of vorticity field.
-;
-#X text 120 40 This simulation nead lot's a masss \, and lot's of CPU.
-;
+#X text 121 23 simulation of a continus elipse of vorticity field.;
+#X text 120 40 This simulation nead lot's a masss \, and lot's of CPU.;
 #X obj 10 2 declare -lib Gem -path pmpd;
+#X obj 42 131 metro 10;
 #X connect 1 0 3 0;
 #X connect 1 1 4 0;
-#X connect 2 0 13 0;
-#X connect 6 0 13 1;
+#X connect 2 0 16 0;
+#X connect 6 0 16 1;
 #X connect 7 0 8 0;
 #X connect 11 0 10 0;
 #X connect 12 0 8 0;
-#X connect 13 0 1 0;
+#X connect 16 0 1 0;

@@ -1,12 +1,10 @@
 #N canvas 747 358 622 422 10;
 #X declare -lib Gem -path pmpd;
 #X obj 28 130 t b b;
-#X obj 23 50 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
+#X obj 23 50 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
 #X msg 196 149 0 \, destroy;
-#X obj 173 177 gemwin;
 #X obj 23 160 s mass;
-#N canvas 58 556 1250 480 pool 0;
+#N canvas 571 637 1066 346 pool 0;
 #X obj 960 210 sand 1 10.6;
 #X obj 240 60 sand -1.5 9.4;
 #X obj 480 30 sand -2 9.8;
@@ -163,8 +161,7 @@
 #X msg 95 95 \; pd filename new ./ \; #N canvas \; #X pop 1 \;;
 #X msg 40 464 menuclose;
 #X obj 43 47 sel 0 1;
-#X obj 44 29 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
+#X obj 44 29 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
 #X obj 69 72 t b b;
 #X obj 97 412 pack f f f f;
 #X obj 89 191 t b f f;
@@ -204,31 +201,28 @@
 #X restore 317 147 pd creation pool;
 #X obj 86 343 s link;
 #X text 212 4 sand;
-#X floatatom 66 72 5 0 0 0 - - -;
+#X floatatom 66 72 5 0 0 0 - - - 0;
 #X msg 168 95 reset \, view 0 0 -8 0 0 0 0 1 0 \, create \, 1;
-#X text 125 18 it's the same than previus exemple \, but with more
-masss \, and diferents physical properties so that the global shape
-is diferent.;
+#X text 125 18 it's the same than previus exemple \, but with more masss \, and diferents physical properties so that the global shape is diferent.;
 #X obj 61 296 iCircle2D mass 3.1 2 0 3 0 0 1 0 0 0 0.1;
 #X obj 72 320 iCircle2D mass -3.1 2 0 3 0 0 1 0 0 0 0.1;
 #X text 461 94 <- 1;
 #X text 49 47 <- 2;
 #X text 204 62 houagalss;
 #X obj 23 95 metro 3;
-#X obj 110 130 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 110 130 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 108 156 s reset;
-#X obj 43 270 iAmbient2D mass 0 -0.00051 0 0 0.031 -1000 1000 -1000
-1000;
+#X obj 43 270 iAmbient2D mass 0 -0.00051 0 0 0.031 -1000 1000 -1000 1000;
 #X obj 11 2 declare -lib Gem -path pmpd;
-#X connect 0 0 4 0;
-#X connect 0 1 7 0;
+#X obj 173 177 gemwin;
+#X connect 0 0 3 0;
+#X connect 0 1 6 0;
+#X connect 0 1 11 0;
 #X connect 0 1 12 0;
-#X connect 0 1 13 0;
-#X connect 0 1 20 0;
-#X connect 1 0 17 0;
-#X connect 2 0 3 0;
-#X connect 9 0 17 1;
-#X connect 10 0 3 0;
-#X connect 17 0 0 0;
-#X connect 18 0 19 0;
+#X connect 0 1 19 0;
+#X connect 1 0 16 0;
+#X connect 2 0 21 0;
+#X connect 8 0 16 1;
+#X connect 9 0 21 0;
+#X connect 16 0 0 0;
+#X connect 17 0 18 0;

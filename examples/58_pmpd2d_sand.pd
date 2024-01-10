@@ -3,7 +3,7 @@
 #X obj 363 187 gemhead;
 #X obj 363 234 world_light;
 #X msg 364 141 \; pd dsp 1;
-#X msg 136 184 FSAA 4;
+#X msg 136 204 FSAA 4;
 #N canvas 1144 73 300 425 massrender 0;
 #X obj 112 80 inlet;
 #X obj 62 311 translateXYZ;
@@ -37,13 +37,11 @@
 #X connect 13 1 5 0;
 #X restore 51 627 pd massrender;
 #X obj 51 350 gemhead;
-#X obj 51 328 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
+#X obj 51 328 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
 #X msg 51 373 get massesPos sable;
 #N canvas 754 153 608 476 creation 0;
 #X obj 198 405 t a;
-#X obj 196 30 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 196 30 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X msg 207 72 reset;
 #X obj 128 28 loadbang;
 #X text 234 32 Reset;
@@ -94,16 +92,14 @@
 #X obj 197 434 outlet;
 #X obj 94 7 inlet;
 #X msg 36 375 Xmax 1111 \, Xmin -1111 \, Ymax 1111 \, Ymin -1111;
-#X msg 48 338 setL linkD 1000 \, setL linkG 1000 \, setL linkH 1000
-\, setL linkB 1000;
+#X msg 48 338 setL linkD 1000 \, setL linkG 1000 \, setL linkH 1000 \, setL linkB 1000;
 #X msg 108 256 link linkD MlinkD sable 0.01 0 1 1000 100000;
 #X msg 103 276 link linkG MlinkG sable 0.01 0 1 1000 100000;
 #X msg 90 295 link linkH MlinkH sable 0.01 0 1 1000 100000;
 #X msg 78 315 link linkB MlinkB sable 0.01 0 1 1000 100000;
 #X msg 167 113 link rebond sable sable 0.003 0.005 1 0 0.4;
 #X msg 146 153 setL rebond 0.4;
-#X msg 120 221 mass MlinkD 0 1 -993.8 0 \, mass MlinkG 0 1 993.8 0
-\, mass MlinkH 0 1 0 996.2 \, mass MlinkB 0 1 0 -996.2;
+#X msg 120 221 mass MlinkD 0 1 -993.8 0 \, mass MlinkG 0 1 993.8 0 \, mass MlinkH 0 1 0 996.2 \, mass MlinkB 0 1 0 -996.2;
 #X msg 129 194 setDEnv sable 0.0001;
 #X connect 0 0 10 0;
 #X connect 1 0 7 0;
@@ -176,27 +172,24 @@
 #X connect 16 0 0 0;
 #X connect 17 0 1 0;
 #X restore 212 496 pd simulation_gravite;
-#X obj 68 475 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 68 475 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 65 417 metro 1;
-#X obj 65 396 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
-;
-#X msg 109 145 view 0 0 40 0 0 0 0 1 0;
-#X msg 119 165 perspec -0.1 0.1 -0.1 0.1 1 100;
-#X obj 116 119 b;
-#X obj 135 96 loadbang;
-#X obj 116 95 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 65 396 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
+#X msg 109 165 view 0 0 40 0 0 0 0 1 0;
+#X msg 119 185 perspec -0.1 0.1 -0.1 0.1 1 100;
+#X obj 116 139 b;
+#X obj 135 116 loadbang;
+#X obj 116 115 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 363 212 rotateXYZ -30 -20 0;
 #X obj 65 444 t b b;
-#X msg 209 242 destroy;
-#X obj 209 197 key;
-#X obj 209 218 sel 27;
+#X msg 209 262 destroy;
+#X obj 209 217 key;
+#X obj 209 238 sel 27;
 #X msg 90 396 1;
-#X msg 88 61 dimen 1680 1050 \, cursor 0;
-#X obj 52 282 gemwin 58;
-#X msg 51 13 dimen 672 420;
-#X msg 69 38 create \, lighting 1 \, 1;
+#X msg 88 81 dimen 1680 1050 \, cursor 0;
+#X obj 52 302 gemwin 58;
+#X msg 51 33 dimen 672 420;
+#X msg 69 58 create \, lighting 1 \, 1;
 #N canvas 0 22 450 300 sound 0;
 #X obj 19 279 dac~;
 #X obj 202 220 *~ 1;
@@ -262,6 +255,7 @@
 #X obj 213 462 gemmouse 80 80;
 #X text 124 661 moove the mouse on the screen to simulate gravity;
 #X obj 362 47 declare -lib Gem -path pmpd;
+#X obj 45 10 loadbang;
 #X connect 0 0 20 0;
 #X connect 3 0 27 0;
 #X connect 5 0 7 0;
@@ -299,3 +293,4 @@
 #X connect 35 0 2 0;
 #X connect 36 0 11 0;
 #X connect 36 1 11 1;
+#X connect 39 0 28 0;

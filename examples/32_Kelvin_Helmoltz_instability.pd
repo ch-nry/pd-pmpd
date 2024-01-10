@@ -1,12 +1,11 @@
-#N canvas 44 91 528 221 10;
+#N canvas 588 242 528 221 10;
 #X declare -lib Gem -path pmpd;
 #N canvas 860 482 341 435 creation 0;
 #X obj 46 380 s pd-new;
 #X msg 86 95 \; pd filename new ./ \; #N canvas \; #X pop 1 \;;
 #X msg 46 350 menuclose;
 #X obj 43 47 sel 0 1;
-#X obj 43 29 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
+#X obj 43 29 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
 #X obj 61 72 t b b;
 #X obj 107 272 * 20;
 #X obj 82 272 * 20;
@@ -136,27 +135,25 @@
 #X obj 1980 1980 vortex 6.125;
 #X restore 392 169 pd pool;
 #X obj 19 158 t b b;
-#X obj 19 81 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
+#X obj 19 81 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
 #X obj 19 202 s mass;
 #X obj 44 183 s link;
 #X text 51 78 <- begin (change the metro speed for slow computer);
-#X floatatom 62 101 5 0 0 0 - - -;
-#X obj 19 132 metro 10;
+#X floatatom 62 101 5 0 0 0 - - - 0;
 #X msg 157 147 0 \, destroy;
 #X obj 122 175 gemwin;
 #X msg 254 150 reset;
 #X msg 122 122 reset \, view 0 0 -8 0 0 0 0 1 0 \, create \, 1;
 #X obj 254 172 s mass2;
-#X text 144 29 Simulation of a continus line of vorticity (no damping
-fluid \, 2D mouvement);
+#X text 144 29 Simulation of a continus line of vorticity (no damping fluid \, 2D mouvement);
 #X text 144 58 This create a Kevin-Helmoltz instability.;
 #X obj 10 2 declare -lib Gem -path pmpd;
+#X obj 19 132 metro 3;
 #X connect 2 0 4 0;
 #X connect 2 1 5 0;
-#X connect 3 0 8 0;
-#X connect 7 0 8 1;
-#X connect 8 0 2 0;
-#X connect 9 0 10 0;
-#X connect 11 0 13 0;
-#X connect 12 0 10 0;
+#X connect 3 0 16 0;
+#X connect 7 0 16 1;
+#X connect 8 0 9 0;
+#X connect 10 0 12 0;
+#X connect 11 0 9 0;
+#X connect 16 0 2 0;

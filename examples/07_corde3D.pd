@@ -1,4 +1,4 @@
-#N canvas 98 91 816 578 12;
+#N canvas 374 169 1008 671 12;
 #X declare -lib Gem -path pmpd;
 #N canvas 663 236 288 320 mass 0;
 #X obj 25 38 inlet;
@@ -36,8 +36,7 @@
 #X connect 4 0 3 0;
 #X connect 4 1 1 0;
 #X restore 47 593 pd link;
-#X obj 23 83 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 0 1
-;
+#X obj 23 83 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
 #X obj 94 188 s link;
 #X obj 23 187 s mass;
 #X obj 540 417 s mass;
@@ -49,9 +48,9 @@
 #X obj 392 127 + 1;
 #X obj 43 314 gemwin;
 #X msg 62 281 0 \, destroy;
-#X floatatom 392 105 5 0 0 0 - - -;
-#X floatatom 529 109 5 0 0 0 - - -;
-#X floatatom 613 108 5 0 0 0 - - -;
+#X floatatom 392 105 5 0 0 0 - - - 0;
+#X floatatom 529 109 5 0 0 0 - - - 0;
+#X floatatom 613 108 5 0 0 0 - - - 0;
 #X obj 392 47 loadbang;
 #X obj 23 104 metro 10;
 #X obj 23 128 t b b;
@@ -63,9 +62,9 @@
 #X obj 535 304 s gemhead;
 #X obj 535 223 gemhead;
 #X obj 535 279 rotateXYZ;
-#X floatatom 557 253 5 0 0 0 - - -;
-#X floatatom 607 254 5 0 0 0 - - -;
-#X floatatom 657 254 5 0 0 0 - - -;
+#X floatatom 557 253 5 0 0 0 - - - 0;
+#X floatatom 607 254 5 0 0 0 - - - 0;
+#X floatatom 657 254 5 0 0 0 - - - 0;
 #X msg 158 479 force3D 1000 0 0;
 #X msg 179 503 force3D 0 1000 0;
 #X msg 196 525 force3D 0 0 1000;
@@ -100,7 +99,7 @@
 #X msg 506 517 force3D 0 0 2000;
 #X msg 490 495 force3D 0 2000 0;
 #X msg 468 471 force3D 2000 0 0;
-#X floatatom 445 110 5 0 0 0 - - -;
+#X floatatom 445 110 5 0 0 0 - - - 0;
 #X msg 445 133 setD \$1;
 #X msg 445 84 1;
 #X msg 529 83 1;
@@ -502,13 +501,10 @@
 #X restore 861 601 pd link;
 #X msg 43 253 reset \, lighting 1 \, create \, 1;
 #X text 433 12 string 3D;
-#X text 25 366 At the initialisation \, all the mass are in the same
-point (0 \, 0). The mass move to find the minimal energy of the system.
-;
+#X text 25 366 At the initialisation \, all the mass are in the same point (0 \, 0). The mass move to find the minimal energy of the system.;
 #X text 720 366 <- send forces to all the masss;
 #X text 654 491 <- send forces to specific masss;
-#X text 21 421 The gravity simulation is a force vertical force aply
-to all masss.;
+#X text 21 421 The gravity simulation is a force vertical force aply to all masss.;
 #X text 710 252 <- rotate the model in 3D;
 #X text 55 78 <- 1;
 #X text 289 255 <- 2;
