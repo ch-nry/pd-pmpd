@@ -17,10 +17,6 @@
 //
 // pmpd = physical modeling for pure data
 // ch@chnry.net
-// pmpd~
-// The same than pmpd, but with audio data for input and output
-// It can be used for particular physical modeling and for sound synthesis
-
 
 #include <stdio.h>
 #include <math.h>
