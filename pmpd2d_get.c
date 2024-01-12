@@ -334,7 +334,7 @@ void pmpd2d_get(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         } 
     }
     else
-        pd_error((t_object*)x,"not get attribute");
+        logpost(x,1,"not get attribute");
 }
 
 void pmpd2d_massPos(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
