@@ -204,7 +204,7 @@ t_int *pmpd_tilde_perform(t_int *w)
 		for (i=0; i<x->nb_inlet; i++)
 		// increase pointer to inlet vectors value
 			in[i]++;
-
+		for (i=0; i<x->nb_outlet; i++) x->outlet[i] = 0;
 		for (i=0; i<x->nb_outPos; i++)
 			x->outlet[x->outPos[i].nbr_outlet] += x->outPos[i].mass1->posX * x->outPos[i].influence;
 			// compute output vector value		
@@ -216,7 +216,6 @@ t_int *pmpd_tilde_perform(t_int *w)
 		// send vector value to the vector pointer
 		{
 			*out[i]++ = x->outlet[i];
-			x->outlet[i] = 0;
 		}
 	}
 	return(w+3);
