@@ -90,8 +90,10 @@ foreach(SOURCE IN LISTS SOURCES)
   else()
     set(PLATFORM_SUFFIX "m") # m for Microsoft
   endif()
-
-  if(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm.*")
+ 
+  if(CMAKE_GENERATOR_PLATFORM MATCHES Win32)
+    set(ARCH_SUFFIX i386)
+  elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm.*")
     set(ARCH_SUFFIX "arm")
   elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*aarch64.*")
     set(ARCH_SUFFIX "aarch64")
