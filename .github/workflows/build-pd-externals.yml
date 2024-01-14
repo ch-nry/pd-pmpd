@@ -96,7 +96,7 @@ jobs:
 
     - name: Build
       run: |
-        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 16 2019" -A x64
+        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64
         cmake --build build --config Release
         cmake --build build --config Release --target install
 
