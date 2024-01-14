@@ -143,6 +143,7 @@ jobs:
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
           SLUG=${SHORT//\//_} # replace '/' with '_'
           zip -r pmpd-${SLUG}.zip pmpd
+          ls pmpd*
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
