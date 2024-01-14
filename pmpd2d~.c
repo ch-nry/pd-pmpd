@@ -109,7 +109,7 @@ typedef struct _pmpd2d_tilde {
 	t_float outlet[nb_max_outlet];
 	t_sample *inlet_vector[nb_max_inlet];
 	t_sample *outlet_vector[nb_max_outlet];
-	int nb_link, nb_NLlink, nb_mass, nb_inlet, nb_outlet, nb_inPosX, nb_inPosY, nb_inForceX, nb_inForceY, nb_outPosX, nb_outPosY, nb_outSpeedX, nb_outSpeedY, nb_outSpeed;
+	t_int nb_link, nb_NLlink, nb_mass, nb_inlet, nb_outlet, nb_inPosX, nb_inPosY, nb_inForceX, nb_inForceY, nb_outPosX, nb_outPosY, nb_outSpeedX, nb_outSpeedY, nb_outSpeed;
 	t_sample f; // used for signal inlet
 	t_int loop, nb_loop; // to be able not to compute everything a each iteration
 } t_pmpd2d_tilde;
