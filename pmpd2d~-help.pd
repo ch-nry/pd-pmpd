@@ -45,11 +45,11 @@
 #X msg 44 100 mass \$1 \$2 \$3 \$4;
 #X text 170 91 create a mass with argument : weight of the mass \, initial position (X Y) \, and velocity damping. A mass with no weight will not move.;
 #X msg 297 576 forceY \$1 \$2;
-#X msg 239 617 setD2 \$1 \$2;
-#X msg 254 640 setD2offset \$1 \$2;
 #X text 330 599 change masses settings (mass \, damping and the offest on the damping (to impose a velocity);
 #X msg 299 707 setL \$1 \$2;
 #X text 376 686 change links settings;
+#X msg 239 617 setDEnv \$1 \$2;
+#X msg 254 640 setDEnvoffset \$1 \$2;
 #X connect 0 0 31 0;
 #X connect 2 0 31 0;
 #X connect 9 0 31 0;
@@ -73,6 +73,6 @@
 #X connect 41 0 31 0;
 #X connect 43 0 31 0;
 #X connect 45 0 31 0;
-#X connect 46 0 31 0;
 #X connect 47 0 31 0;
 #X connect 49 0 31 0;
+#X connect 50 0 31 0;

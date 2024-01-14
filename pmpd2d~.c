@@ -554,8 +554,8 @@ PMPD_EXPORT void pmpd2d_tilde_setup(void) {
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_posY, gensym("posY"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_forceX, gensym("forceX"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_forceY, gensym("forceY"), A_DEFFLOAT, A_DEFFLOAT, 0);
-	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setD2, gensym("setD2"), A_DEFFLOAT, A_DEFFLOAT, 0);
-	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setD2offset, gensym("setD2offset"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setD2, gensym("setDEnv"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setD2offset, gensym("setDEnvOffset"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setK, gensym("setK"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setD, gensym("setD"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setL, gensym("setL"), A_DEFFLOAT, A_DEFFLOAT, 0);
