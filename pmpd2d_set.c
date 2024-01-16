@@ -809,6 +809,7 @@ void pmpd2d_setMassId(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
     }
 }
 
+
 void pmpd2d_setM(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
 // change the weight of masses
@@ -829,7 +830,7 @@ void pmpd2d_setM(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
             {
-        		if(atom_getfloatarg(1, argc, argv) > 0) x->mass[tmp].invM = 1./atom_getfloatarg(1, argc, argv);
+        		if(atom_getfloatarg(1, argc, argv) > 0) x->mass[i].invM = 1./atom_getfloatarg(1, argc, argv);
             }
         }
     }
