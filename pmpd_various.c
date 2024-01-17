@@ -30,7 +30,7 @@ void pmpd_infosL(t_pmpd *x)
     }
 
     post("list of %d link", x->nb_link);
-    post("number, Id, mass1, mass2, K, D, Pow, L, Lmin, Lmax");
+    post("number, Id, active, mass1, mass2, K, D, Pow, L, Lmin, Lmax");
     for(i=0; i < x->nb_link; i++)
     {
         switch(x->link[i].lType)
