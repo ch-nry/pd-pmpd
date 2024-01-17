@@ -244,7 +244,7 @@ void pmpd_setD2(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    else if ( (argc == ) && ( argv[0].a_type == A_FLOAT ) )
+    else if ( (argc == 1) && ( argv[0].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
