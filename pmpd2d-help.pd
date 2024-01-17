@@ -630,7 +630,6 @@
 #X msg 13 303 massPosL [\$1];
 #X msg 13 322 massPosXL [\$1];
 #X msg 33 341 massPosYL [\$1];
-#X msg 13 359 massesPosNormL [\$1];
 #X msg 14 398 massSpeedL [\$1];
 #X msg 14 417 massSpeedXL [\$1];
 #X msg 34 435 massSpeedYL [\$1];
@@ -692,6 +691,7 @@
 #X text 794 508 \$2 : x position;
 #X text 794 523 \$3 : y position;
 #X text 794 537 \$4 : none or Id;
+#X msg 13 359 massPosNormL [\$1];
 #X restore 12 557 pd masses_attributes___;
 #N canvas 120 246 751 772 tests 0;
 #X obj 5 3 cnv 15 700 15 empty empty empty 20 12 0 14 #e0e0e0 #404040 0;
