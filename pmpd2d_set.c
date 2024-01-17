@@ -285,7 +285,7 @@ void pmpd2d_setDEnv(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
             }
         }
     }
-    else if ( (argc == 1) && ( argv[0].a_type == A_FLOAT ) && ( argc == 1 ) )
+    else if ( (argc == 1) && ( argv[0].a_type == A_FLOAT ) )
     {
         for (i=0; i< x->nb_mass; i++)
         {
