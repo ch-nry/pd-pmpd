@@ -116,16 +116,19 @@ PMPD_EXPORT void pmpd_setup(void)
  Output Syntax : 1 list with all elements
 */
 
-    class_addmethod(pmpd_class, (t_method)pmpd_massPosXL,      			gensym("massPosL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massSpeedXL,   			gensym("massSpeedL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massForceXL,   			gensym("massForceL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massPosL,      			gensym("massPosL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massPosXL,      			gensym("massPosXL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massSpeedL,   			gensym("massSpeedL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massSpeedXL,   			gensym("massSpeedXL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massForceL,   			gensym("massForceL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_massForceXL,   			gensym("massForceXL"), A_GIMME, 0);    
     class_addmethod(pmpd_class, (t_method)pmpd_massPosXL,     			gensym("massPosXL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_massSpeedXL,  			gensym("massSpeedXL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_massForceXL,  			gensym("massForceXL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkPosXL,           	gensym("linkPosL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkLengthXL,            gensym("linkLengthL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkPosSpeedXL,          gensym("linkPosSpeedL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linkLengthSpeedXL,       gensym("linkLengthSpeedL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkPosL,           		gensym("linkPosL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkLengthL,             gensym("linkLengthL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkPosSpeedL,           gensym("linkPosSpeedL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linkLengthSpeedL,        gensym("linkLengthSpeedL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linkPosXL,               gensym("linkPosXL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linkLengthXL,            gensym("linkLengthXL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linkPosSpeedXL,          gensym("linkPosSpeedXL"), A_GIMME, 0);
