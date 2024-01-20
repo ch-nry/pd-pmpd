@@ -1,4 +1,4 @@
-#N canvas 651 263 429 631 10;
+#N canvas 641 243 396 611 10;
 #X declare -path pmpd;
 #X floatatom 32 62 0 0 0 0 - - - 0;
 #N canvas 0 0 454 304 cpu 0;
@@ -86,7 +86,6 @@
 #X text 171 267 print internal connection;
 #X obj 96 349 *~ 0.15;
 #X obj 159 350 *~ 0.15;
-#X msg 28 211 forceX 2 0.03;
 #X connect 1 0 0 0;
 #X connect 4 0 3 0;
 #X connect 6 0 9 0;
@@ -107,4 +106,3 @@
 #X connect 24 0 11 0;
 #X connect 25 0 11 1;
 #X connect 25 0 16 0;
-#X connect 26 0 21 0;
