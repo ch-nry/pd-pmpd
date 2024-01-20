@@ -1,7 +1,6 @@
-#N canvas 790 244 452 151 10;
+#N canvas 596 310 452 151 10;
 #X declare -lib Gem -path pmpd;
-#X obj 23 17 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 23 17 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X text 43 16 reset;
 #N canvas 665 446 763 327 gem_stuff 0;
 #X msg 137 179 0 \, destroy;
@@ -53,10 +52,11 @@
 #X connect 17 0 5 0;
 #X connect 18 0 19 0;
 #X connect 19 0 17 0;
-#X restore 262 171 pd linkrender;
+#X restore 262 185 pd linkrender;
 #X obj 262 110 r \$0-pmpdout;
 #N canvas 731 296 454 304 gemmouse 0;
 #X obj 189 77 gemmouse;
+#A saved init;
 #X obj 189 184 pack f f;
 #X obj 189 218 spigot;
 #X obj 103 244 outlet;
@@ -83,10 +83,11 @@
 #X connect 11 0 10 1;
 #X restore 404 127 pd gemmouse;
 #X obj 404 106 gemhead;
-#X msg 405 147 posX fix \$1;
-#X msg 406 168 posY fix \$2;
+#X msg 423 150 posX fix \$1;
+#X msg 424 171 posY fix \$2;
 #X obj 405 194 s \$0-pmpdin;
-#X obj 262 133 route linksPosNo;
+#X obj 262 133 route linkEnd;
+#X obj 262 159 route inter;
 #X connect 0 0 1 0;
 #X connect 2 0 3 0;
 #X connect 3 0 4 0;
@@ -98,10 +99,10 @@
 #X connect 8 0 7 0;
 #X connect 9 0 11 0;
 #X connect 10 0 11 0;
-#X connect 12 0 5 0;
+#X connect 12 0 13 0;
+#X connect 13 0 5 0;
 #X restore 23 86 pd gem_stuff;
-#X obj 23 64 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
-;
+#X obj 23 64 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X text 43 63 gem on/off;
 #N canvas 487 334 635 333 creation 0;
 #X obj 52 15 loadbang;
@@ -111,9 +112,7 @@
 #X msg 169 192 Xmax 100 \, Xmin 0 \, Ymax 100 \, Ymin 0;
 #X msg 186 150 mass mob 1 100 \$1 \$2;
 #X obj 135 42 t b b b b b b;
-#X msg 186 116 20 50 \, 23 61 \, 29 71 \, 39 77 \, 50 80 \, 61 77 \,
-71 71 \, 77 61 \, 80 50 \, 77 39 \, 71 29 \, 61 23 \, 50 20 \, 39 23
-\, 29 29 \, 23 39;
+#X msg 186 116 20 50 \, 23 61 \, 29 71 \, 39 77 \, 50 80 \, 61 77 \, 71 71 \, 77 61 \, 80 50 \, 77 39 \, 71 29 \, 61 23 \, 50 20 \, 39 23 \, 29 29 \, 23 39;
 #X msg 144 211 link intf mob 0 10 2.5;
 #X msg 135 234 link inter mob mob 1 2.5;
 #X obj 192 270 s mouse_init;
@@ -141,15 +140,15 @@
 #N canvas 0 22 450 300 compute 0;
 #X obj 53 100 gemhead;
 #X obj 53 123 t b;
-#X msg 53 145 bang \, get linksPos;
 #X obj 53 224 s \$0-pmpdout;
 #X obj 63 174 r \$0-pmpdin;
 #X obj 53 198 pmpd2d;
+#X msg 53 145 bang \, linkEnd;
 #X connect 0 0 1 0;
-#X connect 1 0 2 0;
-#X connect 2 0 5 0;
-#X connect 4 0 5 0;
-#X connect 5 0 3 0;
+#X connect 1 0 5 0;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X connect 5 0 4 0;
 #X restore 23 111 pd compute;
 #X text 164 54 create window;
 #X text 164 69 and drag the structure with the mouse;
