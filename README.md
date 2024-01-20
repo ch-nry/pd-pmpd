@@ -17,6 +17,13 @@ environment dedicated for audio signal processing. Pd allow the creation of obje
 adapted of the creation of particular physical modelling. GEM is a pd library dedicated to images 
 processing [14]. In the provided `pmpd`  examples, GEM is used for the movement visualisation. 
 
+Simulation can run in a 1 dimentional space, 2d or 3d, depending of the objects used.
+
+Mass, link and interactors objects are design to interact together.
+pmpd, pmpd2d and pmpd3d are design to run a simulation as a single object.
+pmpd~, pmpd2d~ and pmpd3d~ are design for audio synthesis 
+
+Cyrille Henry 2003-2024
 
 Building instruction
 ====================
@@ -28,3 +35,4 @@ To build you need `cmake` and a compiling toolchain. Then run those steps from t
     cmake --build build --target install
 
 Then you'll find the `pmpd` package folder under `build/package/pmpd`.
+
