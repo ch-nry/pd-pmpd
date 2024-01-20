@@ -1,8 +1,13 @@
 TODO : 
-closestNeighbor $1(Id) $2(number of neighbor message)
+for v0.13
+setLcurrent sur pmpd*~
+doc
+verifier tout les exemples
+
+latter (probably never) : 
 linkEndL message, like linkEndT, but for list
+closestNeighbor $1(Id) $2(number of neighbor message)
 iBox3d / iBox2d interactors
 iTriangle3d / iSegment2d interactors
-
 openCL
 remove redondant test on table (when many tablink are used)
