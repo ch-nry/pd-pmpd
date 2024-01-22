@@ -1,6 +1,5 @@
 TODO : 
 for v0.13
-setLcurrent sur pmpd*~
 doc
 verifier tout les exemples
 
