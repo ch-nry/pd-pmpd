@@ -94,6 +94,8 @@ foreach(SOURCE IN LISTS SOURCES)
  
   if(CMAKE_GENERATOR_PLATFORM MATCHES Win32)
     set(ARCH_SUFFIX i386)
+  elseif(APPLE AND CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    set(ARCH_SUFFIX "fat")
   elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm.*")
     set(ARCH_SUFFIX "arm")
   elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*aarch64.*")
@@ -107,10 +109,6 @@ foreach(SOURCE IN LISTS SOURCES)
   endif()
 
   set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".${PLATFORM_SUFFIX}_${ARCH_SUFFIX}" PREFIX "")
-
-  if(APPLE)
-    target_link_libraries(${PMPD_TARGET} PRIVATE -Wl,-undefined,dynamic_lookup)
-  endif()
 
   install(TARGETS ${PMPD_TARGET}
       DESTINATION pmpd
