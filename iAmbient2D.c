@@ -64,7 +64,7 @@ void iAmbient2D_force(t_iAmbient2D *x, t_floatarg f1, t_floatarg f2)
   SETFLOAT(&(x->force[0]), f1);
   SETFLOAT(&(x->force[1]), f2 );
 }
-
+ 
 void iAmbient2D_rndFX(t_iAmbient2D *x, t_float X)
 {
   SETFLOAT(&(x->force[2]), X);
@@ -73,12 +73,6 @@ void iAmbient2D_rndFX(t_iAmbient2D *x, t_float X)
 void iAmbient2D_rndFY(t_iAmbient2D *x, t_float X)
 {
   SETFLOAT(&(x->force[3]), X);
-}
-
-void iAmbient2D_rndF(t_iAmbient2D *x, t_floatarg f1, t_floatarg f2)
-{
-  SETFLOAT(&(x->force[2]), f1);
-  SETFLOAT(&(x->force[3]), f2);
 }
 
 void iAmbient2D_damp(t_iAmbient2D *x, t_float X)

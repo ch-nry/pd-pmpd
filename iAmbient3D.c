@@ -102,7 +102,6 @@ void iAmbient3D_damp(t_iAmbient3D *x, t_float X)
   SETFLOAT(&(x->force[6]), X);
 }
 
-
 void iAmbient3D_Xmin(t_iAmbient3D *x, t_float Xmin)
 {
   SETFLOAT(&(x->force[8]), Xmin);
