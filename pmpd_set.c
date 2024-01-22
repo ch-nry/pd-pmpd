@@ -437,7 +437,11 @@ void pmpd_setLCurrent(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
     int tmp, i;
 
-    if ( ( argc == 1 ) && ( argv[0].a_type == A_FLOAT ) )
+    if (argc == 0) // tout a L=current
+    {
+        for (i=0; i< x->nb_link; i++) x->link[i].L = x->link[i].distance;
+    }
+    else if ( ( argc == 1 ) && ( argv[0].a_type == A_FLOAT ) )
     { // set a link to it's current length
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
