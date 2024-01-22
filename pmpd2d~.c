@@ -309,6 +309,10 @@ void pmpd2d_tilde_setL(t_pmpd2d_tilde *x, t_float nbr_link, t_float L) {
 	if( (nbr_link >= 0) && (nbr_link < x->nb_link) ) x->link[(int)nbr_link].L0 = L;
 }
 
+void pmpd2d_tilde_setLCurrent(t_pmpd2d_tilde *x, t_float nbr_link, t_float pourcent) {
+	if( (nbr_link >= 0) && (nbr_link < x->nb_link) ) x->link[(int)nbr_link].L0 += pourcent * (x->link[(int)nbr_link].L - x->link[(int)nbr_link].L0);
+}
+
 void pmpd2d_tilde_mass(t_pmpd2d_tilde *x, t_float M, t_float posX, t_float posY, t_float D) {
 // add a mass
 //invM speedX posX force
@@ -559,6 +563,7 @@ PMPD_EXPORT void pmpd2d_tilde_setup(void) {
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setK, gensym("setK"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setD, gensym("setD"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setL, gensym("setL"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setLCurrent, gensym("setLCurrent"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setM, gensym("setM"), A_DEFFLOAT, A_DEFFLOAT, 0);	
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_reset, gensym("reset"), 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_dsp, gensym("dsp"),  A_CANT, 0);
