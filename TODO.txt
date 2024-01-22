@@ -1,6 +1,5 @@
 TODO for v0.13
 doc
-verifier tout les exemples
 
 latter (probably never) : 
 linkEndL message, like linkEndT, but for list
