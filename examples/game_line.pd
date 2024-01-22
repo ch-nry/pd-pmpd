@@ -1,4 +1,4 @@
-#N canvas 734 65 656 713 10;
+#N canvas 874 133 656 713 10;
 #X obj 43 227 gemhead;
 #X obj 43 257 curve 2;
 #X obj 70 28 inlet;
@@ -23,12 +23,13 @@
 #X obj 224 366 r space_ship;
 #X obj 78 441 sel 1;
 #X obj 79 407 tSeg2D 0 0 0 0 3;
-#X obj 341 399 tSeg2D 0 0 0 0 3;
+#X obj 319 408 tSeg2D 0 0 0 0 3;
 #X obj 290 168 - 3;
 #X obj 469 129 - 3;
 #X obj 231 475 r bounce;
-#X obj 400 542 iSeg2D bomb 0 0 0 0 3 1;
-#X obj 191 544 iSeg2D bomb 0 0 0 0 3 1;
+#X obj 403 552 iSeg2D bomb 0 0 0 0 3 1;
+#X obj 221 565 iSeg2D bomb 0 0 0 0 3 1;
+#X obj 231 499 route bang;
 #X connect 0 0 1 0;
 #X connect 2 0 5 0;
 #X connect 2 0 25 0;
@@ -66,5 +67,6 @@
 #X connect 24 0 22 0;
 #X connect 25 0 13 0;
 #X connect 26 0 14 0;
-#X connect 27 0 28 0;
-#X connect 27 0 29 0;
+#X connect 27 0 30 0;
+#X connect 30 0 29 0;
+#X connect 30 0 28 0;

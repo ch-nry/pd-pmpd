@@ -1,10 +1,8 @@
-#N canvas 157 91 536 536 10;
+#N canvas 747 225 536 536 10;
 #X declare -lib Gem -path pmpd;
 #X obj 32 137 t b b;
-#X obj 32 89 tgl 15 0 empty empty empty 0 -6 0 8 -262144 -1 -1 1 1
-;
-#X obj 260 176 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 32 89 tgl 15 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0 1;
+#X obj 260 176 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 283 198 loadbang;
 #X obj 57 160 s \$0-link;
 #X obj 32 187 s \$0-mass;
@@ -520,16 +518,11 @@
 #X obj 382 399 world_light;
 #X obj 382 377 gemhead 1;
 #X msg 134 114 reset \, lighting 1 \, create \, 1;
-#X obj 120 417 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#X obj 104 433 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#X obj 136 433 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#X obj 47 434 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
-#X obj 120 449 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 120 417 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
+#X obj 104 433 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
+#X obj 136 433 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
+#X obj 47 434 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
+#X obj 120 449 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 73 312 keyname;
 #X obj 73 333 pack f s;
 #X obj 73 355 route 1;
@@ -539,8 +532,7 @@
 #N canvas 213 219 1094 659 border 0;
 #X text 268 11 This is the first exemple of physical modeling;
 #X text 268 33 this is an elastic string;
-#X text 158 95 <- metronome send bangs to mass and link and gives the
-general computation speed;
+#X text 158 95 <- metronome send bangs to mass and link and gives the general computation speed;
 #X obj 47 198 link \$0-link 0 1 1;
 #X obj 63 251 link \$0-link 0 1 1;
 #X obj 89 307 link \$0-link 0 1 1;
@@ -553,8 +545,7 @@ general computation speed;
 #X obj 104 340 mass \$0-mass 30;
 #X obj 134 395 mass \$0-mass 30;
 #X obj 163 452 mass \$0-mass 30;
-#X text 160 132 masss and link has to be compute one after the other.
-;
+#X text 160 132 masss and link has to be compute one after the other.;
 #X obj 27 148 link \$0-link 0 0 5;
 #X obj 354 214 link \$0-link 0 1 1;
 #X obj 370 267 link \$0-link 0 1 1;
@@ -724,8 +715,7 @@ general computation speed;
 #X obj 44 13 loadbang;
 #X msg 45 60 1;
 #X obj 45 36 metro 1200;
-#X obj 104 11 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 104 11 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #N canvas 510 387 653 468 bomb 0;
 #X obj 36 22 inlet;
 #X obj 82 242 gemhead;
@@ -735,8 +725,7 @@ general computation speed;
 #X obj 86 294 color 1 0 0;
 #X obj 36 44 t b b b;
 #X msg 154 122 reset;
-#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 272 271 r space_ship;
 #X msg 261 240 setXY \$1 \$2;
 #X obj 262 294 tCircle2D 0 0 0 0.2;
@@ -788,8 +777,7 @@ general computation speed;
 #X obj 86 294 color 1 0 0;
 #X obj 36 44 t b b b;
 #X msg 154 122 reset;
-#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 272 271 r space_ship;
 #X msg 261 240 setXY \$1 \$2;
 #X obj 262 294 tCircle2D 0 0 0 0.2;
@@ -840,8 +828,7 @@ general computation speed;
 #X obj 86 294 color 1 0 0;
 #X obj 36 44 t b b b;
 #X msg 154 122 reset;
-#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 272 271 r space_ship;
 #X msg 261 240 setXY \$1 \$2;
 #X obj 262 294 tCircle2D 0 0 0 0.2;
@@ -892,8 +879,7 @@ general computation speed;
 #X obj 86 294 color 1 0 0;
 #X obj 36 44 t b b b;
 #X msg 154 122 reset;
-#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 272 271 r space_ship;
 #X msg 261 240 setXY \$1 \$2;
 #X obj 262 294 tCircle2D 0 0 0 0.2;
@@ -944,8 +930,7 @@ general computation speed;
 #X obj 86 294 color 1 0 0;
 #X obj 36 44 t b b b;
 #X msg 154 122 reset;
-#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 272 271 r space_ship;
 #X msg 261 240 setXY \$1 \$2;
 #X obj 262 294 tCircle2D 0 0 0 0.2;
@@ -996,8 +981,7 @@ general computation speed;
 #X obj 86 294 color 1 0 0;
 #X obj 36 44 t b b b;
 #X msg 154 122 reset;
-#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 272 271 r space_ship;
 #X msg 261 240 setXY \$1 \$2;
 #X obj 262 294 tCircle2D 0 0 0 0.2;
@@ -1048,8 +1032,7 @@ general computation speed;
 #X obj 86 294 color 1 0 0;
 #X obj 36 44 t b b b;
 #X msg 154 122 reset;
-#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 272 271 r space_ship;
 #X msg 261 240 setXY \$1 \$2;
 #X obj 262 294 tCircle2D 0 0 0 0.2;
@@ -1100,8 +1083,7 @@ general computation speed;
 #X obj 86 294 color 1 0 0;
 #X obj 36 44 t b b b;
 #X msg 154 122 reset;
-#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
--1;
+#X obj 87 21 bng 15 250 50 0 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000;
 #X obj 272 271 r space_ship;
 #X msg 261 240 setXY \$1 \$2;
 #X obj 262 294 tCircle2D 0 0 0 0.2;
@@ -1181,7 +1163,7 @@ general computation speed;
 #X connect 3 0 2 0;
 #X connect 4 0 3 0;
 #X restore 383 465 pd points;
-#X floatatom 383 488 5 0 0 0 - - -;
+#X floatatom 383 488 5 0 0 0 - - - 0;
 #X text 181 448 (use arraw key to);
 #N canvas 265 590 255 308 init 0;
 #X obj 94 85 r bomb_in;
@@ -1209,11 +1191,8 @@ general computation speed;
 #X obj 54 235 s \$0-link;
 #X obj 19 261 s \$0-mass;
 #X text 226 10 space-ship game;
-#X text 131 37 use the arrow key to displace the "space ship". space
-for fire. you should stay in the tunnel \, and shoot the red bombs
-;
-#X text 133 80 game restart if you hit the tunnel \, or a red bomb
-;
+#X text 131 37 use the arrow key to displace the "space ship". space for fire. you should stay in the tunnel \, and shoot the red bombs;
+#X text 133 80 game restart if you hit the tunnel \, or a red bomb;
 #X obj 10 2 declare -lib Gem -path pmpd;
 #X connect 0 0 5 0;
 #X connect 0 1 4 0;

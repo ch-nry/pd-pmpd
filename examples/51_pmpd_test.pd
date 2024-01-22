@@ -1,4 +1,4 @@
-#N canvas 392 87 616 594 10;
+#N canvas 863 172 616 594 10;
 #X declare -path pmpd;
 #X obj 20 33 loadbang;
 #X obj 401 197 print msd;
@@ -48,7 +48,7 @@
 #X text 23 566 COPYRIGHT : Nicolas Montgermont 2010;
 #X obj 138 41 declare -path pmpd;
 #X msg 309 103 bang \, massPosL;
-#X obj 308 325 route massPosXL;
+#X obj 308 325 route massPosL;
 #X connect 0 0 21 0;
 #X connect 2 0 44 0;
 #X connect 4 0 21 0;

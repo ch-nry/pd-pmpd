@@ -1,4 +1,4 @@
-#N canvas 588 242 528 221 10;
+#N canvas 578 211 527 242 10;
 #X declare -lib Gem -path pmpd;
 #N canvas 860 482 341 435 creation 0;
 #X obj 46 380 s pd-new;
