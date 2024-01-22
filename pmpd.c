@@ -255,14 +255,14 @@ PMPD_EXPORT void pmpd_setup(void)
     class_addmethod(pmpd_class, (t_method)pmpd_massesSpeedsL,           gensym("massesSpeedsXL"), 0);
     class_addmethod(pmpd_class, (t_method)pmpd_massesForcesL,           gensym("massesForcesXL"), 0);
 
-    class_addmethod(pmpd_class, (t_method)pmpd_linksPosL,               gensym("linksPosL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthL,            gensym("linksLengthL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedL,          gensym("linksPosSpeedL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedL,       gensym("linksLengthSpeedL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksPosL,               gensym("linksPosXL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthL,            gensym("linksLengthXL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedL,          gensym("linksPosSpeedXL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedL,       gensym("linksLengthSpeedXL"), A_GIMME, 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksPosL,               gensym("linksPosL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthL,            gensym("linksLengthL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedL,          gensym("linksPosSpeedL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedL,       gensym("linksLengthSpeedL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksPosL,               gensym("linksPosXL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthL,            gensym("linksLengthXL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksPosSpeedL,          gensym("linksPosSpeedXL"), 0);
+    class_addmethod(pmpd_class, (t_method)pmpd_linksLengthSpeedL,       gensym("linksLengthSpeedXL"), 0);
 
     class_addmethod(pmpd_class, (t_method)pmpd_massesPosMean,           gensym("massesPosMean"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_massesPosStd,            gensym("massesPosStd"),A_GIMME, 0);
