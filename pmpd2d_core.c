@@ -108,7 +108,6 @@ void *pmpd2d_new(t_symbol *s, int argc, t_atom *argv)
     pmpd2d_reset(x);
     
     x->main_outlet=outlet_new(&x->x_obj, 0);
-    // x->info_outlet=outlet_new(&x->x_obj, 0); // TODO
 
 	x->nb_max_mass = 10000;
 	x->nb_max_link = 10000;
@@ -551,7 +550,7 @@ void pmpd2d_tabLink(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 }
 
 void pmpd2d_hinge(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
-{ // TODO : acept symbol ID for hinge creation
+{
     int mass1, mass2, mass3;
     
     x->link[x->nb_link].Id = gensym("hinge");

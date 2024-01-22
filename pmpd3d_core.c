@@ -87,7 +87,6 @@ void *pmpd3d_new(t_symbol *s, int argc, t_atom *argv)
     pmpd3d_reset(x);
     
     x->main_outlet=outlet_new(&x->x_obj, 0);
-    // x->info_outlet=outlet_new(&x->x_obj, 0); // TODO
 	
 	x->nb_max_mass = 10000;
 	x->nb_max_link = 10000;

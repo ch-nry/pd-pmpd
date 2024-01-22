@@ -1178,12 +1178,11 @@ void pmpd2d_pos(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].posX = atom_getfloatarg(1, argc, argv);
-           x->mass[tmp].speedX = 0; 
+        x->mass[tmp].speedX = 0; 
         x->mass[tmp].forceX = 0; 
-           x->mass[tmp].posY = atom_getfloatarg(2, argc, argv);
-           x->mass[tmp].speedY = 0; 
+        x->mass[tmp].posY = atom_getfloatarg(2, argc, argv);
+        x->mass[tmp].speedY = 0; 
         x->mass[tmp].forceY = 0; 
-        
     }
     else if ( (argc == 3) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
     {
@@ -1197,7 +1196,6 @@ void pmpd2d_pos(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
                 x->mass[i].posY = atom_getfloatarg(2, argc, argv);
                 x->mass[i].speedY = 0; 
                 x->mass[i].forceY = 0;
-
             }
         }
     }

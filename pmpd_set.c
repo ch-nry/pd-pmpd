@@ -794,9 +794,8 @@ void pmpd_posX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_mass-1, tmp));
         x->mass[tmp].posX = atom_getfloatarg(1, argc, argv);
-           x->mass[tmp].speedX = 0; // ??? TODO : esce la bonne chose a faire?
-        x->mass[tmp].forceX = 0; // ??? TODO : esce la bonne chose a faire?
-        
+        x->mass[tmp].speedX = 0; 
+        x->mass[tmp].forceX = 0;  
     }
     if ( ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
     {
@@ -805,9 +804,8 @@ void pmpd_posX(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
             if ( atom_getsymbolarg(0,argc,argv) == x->mass[i].Id)
             {
                 x->mass[i].posX = atom_getfloatarg(1, argc, argv);
-                x->mass[i].speedX = 0; // ??? TODO : esce la bonne chose a faire?
-                x->mass[i].forceX = 0; // ??? TODO : esce la bonne chose a faire?
-
+                x->mass[i].speedX = 0; 
+                x->mass[i].forceX = 0; 
             }
         }
     }
