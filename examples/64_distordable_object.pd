@@ -320,6 +320,7 @@
 #X obj 239 159 pack f f;
 #X obj 239 183 spigot 0;
 #X obj 255 87 gemmouse 40 -40;
+#A saved init;
 #X obj 239 137 - 10;
 #X obj 281 138 + 30;
 #X obj 240 113 f;
@@ -332,6 +333,7 @@
 #X obj 480 153 translateXYZ -10 -10 0;
 #X obj 480 132 scaleXYZ 0.2 0.2 0.2;
 #X obj 503 39 gemmouse 40 -40;
+#A saved init;
 #X obj 503 74 - 10;
 #X obj 536 74 + 30;
 #X obj 480 174 translateXYZ;
