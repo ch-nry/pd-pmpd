@@ -1,12 +1,10 @@
-TODO : 
-for v0.13
+TODO for v0.13
 doc
 verifier tout les exemples
 
 latter (probably never) : 
 linkEndL message, like linkEndT, but for list
-closestNeighbor $1(Id) $2(number of neighbor message)
 iBox3d / iBox2d interactors
 iTriangle3d / iSegment2d interactors
-openCL
 remove redondant test on table (when many tablink are used)
+acept symbol ID for hinge creation
