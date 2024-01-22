@@ -122,9 +122,6 @@ PMPD_EXPORT void pmpd_setup(void)
     class_addmethod(pmpd_class, (t_method)pmpd_massSpeedXL,   			gensym("massSpeedXL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_massForceL,   			gensym("massForceL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_massForceXL,   			gensym("massForceXL"), A_GIMME, 0);    
-    class_addmethod(pmpd_class, (t_method)pmpd_massPosXL,     			gensym("massPosXL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massSpeedXL,  			gensym("massSpeedXL"), A_GIMME, 0);
-    class_addmethod(pmpd_class, (t_method)pmpd_massForceXL,  			gensym("massForceXL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linkPosL,           		gensym("linkPosL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linkLengthL,             gensym("linkLengthL"), A_GIMME, 0);
     class_addmethod(pmpd_class, (t_method)pmpd_linkPosSpeedL,           gensym("linkPosSpeedL"), A_GIMME, 0);
