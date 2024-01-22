@@ -35,121 +35,144 @@ int pmpd2d_test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 		{
 			if (atom_getsymbolarg(j,argc,argv) == gensym("Id") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_SYMBOL) ) return(0); 
 				if ( x->mass[i].Id != atom_getsymbolarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
             else if (atom_getsymbolarg(j,argc,argv) == gensym("mobile") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].mobile != atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("posXSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].posX < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("posXInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].posX >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("posYSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].posY <  atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("posYInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].posY >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedXSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].speedX < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedXInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].speedX >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedYSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].speedY < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedYInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].speedY >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( sqrt(pmpd2d_sqr(x->mass[i].speedX)+pmpd2d_sqr(x->mass[i].speedY)) < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+= 2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("speedInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( sqrt(pmpd2d_sqr(x->mass[i].speedX)+pmpd2d_sqr(x->mass[i].speedY)) >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCircleInf"))
 			{ 
+				if ( (j+3 >= argc) || (argv[j+1].a_type != A_FLOAT) || (argv[j+2].a_type != A_FLOAT)|| (argv[j+3].a_type != A_FLOAT) ) return(0); 
 				tmp = pmpd2d_sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+pmpd2d_sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv));
 				if ( tmp >= pmpd2d_sqr(atom_getfloatarg(j+3,argc,argv)) ) { return(0); }
-				j += 5;
+				j += 4;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("distanceCircleSup"))
 			{ 
+				if ( (j+3 >= argc) || (argv[j+1].a_type != A_FLOAT) || (argv[j+2].a_type != A_FLOAT)|| (argv[j+3].a_type != A_FLOAT) ) return(0); 
 				tmp = pmpd2d_sqr(x->mass[i].posX - atom_getfloatarg(j+1,argc,argv))+pmpd2d_sqr(x->mass[i].posY - atom_getfloatarg(j+2,argc,argv));
 				if ( tmp < pmpd2d_sqr(atom_getfloatarg(j+3,argc,argv)) ) { return(0); }
-				j += 5;
+				j += 4;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("massSup"))
 			{ 
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( 1/ x->mass[i].invM < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j += 2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("massInf"))
 			{ 
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( 1/ x->mass[i].invM >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j += 2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp  = pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY) ;
 				if ( ( tmp < atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+= 2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp  = pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY) ;
 				if ( ( tmp >= atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+= 2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceXSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].forceX < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceXInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].forceX >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceYSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].forceY < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceYInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->mass[i].forceY >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkSup") )
 			{ // link number
 				tmp=0;
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				for (k=0; k < x->nb_link; k++)
 				{
 					if ( (x->link[k].mass1->num == x->mass[i].num) ||  (x->link[k].mass2->num == x->mass[i].num) ) tmp++;
@@ -160,6 +183,7 @@ int pmpd2d_test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkInf") )
 			{ // link number
 				tmp=0;
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				for (k=0; k < x->nb_link; k++)
 				{
 					if ( (x->link[k].mass1->num == x->mass[i].num) ||  (x->link[k].mass2->num == x->mass[i].num) ) tmp++;
@@ -170,6 +194,7 @@ int pmpd2d_test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkEqual") )
 			{ // link number
 				tmp=0;
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				for (k=0; k < x->nb_link; k++)
 				{
 					if ( (x->link[k].mass1->num == x->mass[i].num) ||  (x->link[k].mass2->num == x->mass[i].num) ) tmp++;
@@ -180,6 +205,7 @@ int pmpd2d_test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkNameSup") )
 			{ // link name, link number
 				tmp=0;
+				if ( (j+2 >= argc) || (argv[j+1].a_type != A_SYMBOL) || (argv[j+2].a_type != A_FLOAT)) return(0); 
 				for (k=0; k < x->nb_link; k++)
 				{
 					if ( (x->link[k].Id ==  atom_getsymbolarg(j+1,argc,argv)) && ((x->link[k].mass2->num == x->mass[i].num) ||  (x->link[k].mass1->num == x->mass[i].num)) ) tmp++;
@@ -190,6 +216,7 @@ int pmpd2d_test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkNameInf") )
 			{ // link name, link number
 				tmp=0;
+				if ( (j+2 >= argc) || (argv[j+1].a_type != A_SYMBOL) || (argv[j+2].a_type != A_FLOAT)) return(0); 
 				for (k=0; k < x->nb_link; k++)
 				{
 					if ( (x->link[k].Id ==  atom_getsymbolarg(j+1,argc,argv)) && ((x->link[k].mass2->num == x->mass[i].num) ||  (x->link[k].mass1->num == x->mass[i].num)) ) tmp++;
@@ -200,6 +227,7 @@ int pmpd2d_test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("nbLinkNameEqual") )
 			{ // link name, link number
 				tmp=0;
+				if ( (j+2 >=  argc) || (argv[j+1].a_type != A_SYMBOL) || (argv[j+2].a_type != A_FLOAT)) return(0); 
 				for (k=0; k < x->nb_link; k++)
 				{
 					if ( (x->link[k].Id ==  atom_getsymbolarg(j+1,argc,argv)) && ((x->link[k].mass2->num == x->mass[i].num) ||  (x->link[k].mass1->num == x->mass[i].num)) ) tmp++;
@@ -209,11 +237,13 @@ int pmpd2d_test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			}
             else if ( atom_getsymbolarg(j,argc,argv) == gensym("numInf") )
             {
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
                 if ( i >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2; 
             }
             else if ( atom_getsymbolarg(j,argc,argv) == gensym("numSup") )
             {
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
                 if ( i < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2; 
             }
@@ -243,48 +273,57 @@ int pmpd2d_test_2d_link(int i, t_pmpd2d *x, int argc, t_atom *argv)
 		{
 			if (atom_getsymbolarg(j,argc,argv) == gensym("Id") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_SYMBOL) ) return(0); 
 				if ( x->link[i].Id != atom_getsymbolarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("active") )
 			{
-				if ( x->link[i].active != atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
+				if ( x->link[i].active != atom_getfloatarg(j+1,argc,argv) )  { return(0); }
 				j+=2;
 			}
             else if (atom_getsymbolarg(j,argc,argv) == gensym("lengthSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->link[i].distance < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceXSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->link[i].forceX < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceXInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->link[i].forceX >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceYSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->link[i].forceY < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceYInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				if ( x->link[i].forceY >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceSup") )
 			{
 				tmp = pmpd2d_sqr(x->link[i].forceX) + pmpd2d_sqr(x->link[i].forceY);
-				tmp2 = pmpd2d_sqr(atom_getfloatarg(j+1,argc,argv));		
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
+				tmp2 = pmpd2d_sqr(atom_getfloatarg(j+1,argc,argv));	
 				if ( tmp < tmp2 ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp = pmpd2d_sqr(x->link[i].forceX) + pmpd2d_sqr(x->link[i].forceY);
 				tmp2 = pmpd2d_sqr(atom_getfloatarg(j+1,argc,argv));
 				if ( tmp >= tmp2 ) { return(0); }
@@ -292,42 +331,47 @@ int pmpd2d_test_2d_link(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("lengthInf") )
 			{
-				if ( x->link[i].distance >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
+				if ( x->link[i].distance >= atom_getfloatarg(j+1,argc,argv) ){ return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("lengthXInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp = fabs(x->link[i].mass1->posX - x->link[i].mass2->posX);
 				if ( tmp >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("lengthXSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp = fabs(x->link[i].mass1->posX - x->link[i].mass2->posX);
 				if ( tmp < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}		
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("lengthYInf") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp = fabs(x->link[i].mass1->posY - x->link[i].mass2->posY);
 				if ( tmp >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("lengthYSup") )
 			{
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp = fabs(x->link[i].mass1->posY - x->link[i].mass2->posY);
 				if ( tmp < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("connectedTo") )
 			{
-				if (argv[j+1].a_type == A_SYMBOL)
+				if ( (argc > j+1) && (argv[j+1].a_type == A_SYMBOL) )
 				{
 					if (!( (x->link[i].mass1->Id == atom_getsymbolarg(j+1,argc,argv)) || (x->link[i].mass2->Id == atom_getsymbolarg(j+1,argc,argv)) )) 
 					{ return(0); }
 					j+=2;				
 				}
-				else if (argv[j+1].a_type == A_FLOAT)
+				else if ( (argc > j+1) && (argv[j+1].a_type == A_FLOAT))
 				{
 					if (!( (x->link[i].mass1->num == atom_getfloatarg(j+1,argc,argv)) || (x->link[i].mass2->num == atom_getfloatarg(j+1,argc,argv)) ))
 					{ return(0); }
@@ -341,11 +385,13 @@ int pmpd2d_test_2d_link(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			}
             else if ( atom_getsymbolarg(j,argc,argv) == gensym("numInf") )
             {
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
                 if ( i >= atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2; 
             }
             else if ( atom_getsymbolarg(j,argc,argv) == gensym("numSup") )
             {
+				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
                 if ( i < atom_getfloatarg(j+1,argc,argv) ) { return(0); }
 				j+=2; 
             }
