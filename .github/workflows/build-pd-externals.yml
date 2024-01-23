@@ -29,8 +29,9 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-${{ matrix.runs-on }}
+        name: pmpd-ubuntu
         path: build/package/pmpd
+        overwrite: true
     
   build_macos:
     runs-on: macos-latest
@@ -55,8 +56,9 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-${{ matrix.runs-on }}
+        name: pmpd-macos
         path: build/package/pmpd
+        overwrite: true
 
   build_windows:
     runs-on: windows-latest
@@ -79,8 +81,9 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-${{ matrix.runs-on }}
+        name: pmpd-windows
         path: build/package/pmpd
+        overwrite: true
 
   build_windows_x64:
     runs-on: windows-latest
@@ -103,8 +106,9 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-${{ matrix.runs-on }}
+        name: pmpd-windows-x64
         path: build/package/pmpd
+        overwrite: true
 
   build-rpi:
     runs-on: ubuntu-latest
@@ -125,8 +129,9 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-${{ matrix.runs-on }}
+        name: pmpd-rpi
         path: build/package/pmpd
+        overwrite: true
 
   package_release:
     runs-on: ubuntu-latest
@@ -136,7 +141,6 @@ jobs:
         with:
           path: pmpd
           pattern: pmpd-*
-          merge-multiple: true
       - name: Rezip
         shell: bash
         run: |
@@ -162,7 +166,6 @@ jobs:
         with:
           name: pmpd
           pattern: pmpd-*
-          merge-multiple: true
       - name: Create Deken Package
         shell: bash
         env:
