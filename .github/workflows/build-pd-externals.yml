@@ -157,7 +157,7 @@ jobs:
       - name: Merge Artifacts
         run: |
           mkdir pmpd
-          cp -r artifacts/*/* pmpd/
+          cp -rf artifacts/*/* pmpd/
       # Zip the merged directory
       - name: Rezip
         run: |
