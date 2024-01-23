@@ -103,7 +103,7 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-windows64
+        name: pmpd-windows-x64
         path: build/package/pmpd
 
   build-rpi:
@@ -156,14 +156,14 @@ jobs:
       # Extract and merge all files into a single directory
       - name: Merge Artifacts
         run: |
-          mkdir pmpd-merged
-          cp -r artifacts/*/* pmpd-merged/
+          mkdir pmpd
+          cp -r artifacts/*/* pmpd/
       # Zip the merged directory
       - name: Rezip
         run: |
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
           SLUG=${SHORT//\//_} # replace '/' with '_'
-          zip -r pmpd-${SLUG}.zip pmpd-merged
+          zip -r pmpd-${SLUG}.zip pmpd
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
