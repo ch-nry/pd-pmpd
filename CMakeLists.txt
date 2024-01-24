@@ -83,6 +83,7 @@ foreach(SOURCE IN LISTS SOURCES)
   # set library binary file name and extension
   set_target_properties(${PMPD_TARGET}
     PROPERTIES
+      PREFIX ""
       OUTPUT_NAME "${OBJECT_NAME}"
       C_VISIBILITY_PRESET hidden
       CXX_VISIBILITY_PRESET hidden
