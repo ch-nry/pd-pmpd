@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 3.14)
 project(pd-pmpd C)
 
+SET(CMAKE_C_FLAGS "-O3 -ffinite-math-only -ffast-math -Wall -Werror")
+
 set(PUREDATA_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/pure-data/src" CACHE PATH "Path to folder containing m_pd.h" )
 if(WIN32)
   set(PUREDATA_LIB "${CMAKE_SOURCE_DIR}/pure-data/bin/pd.lib" CACHE PATH "Path to pd.lib for Windows")
