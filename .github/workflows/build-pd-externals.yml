@@ -259,6 +259,11 @@ jobs:
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
           SLUG=${SHORT//\//_} # replace '/' with '_'
           zip -r pmpd-${SLUG}.zip pmpd
+      - name: Upload ZIP as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmpd-${SLUG}
+          path: pmpd-${SLUG}.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
