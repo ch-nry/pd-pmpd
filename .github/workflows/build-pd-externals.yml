@@ -6,7 +6,6 @@ env:
   PD_VERSION: 0.51-4
 
 jobs:
-      
   build_ubuntu:
     runs-on: ubuntu-latest
     steps:
@@ -31,9 +30,12 @@ jobs:
       with:
         name: pmpd-ubuntu
         path: build/package/pmpd
-    
+
   build_macos:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        precision: [single, double]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -46,16 +48,32 @@ jobs:
       run: |
         brew install ninja cmake
 
-    - name: Build for x86_64 and ARM64
+    - name: Build for x86_64 and ARM64 (Single Precision)
+      if: matrix.precision == 'single'
       run: |
         cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
         cmake --build build
         cmake --build build --target install  
    
     - name: Archive Package
+      if: matrix.precision == 'single'
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-macos
+        name: pmpd-macos-single
+        path: build/package/pmpd
+
+    - name: Build for x86_64 and ARM64 (Double Precision)
+      if: matrix.precision == 'double'
+      run: |
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DPD_FLOATSIZE64=ON
+        cmake --build build
+        cmake --build build --target install  
+   
+    - name: Archive Package
+      if: matrix.precision == 'double'
+      uses: actions/upload-artifact@v4
+      with:
+        name: pmpd-macos-double
         path: build/package/pmpd
 
   build_windows:
@@ -139,7 +157,11 @@ jobs:
           path: artifacts/ubuntu
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-macos
+          name: pmpd-macos-single
+          path: artifacts/macos
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-macos-double
           path: artifacts/macos
       - uses: actions/download-artifact@v4
         with:
