@@ -1123,7 +1123,7 @@ void pmpd3d_massInfo(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd3d_linkInfo(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_atom info[14];
-	int i, k;
+	int i;
 	
     if (argc==0) 
     {

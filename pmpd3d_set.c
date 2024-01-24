@@ -479,7 +479,7 @@ void pmpd3d_setDEnvOffset(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_setL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i, offset;
+    int tmp, i;
     t_garray *a;
     int npoints, n;
     t_word *vec;
@@ -551,7 +551,7 @@ void pmpd3d_setL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_addL(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int tmp, i, offset;
+    int tmp, i;
     t_garray *a;
     int npoints, n;
     t_word *vec;
@@ -1209,7 +1209,7 @@ void pmpd3d_posSpherical(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     int npoints, n;
     t_word *vec;
     t_float K;
-    t_float r, phy, teta, X,Y,Z;
+    t_float r, phy, teta;
 
 	if ( (argc == 4) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) && ( argv[3].a_type == A_FLOAT ) )
 	{

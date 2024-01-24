@@ -978,7 +978,7 @@ void pmpd2d_massInfo(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd2d_linkInfo(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_atom info[14];
-	int i, k;
+	int i;
 	
     if (argc==0) 
     {

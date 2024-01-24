@@ -760,7 +760,7 @@ void pmpd_massInfo(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 void pmpd_linkInfo(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
 	t_atom info[14];
-	int i, k;
+	int i;
 	
     if (argc==0) 
     {

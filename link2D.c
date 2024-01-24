@@ -52,7 +52,7 @@ void link2D_position2D2(t_link2D *x, t_floatarg f1, t_floatarg f2)
 
 void link2D_bang(t_link2D *x)
 {
-  t_float force, force2, forcex1, forcey1, forcex2, forcey2, distance;
+  t_float force, forcex1, forcey1, forcex2, forcey2, distance;
   t_atom force1[2];
 
   distance = sqrt ( pow((x->position2Dx2-x->position2Dx1), 2) + pow((x->position2Dy2-x->position2Dy1), 2) );

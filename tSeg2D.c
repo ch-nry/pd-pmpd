@@ -119,7 +119,7 @@ void *tSeg2D_new(t_symbol *s, int argc, t_atom *argv)
   else
     x->P = 1;
 
-    if (argc>=4)
+  if (argc>=4)
     x->Y2 = atom_getfloatarg(3, argc, argv);
   else
     x->Y2 = 0;

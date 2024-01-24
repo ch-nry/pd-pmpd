@@ -213,7 +213,7 @@ void pmpd2d_iLine(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 // --------------------------------------------------------
 void pmpd2d_iMatrix_XY_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max, t_float zone_y_min, t_float zone_y_max, int taille_x, int taille_y, t_float K, t_word *tableX, t_word *tableY)
 {
-	t_float Xtable, Ytable, Xindex, Yindex, force1, force2, force;
+	t_float Xtable, Ytable, force1, force2, force;
 	int index;
 	 
 	if ( (x->mass[i].posX >= zone_x_min) && (x->mass[i].posX < zone_x_max) && (x->mass[i].posY >= zone_y_min) && (x->mass[i].posY < zone_y_max) )
@@ -308,7 +308,7 @@ void pmpd2d_iMatrix_XY(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd2d_iMatrix_delta_i(t_pmpd2d *x, int i, t_float zone_x_min, t_float zone_x_max, t_float zone_y_min, t_float zone_y_max, int taille_x, int taille_y, t_float K, t_word *tableX)
 {
-	t_float Xtable, Ytable, Xindex, Yindex, force1, force2, force;
+	t_float Xtable, Ytable, force;
 	int index;
 	 
 	if ( (x->mass[i].posX >= zone_x_min) && (x->mass[i].posX < zone_x_max) && (x->mass[i].posY >= zone_y_min) && (x->mass[i].posY < zone_y_max) )
@@ -342,21 +342,13 @@ void pmpd2d_iMatrix_delta(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	// 6, 7 : matrix size
 	// 8, 9 : table name containing the matrix
 	
-	t_garray *a1, *a2;
-    int npoints1, npoints2;
-    t_word *vec1, *vec2;
+	t_garray *a1;
+    int npoints1;
+    t_word *vec1;
     
     t_float Xmin, Xmax, Ymin, Ymax, K;
     int X, Y, i;
-/*    
-	if (!((argc>=9) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) &&
-		(argv[3].a_type == A_FLOAT) && (argv[4].a_type == A_FLOAT) && (argv[5].a_type == A_FLOAT) && 
-		(argv[6].a_type == A_FLOAT) && (argv[7].a_type == A_FLOAT) &&  (argv[8].a_type == A_SYMBOL)) )
-	{
-		pd_error(x,"bad argument for iTable");
-		return;
-	}
-*/
+
 	X = atom_getfloatarg(6, argc, argv);
 	Y = atom_getfloatarg(7, argc, argv);
 	X = max(2,X);

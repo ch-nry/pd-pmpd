@@ -110,7 +110,7 @@ static int makeseed_pmpd_tilde(void)
     random_nextseed = random_nextseed * 435898247 + 938284287;
     return (random_nextseed & 0x7fffffff);
 }
-
+/*
 static t_float random_bang_pmpd_tilde(t_pmpd_tilde *x)
 {
     int nval;
@@ -126,7 +126,7 @@ static t_float random_bang_pmpd_tilde(t_pmpd_tilde *x)
 	rnd=rnd/1000000.;	//pour mettre entre -1 et 1;
     return (rnd);
 }
-
+*/
 t_int *pmpd_tilde_perform(t_int *w)
 ///////////////////////////////////////////////////////////////////////////////////
 {

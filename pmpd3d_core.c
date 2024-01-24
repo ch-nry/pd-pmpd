@@ -606,7 +606,7 @@ void pmpd3d_delMass_int(t_pmpd3d *x, int delmass)
 
 void pmpd3d_delMass(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 {
-	int i, j, delmass, nb_toremove;
+	int i, j, nb_toremove;
 	if ( (argc > 0) && ( argv[0].a_type == A_FLOAT ) )
 		pmpd3d_delMass_int(x, atom_getfloatarg(0, argc, argv));
 	if ( (argc > 0) && ( argv[0].a_type == A_SYMBOL ) )

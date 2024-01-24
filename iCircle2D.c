@@ -177,7 +177,7 @@ void *iCircle2D_new(t_symbol *s, int argc, t_atom *argv)
   else
     SETFLOAT(&(x->force[16]), 0);
 
-    if (argc>=15)
+  if (argc>=15)
     SETFLOAT(&(x->force[13]), atom_getfloatarg(14, argc, argv));
   else
     SETFLOAT(&(x->force[13]), 0);
@@ -217,12 +217,12 @@ void *iCircle2D_new(t_symbol *s, int argc, t_atom *argv)
   else
     SETFLOAT(&(x->force[6]), 0);
 
-    if (argc>=7)
+  if (argc>=7)
     SETFLOAT(&(x->force[5]), atom_getfloatarg(6, argc, argv));
   else
     SETFLOAT(&(x->force[5]), 0);
 
-    if (argc>=6)
+  if (argc>=6)
     SETFLOAT(&(x->force[4]), atom_getfloatarg(5, argc, argv));
   else
     SETFLOAT(&(x->force[4]), 0);

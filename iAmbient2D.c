@@ -164,7 +164,7 @@ void *iAmbient2D_new(t_symbol *s, int argc, t_atom *argv)
   else
     SETFLOAT(&(x->force[6]), -100000);
 
-    if (argc>=6)
+  if (argc>=6)
     SETFLOAT(&(x->force[4]), atom_getfloatarg(5, argc, argv));
   else
     SETFLOAT(&(x->force[4]), 0);

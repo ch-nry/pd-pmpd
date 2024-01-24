@@ -116,7 +116,7 @@ void *tLine2D_new(t_symbol *s, int argc, t_atom *argv)
   else
     x->P = 1;
 
-    if (argc>=4)
+  if (argc>=4)
     x->Y2 = atom_getfloatarg(3, argc, argv);
   else
     x->Y2 = 0;
@@ -130,7 +130,6 @@ void *tLine2D_new(t_symbol *s, int argc, t_atom *argv)
     x->Y1 = atom_getfloatarg(1, argc, argv);
   else
     x->Y1 = 0;
-
 
   if (argc>=1)
     x->X1 = atom_getfloatarg(0, argc, argv);

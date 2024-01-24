@@ -128,7 +128,7 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
 	t_pmpd3d_tilde *x = (t_pmpd3d_tilde *)(w[1]);
 	int n = (int)(w[2]);
 
-	t_float F, FX, FY, FZ, L, LX, LY, LZ, tmp;
+	t_float F, FX, FY, FZ, L, LX, LY, LZ;
 	t_int i;
 
 	t_sample *out[nb_max_outlet]; 
@@ -166,7 +166,6 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
 				F  = x->link[i].K1 * (L - x->link[i].L0);
 				// spring
 				
-				tmp = (L - x->link[i].L);
 				F  += x->link[i].D1 * (L - x->link[i].L); // on derive la longeur L calculé précedement
 				x->link[i].L = L; // on la sauve pour la prochaine itération				
 				// dashpot	
@@ -201,7 +200,6 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
 					if (L < 0) F *= -1;
 					// spring
 					
-					tmp = (L - x->link[i].L);
 					F  += x->link[i].D1 * (L - x->link[i].L); // on derive la longeur L calculé précedement
 					x->link[i].L = L; // on la sauve pour la prochaine itération				
 					// dashpot	
@@ -227,7 +225,7 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
 			{
 			// compute new masses position
 			// a mass does not move if M=0 (i.e : invM = 0)
-				if ( (x->mass[i].D != 0) && ( (x->mass[i].speedX != 0) || (x->mass[i].speedY != 0) || (x->mass[i].speedZ != 0) ) && (L != 0)) { // amortissement en fct de la vitesse
+				if ( (x->mass[i].D != 0) && ( (x->mass[i].speedX != 0) || (x->mass[i].speedY != 0) || (x->mass[i].speedZ != 0) ) ) { // amortissement en fct de la vitesse
 					L = sqrt(x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY + x->mass[i].speedZ * x->mass[i].speedZ);
 					F = -(L - x->mass[i].Doffset) * x->mass[i].D;
 				 	x->mass[i].forceX += F * x->mass[i].speedX / L;
