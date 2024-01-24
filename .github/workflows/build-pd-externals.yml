@@ -8,6 +8,9 @@ env:
 jobs:
   build_ubuntu:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        precision: [single, double]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -20,15 +23,31 @@ jobs:
         sudo apt-get install -yqq ninja-build cmake
     
     - name: Build
+      if: matrix.precision == 'single'
       run: |
         cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
         cmake --build build
         cmake --build build --target install
 
     - name: Archive Package
+      if: matrix.precision == 'single'
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-ubuntu
+        name: pmpd-ubuntu-single
+        path: build/package/pmpd
+
+    - name: Build
+      if: matrix.precision == 'double'
+      run: |
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPD_FLOATSIZE64=ON
+        cmake --build build
+        cmake --build build --target install
+
+    - name: Archive Package
+      if: matrix.precision == 'double'
+      uses: actions/upload-artifact@v4
+      with:
+        name: pmpd-ubuntu-double
         path: build/package/pmpd
 
   build_macos:
@@ -78,6 +97,9 @@ jobs:
 
   build_windows:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        precision: [single, double]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -89,19 +111,38 @@ jobs:
         Expand-Archive -Path "pd-${env:PD_VERSION}-i386.msw.zip" -DestinationPath .
 
     - name: Build
+      if: matrix.precision == 'single'
       run: |
         cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}-i386/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}-i386/bin/pd.lib" -G "Visual Studio 17 2022" -A Win32
         cmake --build build --config Release
         cmake --build build --config Release --target install
 
     - name: Archive Package
+      if: matrix.precision == 'single'
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-windows
+        name: pmpd-windows-single
+        path: build/package/pmpd
+
+    - name: Build
+      if: matrix.precision == 'double'
+      run: |
+        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}-i386/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}-i386/bin/pd.lib" -G "Visual Studio 17 2022" -A Win32 -DPD_FLOATSIZE64=ON
+        cmake --build build --config Release
+        cmake --build build --config Release --target install
+
+    - name: Archive Package
+      if: matrix.precision == 'double'
+      uses: actions/upload-artifact@v4
+      with:
+        name: pmpd-windows-double
         path: build/package/pmpd
 
   build_windows_x64:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        precision: [single, double]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -113,18 +154,34 @@ jobs:
         Expand-Archive -Path "pd-${env:PD_VERSION}.msw.zip" -DestinationPath .
 
     - name: Build
+      if: matrix.precision == 'single'
       run: |
         cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64
         cmake --build build --config Release
         cmake --build build --config Release --target install
 
     - name: Archive Package
+      if: matrix.precision == 'single'
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-windows-x64
+        name: pmpd-windows-x64-single
         path: build/package/pmpd
 
-  build-rpi:
+    - name: Build
+      if: matrix.precision == 'double'
+      run: |
+        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64 -DPD_FLOATSIZE64=ON
+        cmake --build build --config Release
+        cmake --build build --config Release --target install
+
+    - name: Archive Package
+      if: matrix.precision == 'double'
+      uses: actions/upload-artifact@v4
+      with:
+        name: pmpd-windows-x64-double
+        path: build/package/pmpd
+
+  build_rpi:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -148,12 +205,16 @@ jobs:
 
   package_release:
     runs-on: ubuntu-latest
-    needs: [ build_ubuntu, build_macos, build_windows, build_windows_x64, build-rpi ]
+    needs: [ build_ubuntu, build_macos, build_windows, build_windows_x64, build_rpi ]
     steps:
       # Download all artifacts
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-ubuntu
+          name: pmpd-ubuntu-single
+          path: artifacts/ubuntu
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-ubuntu-double
           path: artifacts/ubuntu
       - uses: actions/download-artifact@v4
         with:
@@ -165,11 +226,19 @@ jobs:
           path: artifacts/macos
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-windows
+          name: pmpd-windows-single
           path: artifacts/windows
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-windows-x64
+          name: pmpd-windows-double
+          path: artifacts/windows
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-windows-x64-single
+          path: artifacts/windows-x64
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-windows-x64-double
           path: artifacts/windows-x64
       - uses: actions/download-artifact@v4
         with:
@@ -194,7 +263,7 @@ jobs:
 
   upload_to_deken:
     runs-on: ubuntu-latest
-    needs: [ build_ubuntu, build_macos, build_windows, build_windows_x64, build-rpi ]
+    needs: [ build_ubuntu, build_macos, build_windows, build_windows_x64, build_rpi ]
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     steps:
       - uses: actions/checkout@v4
