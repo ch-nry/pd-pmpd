@@ -4,11 +4,10 @@ project(pd-pmpd C)
 SET(CMAKE_C_FLAGS "-O3 -ffinite-math-only -ffast-math -Wall -finline-functions -funroll-loops -flto")
 
 # apply with argument -DPD_FLOATSIZE64=ON
+set(FLOATSIZE_SUFFIX 32)
 if(PD_FLOATSIZE64)
   add_definitions(-DPD_FLOATSIZE=64)
   set(FLOATSIZE_SUFFIX 64)
-else()
-  set(FLOATSIZE_SUFFIX 32)
 endif()
 
 set(PUREDATA_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/pure-data/src" CACHE PATH "Path to folder containing m_pd.h" )
@@ -92,19 +91,14 @@ foreach(SOURCE IN LISTS SOURCES)
   )
 
   if(APPLE)
-    if(PD_FLOATSIZE64) # really?
-      set(PLATFORM_SUFFIX "darwin")
-      set(LIB_SUFFIX "-${FLOATSIZE_SUFFIX}.so")
-    else()
-      set(PLATFORM_SUFFIX "d")
-      set(LIB_SUFFIX "")
-    endif()
+    set(PLATFORM_SUFFIX "darwin")
+    set(LIB_SUFFIX "so")
   elseif(UNIX)
     set(PLATFORM_SUFFIX "linux")
-    set(LIB_SUFFIX "-${FLOATSIZE_SUFFIX}.so")
+    set(LIB_SUFFIX "so")
   else()
     set(PLATFORM_SUFFIX "windows")
-    set(LIB_SUFFIX "-${FLOATSIZE_SUFFIX}.dll")
+    set(LIB_SUFFIX "dll")
   endif()
  
   if(CMAKE_GENERATOR_PLATFORM MATCHES Win32)
@@ -125,7 +119,11 @@ foreach(SOURCE IN LISTS SOURCES)
     message(FATAL "Could not determine target architecture")
   endif()
 
-  set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".${PLATFORM_SUFFIX}-${ARCH_SUFFIX}${LIB_SUFFIX}")
+  set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".${PLATFORM_SUFFIX}-${ARCH_SUFFIX}-${FLOATSIZE_SUFFIX}.${LIB_SUFFIX}")
+  # necessary exception?
+  if(NOT PD_FLOATSIZE64 AND APPLE AND CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".d_fat")
+  endif()
 
   install(TARGETS ${PMPD_TARGET}
       DESTINATION pmpd
