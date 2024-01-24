@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        precision: [single, double]
+        precision: [pd32, pd64]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -22,39 +22,39 @@ jobs:
       run: |
         sudo apt-get install -yqq ninja-build cmake
     
-    - name: Build
-      if: matrix.precision == 'single'
+    - name: Build (Single Precision)
+      if: matrix.precision == 'pd32'
       run: |
         cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
         cmake --build build
         cmake --build build --target install
 
     - name: Archive Package
-      if: matrix.precision == 'single'
+      if: matrix.precision == 'pd32'
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-ubuntu-single
+        name: pmpd-ubuntu-pd32
         path: build/package/pmpd
 
-    - name: Build
-      if: matrix.precision == 'double'
+    - name: Build (Double Precision)
+      if: matrix.precision == 'pd64'
       run: |
         cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPD_FLOATSIZE64=ON
         cmake --build build
         cmake --build build --target install
 
     - name: Archive Package
-      if: matrix.precision == 'double'
+      if: matrix.precision == 'pd64'
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-ubuntu-double
+        name: pmpd-ubuntu-pd64
         path: build/package/pmpd
 
   build_macos:
     runs-on: macos-latest
     strategy:
       matrix:
-        precision: [single, double]
+        precision: [pd32, pd64]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -68,31 +68,31 @@ jobs:
         brew install ninja cmake
 
     - name: Build for x86_64 and ARM64 (Single Precision)
-      if: matrix.precision == 'single'
+      if: matrix.precision == 'pd32'
       run: |
         cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
         cmake --build build
         cmake --build build --target install  
    
     - name: Archive Package
-      if: matrix.precision == 'single'
+      if: matrix.precision == 'pd32'
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-macos-single
+        name: pmpd-macos-pd32
         path: build/package/pmpd
 
     - name: Build for x86_64 and ARM64 (Double Precision)
-      if: matrix.precision == 'double'
+      if: matrix.precision == 'pd64'
       run: |
         cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DPD_FLOATSIZE64=ON
         cmake --build build
         cmake --build build --target install  
    
     - name: Archive Package
-      if: matrix.precision == 'double'
+      if: matrix.precision == 'pd64'
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-macos-double
+        name: pmpd-macos-pd64
         path: build/package/pmpd
 
   build_windows:
@@ -107,7 +107,7 @@ jobs:
         Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${env:PD_VERSION}-i386.msw.zip" -OutFile "pd-${env:PD_VERSION}-i386.msw.zip"
         Expand-Archive -Path "pd-${env:PD_VERSION}-i386.msw.zip" -DestinationPath .
 
-    - name: Build
+    - name: Build (Single Precision)
       run: |
         cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}-i386/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}-i386/bin/pd.lib" -G "Visual Studio 17 2022" -A Win32
         cmake --build build --config Release
@@ -116,7 +116,7 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-windows-single
+        name: pmpd-windows-pd32
         path: build/package/pmpd
 
   build_windows_x64:
@@ -131,7 +131,7 @@ jobs:
         Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${env:PD_VERSION}.msw.zip" -OutFile "pd-${env:PD_VERSION}.msw.zip"
         Expand-Archive -Path "pd-${env:PD_VERSION}.msw.zip" -DestinationPath .
 
-    - name: Build
+    - name: Build (Single Precision)
       run: |
         cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64
         cmake --build build --config Release
@@ -140,7 +140,7 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-windows-x64-single
+        name: pmpd-windows-x64-pd32
         path: build/package/pmpd
 
   build_rpi:
@@ -156,13 +156,13 @@ jobs:
         sudo apt-get update && sudo apt-get upgrade -yqq
         sudo apt-get update && DEBIAN_FRONTEND=noninteractive sudo apt-get install -yqq git build-essential cmake gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf ninja-build puredata
 
-    - name: Build
+    - name: Build (Single Precision)
       run: ./cross_compile_rpi.sh
 
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-rpi-single
+        name: pmpd-rpi-pd32
         path: build/package/pmpd
 
   package_release:
@@ -172,31 +172,31 @@ jobs:
       # Download all artifacts
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-ubuntu-single
+          name: pmpd-ubuntu-pd32
           path: artifacts/ubuntu
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-ubuntu-double
+          name: pmpd-ubuntu-pd64
           path: artifacts/ubuntu
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-macos-single
+          name: pmpd-macos-pd32
           path: artifacts/macos
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-macos-double
+          name: pmpd-macos-pd64
           path: artifacts/macos
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-windows-single
+          name: pmpd-windows-pd32
           path: artifacts/windows
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-windows-x64-single
+          name: pmpd-windows-x64-pd32
           path: artifacts/windows-x64
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-rpi-single
+          name: pmpd-rpi-pd32
           path: artifacts/rpi
       # Extract and merge all files into a single directory
       - name: Merge Artifacts
