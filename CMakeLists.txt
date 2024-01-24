@@ -76,10 +76,6 @@ foreach(SOURCE IN LISTS SOURCES)
 
   add_library(${PMPD_TARGET} SHARED ${SOURCE} pmpd_version.h "${CMAKE_BINARY_DIR}/pmpd_version.c")
 
-  # Set specific optimization flags for this target
-  target_compile_options(${PMPD_TARGET} PRIVATE -ffinite-math-only -ffast-math -finline-functions -funroll-loops -flto -O3 -Wall)
-  # check errors: -Werror
-
   if(WIN32)
     target_link_libraries(${PMPD_TARGET} PRIVATE "${PUREDATA_LIB}")
   endif()
