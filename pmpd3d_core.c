@@ -351,7 +351,7 @@ void pmpd3d_link(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			for (j=0; j< x->nb_mass; j++)
 			{
-				if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
+				if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id) && (atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
 				{
 					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
 						// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
@@ -427,7 +427,7 @@ void pmpd3d_tLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			for (j=0; j< x->nb_mass; j++)
 			{
-				if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
+				if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id) && (atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
 				{
 					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
 						// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
@@ -499,7 +499,7 @@ void pmpd3d_tabLink(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
 		{
 			for (j=0; j< x->nb_mass; j++)
 			{
-				if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id)&(atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
+				if ( (atom_getsymbolarg(1,argc,argv) == x->mass[i].Id) && (atom_getsymbolarg(2,argc,argv) == x->mass[j].Id))
 				{
 					if (!( (x->mass[i].Id == x->mass[j].Id) && (i>j) )) 
 						// si lien entre 2 serie de masses identique entres elle, alors on ne creer qu'un lien sur 2, pour evider les redondances
