@@ -83,14 +83,12 @@ foreach(SOURCE IN LISTS SOURCES)
   # set library binary file name and extension
   set_target_properties(${PMPD_TARGET}
     PROPERTIES
-      PREFIX ""
       OUTPUT_NAME "${OBJECT_NAME}"
       C_VISIBILITY_PRESET hidden
       CXX_VISIBILITY_PRESET hidden
       VISIBILITY_INLINES_HIDDEN 1
-      )
-
-  set_target_properties(${PMPD_TARGET} PROPERTIES DEFINE_SYMBOL "PMPD_EXPORTS")
+      DEFINE_SYMBOL "PMPD_EXPORTS"
+  )
 
   if(APPLE)
     set(PLATFORM_SUFFIX "darwin")
