@@ -128,7 +128,6 @@ install(DIRECTORY examples/ DESTINATION pmpd/examples
 
 install(FILES 
   manual/pmpd.pdf
-  manual/pmpd.odt
   LICENSE.txt
   README.md
   DESTINATION pmpd
