@@ -613,17 +613,17 @@ void pmpd3d_closestMassN(t_pmpd3d *x, t_symbol *s, int argc, t_atom *argv)
     nbout = max(nbout,0);
     nbout = min(nbout,x->nb_mass);
 
-	if ( (argc >= 2)  && (argv[1].a_type == A_FLOAT) )
+    if ( (argc >= 2)  && (argv[1].a_type == A_FLOAT) )
         posX = atom_getfloatarg(1, argc, argv);
     else
         posX = 0;
 
-	if ( (argc >= 3)  && (argv[2].a_type == A_FLOAT) )
+    if ( (argc >= 3)  && (argv[2].a_type == A_FLOAT) )
         posY = atom_getfloatarg(2, argc, argv);
     else
         posY = 0;
         
-	if ( (argc >= 4)  && (argv[3].a_type == A_FLOAT) )
+    if ( (argc >= 4)  && (argv[3].a_type == A_FLOAT) )
         posZ = atom_getfloatarg(3, argc, argv);
     else
         posZ = 0;

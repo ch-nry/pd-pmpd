@@ -91,7 +91,7 @@ void tLink3D_position3D2(t_tLink3D *x, t_floatarg f1, t_floatarg f2, t_floatarg 
 
 void tLink3D_bang(t_tLink3D *x)
 {
-  t_float vitesse, distance, orientation;
+  t_float vitesse, distance;
   t_atom force1[3];
 
   distance = sqrt ( pow((x->position2Dx2-x->position2Dx1), 2) + pow((x->position2Dy2-x->position2Dy1), 2) + pow((x->position2Dz2-x->position2Dz1), 2) );

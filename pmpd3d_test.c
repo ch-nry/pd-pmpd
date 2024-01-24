@@ -163,14 +163,14 @@ int pmpd3d_test_3d_mass(int i, t_pmpd3d *x, int argc, t_atom *argv)
 			{
 				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp  = pmpd3d_sqr(x->mass[i].forceX) + pmpd3d_sqr(x->mass[i].forceY) + pmpd3d_sqr(x->mass[i].forceZ);
-				if ( ( tmp < atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				if ( tmp < ( atom_getfloatarg(j+1,argc,argv) * atom_getfloatarg(j+1,argc,argv)) ) { return(0); }
 				j+= 2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceInf") )
 			{
 				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp  = pmpd3d_sqr(x->mass[i].forceX) + pmpd3d_sqr(x->mass[i].forceY) + pmpd3d_sqr(x->mass[i].forceZ);
-				if ( ( tmp >= atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				if ( tmp >= (atom_getfloatarg(j+1,argc,argv) * atom_getfloatarg(j+1,argc,argv)) ) { return(0); }
 				j+= 2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceXSup") )

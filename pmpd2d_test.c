@@ -135,14 +135,14 @@ int pmpd2d_test_2d_mass(int i, t_pmpd2d *x, int argc, t_atom *argv)
 			{
 				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp  = pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY) ;
-				if ( ( tmp < atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				if ( tmp < (atom_getfloatarg(j+1,argc,argv)*atom_getfloatarg(j+1,argc,argv)) ) { return(0); }
 				j+= 2;
 			}
 			else if ( atom_getsymbolarg(j,argc,argv) == gensym("forceInf") )
 			{
 				if ( (j+1 >=  argc) || (argv[j+1].a_type != A_FLOAT) ) return(0); 
 				tmp  = pmpd2d_sqr(x->mass[i].forceX) + pmpd2d_sqr(x->mass[i].forceY) ;
-				if ( ( tmp >= atom_getfloatarg(j+1,argc,argv)) * atom_getfloatarg(j+1,argc,argv) ) { return(0); }
+				if ( tmp >= (atom_getfloatarg(j+1,argc,argv) * atom_getfloatarg(j+1,argc,argv)) ) { return(0); }
 				j+= 2;
 			}
 			else if (atom_getsymbolarg(j,argc,argv) == gensym("forceXSup") )

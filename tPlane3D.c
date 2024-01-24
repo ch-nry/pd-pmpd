@@ -140,12 +140,12 @@ void *tPlane3D_new(t_symbol *s, int argc, t_atom *argv)
   else
     x->P= 10000;
 
-    if (argc>=6)
+  if (argc>=6)
     x->Z= atom_getfloatarg(5, argc, argv);
   else
     x->Z= 0;
 
-    if (argc>=5)
+  if (argc>=5)
     x->Y= atom_getfloatarg(4, argc, argv);
   else
     x->Y= 0;

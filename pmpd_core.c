@@ -109,7 +109,7 @@ void *pmpd_new(t_symbol *s, int argc, t_atom *argv)
 
 void pmpd_bang(t_pmpd *x)
 { // this part is doing all the PM
-    t_float F, L, absL, tmpX;
+    t_float F, L, tmpX;
     t_int i;
     // post("bang");
 
@@ -459,7 +459,7 @@ void pmpd_delMass_int(t_pmpd *x, int delmass)
 
 void pmpd_delMass(t_pmpd *x, t_symbol *s, int argc, t_atom *argv)
 {
-	int i, j, delmass, nb_toremove;
+	int i, j, nb_toremove;
 	if ( (argc > 0) && ( argv[0].a_type == A_FLOAT ) )
 		pmpd_delMass_int(x, atom_getfloatarg(0, argc, argv));
 	if ( (argc > 0) && ( argv[0].a_type == A_SYMBOL ) )

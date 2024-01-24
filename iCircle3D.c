@@ -173,12 +173,12 @@ void *iCircle3D_new(t_symbol *s, int argc, t_atom *argv)
   else
     SETFLOAT(&(x->force[6]), 0);
 
-    if (argc>=7)
+  if (argc>=7)
     SETFLOAT(&(x->force[5]), atom_getfloatarg(6, argc, argv));
   else
     SETFLOAT(&(x->force[5]), 0);
 
-    if (argc>=6)
+  if (argc>=6)
     SETFLOAT(&(x->force[4]), atom_getfloatarg(5, argc, argv));
   else
     SETFLOAT(&(x->force[4]), 0);
