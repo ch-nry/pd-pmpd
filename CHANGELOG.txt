@@ -1,6 +1,7 @@
 version 0.13
-- add pmpd2d~ and pmpd3d~
+- add pmpd2d~ and pmpd3d~ 
 - add setM message to pmpd, pmpd2d and pmpd3d
+- various update, small bugfix
 
 from version 0.11 to version 0.12
 - new buils system (thankx Avilleret)
