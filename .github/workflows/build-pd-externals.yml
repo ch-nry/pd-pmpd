@@ -97,9 +97,6 @@ jobs:
 
   build_windows:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        precision: [single, double]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -111,38 +108,19 @@ jobs:
         Expand-Archive -Path "pd-${env:PD_VERSION}-i386.msw.zip" -DestinationPath .
 
     - name: Build
-      if: matrix.precision == 'single'
       run: |
         cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}-i386/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}-i386/bin/pd.lib" -G "Visual Studio 17 2022" -A Win32
         cmake --build build --config Release
         cmake --build build --config Release --target install
 
     - name: Archive Package
-      if: matrix.precision == 'single'
       uses: actions/upload-artifact@v4
       with:
         name: pmpd-windows-single
         path: build/package/pmpd
 
-    - name: Build
-      if: matrix.precision == 'double'
-      run: |
-        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}-i386/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}-i386/bin/pd.lib" -G "Visual Studio 17 2022" -A Win32 -DPD_FLOATSIZE64=ON
-        cmake --build build --config Release
-        cmake --build build --config Release --target install
-
-    - name: Archive Package
-      if: matrix.precision == 'double'
-      uses: actions/upload-artifact@v4
-      with:
-        name: pmpd-windows-double
-        path: build/package/pmpd
-
   build_windows_x64:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        precision: [single, double]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -154,31 +132,15 @@ jobs:
         Expand-Archive -Path "pd-${env:PD_VERSION}.msw.zip" -DestinationPath .
 
     - name: Build
-      if: matrix.precision == 'single'
       run: |
         cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64
         cmake --build build --config Release
         cmake --build build --config Release --target install
 
     - name: Archive Package
-      if: matrix.precision == 'single'
       uses: actions/upload-artifact@v4
       with:
         name: pmpd-windows-x64-single
-        path: build/package/pmpd
-
-    - name: Build
-      if: matrix.precision == 'double'
-      run: |
-        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64 -DPD_FLOATSIZE64=ON
-        cmake --build build --config Release
-        cmake --build build --config Release --target install
-
-    - name: Archive Package
-      if: matrix.precision == 'double'
-      uses: actions/upload-artifact@v4
-      with:
-        name: pmpd-windows-x64-double
         path: build/package/pmpd
 
   build_rpi:
@@ -200,7 +162,7 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-rpi
+        name: pmpd-rpi-single
         path: build/package/pmpd
 
   package_release:
@@ -230,19 +192,11 @@ jobs:
           path: artifacts/windows
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-windows-double
-          path: artifacts/windows
-      - uses: actions/download-artifact@v4
-        with:
           name: pmpd-windows-x64-single
           path: artifacts/windows-x64
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-windows-x64-double
-          path: artifacts/windows-x64
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-rpi
+          name: pmpd-rpi-single
           path: artifacts/rpi
       # Extract and merge all files into a single directory
       - name: Merge Artifacts
