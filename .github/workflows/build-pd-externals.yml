@@ -226,10 +226,6 @@ jobs:
           path: artifacts/macos
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-macos-double
-          path: artifacts/macos
-      - uses: actions/download-artifact@v4
-        with:
           name: pmpd-windows-single
           path: artifacts/windows
       - uses: actions/download-artifact@v4
