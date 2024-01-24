@@ -6,11 +6,13 @@ env:
   PD_VERSION: 0.51-4
 
 jobs:
-      
   build_ubuntu:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        precision: [single, double]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: true
     - name: Clone Pure-Data
@@ -21,21 +23,40 @@ jobs:
         sudo apt-get install -yqq ninja-build cmake
     
     - name: Build
+      if: matrix.precision == 'single'
       run: |
         cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
         cmake --build build
         cmake --build build --target install
 
     - name: Archive Package
-      uses: actions/upload-artifact@v3
+      if: matrix.precision == 'single'
+      uses: actions/upload-artifact@v4
       with:
-        name: pmpd
+        name: pmpd-ubuntu-single
         path: build/package/pmpd
-    
+
+    - name: Build
+      if: matrix.precision == 'double'
+      run: |
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPD_FLOATSIZE64=ON
+        cmake --build build
+        cmake --build build --target install
+
+    - name: Archive Package
+      if: matrix.precision == 'double'
+      uses: actions/upload-artifact@v4
+      with:
+        name: pmpd-ubuntu-double
+        path: build/package/pmpd
+
   build_macos:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        precision: [single, double]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: true
 
@@ -46,22 +67,41 @@ jobs:
       run: |
         brew install ninja cmake
 
-    - name: Build for x86_64 and ARM64
+    - name: Build for x86_64 and ARM64 (Single Precision)
+      if: matrix.precision == 'single'
       run: |
         cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
         cmake --build build
         cmake --build build --target install  
    
     - name: Archive Package
-      uses: actions/upload-artifact@v3
+      if: matrix.precision == 'single'
+      uses: actions/upload-artifact@v4
       with:
-        name: pmpd
+        name: pmpd-macos-single
+        path: build/package/pmpd
+
+    - name: Build for x86_64 and ARM64 (Double Precision)
+      if: matrix.precision == 'double'
+      run: |
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DPD_FLOATSIZE64=ON
+        cmake --build build
+        cmake --build build --target install  
+   
+    - name: Archive Package
+      if: matrix.precision == 'double'
+      uses: actions/upload-artifact@v4
+      with:
+        name: pmpd-macos-double
         path: build/package/pmpd
 
   build_windows:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        precision: [single, double]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: true
 
@@ -71,21 +111,40 @@ jobs:
         Expand-Archive -Path "pd-${env:PD_VERSION}-i386.msw.zip" -DestinationPath .
 
     - name: Build
+      if: matrix.precision == 'single'
       run: |
         cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}-i386/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}-i386/bin/pd.lib" -G "Visual Studio 17 2022" -A Win32
         cmake --build build --config Release
         cmake --build build --config Release --target install
 
     - name: Archive Package
-      uses: actions/upload-artifact@v3
+      if: matrix.precision == 'single'
+      uses: actions/upload-artifact@v4
       with:
-        name: pmpd
+        name: pmpd-windows-single
+        path: build/package/pmpd
+
+    - name: Build
+      if: matrix.precision == 'double'
+      run: |
+        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}-i386/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}-i386/bin/pd.lib" -G "Visual Studio 17 2022" -A Win32 -DPD_FLOATSIZE64=ON
+        cmake --build build --config Release
+        cmake --build build --config Release --target install
+
+    - name: Archive Package
+      if: matrix.precision == 'double'
+      uses: actions/upload-artifact@v4
+      with:
+        name: pmpd-windows-double
         path: build/package/pmpd
 
   build_windows_x64:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        precision: [single, double]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: true
 
@@ -95,21 +154,37 @@ jobs:
         Expand-Archive -Path "pd-${env:PD_VERSION}.msw.zip" -DestinationPath .
 
     - name: Build
+      if: matrix.precision == 'single'
       run: |
         cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64
         cmake --build build --config Release
         cmake --build build --config Release --target install
 
     - name: Archive Package
-      uses: actions/upload-artifact@v3
+      if: matrix.precision == 'single'
+      uses: actions/upload-artifact@v4
       with:
-        name: pmpd
+        name: pmpd-windows-x64-single
         path: build/package/pmpd
 
-  build-rpi:
+    - name: Build
+      if: matrix.precision == 'double'
+      run: |
+        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64 -DPD_FLOATSIZE64=ON
+        cmake --build build --config Release
+        cmake --build build --config Release --target install
+
+    - name: Archive Package
+      if: matrix.precision == 'double'
+      uses: actions/upload-artifact@v4
+      with:
+        name: pmpd-windows-x64-double
+        path: build/package/pmpd
+
+  build_rpi:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Clone Pure-Data
       run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
@@ -123,23 +198,60 @@ jobs:
       run: ./cross_compile_rpi.sh
 
     - name: Archive Package
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: pmpd
+        name: pmpd-rpi
         path: build/package/pmpd
 
   package_release:
     runs-on: ubuntu-latest
-    needs: [ build_ubuntu, build_macos, build_windows, build_windows_x64, build-rpi ]
+    needs: [ build_ubuntu, build_macos, build_windows, build_windows_x64, build_rpi ]
     steps:
-      - uses: actions/download-artifact@v3
+      # Download all artifacts
+      - uses: actions/download-artifact@v4
         with:
-          name: pmpd
-          path: pmpd
-      - name: Rezip
-        shell: bash
+          name: pmpd-ubuntu-single
+          path: artifacts/ubuntu
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-ubuntu-double
+          path: artifacts/ubuntu
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-macos-single
+          path: artifacts/macos
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-macos-double
+          path: artifacts/macos
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-windows-single
+          path: artifacts/windows
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-windows-double
+          path: artifacts/windows
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-windows-x64-single
+          path: artifacts/windows-x64
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-windows-x64-double
+          path: artifacts/windows-x64
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-rpi
+          path: artifacts/rpi
+      # Extract and merge all files into a single directory
+      - name: Merge Artifacts
         run: |
-          ls
+          mkdir pmpd
+          cp -rn artifacts/*/* pmpd/
+      # Zip the merged directory
+      - name: Rezip
+        run: |
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
           SLUG=${SHORT//\//_} # replace '/' with '_'
           zip -r pmpd-${SLUG}.zip pmpd
@@ -151,13 +263,13 @@ jobs:
 
   upload_to_deken:
     runs-on: ubuntu-latest
-    needs: [ build_ubuntu, build_macos, build_windows, build_windows_x64, build-rpi ]
+    needs: [ build_ubuntu, build_macos, build_windows, build_windows_x64, build_rpi ]
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: pmpd-src
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: pmpd
           path: pmpd
