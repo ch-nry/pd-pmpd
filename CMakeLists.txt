@@ -92,14 +92,19 @@ foreach(SOURCE IN LISTS SOURCES)
   )
 
   if(APPLE)
-    set(PLATFORM_SUFFIX "darwin")
-    set(LIB_SUFFIX "so")
+    if(PD_FLOATSIZE64) # really?
+      set(PLATFORM_SUFFIX "darwin")
+      set(LIB_SUFFIX "-${FLOATSIZE_SUFFIX}.so")
+    else()
+      set(PLATFORM_SUFFIX "d")
+      set(LIB_SUFFIX "")
+    end()
   elseif(UNIX)
     set(PLATFORM_SUFFIX "linux")
-    set(LIB_SUFFIX "so")
+    set(LIB_SUFFIX "-${FLOATSIZE_SUFFIX}.so")
   else()
     set(PLATFORM_SUFFIX "windows")
-    set(LIB_SUFFIX "dll")
+    set(LIB_SUFFIX "-${FLOATSIZE_SUFFIX}.dll")
   endif()
  
   if(CMAKE_GENERATOR_PLATFORM MATCHES Win32)
@@ -120,7 +125,7 @@ foreach(SOURCE IN LISTS SOURCES)
     message(FATAL "Could not determine target architecture")
   endif()
 
-  set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".${PLATFORM_SUFFIX}-${ARCH_SUFFIX}-${FLOATSIZE_SUFFIX}.${LIB_SUFFIX}")
+  set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".${PLATFORM_SUFFIX}-${ARCH_SUFFIX}${LIB_SUFFIX}")
 
   install(TARGETS ${PMPD_TARGET}
       DESTINATION pmpd
