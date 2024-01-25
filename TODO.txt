@@ -1,8 +1,5 @@
 TODO for v0.13
 doc
-check for denormal : do we need to check each value, or do we have a flag, or is the pb disepear with newer architecture
-check for compilaiton flag : https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html 
--O3 -ffinite-math-only -ffast-math -Wall -WError
 
 latter (probably never) : 
 linkEndL message, like linkEndT, but for list
