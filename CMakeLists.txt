@@ -1,7 +1,14 @@
 cmake_minimum_required (VERSION 3.14)
 project(pd-pmpd C)
 
-SET(CMAKE_C_FLAGS "-O3 -ffinite-math-only -ffast-math -Wall")
+SET(CMAKE_C_FLAGS "-O3 -ffinite-math-only -ffast-math -Wall -finline-functions -funroll-loops -flto")
+
+# apply with argument -DPD_FLOATSIZE64=ON
+set(FLOATSIZE_SUFFIX 32)
+if(PD_FLOATSIZE64)
+  add_definitions(-DPD_FLOATSIZE=64)
+  set(FLOATSIZE_SUFFIX 64)
+endif()
 
 set(PUREDATA_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/pure-data/src" CACHE PATH "Path to folder containing m_pd.h" )
 if(WIN32)
@@ -76,28 +83,30 @@ foreach(SOURCE IN LISTS SOURCES)
   set_target_properties(${PMPD_TARGET}
     PROPERTIES
       PREFIX ""
-      OUTPUT_NAME "${OBJECT_NAME}")
-
-  set_target_properties(${PMPD_TARGET} PROPERTIES
+      OUTPUT_NAME "${OBJECT_NAME}"
       C_VISIBILITY_PRESET hidden
       CXX_VISIBILITY_PRESET hidden
       VISIBILITY_INLINES_HIDDEN 1
-      )
-
-  set_target_properties(${PMPD_TARGET} PROPERTIES DEFINE_SYMBOL "PMPD_EXPORTS")
+      DEFINE_SYMBOL "PMPD_EXPORTS"
+  )
 
   if(APPLE)
-    set(PLATFORM_SUFFIX "d") # d for Darwin
+    set(PLATFORM_SUFFIX "darwin")
+    set(LIB_SUFFIX "so")
   elseif(UNIX)
-    set(PLATFORM_SUFFIX "l") # l for Linux
+    set(PLATFORM_SUFFIX "linux")
+    set(LIB_SUFFIX "so")
   else()
-    set(PLATFORM_SUFFIX "m") # m for Microsoft
+    set(PLATFORM_SUFFIX "windows")
+    set(LIB_SUFFIX "dll")
   endif()
  
   if(CMAKE_GENERATOR_PLATFORM MATCHES Win32)
     set(ARCH_SUFFIX i386)
   elseif(APPLE AND CMAKE_SYSTEM_NAME MATCHES "Darwin")
     set(ARCH_SUFFIX "fat")
+  elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm64.*")
+    set(ARCH_SUFFIX "arm64")
   elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm.*")
     set(ARCH_SUFFIX "arm")
   elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*aarch64.*")
@@ -110,7 +119,11 @@ foreach(SOURCE IN LISTS SOURCES)
     message(FATAL "Could not determine target architecture")
   endif()
 
-  set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".${PLATFORM_SUFFIX}_${ARCH_SUFFIX}" PREFIX "")
+  set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".${PLATFORM_SUFFIX}-${ARCH_SUFFIX}-${FLOATSIZE_SUFFIX}.${LIB_SUFFIX}")
+  # necessary exception?
+  if(NOT PD_FLOATSIZE64 AND APPLE AND CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".d_fat")
+  endif()
 
   install(TARGETS ${PMPD_TARGET}
       DESTINATION pmpd

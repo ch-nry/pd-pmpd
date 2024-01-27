@@ -624,7 +624,7 @@ t_float posx1, posy1, posz1, Nx, Ny, Nz, distance, Dmax, tmp;
 		Nz = Nz/distance;							// composante Y de la normal.
 
 		Dmax= atom_getfloatarg(4, argc, argv);		// distance max de l'interaction
-		if ( (distance > atom_getfloatarg(3, argc, argv)) & (distance < Dmax) )
+		if ( (distance > atom_getfloatarg(3, argc, argv)) && (distance < Dmax) )
 		{
 			tmp = atom_getfloatarg(5, argc, argv); // force constante normal
 			x->forceX += tmp * Nx;
@@ -747,9 +747,9 @@ void mass3D_inter_circle(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 
 		profondeur = a * x->posX_old_1 + b * x->posY_old_1 + c * x->posZ_old_1 - d;
 
-		rayon = sqrt ( pow(x->posX_old_1-atom_getfloatarg(3, argc, argv), 2) +pow(x->posY_old_1-atom_getfloatarg(4, argc, argv) , 2)  + pow(x->posZ_old_1 - atom_getfloatarg(5, argc, argv) , 2) - profondeur*profondeur );
+		rayon = sqrt ( pow(x->posX_old_1-atom_getfloatarg(3, argc, argv), 2) + pow(x->posY_old_1-atom_getfloatarg(4, argc, argv) , 2) + pow(x->posZ_old_1 - atom_getfloatarg(5, argc, argv) , 2) - profondeur*profondeur );
 
-		if ( (profondeur < 0) & (profondeur > - atom_getfloatarg(11, argc, argv)) & (rayon > atom_getfloatarg(6, argc, argv)) & (rayon < atom_getfloatarg(7, argc, argv)))
+		if ( (profondeur < 0) && (profondeur > - atom_getfloatarg(11, argc, argv)) && (rayon > atom_getfloatarg(6, argc, argv)) && (rayon < atom_getfloatarg(7, argc, argv)))
 		{
 
 			tmp = atom_getfloatarg(8, argc, argv); // force normal constante
@@ -873,7 +873,7 @@ void mass3D_inter_cylinder(t_mass3D *x, t_symbol *s, int argc, t_atom *argv)
 		Tb = c*Xb - a*Zb;
 		Tc = a*Yb - b*Xb;
 		
-		if ( (profondeur < atom_getfloatarg(14, argc, argv)) & (profondeur > atom_getfloatarg(13, argc, argv)) & (rayon < atom_getfloatarg(7, argc, argv)) & (rayon > atom_getfloatarg(6, argc, argv)) )
+		if ( (profondeur < atom_getfloatarg(14, argc, argv)) && (profondeur > atom_getfloatarg(13, argc, argv)) && (rayon < atom_getfloatarg(7, argc, argv)) && (rayon > atom_getfloatarg(6, argc, argv)) )
 		{
 
 			tmp = atom_getfloatarg(8, argc, argv); // force normal constante
