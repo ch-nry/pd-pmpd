@@ -139,7 +139,7 @@ include(GenerateExportHeader)
 generate_export_header(pmpd)
 
 install(DIRECTORY examples/ DESTINATION pmpd/examples
-        FILES_MATCHING PATTERN "*.pd")
+        FILES_MATCHING PATTERN "*.pd" PATTERN "*.html")
 
 install(FILES 
   LICENSE.txt
