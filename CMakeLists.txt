@@ -142,7 +142,6 @@ install(DIRECTORY examples/ DESTINATION pmpd/examples
         FILES_MATCHING PATTERN "*.pd")
 
 install(FILES 
-  manual/pm_pmpd_and_expressive_mvt_synthesis.pdf
   LICENSE.txt
   README.md
   DESTINATION pmpd
