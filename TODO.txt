@@ -1,7 +1,4 @@
-TODO for v0.13
-doc
-
-latter (probably never) : 
+TODO :
 linkEndL message, like linkEndT, but for list
 iBox3d / iBox2d interactors
 iTriangle3d / iSegment2d interactors
