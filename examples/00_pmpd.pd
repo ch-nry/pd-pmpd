@@ -22,13 +22,13 @@
 #X connect 7 0 6 0;
 #X restore 17 243 pd cpu;
 #X floatatom 17 264 5 0 0 0 - - -;
-#X text 17 54 You are ready to try the examples patchs. Please do not
-run 2 examples in the same time (some use same send and receive names).
+#X text 17 54 You are ready to try the examples patches. Please do not
+run 2 examples at the same time (some use identical send and receive names).
 ;
-#X text 17 106 Gem v0.90 is neaded. It's the only dependency of the
+#X text 17 106 Gem v0.90 is required. It's the only dependency of the
 examples.;
-#X text 17 142 Examples are the files begginig with XX_name. XX is
-a number. Others files are abstractions used by these examples.;
-#X text 17 185 For big patch \, look at the cpu used \, you have to
-reduce the simulation speed if your computer is too slow.;
+#X text 17 142 Examples are the files beginning with XX_name (where XX 
+is a number. Other files are abstractions used by these examples.;
+#X text 17 185 For bigger patches \, look at the CPU usage \, you might
+have to reduce the simulation speed if your computer is too slow.;
 #X connect 0 0 1 0;
