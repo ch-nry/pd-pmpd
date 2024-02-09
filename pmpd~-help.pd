@@ -17,7 +17,7 @@
 #X text 147 477 few messages can interact in real time with the simulation;
 #X text 117 691 arg3 : oversample factor (usefull to run the simulation faster than audio rate);
 #X text 217 494 change the position (\$2) of a fixed mass (\$1);
-#X text 239 515 send a force (\$1) to a mass (\$2);
+#X text 239 515 send a force (\$2) to a mass (\$1);
 #X obj 186 627 osc~ 444;
 #X text 239 626 interaction with the simulation is at audio rate;
 #X msg 54 137 link \$1 \$2 \$3 \$4;
