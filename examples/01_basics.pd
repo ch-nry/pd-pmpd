@@ -1,6 +1,6 @@
 #N canvas 834 164 515 653 12;
 #X declare -path pmpd;
-#N canvas 750 254 623 384 read 0;
+#N canvas 173 239 623 384 read 1;
 #X text 412 312 ch20031213;
 #X text 30 25 The aim of this collection of objects is to simulate physical behavior with pure data. It's not audio synthesis. But it can be used for the creation of parameters that can be used for driving audio or video synthesis.;
 #X text 122 263 http://www.chnry.net/ch/?120-pmpd&lang=en;
@@ -9,7 +9,7 @@
 #X text 30 161 Any comments \, criticism \, suggestions \, help is highly appreciated :;
 #X text 28 240 Information can be found online:;
 #X restore 69 316 pd read me first;
-#N canvas 724 188 663 567 basics 0;
+#N canvas 147 165 663 567 basics 1;
 #X text 29 395 You have to declare the path of the pmpd externals to use them \, for example:;
 #X text 47 126 Links (link \, link2D \, link3D) represent the fundamental interaction between 2 masses. They are viscoelastic connections. The link object receives the position of 2 masses \, computes the force between the 2 masses and outputs a force for each mass., f 57;
 #X text 47 202 Interactors are a kind of link \, but influence a group of masses at once. They can be used for global interaction. We will look further into this later., f 57;
@@ -53,7 +53,7 @@
 #X connect 15 0 5 1;
 #X connect 20 0 1 0;
 #X restore 69 373 pd global_description;
-#N canvas 50 97 762 661 test 0;
+#N canvas 50 97 762 661 test 1;
 #X msg 104 114 1;
 #X msg 70 114 0;
 #X msg 37 114 -1;
@@ -112,7 +112,7 @@
 #X restore 71 494 pd test;
 #X obj 96 432 mass;
 #X obj 96 462 link;
-#N canvas 100 117 451 696 list 0;
+#N canvas 100 117 451 696 list 1;
 #X obj 190 135 iAmbient2D;
 #X obj 305 137 iAmbient3D;
 #X obj 190 166 iCircle2D;
@@ -156,13 +156,13 @@
 #X obj 10 200 cnv 15 15 15 Ma1 M1 empty 2 10 0 14 #000000 #404040 0;
 #X obj 24 185 cnv 15 15 15 Ma3 M3 empty 2 10 0 14 #000000 #404040 0;
 #X obj 39 172 cnv 15 15 15 Ma5 M5 empty 2 10 0 14 #000000 #404040 0;
-#X obj 80 200 cnv 15 15 15 Ma9 M9 empty 2 10 0 14 #000000 #404040 0;
+#X obj 79 200 cnv 15 15 15 Ma9 M9 empty 2 10 0 14 #000000 #404040 0;
 #X obj 183 200 cnv 15 15 15 empty M29 empty 2 10 0 14 #000000 #404040 0;
 #X obj 120 200 cnv 15 15 15 Ma2 M2 empty 2 10 0 14 #000000 #404040 0;
 #X obj 120 160 cnv 15 15 15 Ma4 M4 empty 2 10 0 14 #000000 #404040 0;
-#X obj 100 170 cnv 15 15 15 Ma6 M6 empty 2 10 0 14 #000000 #404040 0;
-#X obj 80 160 cnv 15 15 15 Ma8 M8 empty 2 10 0 14 #000000 #404040 0;
-#X obj 120 180 cnv 15 15 15 Ma11 M11 empty 2 10 0 14 #000000 #404040 0;
+#X obj 99 170 cnv 15 15 15 Ma6 M6 empty 2 10 0 14 #000000 #404040 0;
+#X obj 79 160 cnv 15 15 15 Ma8 M8 empty 2 10 0 14 #000000 #404040 0;
+#X obj 119 180 cnv 15 15 15 Ma11 M11 empty 2 10 0 14 #000000 #404040 0;
 #X obj 80 180 cnv 15 15 15 Ma12 M12 empty 2 10 0 14 #000000 #404040 0;
 #X obj 184 172 cnv 15 15 15 Ma14 M14 empty 2 10 0 14 #000000 #404040 0;
 #X obj 198 187 cnv 15 15 15 Ma13 M13 empty 2 10 0 14 #000000 #404040 0;
@@ -694,7 +694,7 @@
 #X obj 155 200 cnv 15 15 15 Ma16 M16 empty 2 10 0 14 #000000 #404040 0;
 #X text 66 263 Physical modeling for pure data using a collection of physical ojects.;
 #X text 95 409 Look at mass and link help file :;
-#N canvas 255 121 879 595 simple_example 0;
+#N canvas 55 141 802 595 simple_example 1;
 #X obj 356 237 vsl 15 128 0 127 0 0 empty empty empty 0 -8 0 8 #fcfcfc #000000 #000000 0 0;
 #X obj 169 109 hradio 15 1 0 5 empty empty empty 0 -6 0 8 #fcfcfc #000000 #000000 0;
 #N canvas 477 50 445 299 preset 0;
