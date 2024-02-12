@@ -43,6 +43,7 @@ struct _mass {
 	t_float speedX;
 	t_float posX;
 	t_float forceX;
+	t_int Id;
 } ;
 
 struct _link {
@@ -262,14 +263,42 @@ void pmpd_tilde_setM(t_pmpd_tilde *x, t_float nbr_mass, t_float M)
 	if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass) && (M>0)) x->mass[(int)nbr_mass].invM = 1./M;
 }
 
-void pmpd_tilde_setK(t_pmpd_tilde *x, t_float nbr_link, t_float K)
+void pmpd_tilde_setK(t_pmpd_tilde *x, t_float nb_link, t_float K)
 {
-	if( (nbr_link >= 0) && (nbr_link < x->nb_link) ) x->link[(int)nbr_link].K1 = K;
+	if( (nb_link >= 0) && (nb_link < x->nb_link) ) x->link[(int)nb_link].K1 = K;
 }
 
-void pmpd_tilde_setD(t_pmpd_tilde *x, t_float nbr_link, t_float D)
+void pmpd_tilde_setD(t_pmpd_tilde *x, t_float nb_link, t_float D)
 {
-	if( (nbr_link >= 0) && (nbr_link < x->nb_link) ) x->link[(int)nbr_link].D1 = D;
+	if( (nb_link >= 0) && (nb_link < x->nb_link) ) x->link[(int)nb_link].D1 = D;
+}
+
+void pmpd_tilde_setNLD(t_pmpd_tilde *x, t_float nb_NLlink, t_float D)
+{
+	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].D1 = D;
+}
+
+void pmpd_tilde_setNLK(t_pmpd_tilde *x, t_float nb_NLlink, t_float K, t_float Pow)
+{
+	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) ) {
+		x->NLlink[(int)nb_NLlink].K1 = K;
+		x->NLlink[(int)nb_NLlink].Pow = Pow;
+	}
+}
+
+void pmpd_tilde_setNLL(t_pmpd_tilde *x, t_float nb_NLlink, t_float L)
+{
+	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].L0 = L;
+}
+
+void pmpd_tilde_setNLLMin(t_pmpd_tilde *x, t_float nb_NLlink, t_float M)
+{
+	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].Lmin = M;
+}
+
+void pmpd_tilde_setNLLMax(t_pmpd_tilde *x, t_float nb_NLlink, t_float M)
+{
+	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].Lmax = M;
 }
 
 void pmpd_tilde_mass(t_pmpd_tilde *x, t_float M, t_float posX)
@@ -287,7 +316,8 @@ void pmpd_tilde_mass(t_pmpd_tilde *x, t_float M, t_float posX)
 	x->mass[x->nb_mass].speedX = 0;
 	x->mass[x->nb_mass].posX = posX;
 	x->mass[x->nb_mass].forceX = 0;
-
+	x->mass[x->nb_mass].Id = x->nb_mass;
+	
 	x->nb_mass++ ;
 	if (x->nb_mass == nb_max_mass) logpost(x,1, "to many mass");
 	x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
@@ -440,6 +470,12 @@ PMPD_EXPORT void pmpd_tilde_setup(void) {
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setK, gensym("setK"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setD, gensym("setD"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setM, gensym("setM"), A_DEFFLOAT, A_DEFFLOAT, 0);	
+	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLK, gensym("setNLK"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLD, gensym("setNLD"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLL, gensym("setNLL"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLMin, gensym("setNLLMin"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLMax, gensym("setNLLMax"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_reset, gensym("reset"), 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_dsp, gensym("dsp"),  A_CANT, 0);
 }

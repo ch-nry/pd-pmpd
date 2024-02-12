@@ -350,6 +350,34 @@ void pmpd3d_tilde_setLCurrent(t_pmpd3d_tilde *x, t_float nbr_link, t_float pourc
 	if( (nbr_link >= 0) && (nbr_link < x->nb_link) ) x->link[(int)nbr_link].L0 += pourcent * (x->link[(int)nbr_link].L - x->link[(int)nbr_link].L0);
 }
 
+void pmpd3d_tilde_setNLD(t_pmpd3d_tilde *x, t_float nb_NLlink, t_float D)
+{
+	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].D1 = D;
+}
+
+void pmpd3d_tilde_setNLK(t_pmpd3d_tilde *x, t_float nb_NLlink, t_float K, t_float Pow)
+{
+	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) ) {
+		x->NLlink[(int)nb_NLlink].K1 = K;
+		x->NLlink[(int)nb_NLlink].Pow = Pow;
+	}
+}
+
+void pmpd3d_tilde_setNLL(t_pmpd3d_tilde *x, t_float nb_NLlink, t_float L)
+{
+	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].L0 = L;
+}
+
+void pmpd3d_tilde_setNLLMin(t_pmpd3d_tilde *x, t_float nb_NLlink, t_float M)
+{
+	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].Lmin = M;
+}
+
+void pmpd3d_tilde_setNLLMax(t_pmpd3d_tilde *x, t_float nb_NLlink, t_float M)
+{
+	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].Lmax = M;
+}
+
 void pmpd3d_tilde_mass(t_pmpd3d_tilde *x, t_float M, t_float posX, t_float posY, t_float posZ, t_float D) {
 // add a mass
 //invM speedX posX force
@@ -662,7 +690,13 @@ PMPD_EXPORT void pmpd3d_tilde_setup(void) {
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setD, gensym("setD"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setL, gensym("setL"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setLCurrent, gensym("setLCurrent"), A_DEFFLOAT, A_DEFFLOAT, 0);
-	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setM, gensym("setM"), A_DEFFLOAT, A_DEFFLOAT, 0);	
+	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setM, gensym("setM"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLK, gensym("setNLK"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLD, gensym("setNLD"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLL, gensym("setNLL"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLLMin, gensym("setNLLMin"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLLMax, gensym("setNLLMax"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_reset, gensym("reset"), 0);
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_dsp, gensym("dsp"),  A_CANT, 0);
 }
