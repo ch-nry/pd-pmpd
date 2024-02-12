@@ -362,7 +362,7 @@ void pmpd2d_tilde_mass(t_pmpd2d_tilde *x, t_float M, t_float posX, t_float posY,
 
 	x->nb_mass++ ;
 	if (x->nb_mass >= nb_max_mass) {
-		logpost(x,1, "to many mass");
+		logpost(x,1, "too many mass");
 		x->nb_mass--;
 	}
 }
@@ -379,7 +379,7 @@ void pmpd2d_tilde_link(t_pmpd2d_tilde *x, t_float mass_1, t_float mass_2, t_floa
 
 	x->nb_link++ ;
 	if (x->nb_link >= nb_max_link) {
-		logpost(x,1,"to many link");
+		logpost(x,1,"too many link");
 		x->nb_link--;
 	}
 }
@@ -400,7 +400,7 @@ void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 
 		x->nb_NLlink++ ;
 		if (x->nb_NLlink == nb_max_link) {
-			logpost(x,1,"to many NLlink");
+			logpost(x,1,"too many NLlink");
 			x->nb_NLlink--;
 		}
 	}
@@ -417,7 +417,7 @@ void pmpd2d_tilde_inPosX(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_
 
 	x->nb_inPosX++;
 	if (x->nb_inPosX == nb_max_in) {
-		logpost(x,1,"to many inPosX");
+		logpost(x,1,"too many inPosX");
 		x->nb_inPosX--;
 	}
 }
@@ -431,7 +431,7 @@ void pmpd2d_tilde_inPosY(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_
 
 	x->nb_inPosY++;
 	if (x->nb_inPosY == nb_max_in) {
-		logpost(x,1,"to many inPosY");
+		logpost(x,1,"too many inPosY");
 		x->nb_inPosY--;
 	}
 }
@@ -443,7 +443,7 @@ void pmpd2d_tilde_inForceX(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, 
 
 	x->nb_inForceX++;
 	if (x->nb_inForceX == nb_max_in) {
-		logpost(x,1,"to many inForceX");
+		logpost(x,1,"too many inForceX");
 		x->nb_inForceX--;
 	}
 }
@@ -455,7 +455,7 @@ void pmpd2d_tilde_inForceY(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, 
 
 	x->nb_inForceY++;
 	if (x->nb_inForceY == nb_max_in) {
-		logpost(x,1,"to many inForceY");
+		logpost(x,1,"too many inForceY");
 		x->nb_inForceY--;
 	}
 }
@@ -467,7 +467,7 @@ void pmpd2d_tilde_outPosX(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, 
 
 	x->nb_outPosX++ ;
 	if (x->nb_outPosX == nb_max_out) {
-		logpost(x,1,"to many outPosX");
+		logpost(x,1,"too many outPosX");
 		x->nb_outPosX--;
 	}
 }
@@ -479,7 +479,7 @@ void pmpd2d_tilde_outPosY(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, 
 
 	x->nb_outPosY++ ;
 	if (x->nb_outPosY == nb_max_out) {
-		logpost(x,1,"to many outPosY");
+		logpost(x,1,"too many outPosY");
 		x->nb_outPosY--;
 	}
 }
@@ -491,7 +491,7 @@ void pmpd2d_tilde_outSpeedX(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1
 
 	x->nb_outSpeedX++ ;
 	if (x->nb_outSpeedX == nb_max_out) {
-		logpost(x,1,"to many outSpeedX");
+		logpost(x,1,"too many outSpeedX");
 		x->nb_outSpeedX--;
 	}
 }
@@ -503,7 +503,7 @@ void pmpd2d_tilde_outSpeedY(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1
 
 	x->nb_outSpeedY++ ;
 	if (x->nb_outSpeedY == nb_max_out) {
-		logpost(x,1,"to many outSpeedY");
+		logpost(x,1,"too many outSpeedY");
 		x->nb_outSpeedY--;
 	}
 }
@@ -515,7 +515,7 @@ void pmpd2d_tilde_outSpeed(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1,
 
 	x->nb_outSpeed++ ;
 	if (x->nb_outSpeed == nb_max_out) {
-		logpost(x,1,"to many outSpeed");
+		logpost(x,1,"too many outSpeed");
 		x->nb_outSpeed--;
 	}
 }
