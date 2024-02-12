@@ -63,9 +63,9 @@
 #X text 327 626 change link settings;
 #X text 218 657 change rigidity \$2 of NLlink \$1 with exponent \$3;
 #X text 288 680 change damping and length of NLlink;
-#X msg 126 702 setNLMin \$1 \$2;
-#X msg 224 702 setNLMax \$1 \$2;
-#X text 317 702 change min and max length of NLlink;
+#X text 328 702 change min and max length of NLlink;
+#X msg 126 702 setNLLMin \$1 \$2;
+#X msg 228 702 setNLLMax \$1 \$2;
 #X connect 0 0 24 0;
 #X connect 2 0 24 0;
 #X connect 3 0 24 0;
@@ -85,4 +85,4 @@
 #X connect 36 0 24 0;
 #X connect 58 0 24 0;
 #X connect 60 0 24 0;
-#X connect 64 0 24 0;
+#X connect 65 0 24 0;
