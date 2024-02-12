@@ -283,13 +283,13 @@ void pmpd3d_tilde_bang(t_pmpd3d_tilde *x) {
 	for (i=0; i<x->nb_inForceX; i++) logpost(x, 2, "In_forceX:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForceX[i].nbr_inlet, x->inForceX[i].mass1->Id, x->inForceX[i].influence);
 	for (i=0; i<x->nb_inForceY; i++) logpost(x, 2, "In_forceY:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForceY[i].nbr_inlet, x->inForceY[i].mass1->Id, x->inForceY[i].influence);
 	for (i=0; i<x->nb_inForceZ; i++) logpost(x, 2, "In_forceZ:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForceZ[i].nbr_inlet, x->inForceZ[i].mass1->Id, x->inForceZ[i].influence);
-	for (i=0; i<x->nb_outPosX; i++) logpost(x, 2, "Out_posX:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPosX[i].nbr_outlet, x->outPosX[i].mass1->Id, x->outPosX[i].influence);
-	for (i=0; i<x->nb_outPosY; i++) logpost(x, 2, "Out_posY:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPosY[i].nbr_outlet, x->outPosY[i].mass1->Id, x->outPosY[i].influence);
-	for (i=0; i<x->nb_outPosZ; i++) logpost(x, 2, "Out_posZ:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPosZ[i].nbr_outlet, x->outPosZ[i].mass1->Id, x->outPosZ[i].influence);
-	for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "Out_speed:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass1->Id, x->outSpeed[i].influence);
-	for (i=0; i<x->nb_outSpeedX; i++) logpost(x, 2, "Out_speedX:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedX[i].nbr_outlet, x->outSpeedX[i].mass1->Id, x->outSpeedX[i].influence);
-	for (i=0; i<x->nb_outSpeedY; i++) logpost(x, 2, "Out_speedY:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedY[i].nbr_outlet, x->outSpeedY[i].mass1->Id, x->outSpeedY[i].influence);
-	for (i=0; i<x->nb_outSpeedZ; i++) logpost(x, 2, "Out_speedZ:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedZ[i].nbr_outlet, x->outSpeedZ[i].mass1->Id, x->outSpeedZ[i].influence);
+	for (i=0; i<x->nb_outPosX; i++) logpost(x, 2, "Out_posX:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPosX[i].nbr_outlet, x->outPosX[i].mass1->Id, x->outPosX[i].influence);
+	for (i=0; i<x->nb_outPosY; i++) logpost(x, 2, "Out_posY:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPosY[i].nbr_outlet, x->outPosY[i].mass1->Id, x->outPosY[i].influence);
+	for (i=0; i<x->nb_outPosZ; i++) logpost(x, 2, "Out_posZ:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPosZ[i].nbr_outlet, x->outPosZ[i].mass1->Id, x->outPosZ[i].influence);
+	for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "Out_speed:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass1->Id, x->outSpeed[i].influence);
+	for (i=0; i<x->nb_outSpeedX; i++) logpost(x, 2, "Out_speedX:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedX[i].nbr_outlet, x->outSpeedX[i].mass1->Id, x->outSpeedX[i].influence);
+	for (i=0; i<x->nb_outSpeedY; i++) logpost(x, 2, "Out_speedY:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedY[i].nbr_outlet, x->outSpeedY[i].mass1->Id, x->outSpeedY[i].influence);
+	for (i=0; i<x->nb_outSpeedZ; i++) logpost(x, 2, "Out_speedZ:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedZ[i].nbr_outlet, x->outSpeedZ[i].mass1->Id, x->outSpeedZ[i].influence);
 }
 
 void pmpd3d_tilde_float(t_pmpd3d_tilde *x, t_float force) {}

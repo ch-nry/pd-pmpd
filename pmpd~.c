@@ -242,8 +242,8 @@ void pmpd_tilde_bang(t_pmpd_tilde *x)
 	for (i=0; i<x->nb_NLlink; i++) logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, Lmin:%f, Lmax:%f, Pow:%f", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K1, x->NLlink[i].D1, x->NLlink[i].L0, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
 	for (i=0; i<x->nb_inPos; i++) logpost(x, 2, "In_pos:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPos[i].nbr_inlet, x->inPos[i].mass1->Id, x->inPos[i].influence);
 	for (i=0; i<x->nb_inForce; i++) logpost(x, 2, "In_force:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForce[i].nbr_inlet, x->inForce[i].mass1->Id, x->inForce[i].influence);
-	for (i=0; i<x->nb_outPos; i++) logpost(x, 2, "Out_pos:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPos[i].nbr_outlet, x->outPos[i].mass1->Id, x->outPos[i].influence);
-	for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "Out_speed:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass1->Id, x->outSpeed[i].influence);
+	for (i=0; i<x->nb_outPos; i++) logpost(x, 2, "Out_pos:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPos[i].nbr_outlet, x->outPos[i].mass1->Id, x->outPos[i].influence);
+	for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "Out_speed:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass1->Id, x->outSpeed[i].influence);
 }
 
 void pmpd_tilde_float(t_pmpd_tilde *x, t_float force)
