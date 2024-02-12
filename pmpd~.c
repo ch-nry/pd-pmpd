@@ -346,7 +346,7 @@ void pmpd_tilde_link(t_pmpd_tilde *x, t_float mass_1, t_float mass_2, t_float K1
 }
 
 void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
-// t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float Lmin, t_float Lmax, t_float L0
+// t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
 {
 	if  (argc == 8) 

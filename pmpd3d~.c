@@ -196,7 +196,7 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
 				LZ = x->NLlink[i].mass2->posZ - x->NLlink[i].mass1->posZ;
 				L = sqrt(LY*LY + LX*LX + LZ*LZ);
 				if ((L < x->NLlink[i].Lmax) && (L > x->NLlink[i].Lmin)) {
-					F  = x->NLlink[i].K1 * pow(fabs(L- x->NLlink[i].L0) ,x->NLlink[i].Pow); 
+					F  = x->NLlink[i].K1 * pow(fabs(L - x->NLlink[i].L0), x->NLlink[i].Pow);
 					if (L < 0) F *= -1;
 					// spring
 					
@@ -206,8 +206,8 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
 
 					if(L !=0 ) { // si L = 0 : on ne sais pas dans quel direction apliquer la force : c'est un point d'equilibre instable
 						FX = F * LX/L;
-						FY = F * LY/L;  
-						FZ = F * LZ/L;  
+						FY = F * LY/L;
+						FZ = F * LZ/L;
 					} else {
 						FX = 0;
 						FY = 0;
@@ -216,9 +216,9 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
 					x->NLlink[i].mass1->forceX += FX;
 					x->NLlink[i].mass2->forceX -= FX;
 					x->NLlink[i].mass1->forceY += FY;
-					x->NLlink[i].mass2->forceY -= FY;	
+					x->NLlink[i].mass2->forceY -= FY;
 					x->NLlink[i].mass1->forceZ += FZ;
-					x->NLlink[i].mass2->forceZ -= FZ;	
+					x->NLlink[i].mass2->forceZ -= FZ;
 				}
 			}
 			for (i=0; i<x->nb_mass; i++)
@@ -427,7 +427,7 @@ void pmpd3d_tilde_link(t_pmpd3d_tilde *x, t_float mass_1, t_float mass_2, t_floa
 }
 
 void pmpd3d_tilde_NLlink(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv) {
-// t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float Lmin, t_float Lmax, t_float L0
+// t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
 	if  (argc == 8) 
 	{
@@ -437,6 +437,7 @@ void pmpd3d_tilde_NLlink(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 		x->NLlink[x->nb_NLlink].D1 = atom_getfloatarg(3, argc, argv);
 		x->NLlink[x->nb_NLlink].Pow = atom_getfloatarg(4, argc, argv);
 		x->NLlink[x->nb_NLlink].L0 = atom_getfloatarg(5, argc, argv);
+		x->NLlink[x->nb_NLlink].L = atom_getfloatarg(5, argc, argv);
 		x->NLlink[x->nb_NLlink].Lmin = atom_getfloatarg(6, argc, argv);
 		x->NLlink[x->nb_NLlink].Lmax = atom_getfloatarg(7, argc, argv);
 

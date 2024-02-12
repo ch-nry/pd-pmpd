@@ -385,7 +385,7 @@ void pmpd2d_tilde_link(t_pmpd2d_tilde *x, t_float mass_1, t_float mass_2, t_floa
 }
 
 void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv) {
-// t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float Lmin, t_float Lmax, t_float L0
+// t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
 	if  (argc == 8) 
 	{
@@ -395,6 +395,7 @@ void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 		x->NLlink[x->nb_NLlink].D1 = atom_getfloatarg(3, argc, argv);
 		x->NLlink[x->nb_NLlink].Pow = atom_getfloatarg(4, argc, argv);
 		x->NLlink[x->nb_NLlink].L0 = atom_getfloatarg(5, argc, argv);
+		x->NLlink[x->nb_NLlink].L = atom_getfloatarg(5, argc, argv);
 		x->NLlink[x->nb_NLlink].Lmin = atom_getfloatarg(6, argc, argv);
 		x->NLlink[x->nb_NLlink].Lmax = atom_getfloatarg(7, argc, argv);
 
