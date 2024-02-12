@@ -59,13 +59,14 @@
 #X msg 122 680 setNLD \$1 \$2;
 #X msg 207 680 setNLL \$1 \$2;
 #X msg 119 658 setNLK \$1 \$2 \$3;
-#X text 327 626 change link settings;
 #X text 218 657 change rigidity \$2 of NLlink \$1 with exponent \$3;
 #X text 288 680 change damping and length of NLlink;
 #X text 328 702 change min and max length of NLlink;
 #X msg 126 702 setNLLMin \$1 \$2;
 #X msg 228 702 setNLLMax \$1 \$2;
 #X text 110 825 arg3 : oversample factor (useful to run the simulation faster than audio rate);
+#X msg 331 626 setLCurrent \$1 \$2;
+#X text 445 615 change link settings: rigidity \, damping \, length and mix between set length and current length (0..1), f 35;
 #X connect 0 0 23 0;
 #X connect 2 0 23 0;
 #X connect 3 0 23 0;
@@ -85,4 +86,4 @@
 #X connect 35 0 23 0;
 #X connect 57 0 23 0;
 #X connect 59 0 23 0;
-#X connect 64 0 23 0;
+#X connect 63 0 23 0;
