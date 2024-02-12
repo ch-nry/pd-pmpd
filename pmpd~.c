@@ -189,12 +189,11 @@ t_int *pmpd_tilde_perform(t_int *w)
 					x->NLlink[i].mass2->forceX += F;
 				}
 			}
-			for (i=1; i<x->nb_mass; i++)
+			for (i=0; i<x->nb_mass; i++)
 			{
 			// compute new masses position
 			// a mass does not move if M=0 (i.e : invM = 0)
 				x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
-				x->mass[i].forceX = 0;
 				x->mass[i].forceX = 0; //random_bang_pmpd_tilde(x) * 1e-25; 
 					// only used for denormal problem
 					// -ffast-math -O6 does not solve the problem

@@ -350,32 +350,32 @@ void pmpd3d_tilde_setLCurrent(t_pmpd3d_tilde *x, t_float nbr_link, t_float pourc
 	if( (nbr_link >= 0) && (nbr_link < x->nb_link) ) x->link[(int)nbr_link].L0 += pourcent * (x->link[(int)nbr_link].L - x->link[(int)nbr_link].L0);
 }
 
-void pmpd3d_tilde_setNLD(t_pmpd3d_tilde *x, t_float nb_NLlink, t_float D)
+void pmpd3d_tilde_setNLD(t_pmpd3d_tilde *x, t_float nbr_NLlink, t_float D)
 {
-	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].D1 = D;
+	if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  x->NLlink[(int)nbr_NLlink].D1 = D;
 }
 
-void pmpd3d_tilde_setNLK(t_pmpd3d_tilde *x, t_float nb_NLlink, t_float K, t_float Pow)
+void pmpd3d_tilde_setNLK(t_pmpd3d_tilde *x, t_float nbr_NLlink, t_float K, t_float Pow)
 {
-	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) ) {
-		x->NLlink[(int)nb_NLlink].K1 = K;
-		x->NLlink[(int)nb_NLlink].Pow = Pow;
+	if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) ) {
+		x->NLlink[(int)nbr_NLlink].K1 = K;
+		x->NLlink[(int)nbr_NLlink].Pow = Pow;
 	}
 }
 
-void pmpd3d_tilde_setNLL(t_pmpd3d_tilde *x, t_float nb_NLlink, t_float L)
+void pmpd3d_tilde_setNLL(t_pmpd3d_tilde *x, t_float nbr_NLlink, t_float L)
 {
-	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].L0 = L;
+	if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  x->NLlink[(int)nbr_NLlink].L0 = L;
 }
 
-void pmpd3d_tilde_setNLLMin(t_pmpd3d_tilde *x, t_float nb_NLlink, t_float M)
+void pmpd3d_tilde_setNLLMin(t_pmpd3d_tilde *x, t_float nbr_NLlink, t_float M)
 {
-	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].Lmin = M;
+	if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  x->NLlink[(int)nbr_NLlink].Lmin = M;
 }
 
-void pmpd3d_tilde_setNLLMax(t_pmpd3d_tilde *x, t_float nb_NLlink, t_float M)
+void pmpd3d_tilde_setNLLMax(t_pmpd3d_tilde *x, t_float nbr_NLlink, t_float M)
 {
-	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].Lmax = M;
+	if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  x->NLlink[(int)nbr_NLlink].Lmax = M;
 }
 
 void pmpd3d_tilde_mass(t_pmpd3d_tilde *x, t_float M, t_float posX, t_float posY, t_float posZ, t_float D) {
