@@ -1,4 +1,4 @@
-#N canvas 703 43 703 885 10;
+#N canvas 703 42 703 885 10;
 #X text 153 6 pmpd2d~ : 2d particle-based physical modeling for audio synthesis, f 66;
 #X msg 30 74 reset;
 #X obj 30 836 dac~;
