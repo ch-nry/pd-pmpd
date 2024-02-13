@@ -55,7 +55,7 @@ struct _link {
 struct _NLlink {
 	struct _mass *mass1;
 	struct _mass *mass2;
-	t_float K1, D1,L0,Lmin, Lmax, Pow; 
+	t_float K1, D1, L0, Lmin, Lmax, Pow; 
 } ;
 
 struct _inPos {
@@ -189,12 +189,11 @@ t_int *pmpd_tilde_perform(t_int *w)
 					x->NLlink[i].mass2->forceX += F;
 				}
 			}
-			for (i=1; i<x->nb_mass; i++)
+			for (i=0; i<x->nb_mass; i++)
 			{
 			// compute new masses position
 			// a mass does not move if M=0 (i.e : invM = 0)
 				x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
-				x->mass[i].forceX = 0;
 				x->mass[i].forceX = 0; //random_bang_pmpd_tilde(x) * 1e-25; 
 					// only used for denormal problem
 					// -ffast-math -O6 does not solve the problem
@@ -243,8 +242,8 @@ void pmpd_tilde_bang(t_pmpd_tilde *x)
 	for (i=0; i<x->nb_NLlink; i++) logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, Lmin:%f, Lmax:%f, Pow:%f", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K1, x->NLlink[i].D1, x->NLlink[i].L0, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
 	for (i=0; i<x->nb_inPos; i++) logpost(x, 2, "In_pos:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPos[i].nbr_inlet, x->inPos[i].mass1->Id, x->inPos[i].influence);
 	for (i=0; i<x->nb_inForce; i++) logpost(x, 2, "In_force:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForce[i].nbr_inlet, x->inForce[i].mass1->Id, x->inForce[i].influence);
-	for (i=0; i<x->nb_outPos; i++) logpost(x, 2, "Out_pos:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPos[i].nbr_outlet, x->outPos[i].mass1->Id, x->outPos[i].influence);
-	for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "Out_speed:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass1->Id, x->outSpeed[i].influence);
+	for (i=0; i<x->nb_outPos; i++) logpost(x, 2, "Out_pos:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPos[i].nbr_outlet, x->outPos[i].mass1->Id, x->outPos[i].influence);
+	for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "Out_speed:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass1->Id, x->outSpeed[i].influence);
 }
 
 void pmpd_tilde_float(t_pmpd_tilde *x, t_float force)
@@ -328,7 +327,7 @@ void pmpd_tilde_mass(t_pmpd_tilde *x, t_float M, t_float posX)
 	x->mass[x->nb_mass].Id = x->nb_mass;
 	
 	x->nb_mass++ ;
-	if (x->nb_mass == nb_max_mass) logpost(x,1, "to many mass");
+	if (x->nb_mass == nb_max_mass) logpost(x,1, "too many mass");
 	x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
 }
 
@@ -342,12 +341,12 @@ void pmpd_tilde_link(t_pmpd_tilde *x, t_float mass_1, t_float mass_2, t_float K1
 	x->link[x->nb_link].D1 = D1;
 
 	x->nb_link++ ;
-	if (x->nb_link == nb_max_link) logpost(x,1,"to many link");
+	if (x->nb_link == nb_max_link) logpost(x,1,"too many link");
 	x->nb_link = min ( nb_max_link -1, x->nb_link );
 }
 
 void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
-// t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float Lmin, t_float Lmax, t_float L0
+// t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
 {
 	if  (argc == 8) 
@@ -362,7 +361,7 @@ void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 		x->NLlink[x->nb_NLlink].Lmax = atom_getfloatarg(7, argc, argv);
 
 		x->nb_NLlink++ ;
-		if (x->nb_NLlink == nb_max_link) logpost(x,1,"to many NLlink");
+		if (x->nb_NLlink == nb_max_link) logpost(x,1,"too many NLlink");
 		x->nb_NLlink = min ( nb_max_link -1, x->nb_NLlink );
 	}
 	else
@@ -378,7 +377,7 @@ void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float
 	x->inPos[x->nb_inPos].influence = influence;
 
 	x->nb_inPos++;
-	if (x->nb_inPos == nb_max_in) logpost(x,1,"to many inPos");
+	if (x->nb_inPos == nb_max_in) logpost(x,1,"too many inPos");
 	x->nb_inPos = min ( nb_max_in - 1, x->nb_inPos );
 }
 void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence)
@@ -390,7 +389,7 @@ void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_flo
 	x->inForce[x->nb_inForce].influence = influence;
 
 	x->nb_inForce++;
-	if (x->nb_inForce == nb_max_in) logpost(x,1,"to many inForce");
+	if (x->nb_inForce == nb_max_in) logpost(x,1,"too many inForce");
 	x->nb_inForce = min ( nb_max_in - 1, x->nb_inForce );
 }
 
@@ -403,7 +402,7 @@ void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_flo
 	x->outPos[x->nb_outPos].influence = influence;
 
 	x->nb_outPos++ ;
-	if (x->nb_outPos == nb_max_out) logpost(x,1,"to many outPos");
+	if (x->nb_outPos == nb_max_out) logpost(x,1,"too many outPos");
 	x->nb_outPos = min ( nb_max_out - 1, x->nb_outPos );
 }
 
@@ -416,7 +415,7 @@ void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_f
 	x->outSpeed[x->nb_outSpeed].influence = influence;
 
 	x->nb_outSpeed++ ;
-	if (x->nb_outSpeed == nb_max_out) logpost(x,1,"to many outSpeed");
+	if (x->nb_outSpeed == nb_max_out) logpost(x,1,"too many outSpeed");
 	x->nb_outSpeed = min ( nb_max_out - 1, x->nb_outSpeed );
 }
 
