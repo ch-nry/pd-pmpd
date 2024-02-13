@@ -53,9 +53,9 @@
 #X text 203 736 print the current state of the model in the console;
 #X text 284 767 interaction with the simulation at audio rate;
 #X text 413 381 connect the X \, Y or Z position of mass \$2 to outlet \$1 with amplitude \$3, f 38;
-#X text 420 247 signal on inlet \$1 sends force in X \, Y or Z direction to mass \$2 with amplitude \$3, f 43;
+#X text 420 247 signal on inlet \$1 sends force in X \, Y or Z direction to mass \$2 with amplitude \$3, f 41;
 #X text 389 307 signal on inlet \$1 controls the X \, Y or Z position of mass \$2 with amplitude \$3, f 41;
-#X text 452 418 connect the velocity of mass \$2 to outlet \$1 with amplitude \$3 (for X \, Y \, Z direction or overall velocity), f 36;
+#X text 452 418 connect the velocity of mass \$2 to outlet \$1 with amplitude \$3 (for X \, Y \, Z direction or overall velocity), f 35;
 #X msg 122 680 setNLD \$1 \$2;
 #X msg 207 680 setNLL \$1 \$2;
 #X msg 119 658 setNLK \$1 \$2 \$3;

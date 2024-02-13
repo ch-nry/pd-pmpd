@@ -188,7 +188,7 @@ t_int *pmpd2d_tilde_perform(t_int *w) {
 
 					if(L !=0 ) { // si L = 0 : on ne sais pas dans quel direction apliquer la force : c'est un point d'equilibre instable
 						FX = F * LX/L;
-						FY = F * LY/L;  
+						FY = F * LY/L;
 					} else {
 						FX = 0;
 						FY = 0;
@@ -213,8 +213,8 @@ t_int *pmpd2d_tilde_perform(t_int *w) {
 				x->mass[i].speedY += x->mass[i].forceY * x->mass[i].invM;
 				x->mass[i].forceX = 0;
 				x->mass[i].forceY = 0;
-				x->mass[i].posX += x->mass[i].speedX ;
-				x->mass[i].posY += x->mass[i].speedY ;
+				x->mass[i].posX += x->mass[i].speedX;
+				x->mass[i].posY += x->mass[i].speedY;
 			}
 		}	
 
@@ -370,12 +370,18 @@ void pmpd2d_tilde_mass(t_pmpd2d_tilde *x, t_float M, t_float posX, t_float posY,
 void pmpd2d_tilde_link(t_pmpd2d_tilde *x, t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float L0) {
 // add a link
 // *mass1, *mass2, K1, D1;
+	t_float LX, LY;
+
 	x->link[x->nb_link].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
 	x->link[x->nb_link].mass2 = &x->mass[max(0, min ( x->nb_mass, (int)mass_2))];
 	x->link[x->nb_link].K1 = K1;
 	x->link[x->nb_link].D1 = D1;
 	x->link[x->nb_link].L0 = L0;
-	x->link[x->nb_link].L = L0;
+
+	// initialize L with actual distance between masses
+	LX = x->link[x->nb_link].mass2->posX - x->link[x->nb_link].mass1->posX;
+	LY = x->link[x->nb_link].mass2->posY - x->link[x->nb_link].mass1->posY;
+	x->link[x->nb_link].L = sqrt(LY*LY + LX*LX);
 
 	x->nb_link++ ;
 	if (x->nb_link >= nb_max_link) {
@@ -387,6 +393,8 @@ void pmpd2d_tilde_link(t_pmpd2d_tilde *x, t_float mass_1, t_float mass_2, t_floa
 void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv) {
 // t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
+	t_float LX, LY;
+
 	if  (argc == 8) 
 	{
 		x->NLlink[x->nb_NLlink].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)atom_getfloatarg(0, argc, argv)))];
@@ -395,9 +403,13 @@ void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 		x->NLlink[x->nb_NLlink].D1 = atom_getfloatarg(3, argc, argv);
 		x->NLlink[x->nb_NLlink].Pow = atom_getfloatarg(4, argc, argv);
 		x->NLlink[x->nb_NLlink].L0 = atom_getfloatarg(5, argc, argv);
-		x->NLlink[x->nb_NLlink].L = atom_getfloatarg(5, argc, argv);
 		x->NLlink[x->nb_NLlink].Lmin = atom_getfloatarg(6, argc, argv);
 		x->NLlink[x->nb_NLlink].Lmax = atom_getfloatarg(7, argc, argv);
+
+		// initialize L with actual distance between masses
+		LX = x->NLlink[x->nb_link].mass2->posX - x->NLlink[x->nb_link].mass1->posX;
+		LY = x->NLlink[x->nb_link].mass2->posY - x->NLlink[x->nb_link].mass1->posY;
+		x->NLlink[x->nb_NLlink].L = sqrt(LY*LY + LX*LX);
 
 		x->nb_NLlink++ ;
 		if (x->nb_NLlink == nb_max_link) {

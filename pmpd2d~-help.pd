@@ -40,8 +40,8 @@
 #X text 93 499 these messages interact with the simulation in real time:;
 #X text 240 523 change the position \$2 of a fixed mass \$1;
 #X text 270 551 send force \$2 to mass \$1;
-#X text 201 737 print the current state of the model in the console;
-#X text 282 767 interaction with the simulation at audio rate;
+#X text 202 736 print the current state of the model in the console;
+#X text 284 767 interaction with the simulation at audio rate;
 #X msg 122 680 setNLD \$1 \$2;
 #X msg 207 680 setNLL \$1 \$2;
 #X msg 119 658 setNLK \$1 \$2 \$3;
