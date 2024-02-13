@@ -201,7 +201,7 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
 					if (deltaL < 0) F *= -1;
 					// spring
 					
-					F  += x->NLlink[i].D1 * (L - x->NLlink[i].L); // on derive la longeur L calculé précedement
+					F += x->NLlink[i].D1 * (L - x->NLlink[i].L); // on derive la longeur L calculé précedement
 					x->NLlink[i].L = L; // on la sauve pour la prochaine itération				
 					// dashpot	
 
@@ -411,7 +411,7 @@ void pmpd3d_tilde_mass(t_pmpd3d_tilde *x, t_float M, t_float posX, t_float posY,
 
 	x->nb_mass++ ;
 	if (x->nb_mass >= nb_max_mass) {
-		logpost(x,1, "too many mass");
+		pd_error(x, "too many mass");
 		x->nb_mass--;
 	}
 }
@@ -435,7 +435,7 @@ void pmpd3d_tilde_link(t_pmpd3d_tilde *x, t_float mass_1, t_float mass_2, t_floa
 
 	x->nb_link++ ;
 	if (x->nb_link >= nb_max_link) {
-		logpost(x,1,"too many link");
+		pd_error(x, "too many link");
 		x->nb_link--;
 	}
 }
@@ -464,12 +464,12 @@ void pmpd3d_tilde_NLlink(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 
 		x->nb_NLlink++ ;
 		if (x->nb_NLlink == nb_max_link) {
-			logpost(x,1,"too many NLlink");
+			pd_error(x, "too many NLlink");
 			x->nb_NLlink--;
 		}
 	}
 	else
-	logpost(x,1,"wrong argument number for NLlink");
+	pd_error(x, "wrong argument count for NLlink");
 }
 
 void pmpd3d_tilde_inPosX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence) {
@@ -481,7 +481,7 @@ void pmpd3d_tilde_inPosX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass_1, t_
 
 	x->nb_inPosX++;
 	if (x->nb_inPosX == nb_max_in) {
-		logpost(x,1,"too many inPosX");
+		pd_error(x, "too many inPosX");
 		x->nb_inPosX--;
 	}
 }
@@ -495,7 +495,7 @@ void pmpd3d_tilde_inPosY(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass_1, t_
 
 	x->nb_inPosY++;
 	if (x->nb_inPosY == nb_max_in) {
-		logpost(x,1,"too many inPosY");
+		pd_error(x, "too many inPosY");
 		x->nb_inPosY--;
 	}
 }
@@ -509,7 +509,7 @@ void pmpd3d_tilde_inPosZ(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass_1, t_
 
 	x->nb_inPosZ++;
 	if (x->nb_inPosZ == nb_max_in) {
-		logpost(x,1,"too many inPosZ");
+		pd_error(x, "too many inPosZ");
 		x->nb_inPosZ--;
 	}
 }
@@ -521,7 +521,7 @@ void pmpd3d_tilde_inForceX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass_1, 
 
 	x->nb_inForceX++;
 	if (x->nb_inForceX == nb_max_in) {
-		logpost(x,1,"too many inForceX");
+		pd_error(x, "too many inForceX");
 		x->nb_inForceX--;
 	}
 }
@@ -533,7 +533,7 @@ void pmpd3d_tilde_inForceY(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass_1, 
 
 	x->nb_inForceY++;
 	if (x->nb_inForceY == nb_max_in) {
-		logpost(x,1,"too many inForceY");
+		pd_error(x, "too many inForceY");
 		x->nb_inForceY--;
 	}
 }
@@ -545,7 +545,7 @@ void pmpd3d_tilde_inForceZ(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass_1, 
 
 	x->nb_inForceZ++;
 	if (x->nb_inForceZ == nb_max_in) {
-		logpost(x,1,"too many inForceZ");
+		pd_error(x, "too many inForceZ");
 		x->nb_inForceZ--;
 	}
 }
@@ -557,7 +557,7 @@ void pmpd3d_tilde_outPosX(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass_1, 
 
 	x->nb_outPosX++ ;
 	if (x->nb_outPosX == nb_max_out) {
-		logpost(x,1,"too many outPosX");
+		pd_error(x, "too many outPosX");
 		x->nb_outPosX--;
 	}
 }
@@ -569,7 +569,7 @@ void pmpd3d_tilde_outPosY(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass_1, 
 
 	x->nb_outPosY++ ;
 	if (x->nb_outPosY == nb_max_out) {
-		logpost(x,1,"too many outPosY");
+		pd_error(x, "too many outPosY");
 		x->nb_outPosY--;
 	}
 }
@@ -581,7 +581,7 @@ void pmpd3d_tilde_outPosZ(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass_1, 
 
 	x->nb_outPosZ++ ;
 	if (x->nb_outPosZ == nb_max_out) {
-		logpost(x,1,"too many outPosZ");
+		pd_error(x, "too many outPosZ");
 		x->nb_outPosZ--;
 	}
 }
@@ -593,7 +593,7 @@ void pmpd3d_tilde_outSpeedX(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass_1
 
 	x->nb_outSpeedX++ ;
 	if (x->nb_outSpeedX == nb_max_out) {
-		logpost(x,1,"too many outSpeedX");
+		pd_error(x, "too many outSpeedX");
 		x->nb_outSpeedX--;
 	}
 }
@@ -605,7 +605,7 @@ void pmpd3d_tilde_outSpeedY(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass_1
 
 	x->nb_outSpeedY++ ;
 	if (x->nb_outSpeedY == nb_max_out) {
-		logpost(x,1,"too many outSpeedY");
+		pd_error(x, "too many outSpeedY");
 		x->nb_outSpeedY--;
 	}
 }
@@ -617,7 +617,7 @@ void pmpd3d_tilde_outSpeedZ(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass_1
 
 	x->nb_outSpeedZ++ ;
 	if (x->nb_outSpeedZ == nb_max_out) {
-		logpost(x,1,"too many outSpeedZ");
+		pd_error(x, "too many outSpeedZ");
 		x->nb_outSpeedZ--;
 	}
 }
@@ -629,7 +629,7 @@ void pmpd3d_tilde_outSpeed(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass_1,
 
 	x->nb_outSpeed++ ;
 	if (x->nb_outSpeed == nb_max_out) {
-		logpost(x,1,"too many outSpeed");
+		pd_error(x, "too many outSpeed");
 		x->nb_outSpeed--;
 	}
 }
@@ -713,7 +713,7 @@ PMPD_EXPORT void pmpd3d_tilde_setup(void) {
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setL, gensym("setL"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setLCurrent, gensym("setLCurrent"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setM, gensym("setM"), A_DEFFLOAT, A_DEFFLOAT, 0);
-	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLK, gensym("setNLK"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLK, gensym("setNLK"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLKPow, gensym("setNLKPow"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLD, gensym("setNLD"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLL, gensym("setNLL"), A_DEFFLOAT, A_DEFFLOAT, 0);
