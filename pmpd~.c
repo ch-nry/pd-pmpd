@@ -286,12 +286,26 @@ void pmpd_tilde_setNLD(t_pmpd_tilde *x, t_float nb_NLlink, t_float D)
 	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].D1 = D;
 }
 
-void pmpd_tilde_setNLK(t_pmpd_tilde *x, t_float nb_NLlink, t_float K, t_float Pow)
+void pmpd_tilde_setNLK(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 {
-	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) ) {
-		x->NLlink[(int)nb_NLlink].K1 = K;
-		x->NLlink[(int)nb_NLlink].Pow = Pow;
+	int nbr_NLlink;
+	if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) ) {
+		nbr_NLlink = atom_getfloatarg(0,argc,argv);
+		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  
+			x->NLlink[(int)nbr_NLlink].K1 = atom_getfloatarg(1,argc,argv);;
+	} else 
+	if ( (argc == 3) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) ) {
+		nbr_NLlink = atom_getfloatarg(0,argc,argv);
+		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  {
+			x->NLlink[(int)nbr_NLlink].K1 = atom_getfloatarg(1,argc,argv);
+			x->NLlink[(int)nbr_NLlink].Pow = atom_getfloatarg(2,argc,argv);
+		}
 	}
+}
+
+void pmpd_tilde_setNLKPow(t_pmpd_tilde *x, t_float nbr_NLlink, t_float Pow)
+{
+	if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  x->NLlink[(int)nbr_NLlink].Pow = Pow;
 }
 
 void pmpd_tilde_setNLL(t_pmpd_tilde *x, t_float nb_NLlink, t_float L)
@@ -307,6 +321,20 @@ void pmpd_tilde_setNLLMin(t_pmpd_tilde *x, t_float nb_NLlink, t_float M)
 void pmpd_tilde_setNLLMax(t_pmpd_tilde *x, t_float nb_NLlink, t_float M)
 {
 	if( (nb_NLlink >= 0) && (nb_NLlink < x->nb_NLlink) )  x->NLlink[(int)nb_NLlink].Lmax = M;
+}
+
+void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv) {
+	int nbr_NLlink;
+	t_float percent;
+	if ( (argc >= 1) && (argv[0].a_type == A_FLOAT) ) {
+		nbr_NLlink = (int)atom_getfloatarg(0,argc,argv);
+		if ( (argc >= 2) && (argv[1].a_type == A_FLOAT) )
+			percent = atom_getfloatarg(1,argc,argv);
+		else 
+			percent = 1.;
+		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) ) 
+			x->NLlink[nbr_NLlink].L0 += percent * (x->NLlink[nbr_NLlink].L - x->NLlink[nbr_NLlink].L0);
+	}		
 }
 
 void pmpd_tilde_mass(t_pmpd_tilde *x, t_float M, t_float posX)
@@ -478,11 +506,13 @@ PMPD_EXPORT void pmpd_tilde_setup(void) {
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setK, gensym("setK"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setD, gensym("setD"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setM, gensym("setM"), A_DEFFLOAT, A_DEFFLOAT, 0);	
-	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLK, gensym("setNLK"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLK, gensym("setNLK"), A_GIMME, 0);
+	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLKPow, gensym("setNLKPow"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLD, gensym("setNLD"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLL, gensym("setNLL"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLMin, gensym("setNLLMin"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLMax, gensym("setNLLMax"), A_DEFFLOAT, A_DEFFLOAT, 0);
+	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLCurrent, gensym("setNLLCurrent"), A_GIMME, 0);	
 	
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_reset, gensym("reset"), 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_dsp, gensym("dsp"),  A_CANT, 0);
