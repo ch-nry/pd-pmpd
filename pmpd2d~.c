@@ -149,7 +149,7 @@ t_int *pmpd2d_tilde_perform(t_int *w) {
 			{
 				LX = x->link[i].mass2->posX - x->link[i].mass1->posX;
 				LY = x->link[i].mass2->posY - x->link[i].mass1->posY;
-				L = sqrt(LY*LY + LX*LX);
+				L  = sqrt(LY*LY + LX*LX);
 				F  = x->link[i].K1 * (L - x->link[i].L0);
 				// spring
 				
@@ -179,11 +179,11 @@ t_int *pmpd2d_tilde_perform(t_int *w) {
 				L = sqrt(LY*LY + LX*LX);
 				if ((L < x->NLlink[i].Lmax) && (L > x->NLlink[i].Lmin)) {
 					deltaL = L - x->NLlink[i].L0;
-					F  = x->NLlink[i].K1 * pow(fabs(deltaL), x->NLlink[i].Pow); 
+					F  = x->NLlink[i].K1 * pow(fabs(deltaL), x->NLlink[i].Pow);
 					if (deltaL < 0) F *= -1;
 					// spring
 					
-					F  += x->NLlink[i].D1 * (L - x->NLlink[i].L); // on derive la longeur L calculé précedement
+					F += x->NLlink[i].D1 * (L - x->NLlink[i].L); // on derive la longeur L calculé précedement
 					x->NLlink[i].L = L; // on la sauve pour la prochaine itération				
 					// dashpot	
 
@@ -401,7 +401,7 @@ void pmpd2d_tilde_mass(t_pmpd2d_tilde *x, t_float M, t_float posX, t_float posY,
 
 	x->nb_mass++ ;
 	if (x->nb_mass >= nb_max_mass) {
-		logpost(x,1, "too many mass");
+		pd_error(x, "too many mass");
 		x->nb_mass--;
 	}
 }
@@ -424,7 +424,7 @@ void pmpd2d_tilde_link(t_pmpd2d_tilde *x, t_float mass_1, t_float mass_2, t_floa
 
 	x->nb_link++ ;
 	if (x->nb_link >= nb_max_link) {
-		logpost(x,1,"too many link");
+		pd_error(x, "too many link");
 		x->nb_link--;
 	}
 }
@@ -452,12 +452,12 @@ void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 
 		x->nb_NLlink++ ;
 		if (x->nb_NLlink == nb_max_link) {
-			logpost(x,1,"too many NLlink");
+			pd_error(x, "too many NLlink");
 			x->nb_NLlink--;
 		}
 	}
 	else
-	logpost(x,1,"wrong argument number for NLlink");
+	pd_error(x, "wrong argument count for NLlink");
 }
 
 void pmpd2d_tilde_inPosX(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence) {
@@ -469,7 +469,7 @@ void pmpd2d_tilde_inPosX(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_
 
 	x->nb_inPosX++;
 	if (x->nb_inPosX == nb_max_in) {
-		logpost(x,1,"too many inPosX");
+		pd_error(x, "too many inPosX");
 		x->nb_inPosX--;
 	}
 }
@@ -483,7 +483,7 @@ void pmpd2d_tilde_inPosY(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_
 
 	x->nb_inPosY++;
 	if (x->nb_inPosY == nb_max_in) {
-		logpost(x,1,"too many inPosY");
+		pd_error(x, "too many inPosY");
 		x->nb_inPosY--;
 	}
 }
@@ -495,7 +495,7 @@ void pmpd2d_tilde_inForceX(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, 
 
 	x->nb_inForceX++;
 	if (x->nb_inForceX == nb_max_in) {
-		logpost(x,1,"too many inForceX");
+		pd_error(x, "too many inForceX");
 		x->nb_inForceX--;
 	}
 }
@@ -507,7 +507,7 @@ void pmpd2d_tilde_inForceY(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, 
 
 	x->nb_inForceY++;
 	if (x->nb_inForceY == nb_max_in) {
-		logpost(x,1,"too many inForceY");
+		pd_error(x, "too many inForceY");
 		x->nb_inForceY--;
 	}
 }
@@ -519,7 +519,7 @@ void pmpd2d_tilde_outPosX(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, 
 
 	x->nb_outPosX++ ;
 	if (x->nb_outPosX == nb_max_out) {
-		logpost(x,1,"too many outPosX");
+		pd_error(x, "too many outPosX");
 		x->nb_outPosX--;
 	}
 }
@@ -531,7 +531,7 @@ void pmpd2d_tilde_outPosY(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, 
 
 	x->nb_outPosY++ ;
 	if (x->nb_outPosY == nb_max_out) {
-		logpost(x,1,"too many outPosY");
+		pd_error(x, "too many outPosY");
 		x->nb_outPosY--;
 	}
 }
@@ -543,7 +543,7 @@ void pmpd2d_tilde_outSpeedX(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1
 
 	x->nb_outSpeedX++ ;
 	if (x->nb_outSpeedX == nb_max_out) {
-		logpost(x,1,"too many outSpeedX");
+		pd_error(x, "too many outSpeedX");
 		x->nb_outSpeedX--;
 	}
 }
@@ -555,7 +555,7 @@ void pmpd2d_tilde_outSpeedY(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1
 
 	x->nb_outSpeedY++ ;
 	if (x->nb_outSpeedY == nb_max_out) {
-		logpost(x,1,"too many outSpeedY");
+		pd_error(x, "too many outSpeedY");
 		x->nb_outSpeedY--;
 	}
 }
@@ -567,7 +567,7 @@ void pmpd2d_tilde_outSpeed(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1,
 
 	x->nb_outSpeed++ ;
 	if (x->nb_outSpeed == nb_max_out) {
-		logpost(x,1,"too many outSpeed");
+		pd_error(x, "too many outSpeed");
 		x->nb_outSpeed--;
 	}
 }
