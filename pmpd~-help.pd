@@ -22,7 +22,7 @@
 #X text 89 272 you can send many forces to a single mass \, the resulting force will be the sum of all forces, f 92;
 #X text 113 420 the output of an outlet is the sum of the contributions of all out* messages, f 76;
 #X text 93 454 these messages interact with the simulation in real time:;
-#X text 180 497 send force \$2 to mass \$1;
+#X text 173 497 send force \$2 to mass \$1;
 #X text 203 725 print the current state of the model in the console;
 #X text 281 751 interaction with the simulation at audio rate;
 #X text 99 805 arg3 : oversample factor (useful to run the simulation faster than audio rate);
@@ -34,7 +34,7 @@
 #X text 187 365 connect the position of mass \$2 to outlet \$1 with amplitude \$3, f 38;
 #X msg 83 372 outPos \$1 \$2 \$3;
 #X text 209 395 connect the velocity of mass \$2 to outlet \$1 with amplitude \$3, f 36;
-#X text 164 473 change the position \$2 of a fixed mass \$1;
+#X text 157 473 change the position \$2 of a fixed mass \$1;
 #X msg 41 108 mass \$1 \$2 \$3;
 #X text 133 101 create a mass with arguments : weight of the mass (\$1) \, initial position (\$2). A mass with weight 0 will not move., f 65;
 #X obj 30 778 pmpd~ 1 1;
