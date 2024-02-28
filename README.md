@@ -1,5 +1,5 @@
-PMPD Physical Modelling for PureData
-====================================
+PMPD Physical Modelling for Pure Data
+=====================================
 
 `pmpd` is a collection of objects for Pd (Pure Data), enabling real-time simulations of physical phenomena. These objects facilitate the creation of dynamic natural systems such as bouncing balls, string oscillations, Brownian motion, chaos theory models, fluid dynamics, sand simulations, gravitational interactions and more. Additionally, `pmpd` allows displacements of physical entities, thus offering a completely dynamic approach of Pd computing.
 
@@ -13,8 +13,8 @@ while `pmpd~`, `pmpd2d~` and `pmpd3d~` are intended for audio synthesis applicat
 
 Cyrille Henry 2003-2024
 
-Building instruction
-====================
+Build instructions
+==================
 
 To build, you need `cmake` and a compilation toolchain. Execute the following steps from within the repository folder:
 
