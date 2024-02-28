@@ -13,7 +13,7 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with pmpd software. If not, see <http://www.gnu.org/licenses/>.
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 //
 // pmpd = physical modeling for pure data
 // ch@chnry.net
@@ -27,8 +27,8 @@
 
 #include "m_pd.h"
 
-#define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
-#define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
+#define max(a,b) ( ((a) > (b)) ? (a) : (b) )
+#define min(a,b) ( ((a) < (b)) ? (a) : (b) )
 
 #define NB_MAX_LINK_DEFAULT 10000
 #define NB_MAX_MASS_DEFAULT 10000
@@ -45,19 +45,19 @@ struct _mass {
 	t_float forceY;
 	t_float D; // damping de vitesse
 	t_float Doffset;
-	t_int Id;	
+	t_int Id;
 };
 
 struct _link {
 	struct _mass *mass1;
 	struct _mass *mass2;
-	t_float K1, D1, L0, L; 
+	t_float K1, D1, L0, L;
 };
 
 struct _NLlink {
 	struct _mass *mass1;
 	struct _mass *mass2;
-	t_float K1, D1, L0, L, Lmin, Lmax, Pow; 
+	t_float K1, D1, L0, L, Lmin, Lmax, Pow;
 };
 
 struct _inPos {
@@ -151,14 +151,14 @@ t_int *pmpd2d_tilde_perform(t_int *w) {
 			L  = sqrt(LY*LY + LX*LX);
 			F  = x->link[i].K1 * (L - x->link[i].L0);
 			// spring
-			
+
 			F  += x->link[i].D1 * (L - x->link[i].L); // on derive la longeur L calculé précedement
-			x->link[i].L = L; // on la sauve pour la prochaine itération				
-			// dashpot	
+			x->link[i].L = L; // on la sauve pour la prochaine itération
+			// dashpot
 
 			if(L !=0 ) { // si L = 0 : on ne sais pas dans quel direction apliquer la force : c'est un point d'equilibre instable
 				FX = F * LX/L;
-	            FY = F * LY/L;  
+	            FY = F * LY/L;
 			} else {
 				FX = 0;
 				FY = 0;
@@ -167,7 +167,7 @@ t_int *pmpd2d_tilde_perform(t_int *w) {
 			x->link[i].mass1->forceX += FX;
 			x->link[i].mass2->forceX -= FX;
 			x->link[i].mass1->forceY += FY;
-			x->link[i].mass2->forceY -= FY;		
+			x->link[i].mass2->forceY -= FY;
 		}
 
 		for (i=0; i<x->nb_NLlink; i++)
@@ -181,10 +181,10 @@ t_int *pmpd2d_tilde_perform(t_int *w) {
 				F  = x->NLlink[i].K1 * pow(fabs(deltaL), x->NLlink[i].Pow);
 				if (deltaL < 0) F *= -1;
 				// spring
-				
+
 				F += x->NLlink[i].D1 * (L - x->NLlink[i].L); // on derive la longeur L calculé précedement
-				x->NLlink[i].L = L; // on la sauve pour la prochaine itération				
-				// dashpot	
+				x->NLlink[i].L = L; // on la sauve pour la prochaine itération
+				// dashpot
 
 				if(L !=0 ) { // si L = 0 : on ne sais pas dans quel direction apliquer la force : c'est un point d'equilibre instable
 					FX = F * LX/L;
@@ -196,7 +196,7 @@ t_int *pmpd2d_tilde_perform(t_int *w) {
 				x->NLlink[i].mass1->forceX += FX;
 				x->NLlink[i].mass2->forceX -= FX;
 				x->NLlink[i].mass1->forceY += FY;
-				x->NLlink[i].mass2->forceY -= FY;	
+				x->NLlink[i].mass2->forceY -= FY;
 			}
 		}
 		for (i=0; i<x->nb_mass; i++)
@@ -217,7 +217,7 @@ t_int *pmpd2d_tilde_perform(t_int *w) {
 			x->mass[i].posY += x->mass[i].speedY;
 		}
 
-		// compute output vector value		
+		// compute output vector value
 		for (i=0; i<x->nb_outlet; i++) x->outlet[i] = 0;
 		for (i=0; i<x->nb_outPosX; i++) x->outlet[x->outPosX[i].nbr_outlet] += x->outPosX[i].mass1->posX * x->outPosX[i].influence;
 		for (i=0; i<x->nb_outPosY; i++) x->outlet[x->outPosY[i].nbr_outlet] += x->outPosY[i].mass1->posY * x->outPosY[i].influence;
@@ -244,7 +244,7 @@ void pmpd2d_tilde_dsp(t_pmpd2d_tilde *x, t_signal **sp)
 	dsp_add(pmpd2d_tilde_perform, 2, x, sp[0]->s_n); // S_n : la taill du vecteur
 }
 
-void pmpd2d_tilde_bang(t_pmpd2d_tilde *x) { 
+void pmpd2d_tilde_bang(t_pmpd2d_tilde *x) {
 	t_int i;
 
 	for (i=0; i<x->nb_mass; i++) logpost(x, 2, "mass:%ld, M:%f, posX:%f, posY:%f, D2:%f, D2offset:%f",i, x->mass[i].invM<=0.?0:1/x->mass[i].invM, x->mass[i].posX,x->mass[i].posY,x->mass[i].D,x->mass[i].Doffset);
@@ -331,9 +331,9 @@ void pmpd2d_tilde_setNLK(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 	int nbr_NLlink;
 	if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) ) {
 		nbr_NLlink = atom_getfloatarg(0,argc,argv);
-		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  
+		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )
 			x->NLlink[(int)nbr_NLlink].K1 = atom_getfloatarg(1,argc,argv);;
-	} else 
+	} else
 	if ( (argc == 3) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) ) {
 		nbr_NLlink = atom_getfloatarg(0,argc,argv);
 		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  {
@@ -370,11 +370,11 @@ void pmpd2d_tilde_setNLLCurrent(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom
 		nbr_NLlink = (int)atom_getfloatarg(0,argc,argv);
 		if ( (argc >= 2) && (argv[1].a_type == A_FLOAT) )
 			percent = atom_getfloatarg(1,argc,argv);
-		else 
+		else
 			percent = 1.;
-		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) ) 
+		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )
 			x->NLlink[nbr_NLlink].L0 += percent * (x->NLlink[nbr_NLlink].L - x->NLlink[nbr_NLlink].L0);
-	}		
+	}
 }
 
 void pmpd2d_tilde_mass(t_pmpd2d_tilde *x, t_float M, t_float posX, t_float posY, t_float D) {
@@ -387,7 +387,7 @@ void pmpd2d_tilde_mass(t_pmpd2d_tilde *x, t_float M, t_float posX, t_float posY,
 	if (M<=0)
 	{
 		M = 0;
-		x->mass[x->nb_mass].invM = 0; 
+		x->mass[x->nb_mass].invM = 0;
 	}
 	else
 		x->mass[x->nb_mass].invM = 1/M;
@@ -400,7 +400,7 @@ void pmpd2d_tilde_mass(t_pmpd2d_tilde *x, t_float M, t_float posX, t_float posY,
 	x->mass[x->nb_mass].forceY = 0;
 	x->mass[x->nb_mass].D = D;
 	x->mass[x->nb_mass].Doffset = 0;
-	x->mass[x->nb_mass].Id = x->nb_mass;	
+	x->mass[x->nb_mass].Id = x->nb_mass;
 	x->nb_mass++;
 }
 
@@ -433,7 +433,7 @@ void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 	if (argc != 8)
 	{
 		pd_error(x, "wrong argument count for NLlink");
-		return; 
+		return;
 	}
 	if (x->nb_NLlink == x->nb_max_link)
 	{
@@ -485,7 +485,7 @@ void pmpd2d_tilde_inPosY(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_
 }
 
 void pmpd2d_tilde_inForceX(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence) {
-	if (x->nb_inForceX == x->nb_max_in) 
+	if (x->nb_inForceX == x->nb_max_in)
 	{
 		pd_error(x, "too many inForceX assigned (increase limit with creation argument)");
 		return;
@@ -497,7 +497,7 @@ void pmpd2d_tilde_inForceX(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, 
 }
 
 void pmpd2d_tilde_inForceY(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence) {
-	if (x->nb_inForceY == x->nb_max_in) 
+	if (x->nb_inForceY == x->nb_max_in)
 	{
 		pd_error(x, "too many inForceX assigned (increase limit with creation argument)");
 		return;
@@ -509,7 +509,7 @@ void pmpd2d_tilde_inForceY(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, 
 }
 
 void pmpd2d_tilde_outPosX(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence) {
-	if (x->nb_outPosX == x->nb_max_out) 
+	if (x->nb_outPosX == x->nb_max_out)
 	{
 		pd_error(x, "too many outPosX assigned (increase limit with creation argument)");
 		return;
@@ -521,7 +521,7 @@ void pmpd2d_tilde_outPosX(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, 
 }
 
 void pmpd2d_tilde_outPosY(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence) {
-	if (x->nb_outPosY == x->nb_max_out) 
+	if (x->nb_outPosY == x->nb_max_out)
 	{
 		pd_error(x, "too many outPosY assigned (increase limit with creation argument)");
 		return;
@@ -533,7 +533,7 @@ void pmpd2d_tilde_outPosY(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, 
 }
 
 void pmpd2d_tilde_outSpeedX(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence) {
-	if (x->nb_outSpeedX == x->nb_max_out) 
+	if (x->nb_outSpeedX == x->nb_max_out)
 	{
 		pd_error(x, "too many outSpeedX assigned (increase limit with creation argument)");
 		return;
@@ -545,7 +545,7 @@ void pmpd2d_tilde_outSpeedX(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1
 }
 
 void pmpd2d_tilde_outSpeedY(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence) {
-	if (x->nb_outSpeedY == x->nb_max_out) 
+	if (x->nb_outSpeedY == x->nb_max_out)
 	{
 		pd_error(x, "too many outSpeedY assigned (increase limit with creation argument)");
 		return;
@@ -557,7 +557,7 @@ void pmpd2d_tilde_outSpeedY(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1
 }
 
 void pmpd2d_tilde_outSpeed(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence) {
-	if (x->nb_outSpeed == x->nb_max_out) 
+	if (x->nb_outSpeed == x->nb_max_out)
 	{
 		pd_error(x, "too many outSpeed assigned (increase limit with creation argument)");
 		return;
@@ -584,7 +584,7 @@ void pmpd2d_tilde_reset(t_pmpd2d_tilde *x) {
 }
 
 void pmpd2d_tilde_free(t_pmpd2d_tilde *x) {
-    if (x->outlet) freebytes(x->outlet, x->nb_outlet * sizeof(t_float));    
+    if (x->outlet) freebytes(x->outlet, x->nb_outlet * sizeof(t_float));
 
     if (x->inlet_vector) freebytes(x->inlet_vector, x->nb_inlet * sizeof(t_sample *));
     if (x->outlet_vector) freebytes(x->outlet_vector, x->nb_outlet * sizeof(t_sample *));
@@ -682,7 +682,7 @@ PMPD_EXPORT void pmpd2d_tilde_setup(void) {
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setD, gensym("setD"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setL, gensym("setL"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setLCurrent, gensym("setLCurrent"), A_GIMME, 0);
-	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setM, gensym("setM"), A_DEFFLOAT, A_DEFFLOAT, 0);	
+	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setM, gensym("setM"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setNLK, gensym("setNLK"), A_GIMME, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setNLKPow, gensym("setNLKPow"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setNLD, gensym("setNLD"), A_DEFFLOAT, A_DEFFLOAT, 0);
