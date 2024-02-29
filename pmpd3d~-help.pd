@@ -71,10 +71,10 @@
 #X text 237 559 mix between set length and current length (0..1) (defaults to 1 if no second argument given), f 48;
 #X text 106 771 arg1 : number of audio inlets (default: 1);
 #X text 106 785 arg2 : number of audio outlets (default: 1);
-#X text 106 802 arg3 : number of masses (default: 10000);
-#X text 106 816 arg4 : number of links (default: 10000);
-#X text 106 833 arg5 : number inlet assigments (default: number of inlets);
-#X text 106 847 arg6 : number outlet assignments (default: number of outlets), f 61;
+#X text 106 802 arg3 : max. number of masses (default: 10000);
+#X text 106 816 arg4 : max. number of links (default: 10000);
+#X text 106 847 arg6 : max. number outlet assignments (default: equal to outlet count), f 70;
+#X text 106 833 arg5 : max. number inlet assigments (default: equal to inlet count), f 67;
 #X connect 0 0 18 0;
 #X connect 2 0 18 0;
 #X connect 3 0 18 0;
