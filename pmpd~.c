@@ -13,7 +13,7 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with pmpd software. If not, see <http://www.gnu.org/licenses/>.
-// -------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------
 //
 // pmpd = physical modeling for pure data
 // ch@chnry.net
@@ -26,79 +26,78 @@
 
 #include "m_pd.h"
 
-#define max(a,b) ( ((a) > (b)) ? (a) : (b) ) 
-#define min(a,b) ( ((a) < (b)) ? (a) : (b) ) 
+#define max(a,b) ( ((a) > (b)) ? (a) : (b) )
+#define min(a,b) ( ((a) < (b)) ? (a) : (b) )
 
-#define nb_max_link     10000
-#define nb_max_mass     10000
-#define nb_max_in       1000
-#define nb_max_out      1000
 #define nb_max_outlet   20
 #define nb_max_inlet    20 // hard-coded on the methods definition
 
 static t_class *pmpd_tilde_class;
 
-struct _mass {
+typedef struct _mass {
 	t_float invM;
 	t_float speedX;
 	t_float posX;
 	t_float forceX;
 	t_int Id;
-} ;
+} massStruct, *massPtr;
 
-struct _link {
+typedef struct _link {
 	struct _mass *mass1;
 	struct _mass *mass2;
-	t_float K1, D1; 
-} ;
+	t_float K1, D1;
+} linkStruct, *linkPtr;
 
-struct _NLlink {
+typedef struct _NLlink {
 	struct _mass *mass1;
 	struct _mass *mass2;
-	t_float K1, D1, L, L0, Lmin, Lmax, Pow; 
-} ;
+	t_float K1, D1, L, L0, Lmin, Lmax, Pow;
+} NLlinkStruct, *NLlinkPtr;
 
-struct _inPos {
+typedef struct _inPos {
 	// in en position
 	t_int nbr_inlet;
 	struct _mass *mass1;
 	t_float influence;
-} ;
+} inPosStruct, *inPosPtr;
 
-struct _inForce {
+typedef struct _inForce {
 	// in en force
 	t_int nbr_inlet;
 	struct _mass *mass1;
 	t_float influence;
-} ;
+} inForceStruct, *inForcePtr;
 
-struct _outPos {
+typedef struct _outPos {
 	// out en position
 	t_int nbr_outlet;
 	struct _mass *mass1;
 	t_float influence;
-} ;
+} outPosStruct, *outPosPtr;
 
-struct _outSpeed {
+typedef struct _outSpeed {
 	// out en vitesse
 	t_int nbr_outlet;
 	struct _mass *mass1;
 	t_float influence;
-} ;
+} outSpeedStruct, *outSpeedPtr;
 
 typedef struct _pmpd_tilde {
 	t_object  x_obj;
-	struct _link link[nb_max_link];
-	struct _NLlink NLlink[nb_max_link];
-	struct _mass mass[nb_max_mass];
-	struct _inPos inPos[nb_max_in];
-	struct _inForce inForce[nb_max_in];
-	struct _outPos outPos[nb_max_out];
-	struct _outSpeed outSpeed[nb_max_out];
+    massPtr mass;
+    linkPtr link;
+	NLlinkPtr NLlink;
+	inPosPtr inPos;
+	inForcePtr inForce;
+	outPosPtr outPos;
+	outSpeedPtr outSpeed;
 	t_float outlet[nb_max_outlet];
 	t_sample *outlet_vector[nb_max_outlet];
 	t_sample *inlet_vector[nb_max_inlet];
+	t_inlet  *x_in[nb_max_inlet];
+	t_outlet *x_out[nb_max_outlet];
 	int nb_link, nb_NLlink, nb_mass, nb_inlet, nb_outlet, nb_inPos, nb_inForce, nb_outPos, nb_outSpeed;
+	int max_mass, max_link, max_inout, max_inoutlet;
 	t_sample f; // used for signal inlet
 	t_int loop, nb_loop; // to be able not to compute everything a each iteration
 	unsigned int x_state; // random
@@ -136,18 +135,17 @@ t_int *pmpd_tilde_perform(t_int *w)
 
 	t_float F,L;
 	t_int i;
-//	struct _mass mass_1, mass_2;
 
-	t_sample *out[nb_max_outlet]; 
+	t_sample *out[nb_max_outlet];
 	t_sample *in[nb_max_inlet];
 
-	for (i=0; i<x->nb_inlet; i++) 
+	for (i=0; i<x->nb_inlet; i++)
 		in[i]= x->inlet_vector[i];
 
 	for (i=0; i<x->nb_outlet; i++)
 		out[i]= x->outlet_vector[i];
 
-	while (n--) 
+	while (n--)
 	{
 		x->loop = 0;
 		while (x->loop++ < x->nb_loop)
@@ -167,7 +165,7 @@ t_int *pmpd_tilde_perform(t_int *w)
 
 				F += x->link[i].D1 * ( x->link[i].mass1->speedX - x->link[i].mass2->speedX) ;
 				// dashpot
-			
+
 				x->link[i].mass1->forceX -= F;
 				x->link[i].mass2->forceX += F;
 			}
@@ -182,10 +180,10 @@ t_int *pmpd_tilde_perform(t_int *w)
 					F  = x->NLlink[i].K1 * pow(fabs(L) ,x->NLlink[i].Pow) ;
 					if (L < 0) F *= -1;
 					// spring
-	
+
 					F += x->NLlink[i].D1 * ( x->NLlink[i].mass1->speedX - x->NLlink[i].mass2->speedX) ;
 					// dashpot
-				
+
 					x->NLlink[i].mass1->forceX -= F;
 					x->NLlink[i].mass2->forceX += F;
 				}
@@ -195,12 +193,12 @@ t_int *pmpd_tilde_perform(t_int *w)
 			// compute new masses position
 			// a mass does not move if M=0 (i.e : invM = 0)
 				x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
-				x->mass[i].forceX = 0; //random_bang_pmpd_tilde(x) * 1e-25; 
+				x->mass[i].forceX = 0; //random_bang_pmpd_tilde(x) * 1e-25;
 					// only used for denormal problem
 					// -ffast-math -O6 does not solve the problem
 				x->mass[i].posX += x->mass[i].speedX ;
 			}
-		}	
+		}
 
 		for (i=0; i<x->nb_inlet; i++)
 		// increase pointer to inlet vectors value
@@ -208,10 +206,10 @@ t_int *pmpd_tilde_perform(t_int *w)
 		for (i=0; i<x->nb_outlet; i++) x->outlet[i] = 0;
 		for (i=0; i<x->nb_outPos; i++)
 			x->outlet[x->outPos[i].nbr_outlet] += x->outPos[i].mass1->posX * x->outPos[i].influence;
-			// compute output vector value		
+			// compute output vector value
 		for (i=0; i<x->nb_outSpeed; i++)
 			x->outlet[x->outSpeed[i].nbr_outlet] += x->outSpeed[i].mass1->speedX * x->outSpeed[i].influence;
-			// compute output vector value		
+			// compute output vector value
 
 		for (i=0; i<x->nb_outlet; i++)
 		// send vector value to the vector pointer
@@ -292,9 +290,9 @@ void pmpd_tilde_setNLK(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 	int nbr_NLlink;
 	if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) ) {
 		nbr_NLlink = atom_getfloatarg(0,argc,argv);
-		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  
+		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )
 			x->NLlink[(int)nbr_NLlink].K1 = atom_getfloatarg(1,argc,argv);;
-	} else 
+	} else
 	if ( (argc == 3) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) ) {
 		nbr_NLlink = atom_getfloatarg(0,argc,argv);
 		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  {
@@ -331,11 +329,11 @@ void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *ar
 		nbr_NLlink = (int)atom_getfloatarg(0,argc,argv);
 		if ( (argc >= 2) && (argv[1].a_type == A_FLOAT) )
 			percent = atom_getfloatarg(1,argc,argv);
-		else 
+		else
 			percent = 1.;
-		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) ) 
+		if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )
 			x->NLlink[nbr_NLlink].L0 += percent * (x->NLlink[nbr_NLlink].L - x->NLlink[nbr_NLlink].L0);
-	}		
+	}
 }
 
 void pmpd_tilde_mass(t_pmpd_tilde *x, t_float M, t_float posX)
@@ -354,10 +352,10 @@ void pmpd_tilde_mass(t_pmpd_tilde *x, t_float M, t_float posX)
 	x->mass[x->nb_mass].posX = posX;
 	x->mass[x->nb_mass].forceX = 0;
 	x->mass[x->nb_mass].Id = x->nb_mass;
-	
+
 	x->nb_mass++ ;
-	if (x->nb_mass == nb_max_mass) pd_error(x, "too many mass");
-	x->nb_mass = min ( nb_max_mass -1, x->nb_mass );
+	if (x->nb_mass == x->max_mass) pd_error(x, "too many mass");
+	x->nb_mass = min ( x->max_mass -1, x->nb_mass );
 }
 
 void pmpd_tilde_link(t_pmpd_tilde *x, t_float mass_1, t_float mass_2, t_float K1, t_float D1)
@@ -370,15 +368,15 @@ void pmpd_tilde_link(t_pmpd_tilde *x, t_float mass_1, t_float mass_2, t_float K1
 	x->link[x->nb_link].D1 = D1;
 
 	x->nb_link++ ;
-	if (x->nb_link == nb_max_link) pd_error(x, "too many link");
-	x->nb_link = min ( nb_max_link -1, x->nb_link );
+	if (x->nb_link == x->max_link) pd_error(x, "too many link");
+	x->nb_link = min ( x->max_link -1, x->nb_link );
 }
 
 void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 // t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
 {
-	if  (argc == 8) 
+	if  (argc == 8)
 	{
 		x->NLlink[x->nb_NLlink].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)atom_getfloatarg(0, argc, argv)))];
 		x->NLlink[x->nb_NLlink].mass2 = &x->mass[max(0, min ( x->nb_mass, (int)atom_getfloatarg(1, argc, argv)))];
@@ -390,8 +388,8 @@ void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 		x->NLlink[x->nb_NLlink].Lmax = atom_getfloatarg(7, argc, argv);
 
 		x->nb_NLlink++ ;
-		if (x->nb_NLlink == nb_max_link) pd_error(x, "too many NLlink");
-		x->nb_NLlink = min ( nb_max_link -1, x->nb_NLlink );
+		if (x->nb_NLlink == x->max_link) pd_error(x, "too many NLlink");
+		x->nb_NLlink = min ( x->max_link -1, x->nb_NLlink );
 	}
 	else
 	pd_error(x, "wrong argument count for NLlink");
@@ -406,8 +404,8 @@ void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float
 	x->inPos[x->nb_inPos].influence = influence;
 
 	x->nb_inPos++;
-	if (x->nb_inPos == nb_max_in) pd_error(x, "too many inPos");
-	x->nb_inPos = min ( nb_max_in - 1, x->nb_inPos );
+	if (x->nb_inPos == x->max_inout) pd_error(x, "too many inPos");
+	x->nb_inPos = min ( x->max_inout - 1, x->nb_inPos );
 }
 void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence)
 //add an input point
@@ -418,8 +416,8 @@ void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_flo
 	x->inForce[x->nb_inForce].influence = influence;
 
 	x->nb_inForce++;
-	if (x->nb_inForce == nb_max_in) pd_error(x, "too many inForce");
-	x->nb_inForce = min ( nb_max_in - 1, x->nb_inForce );
+	if (x->nb_inForce == x->max_inout) pd_error(x, "too many inForce");
+	x->nb_inForce = min ( x->max_inout - 1, x->nb_inForce );
 }
 
 void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence)
@@ -431,8 +429,8 @@ void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_flo
 	x->outPos[x->nb_outPos].influence = influence;
 
 	x->nb_outPos++ ;
-	if (x->nb_outPos == nb_max_out) pd_error(x, "too many outPos");
-	x->nb_outPos = min ( nb_max_out - 1, x->nb_outPos );
+	if (x->nb_outPos == x->max_inout) pd_error(x, "too many outPos");
+	x->nb_outPos = min ( x->max_inout - 1, x->nb_outPos );
 }
 
 void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence)
@@ -444,8 +442,8 @@ void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_f
 	x->outSpeed[x->nb_outSpeed].influence = influence;
 
 	x->nb_outSpeed++ ;
-	if (x->nb_outSpeed == nb_max_out) pd_error(x, "too many outSpeed");
-	x->nb_outSpeed = min ( nb_max_out - 1, x->nb_outSpeed );
+	if (x->nb_outSpeed == x->max_inout) pd_error(x, "too many outSpeed");
+	x->nb_outSpeed = min ( x->max_inout - 1, x->nb_outSpeed );
 }
 
 void pmpd_tilde_reset(t_pmpd_tilde *x)
@@ -467,24 +465,62 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 	pmpd_tilde_reset(x);
 	makeseed_pmpd_tilde();
-	
-	x->nb_outlet= (int)atom_getfloatarg(1, argc, argv);
-	x->nb_outlet= max(1, min(nb_max_outlet, x->nb_outlet) );
-	for(i=0; i<x->nb_outlet; i++)
-		outlet_new(&x->x_obj, &s_signal);
 
 	x->nb_inlet = (int)atom_getfloatarg(0, argc, argv);
 	x->nb_inlet= max(1, min(nb_max_inlet, x->nb_inlet) );
 	for(i=0; i<x->nb_inlet-1; i++)
-		inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+		x->x_in[i]=inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+
+	x->nb_outlet= (int)atom_getfloatarg(1, argc, argv);
+	x->nb_outlet= max(1, min(nb_max_outlet, x->nb_outlet) );
+	for(i=0; i<x->nb_outlet; i++)
+		x->x_out[i]=outlet_new(&x->x_obj, &s_signal);
 
 	x->nb_loop = max (1, (int)atom_getfloatarg(2, argc, argv) );
-	
+
+	x->max_mass = 10000;
+	if ((argc >= 4) && (argv[3].a_type == A_FLOAT) && (int)atom_getfloatarg(3, argc, argv) > 0)
+		x->max_mass = (int)atom_getfloatarg(3, argc, argv);
+
+	x->max_link = 10000;
+	if ((argc >= 5) && (argv[4].a_type == A_FLOAT) && (int)atom_getfloatarg(4, argc, argv) > 0)
+		x->max_link = (int)atom_getfloatarg(4, argc, argv);
+
+	x->max_inout = 100;
+	if ((argc >= 6) && (argv[5].a_type == A_FLOAT) && (int)atom_getfloatarg(5, argc, argv) > 0)
+		x->max_inout = (int)atom_getfloatarg(5, argc, argv);
+
+	x->mass = getbytes(sizeof(massStruct)*x->max_mass);
+	x->link = getbytes(sizeof(linkStruct)*x->max_link);
+	x->NLlink = getbytes(sizeof(NLlinkStruct)*x->max_link);
+	x->inPos = getbytes(sizeof(inPosStruct)*x->max_inout);
+	x->inForce = getbytes(sizeof(inForceStruct)*x->max_inout);
+	x->outPos = getbytes(sizeof(outPosStruct)*x->max_inout);
+	x->outSpeed = getbytes(sizeof(outSpeedStruct)*x->max_inout);
+
 	return (void *)x;
 }
 
+void pmpd_tilde_free(t_pmpd_tilde *x) {
+	int i;
+
+	for(i=0; i<x->nb_inlet-1; i++)
+		inlet_free(x->x_in[i]);
+	for(i=0; i<x->nb_outlet; i++)
+		outlet_free(x->x_out[i]);
+
+	freebytes(x->mass, sizeof(massStruct)*x->max_mass);
+	freebytes(x->link, sizeof(linkStruct)*x->max_link);
+	freebytes(x->NLlink, sizeof(linkStruct)*x->max_link);
+	freebytes(x->inPos, sizeof(inPosStruct)*x->max_inout);
+	freebytes(x->inForce, sizeof(inForceStruct)*x->max_inout);
+	freebytes(x->outPos, sizeof(outPosStruct)*x->max_inout);
+	freebytes(x->outSpeed, sizeof(outSpeedStruct)*x->max_inout);
+
+}
+
 PMPD_EXPORT void pmpd_tilde_setup(void) {
-	pmpd_tilde_class = class_new(gensym("pmpd~"), (t_newmethod)pmpd_tilde_new, 0, sizeof(t_pmpd_tilde), CLASS_DEFAULT, A_GIMME, 0);
+	pmpd_tilde_class = class_new(gensym("pmpd~"), (t_newmethod)pmpd_tilde_new, (t_method)pmpd_tilde_free, sizeof(t_pmpd_tilde), CLASS_DEFAULT, A_GIMME, 0);
 
     if(!pmpd_tilde_class)
         return;
@@ -512,15 +548,15 @@ PMPD_EXPORT void pmpd_tilde_setup(void) {
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_forceX, gensym("forceX"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setK, gensym("setK"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setD, gensym("setD"), A_DEFFLOAT, A_DEFFLOAT, 0);
-	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setM, gensym("setM"), A_DEFFLOAT, A_DEFFLOAT, 0);	
+	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setM, gensym("setM"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLK, gensym("setNLK"), A_GIMME, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLKPow, gensym("setNLKPow"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLD, gensym("setNLD"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLL, gensym("setNLL"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLMin, gensym("setNLLMin"), A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLMax, gensym("setNLLMax"), A_DEFFLOAT, A_DEFFLOAT, 0);
-	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLCurrent, gensym("setNLLCurrent"), A_GIMME, 0);	
-	
+	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLCurrent, gensym("setNLLCurrent"), A_GIMME, 0);
+
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_reset, gensym("reset"), 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_dsp, gensym("dsp"),  A_CANT, 0);
 }

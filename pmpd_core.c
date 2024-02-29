@@ -107,6 +107,12 @@ void *pmpd_new(t_symbol *s, int argc, t_atom *argv)
     return (void *)x;
 }
 
+void pmpd_free(t_pmpd *x){
+
+	freebytes(x->mass, sizeof(massStruct)*x->nb_max_mass);
+	freebytes(x->link, sizeof(linkStruct)*x->nb_max_link);
+}
+
 void pmpd_bang(t_pmpd *x)
 { // this part is doing all the PM
     t_float F, L, tmpX;

@@ -1,4 +1,4 @@
-#N canvas 717 47 693 866 10;
+#N canvas 707 4 693 899 10;
 #X msg 30 74 reset;
 #X obj 30 816 dac~;
 #X obj 225 752 osc~ 444;
@@ -54,6 +54,9 @@
 #X msg 52 146 link \$1 \$2 \$3 \$4;
 #X msg 41 108 mass \$1 \$2;
 #X text 161 146 connect two masses (\$1 and \$2) with link rigidity \$3 and damping \$4, f 68;
+#X text 101 832 arg4 : max number of masses;
+#X text 101 847 arg5 : max number of links;
+#X text 101 862 arg6 : max number of in/out;
 #X connect 0 0 35 0;
 #X connect 2 0 35 0;
 #X connect 7 0 35 0;

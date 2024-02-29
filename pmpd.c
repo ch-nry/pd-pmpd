@@ -43,7 +43,7 @@ PMPD_EXPORT void pmpd_setup(void)
 {
  pmpd_class = class_new(gensym("pmpd"),
         (t_newmethod)pmpd_new,
-        0, sizeof(t_pmpd),CLASS_DEFAULT, A_GIMME, 0);
+        (t_method)pmpd_free, sizeof(t_pmpd),CLASS_DEFAULT, A_GIMME, 0);
 
     if(!pmpd_class)
       return;
