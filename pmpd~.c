@@ -91,7 +91,7 @@ typedef struct _pmpd_tilde {
 	inForcePtr inForce;
 	outPosPtr outPos;
 	outSpeedPtr outSpeed;
-	t_float outlet[nb_max_outlet];
+	t_float outlet[nb_max_outlet]; // pour claculer les sorties
 	t_sample *outlet_vector[nb_max_outlet];
 	t_sample *inlet_vector[nb_max_inlet];
 	t_inlet  *x_in[nb_max_inlet];
