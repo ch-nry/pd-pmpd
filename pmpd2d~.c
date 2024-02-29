@@ -429,7 +429,6 @@ void pmpd2d_tilde_link(t_pmpd2d_tilde *x, t_float mass_1, t_float mass_2, t_floa
 void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv) {
 // t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
-	t_float LX, LY;
 	if (argc != 8)
 	{
 		pd_error(x, "wrong argument count for NLlink");
@@ -440,6 +439,7 @@ void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 		pd_error(x, "too many NLlinks (increase limit with creation argument)");
 		return;
 	}
+	t_float LX, LY;
 	x->NLlink[x->nb_NLlink].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)atom_getfloatarg(0, argc, argv)))];
 	x->NLlink[x->nb_NLlink].mass2 = &x->mass[max(0, min ( x->nb_mass, (int)atom_getfloatarg(1, argc, argv)))];
 	x->NLlink[x->nb_NLlink].K1 = atom_getfloatarg(2, argc, argv);
@@ -450,8 +450,8 @@ void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 	x->NLlink[x->nb_NLlink].Lmax = atom_getfloatarg(7, argc, argv);
 
 	// initialize L with actual distance between masses
-	LX = x->NLlink[x->nb_link].mass2->posX - x->NLlink[x->nb_link].mass1->posX;
-	LY = x->NLlink[x->nb_link].mass2->posY - x->NLlink[x->nb_link].mass1->posY;
+	LX = x->NLlink[x->nb_NLlink].mass2->posX - x->NLlink[x->nb_NLlink].mass1->posX;
+	LY = x->NLlink[x->nb_NLlink].mass2->posY - x->NLlink[x->nb_NLlink].mass1->posY;
 	x->NLlink[x->nb_NLlink].L = sqrt(LY*LY + LX*LX);
 	x->nb_NLlink++;
 }
