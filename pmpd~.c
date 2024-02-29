@@ -98,6 +98,8 @@ typedef struct _pmpd_tilde {
 	t_float outlet[nb_max_outlet];
 	t_sample *outlet_vector[nb_max_outlet];
 	t_sample *inlet_vector[nb_max_inlet];
+	t_inlet  *x_in[nb_max_in];
+	t_outlet *x_out[nb_max_out];
 	int nb_link, nb_NLlink, nb_mass, nb_inlet, nb_outlet, nb_inPos, nb_inForce, nb_outPos, nb_outSpeed;
 	t_sample f; // used for signal inlet
 	t_int loop, nb_loop; // to be able not to compute everything a each iteration
@@ -468,23 +470,32 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 	pmpd_tilde_reset(x);
 	makeseed_pmpd_tilde();
 	
-	x->nb_outlet= (int)atom_getfloatarg(1, argc, argv);
-	x->nb_outlet= max(1, min(nb_max_outlet, x->nb_outlet) );
-	for(i=0; i<x->nb_outlet; i++)
-		outlet_new(&x->x_obj, &s_signal);
-
 	x->nb_inlet = (int)atom_getfloatarg(0, argc, argv);
 	x->nb_inlet= max(1, min(nb_max_inlet, x->nb_inlet) );
 	for(i=0; i<x->nb_inlet-1; i++)
-		inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+		x->x_in[i]=inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+
+	x->nb_outlet= (int)atom_getfloatarg(1, argc, argv);
+	x->nb_outlet= max(1, min(nb_max_outlet, x->nb_outlet) );
+	for(i=0; i<x->nb_outlet; i++)
+		x->x_out[i]=outlet_new(&x->x_obj, &s_signal);
 
 	x->nb_loop = max (1, (int)atom_getfloatarg(2, argc, argv) );
 	
 	return (void *)x;
 }
 
+void pmpd_tilde_free(t_pmpd_tilde *x) {
+	int i;
+	
+	for(i=0; i<x->nb_inlet-1; i++)
+		inlet_free(x->x_in[i]);
+	for(i=0; i<x->nb_outlet; i++)
+		outlet_free(x->x_out[i]);
+}
+
 PMPD_EXPORT void pmpd_tilde_setup(void) {
-	pmpd_tilde_class = class_new(gensym("pmpd~"), (t_newmethod)pmpd_tilde_new, 0, sizeof(t_pmpd_tilde), CLASS_DEFAULT, A_GIMME, 0);
+	pmpd_tilde_class = class_new(gensym("pmpd~"), (t_newmethod)pmpd_tilde_new, (t_method)pmpd_tilde_free, sizeof(t_pmpd_tilde), CLASS_DEFAULT, A_GIMME, 0);
 
     if(!pmpd_tilde_class)
         return;
