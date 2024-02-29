@@ -508,6 +508,15 @@ void pmpd_tilde_free(t_pmpd_tilde *x) {
 		inlet_free(x->x_in[i]);
 	for(i=0; i<x->nb_outlet; i++)
 		outlet_free(x->x_out[i]);
+
+	freebytes(x->mass, sizeof(massStruct)*x->max_mass);
+	freebytes(x->link, sizeof(linkStruct)*x->max_link);
+	freebytes(x->NLlink, sizeof(linkStruct)*x->max_link);
+	freebytes(x->inPos, sizeof(inPosStruct)*x->max_inout);
+	freebytes(x->inForce, sizeof(inForceStruct)*x->max_inout);
+	freebytes(x->outPos, sizeof(outPosStruct)*x->max_inout);
+	freebytes(x->outSpeed, sizeof(outSpeedStruct)*x->max_inout);
+
 }
 
 PMPD_EXPORT void pmpd_tilde_setup(void) {
