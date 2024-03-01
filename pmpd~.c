@@ -238,13 +238,13 @@ void pmpd_tilde_bang(t_pmpd_tilde *x)
 	for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "Out_speed:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass1->Id, x->outSpeed[i].influence);
 }
 
-// void pmpd_tilde_float(t_pmpd_tilde *x, t_float force)
-// {
-// // add a force to all masses
-// 	int i;
-// 	for (i=0;i < x->nb_mass; i++)
-// 		x->mass[i].forceX += force;
-// }
+void pmpd_tilde_float(t_pmpd_tilde *x, t_float force)
+{
+// add a force to all masses
+	int i;
+	for (i=0;i < x->nb_mass; i++)
+		x->mass[i].forceX += force;
+}
 
 void pmpd_tilde_forceX(t_pmpd_tilde *x, t_float nbr_mass, t_float force)
 {
@@ -537,7 +537,7 @@ PMPD_EXPORT void pmpd_tilde_setup(void) {
 	CLASS_MAINSIGNALIN(pmpd_tilde_class, t_pmpd_tilde, f);
 
 	class_addbang(pmpd_tilde_class, pmpd_tilde_bang);
-	// class_addfloat(pmpd_tilde_class,  (t_method)pmpd_tilde_float);
+	class_addfloat(pmpd_tilde_class,  (t_method)pmpd_tilde_float);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_mass, gensym("mass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_link, gensym("link"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 	class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_NLlink, gensym("NLlink"), A_GIMME, 0);
