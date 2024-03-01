@@ -6,7 +6,7 @@ set(COMMON_FLAGS "-Wall")
 # Platform-specific and compiler-specific settings
 if(MSVC)
   # MSVC-specific flags
-  set(CMAKE_C_FLAGS "${COMMON_FLAGS} /O2 /Za /std:c11")
+  set(CMAKE_C_FLAGS "${COMMON_FLAGS} /O2 /std:c17")
 else()
   # GCC/Clang-specific flags
   set(CMAKE_C_FLAGS "${COMMON_FLAGS} -O3 -ffinite-math-only -ffast-math -finline-functions -funroll-loops -flto")
