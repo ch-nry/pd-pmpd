@@ -108,7 +108,6 @@ void *pmpd_new(t_symbol *s, int argc, t_atom *argv)
 }
 
 void pmpd_free(t_pmpd *x){
-
 	freebytes(x->mass, sizeof(massStruct)*x->nb_max_mass);
 	freebytes(x->link, sizeof(linkStruct)*x->nb_max_link);
 }

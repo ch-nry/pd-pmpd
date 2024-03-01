@@ -42,9 +42,9 @@
 
 PMPD_EXPORT void pmpd3d_setup(void)
 {
- pmpd3d_class = class_new(gensym("pmpd3d"),
+pmpd3d_class = class_new(gensym("pmpd3d"),
         (t_newmethod)pmpd3d_new,
-        0, sizeof(t_pmpd3d),CLASS_DEFAULT, A_GIMME, 0);
+        (t_method)pmpd3d_free, sizeof(t_pmpd3d),CLASS_DEFAULT, A_GIMME, 0);
 
     if(!pmpd3d_class)
         return;
