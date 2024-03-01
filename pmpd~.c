@@ -91,26 +91,27 @@ typedef struct _pmpd_tilde {
 	inForcePtr inForce;
 	outPosPtr outPos;
 	outSpeedPtr outSpeed;
-	t_float outlet[nb_max_outlet];
-	t_sample *outlet_vector[nb_max_outlet];
-	t_sample *inlet_vector[nb_max_inlet];
-	t_inlet  *x_in[nb_max_inlet];
-	t_outlet *x_out[nb_max_outlet];
+	t_float *outlet; // pour calculer les sorties
+	t_sample **outlet_vector;
+	t_sample **inlet_vector;
+	t_inlet  **x_in;
+	t_outlet **x_out;
 	int nb_link, nb_NLlink, nb_mass, nb_inlet, nb_outlet, nb_inPos, nb_inForce, nb_outPos, nb_outSpeed;
-	int max_mass, max_link, max_inout, max_inoutlet;
+	int max_mass, max_link, max_in, max_out;
 	t_sample f; // used for signal inlet
 	t_int loop, nb_loop; // to be able not to compute everything a each iteration
 	unsigned int x_state; // random
     t_float x_f; // random
 } t_pmpd_tilde;
 
+/*
 static int makeseed_pmpd_tilde(void)
 {
     static unsigned int random_nextseed = 1489853723;
     random_nextseed = random_nextseed * 435898247 + 938284287;
     return (random_nextseed & 0x7fffffff);
 }
-/*
+
 static t_float random_bang_pmpd_tilde(t_pmpd_tilde *x)
 {
     int nval;
@@ -404,8 +405,8 @@ void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float
 	x->inPos[x->nb_inPos].influence = influence;
 
 	x->nb_inPos++;
-	if (x->nb_inPos == x->max_inout) pd_error(x, "too many inPos");
-	x->nb_inPos = min ( x->max_inout - 1, x->nb_inPos );
+	if (x->nb_inPos == x->max_in) pd_error(x, "too many inPos");
+	x->nb_inPos = min ( x->max_in - 1, x->nb_inPos );
 }
 void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence)
 //add an input point
@@ -416,8 +417,8 @@ void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_flo
 	x->inForce[x->nb_inForce].influence = influence;
 
 	x->nb_inForce++;
-	if (x->nb_inForce == x->max_inout) pd_error(x, "too many inForce");
-	x->nb_inForce = min ( x->max_inout - 1, x->nb_inForce );
+	if (x->nb_inForce == x->max_in) pd_error(x, "too many inForce");
+	x->nb_inForce = min ( x->max_in - 1, x->nb_inForce );
 }
 
 void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence)
@@ -429,8 +430,8 @@ void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_flo
 	x->outPos[x->nb_outPos].influence = influence;
 
 	x->nb_outPos++ ;
-	if (x->nb_outPos == x->max_inout) pd_error(x, "too many outPos");
-	x->nb_outPos = min ( x->max_inout - 1, x->nb_outPos );
+	if (x->nb_outPos == x->max_out) pd_error(x, "too many outPos");
+	x->nb_outPos = min ( x->max_out - 1, x->nb_outPos );
 }
 
 void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence)
@@ -442,8 +443,8 @@ void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_f
 	x->outSpeed[x->nb_outSpeed].influence = influence;
 
 	x->nb_outSpeed++ ;
-	if (x->nb_outSpeed == x->max_inout) pd_error(x, "too many outSpeed");
-	x->nb_outSpeed = min ( x->max_inout - 1, x->nb_outSpeed );
+	if (x->nb_outSpeed == x->max_out) pd_error(x, "too many outSpeed");
+	x->nb_outSpeed = min ( x->max_out - 1, x->nb_outSpeed );
 }
 
 void pmpd_tilde_reset(t_pmpd_tilde *x)
@@ -464,17 +465,12 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 	t_pmpd_tilde *x = (t_pmpd_tilde *)pd_new(pmpd_tilde_class);
 
 	pmpd_tilde_reset(x);
-	makeseed_pmpd_tilde();
+	//makeseed_pmpd_tilde();
 
 	x->nb_inlet = (int)atom_getfloatarg(0, argc, argv);
 	x->nb_inlet= max(1, min(nb_max_inlet, x->nb_inlet) );
-	for(i=0; i<x->nb_inlet-1; i++)
-		x->x_in[i]=inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-
 	x->nb_outlet= (int)atom_getfloatarg(1, argc, argv);
 	x->nb_outlet= max(1, min(nb_max_outlet, x->nb_outlet) );
-	for(i=0; i<x->nb_outlet; i++)
-		x->x_out[i]=outlet_new(&x->x_obj, &s_signal);
 
 	x->nb_loop = max (1, (int)atom_getfloatarg(2, argc, argv) );
 
@@ -486,17 +482,31 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 	if ((argc >= 5) && (argv[4].a_type == A_FLOAT) && (int)atom_getfloatarg(4, argc, argv) > 0)
 		x->max_link = (int)atom_getfloatarg(4, argc, argv);
 
-	x->max_inout = 100;
+	x->max_in = x->nb_inlet+1;
 	if ((argc >= 6) && (argv[5].a_type == A_FLOAT) && (int)atom_getfloatarg(5, argc, argv) > 0)
-		x->max_inout = (int)atom_getfloatarg(5, argc, argv);
+		x->max_in = (int)atom_getfloatarg(5, argc, argv);
+	x->max_out = x->nb_outlet+1;
+	if ((argc >= 7) && (argv[6].a_type == A_FLOAT) && (int)atom_getfloatarg(6, argc, argv) > 0)
+		x->max_in = (int)atom_getfloatarg(6, argc, argv);
+		
 
 	x->mass = getbytes(sizeof(massStruct)*x->max_mass);
 	x->link = getbytes(sizeof(linkStruct)*x->max_link);
 	x->NLlink = getbytes(sizeof(NLlinkStruct)*x->max_link);
-	x->inPos = getbytes(sizeof(inPosStruct)*x->max_inout);
-	x->inForce = getbytes(sizeof(inForceStruct)*x->max_inout);
-	x->outPos = getbytes(sizeof(outPosStruct)*x->max_inout);
-	x->outSpeed = getbytes(sizeof(outSpeedStruct)*x->max_inout);
+	x->inPos = getbytes(sizeof(inPosStruct)*x->max_in);
+	x->inForce = getbytes(sizeof(inForceStruct)*x->max_in);
+	x->outPos = getbytes(sizeof(outPosStruct)*x->max_out);
+	x->outSpeed = getbytes(sizeof(outSpeedStruct)*x->max_out);
+	x->outlet = getbytes(sizeof(t_float)*x->nb_outlet);
+	x->inlet_vector = getbytes(sizeof(t_sample*)*x->nb_inlet);
+	x->outlet_vector = getbytes(sizeof(t_sample*)*x->nb_outlet);
+	x->x_in = getbytes(sizeof(t_inlet*)*x->nb_inlet);
+	x->x_out =getbytes(sizeof(t_outlet*)*x->nb_outlet);
+
+	for(i=0; i<x->nb_inlet-1; i++)
+		x->x_in[i]=inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+	for(i=0; i<x->nb_outlet; i++)
+		x->x_out[i]=outlet_new(&x->x_obj, &s_signal);
 
 	return (void *)x;
 }
@@ -512,10 +522,15 @@ void pmpd_tilde_free(t_pmpd_tilde *x) {
 	freebytes(x->mass, sizeof(massStruct)*x->max_mass);
 	freebytes(x->link, sizeof(linkStruct)*x->max_link);
 	freebytes(x->NLlink, sizeof(linkStruct)*x->max_link);
-	freebytes(x->inPos, sizeof(inPosStruct)*x->max_inout);
-	freebytes(x->inForce, sizeof(inForceStruct)*x->max_inout);
-	freebytes(x->outPos, sizeof(outPosStruct)*x->max_inout);
-	freebytes(x->outSpeed, sizeof(outSpeedStruct)*x->max_inout);
+	freebytes(x->inPos, sizeof(inPosStruct)*x->max_in);
+	freebytes(x->inForce, sizeof(inForceStruct)*x->max_in);
+	freebytes(x->outPos, sizeof(outPosStruct)*x->max_out);
+	freebytes(x->outSpeed, sizeof(outSpeedStruct)*x->max_out);
+	freebytes(x->outlet, sizeof(t_float)*x->nb_outlet);
+	freebytes(x->outlet_vector, sizeof(t_sample*)*x->nb_outlet);
+	freebytes(x->inlet_vector, sizeof(t_sample*)*x->nb_inlet);
+	freebytes(x->x_in, sizeof(t_inlet*)*x->nb_inlet);
+	freebytes(x->x_out, sizeof(t_outlet*)*x->nb_outlet);
 
 }
 

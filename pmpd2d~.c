@@ -446,8 +446,8 @@ void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 		x->NLlink[x->nb_NLlink].Lmax = atom_getfloatarg(7, argc, argv);
 
 		// initialize L with actual distance between masses
-		LX = x->NLlink[x->nb_link].mass2->posX - x->NLlink[x->nb_link].mass1->posX;
-		LY = x->NLlink[x->nb_link].mass2->posY - x->NLlink[x->nb_link].mass1->posY;
+		LX = x->NLlink[x->nb_NLlink].mass2->posX - x->NLlink[x->nb_NLlink].mass1->posX;
+		LY = x->NLlink[x->nb_NLlink].mass2->posY - x->NLlink[x->nb_NLlink].mass1->posY;
 		x->NLlink[x->nb_NLlink].L = sqrt(LY*LY + LX*LX);
 
 		x->nb_NLlink++ ;
