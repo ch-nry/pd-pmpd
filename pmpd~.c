@@ -92,8 +92,8 @@ typedef struct _pmpd_tilde {
 	outPosPtr outPos;
 	outSpeedPtr outSpeed;
 	t_float *outlet; // pour calculer les sorties
-	t_sample *outlet_vector[nb_max_outlet];
-	t_sample *inlet_vector[nb_max_inlet];
+	t_sample **outlet_vector;
+	t_sample **inlet_vector;
 	t_inlet  *x_in[nb_max_inlet];
 	t_outlet *x_out[nb_max_outlet];
 	int nb_link, nb_NLlink, nb_mass, nb_inlet, nb_outlet, nb_inPos, nb_inForce, nb_outPos, nb_outSpeed;
@@ -498,6 +498,8 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 	x->outPos = getbytes(sizeof(outPosStruct)*x->max_inout);
 	x->outSpeed = getbytes(sizeof(outSpeedStruct)*x->max_inout);
 	x->outlet = getbytes(sizeof(t_float)*x->nb_outlet);
+	x->outlet_vector = getbytes(sizeof(t_sample*)*x->nb_outlet);
+	x->inlet_vector = getbytes(sizeof(t_sample*)*x->nb_inlet);
 
 	return (void *)x;
 }
@@ -518,6 +520,8 @@ void pmpd_tilde_free(t_pmpd_tilde *x) {
 	freebytes(x->outPos, sizeof(outPosStruct)*x->max_inout);
 	freebytes(x->outSpeed, sizeof(outSpeedStruct)*x->max_inout);
 	freebytes(x->outlet, sizeof(t_float)*x->nb_outlet);
+	freebytes(x->outlet_vector, sizeof(t_sample*)*x->nb_outlet);
+	freebytes(x->inlet_vector, sizeof(t_sample*)*x->nb_inlet);
 
 }
 
