@@ -29,9 +29,6 @@
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) )
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) )
 
-#define nb_max_outlet   20
-#define nb_max_inlet    20 // hard-coded on the methods definition
-
 static t_class *pmpd_tilde_class;
 
 typedef struct _mass {
@@ -137,8 +134,8 @@ t_int *pmpd_tilde_perform(t_int *w)
 	t_float F,L;
 	t_int i;
 
-	t_sample *out[nb_max_outlet];
-	t_sample *in[nb_max_inlet];
+	t_sample *out[x->nb_outlet];
+	t_sample *in[x->nb_inlet];
 
 	for (i=0; i<x->nb_inlet; i++)
 		in[i]= x->inlet_vector[i];
@@ -468,9 +465,9 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 	//makeseed_pmpd_tilde();
 
 	x->nb_inlet = (int)atom_getfloatarg(0, argc, argv);
-	x->nb_inlet= max(1, min(nb_max_inlet, x->nb_inlet) );
+	x->nb_inlet= max(1, x->nb_inlet );
 	x->nb_outlet= (int)atom_getfloatarg(1, argc, argv);
-	x->nb_outlet= max(1, min(nb_max_outlet, x->nb_outlet) );
+	x->nb_outlet= max(1, x->nb_outlet);
 
 	x->nb_loop = max (1, (int)atom_getfloatarg(2, argc, argv) );
 
