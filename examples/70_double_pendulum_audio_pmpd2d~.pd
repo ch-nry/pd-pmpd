@@ -1,4 +1,4 @@
-#N canvas 804 210 776 633 10;
+#N canvas 694 210 583 633 10;
 #X declare -path pmpd;
 #X declare -lib Gem;
 #X floatatom 32 62 0 0 0 0 - - - 0;
@@ -85,10 +85,10 @@
 #X text 171 267 print internal connection;
 #X obj 96 349 *~ 0.15;
 #X obj 159 350 *~ 0.15;
-#X obj 456 297 gemhead;
-#X msg 473 380 draw line;
-#X obj 456 433 scopeXYZ~ 2048;
-#X obj 473 356 loadbang;
+#X obj 406 297 gemhead;
+#X msg 423 380 draw line;
+#X obj 406 433 scopeXYZ~ 2048;
+#X obj 423 356 loadbang;
 #N canvas 63 100 450 300 gemwin 0;
 #X msg 65 124 reset \, create \, 1;
 #X msg 191 124 0 \, destroy;
@@ -101,9 +101,9 @@
 #X connect 2 0 0 0;
 #X connect 2 1 1 0;
 #X connect 3 0 2 0;
-#X restore 443 92 pd gemwin;
-#X obj 443 68 tgl 19 0 empty empty display\ on/off 0 -10 0 12 #fcfcfc #000000 #000000 0 1;
-#X obj 456 332 scaleXYZ 0.2 0.2 0.2;
+#X restore 406 275 pd gemwin;
+#X obj 406 251 tgl 18 0 empty empty oscilloscope\ on/off 0 -10 0 10 #fcfcfc #000000 #000000 0 1;
+#X obj 406 332 scaleXYZ 0.2 0.2 0.2;
 #X connect 1 0 0 0;
 #X connect 4 0 3 0;
 #X connect 6 0 9 0;
