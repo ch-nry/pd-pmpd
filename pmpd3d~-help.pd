@@ -73,9 +73,9 @@
 #X text 109 785 arg2 : number of audio outlets (default: 1);
 #X text 109 813 arg4 : max. number of masses (default: 10000);
 #X text 109 827 arg5 : max. number of links (default: 10000);
-#X text 109 841 arg6 : max. number inlet assigments (default: equal to inlet count), f 67;
-#X text 109 855 arg7 : max. number outlet assignments (default: equal to outlet count), f 70;
 #X text 109 799 arg3 : oversample factor (useful to run the simulation faster than audio rate - default: 1), f 91;
+#X text 109 841 arg6 : max. number inlet assigments (default: 1000);
+#X text 109 855 arg7 : max. number outlet assignments (default: 1000);
 #X connect 0 0 18 0;
 #X connect 2 0 18 0;
 #X connect 3 0 18 0;

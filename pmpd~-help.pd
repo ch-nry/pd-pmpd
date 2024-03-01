@@ -1,4 +1,4 @@
-#N canvas 707 4 693 891 10;
+#N canvas 707 37 693 891 10;
 #X obj 225 752 osc~ 444;
 #X msg 169 726 bang;
 #X text 203 725 print the current state of the model in the console;
@@ -55,9 +55,9 @@
 #X obj 30 815 dac~;
 #X obj 30 777 pmpd~ 1 1;
 #X text 98 832 arg5 : max. number of links (default: 10000);
-#X text 98 846 arg6 : max. number inlet assigments (default: equal to inlet count), f 67;
-#X text 98 860 arg7 : max. number outlet assignments (default: equal to outlet count), f 70;
 #X text 98 804 arg3 : oversample factor (useful to run the simulation faster than audio rate - default: 1), f 91;
+#X text 98 846 arg6 : max. number inlet assigments (default: 1000);
+#X text 98 860 arg7 : max. number outlet assignments (default: 1000);
 #X connect 0 0 54 0;
 #X connect 1 0 54 0;
 #X connect 7 0 54 0;
