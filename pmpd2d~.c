@@ -504,7 +504,7 @@ void pmpd2d_tilde_inForceX(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, 
 void pmpd2d_tilde_inForceY(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence) {
 	if (x->nb_inForceY == x->nb_max_in)
 	{
-		pd_error(x, "too many inForceX assigned (increase limit with creation argument)");
+		pd_error(x, "too many inForceY assigned (increase limit with creation argument)");
 		return;
 	}
 	x->inForceY[x->nb_inForceY].nbr_inlet = max(0, min( x->nb_inlet,(int)nb_inlet));
