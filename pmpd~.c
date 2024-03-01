@@ -104,13 +104,14 @@ typedef struct _pmpd_tilde {
     t_float x_f; // random
 } t_pmpd_tilde;
 
+/*
 static int makeseed_pmpd_tilde(void)
 {
     static unsigned int random_nextseed = 1489853723;
     random_nextseed = random_nextseed * 435898247 + 938284287;
     return (random_nextseed & 0x7fffffff);
 }
-/*
+
 static t_float random_bang_pmpd_tilde(t_pmpd_tilde *x)
 {
     int nval;
@@ -464,7 +465,7 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 	t_pmpd_tilde *x = (t_pmpd_tilde *)pd_new(pmpd_tilde_class);
 
 	pmpd_tilde_reset(x);
-	makeseed_pmpd_tilde();
+	//makeseed_pmpd_tilde();
 
 	x->nb_inlet = (int)atom_getfloatarg(0, argc, argv);
 	x->nb_inlet= max(1, min(nb_max_inlet, x->nb_inlet) );
