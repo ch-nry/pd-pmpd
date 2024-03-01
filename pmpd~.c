@@ -94,8 +94,8 @@ typedef struct _pmpd_tilde {
 	t_float *outlet; // pour calculer les sorties
 	t_sample **outlet_vector;
 	t_sample **inlet_vector;
-	t_inlet  *x_in[nb_max_inlet];
-	t_outlet *x_out[nb_max_outlet];
+	t_inlet  **x_in;
+	t_outlet **x_out;
 	int nb_link, nb_NLlink, nb_mass, nb_inlet, nb_outlet, nb_inPos, nb_inForce, nb_outPos, nb_outSpeed;
 	int max_mass, max_link, max_inout, max_inoutlet;
 	t_sample f; // used for signal inlet
@@ -468,13 +468,8 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 	x->nb_inlet = (int)atom_getfloatarg(0, argc, argv);
 	x->nb_inlet= max(1, min(nb_max_inlet, x->nb_inlet) );
-	for(i=0; i<x->nb_inlet-1; i++)
-		x->x_in[i]=inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-
 	x->nb_outlet= (int)atom_getfloatarg(1, argc, argv);
 	x->nb_outlet= max(1, min(nb_max_outlet, x->nb_outlet) );
-	for(i=0; i<x->nb_outlet; i++)
-		x->x_out[i]=outlet_new(&x->x_obj, &s_signal);
 
 	x->nb_loop = max (1, (int)atom_getfloatarg(2, argc, argv) );
 
@@ -498,8 +493,15 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 	x->outPos = getbytes(sizeof(outPosStruct)*x->max_inout);
 	x->outSpeed = getbytes(sizeof(outSpeedStruct)*x->max_inout);
 	x->outlet = getbytes(sizeof(t_float)*x->nb_outlet);
-	x->outlet_vector = getbytes(sizeof(t_sample*)*x->nb_outlet);
 	x->inlet_vector = getbytes(sizeof(t_sample*)*x->nb_inlet);
+	x->outlet_vector = getbytes(sizeof(t_sample*)*x->nb_outlet);
+	x->x_in = getbytes(sizeof(t_inlet*)*x->nb_inlet);
+	x->x_out =getbytes(sizeof(t_outlet*)*x->nb_outlet);
+
+	for(i=0; i<x->nb_inlet-1; i++)
+		x->x_in[i]=inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+	for(i=0; i<x->nb_outlet; i++)
+		x->x_out[i]=outlet_new(&x->x_obj, &s_signal);
 
 	return (void *)x;
 }
@@ -522,6 +524,8 @@ void pmpd_tilde_free(t_pmpd_tilde *x) {
 	freebytes(x->outlet, sizeof(t_float)*x->nb_outlet);
 	freebytes(x->outlet_vector, sizeof(t_sample*)*x->nb_outlet);
 	freebytes(x->inlet_vector, sizeof(t_sample*)*x->nb_inlet);
+	freebytes(x->x_in, sizeof(t_inlet*)*x->nb_inlet);
+	freebytes(x->x_out, sizeof(t_outlet*)*x->nb_outlet);
 
 }
 
