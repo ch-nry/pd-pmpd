@@ -18,9 +18,11 @@ jobs:
     - name: Clone Pure-Data
       run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
     
-    - name: Install Dependencies
-      run: |
-        sudo apt-get install -yqq ninja-build cmake
+    - name: Update package lists
+      run: sudo apt-get update -yqq
+
+    - name: Install dependencies
+      run: sudo apt-get install -yqq ninja-build cmake --fix-missing
     
     - name: Build (Single Precision)
       if: matrix.precision == 'pd32'
