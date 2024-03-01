@@ -91,7 +91,7 @@ typedef struct _pmpd_tilde {
 	inForcePtr inForce;
 	outPosPtr outPos;
 	outSpeedPtr outSpeed;
-	t_float outlet[nb_max_outlet]; // pour claculer les sorties
+	t_float *outlet; // pour calculer les sorties
 	t_sample *outlet_vector[nb_max_outlet];
 	t_sample *inlet_vector[nb_max_inlet];
 	t_inlet  *x_in[nb_max_inlet];
@@ -497,6 +497,7 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 	x->inForce = getbytes(sizeof(inForceStruct)*x->max_inout);
 	x->outPos = getbytes(sizeof(outPosStruct)*x->max_inout);
 	x->outSpeed = getbytes(sizeof(outSpeedStruct)*x->max_inout);
+	x->outlet = getbytes(sizeof(t_float)*x->nb_outlet);
 
 	return (void *)x;
 }
@@ -516,6 +517,7 @@ void pmpd_tilde_free(t_pmpd_tilde *x) {
 	freebytes(x->inForce, sizeof(inForceStruct)*x->max_inout);
 	freebytes(x->outPos, sizeof(outPosStruct)*x->max_inout);
 	freebytes(x->outSpeed, sizeof(outSpeedStruct)*x->max_inout);
+	freebytes(x->outlet, sizeof(t_float)*x->nb_outlet);
 
 }
 
