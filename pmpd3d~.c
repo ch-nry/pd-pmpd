@@ -32,6 +32,8 @@
 
 #define NB_MAX_LINK_DEFAULT 10000
 #define NB_MAX_MASS_DEFAULT 10000
+#define NB_MAX_IN_DEFAULT    1000
+#define NB_MAX_OUT_DEFAULT   1000
 
 static t_class *pmpd3d_tilde_class;
 
@@ -721,8 +723,8 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv) {
 	x->nb_loop     = max(1, (int)atom_getfloatarg(2, argc, argv) );
 	x->nb_max_mass = (arg = (int)atom_getfloatarg(3, argc, argv)) > 0 ? arg : NB_MAX_MASS_DEFAULT;
 	x->nb_max_link = (arg = (int)atom_getfloatarg(4, argc, argv)) > 0 ? arg : NB_MAX_LINK_DEFAULT;
-	x->nb_max_in   = max(x->nb_inlet,  (int)atom_getfloatarg(5, argc, argv));
-	x->nb_max_out  = max(x->nb_outlet, (int)atom_getfloatarg(6, argc, argv));
+	x->nb_max_in   = (arg = (int)atom_getfloatarg(5, argc, argv)) > 0 ? arg : NB_MAX_IN_DEFAULT;
+	x->nb_max_out  = (arg = (int)atom_getfloatarg(6, argc, argv)) > 0 ? arg : NB_MAX_OUT_DEFAULT;
 
 	x->outlet = (t_float *)getbytes(x->nb_outlet * sizeof(t_float));
 
