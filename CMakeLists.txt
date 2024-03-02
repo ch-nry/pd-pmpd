@@ -1,15 +1,13 @@
 cmake_minimum_required (VERSION 3.14)
 project(pd-pmpd C)
 
-set(COMMON_FLAGS "-Wall")
-
 # Platform-specific and compiler-specific settings
 if(MSVC)
   # MSVC-specific flags
-  set(CMAKE_C_FLAGS "${COMMON_FLAGS} /O2")
+  set(CMAKE_C_FLAGS "/W3 /O2 /Ot /fp:fast")
 else()
   # GCC/Clang-specific flags
-  set(CMAKE_C_FLAGS "${COMMON_FLAGS} -O3 -ffinite-math-only -ffast-math -finline-functions -funroll-loops -flto")
+  set(CMAKE_C_FLAGS "-Wall -O3 -ffast-math -ffinite-math-only -finline-functions -funroll-loops")
 endif()
 
 # apply with argument -DPD_FLOATSIZE64=ON

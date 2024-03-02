@@ -111,6 +111,11 @@ void *pmpd3d_new(t_symbol *s, int argc, t_atom *argv)
     return (void *)x;
 }
 
+void pmpd3d_free(t_pmpd3d *x){
+	freebytes(x->mass, sizeof(massStruct)*x->nb_max_mass);
+	freebytes(x->link, sizeof(linkStruct)*x->nb_max_link);
+}
+
 void pmpd3d_bang(t_pmpd3d *x)
 {
 	// this part is doing all the PM

@@ -132,6 +132,11 @@ void *pmpd2d_new(t_symbol *s, int argc, t_atom *argv)
     return (void *)x;
 }
 
+void pmpd2d_free(t_pmpd2d *x){
+    freebytes(x->mass, sizeof(massStruct)*x->nb_max_mass);
+    freebytes(x->link, sizeof(linkStruct)*x->nb_max_link);
+}
+
 void pmpd2d_bang(t_pmpd2d *x)
 { // this part is doing all the PM
     t_float F, L, Dist, Lx,Ly, Fx, Fy, tmp, tmpX, tmpY,speed;

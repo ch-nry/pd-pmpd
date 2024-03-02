@@ -43,8 +43,8 @@
 PMPD_EXPORT void pmpd2d_setup(void)
 {
 pmpd2d_class = class_new(gensym("pmpd2d"),
-    (t_newmethod)pmpd2d_new,
-    0, sizeof(t_pmpd2d),CLASS_DEFAULT, A_GIMME, 0);
+        (t_newmethod)pmpd2d_new,
+        (t_method)pmpd2d_free, sizeof(t_pmpd2d),CLASS_DEFAULT, A_GIMME, 0);
 
     if(!pmpd2d_class)
         return;
