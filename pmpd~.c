@@ -151,7 +151,7 @@ t_int *pmpd_tilde_perform(t_int *w)
 				x->NLlink[i].L = L;
 				if ((L < x->NLlink[i].Lmax) && (L > x->NLlink[i].Lmin))
 				{
-					F  = x->NLlink[i].K1 * pow(fabs(L), x->NLlink[i].Pow);
+					F  = x->NLlink[i].K1 * pow((L), x->NLlink[i].Pow);
 					if (L < 0) F *= -1;
 					// spring
 
@@ -477,15 +477,15 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 	x->outlet = (t_float *)getbytes(x->nb_outlet * sizeof(t_float));
 
-	x->inlet_vector  = (t_sample **)getbytes(x->nb_inlet  * sizeof(t_sample *));
+	x->inlet_vector  = (t_sample **)getbytes(x->nb_inlet * sizeof(t_sample *));
 	x->outlet_vector = (t_sample **)getbytes(x->nb_outlet * sizeof(t_sample *));
 
-	x->mass   = (struct _mass *)getbytes(x->nb_max_mass * sizeof(struct _link));
-	x->link   = (struct _link *)getbytes(x->nb_max_link * sizeof(struct _link));
-	x->NLlink = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
+	x->mass     = (struct _mass *)getbytes(x->nb_max_mass * sizeof(struct _link));
+	x->link     = (struct _link *)getbytes(x->nb_max_link * sizeof(struct _link));
+	x->NLlink   = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
 
-	x->inPos    = (struct _inPos *)getbytes(x->nb_max_in  * sizeof(struct _inPos));
-	x->inForce  = (struct _inForce *)getbytes(x->nb_max_in  * sizeof(struct _inForce));
+	x->inPos    = (struct _inPos *)getbytes(x->nb_max_in * sizeof(struct _inPos));
+	x->inForce  = (struct _inForce *)getbytes(x->nb_max_in * sizeof(struct _inForce));
 	x->outPos   = (struct _outPos *)getbytes(x->nb_max_out * sizeof(struct _outPos));
 	x->outSpeed = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
 

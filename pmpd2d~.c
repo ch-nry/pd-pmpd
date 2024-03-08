@@ -630,16 +630,16 @@ void *pmpd2d_tilde_new(t_symbol *s, int argc, t_atom *argv) {
 	x->inlet_vector = (t_sample **)getbytes(x->nb_inlet * sizeof(t_sample *));
 	x->outlet_vector = (t_sample **)getbytes(x->nb_outlet * sizeof(t_sample *));
 
-	x->mass   = (struct _mass *  )getbytes(x->nb_max_mass * sizeof(struct _link));
-	x->link   = (struct _link *  )getbytes(x->nb_max_link * sizeof(struct _link));
-	x->NLlink = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
+	x->mass      = (struct _mass *)getbytes(x->nb_max_mass * sizeof(struct _link));
+	x->link      = (struct _link *)getbytes(x->nb_max_link * sizeof(struct _link));
+	x->NLlink    = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
 
-	x->inPosX    = (struct _inPos *   )getbytes(x->nb_max_in  * sizeof(struct _inPos));
-	x->inPosY    = (struct _inPos *   )getbytes(x->nb_max_in  * sizeof(struct _inPos));
-	x->inForceX  = (struct _inForce * )getbytes(x->nb_max_in  * sizeof(struct _inForce));
-	x->inForceY  = (struct _inForce * )getbytes(x->nb_max_in  * sizeof(struct _inForce));
-	x->outPosX   = (struct _outPos *  )getbytes(x->nb_max_out * sizeof(struct _outPos));
-	x->outPosY   = (struct _outPos *  )getbytes(x->nb_max_out * sizeof(struct _outPos));
+	x->inPosX    = (struct _inPos *)getbytes(x->nb_max_in * sizeof(struct _inPos));
+	x->inPosY    = (struct _inPos *)getbytes(x->nb_max_in * sizeof(struct _inPos));
+	x->inForceX  = (struct _inForce *)getbytes(x->nb_max_in * sizeof(struct _inForce));
+	x->inForceY  = (struct _inForce *)getbytes(x->nb_max_in * sizeof(struct _inForce));
+	x->outPosX   = (struct _outPos *)getbytes(x->nb_max_out * sizeof(struct _outPos));
+	x->outPosY   = (struct _outPos *)getbytes(x->nb_max_out * sizeof(struct _outPos));
 	x->outSpeedX = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
 	x->outSpeedY = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
 	x->outSpeed  = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
