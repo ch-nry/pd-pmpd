@@ -87,52 +87,26 @@ struct _outSpeed {
 typedef struct _pmpd_tilde {
 	t_object  x_obj;
 
-    struct _mass *mass;
-    struct _link *link;
-    struct _NLlink *NLlink;
+	struct _mass *mass;
+	struct _link *link;
+	struct _NLlink *NLlink;
 
-    struct _inPos *inPos;
-    struct _inForce *inForce;
-    struct _outPos *outPos;
-    struct _outSpeed *outSpeed;
+	struct _inPos *inPos;
+	struct _inForce *inForce;
+	struct _outPos *outPos;
+	struct _outSpeed *outSpeed;
 
 	t_float *outlet;
-    t_sample **inlet_vector;
-    t_sample **outlet_vector;
+	t_sample **inlet_vector;
+	t_sample **outlet_vector;
 	t_int nb_max_link, nb_max_mass;
 	t_int nb_link, nb_NLlink, nb_mass;
 	t_int nb_inlet, nb_outlet, nb_max_in, nb_max_out;
 	t_int nb_inPos, nb_inForce, nb_outPos, nb_outSpeed;
 	t_sample f; // used for signal inlet
 	t_int loop, nb_loop; // to be able not to compute everything a each iteration
-	// unsigned int x_state; // random
-    // t_float x_f; // random
 } t_pmpd_tilde;
 
-/*
-static int makeseed_pmpd_tilde(void)
-{
-    static unsigned int random_nextseed = 1489853723;
-    random_nextseed = random_nextseed * 435898247 + 938284287;
-    return (random_nextseed & 0x7fffffff);
-}
-
-static t_float random_bang_pmpd_tilde(t_pmpd_tilde *x)
-{
-    int nval;
-    int range = 2000000;
-	t_float rnd;
-	unsigned int randval = x->x_state;
-	x->x_state = randval = randval * 472940017 + 832416023;
-    nval = ((double)range) * ((double)randval)
-    	* (1./4294967296.);
-    if (nval >= range) nval = range-1;
-	rnd=nval;
-	rnd-=1000000;
-	rnd=rnd/1000000.;	//pour mettre entre -1 et 1;
-    return (rnd);
-}
-*/
 t_int *pmpd_tilde_perform(t_int *w)
 ///////////////////////////////////////////////////////////////////////////////////
 {
@@ -141,10 +115,9 @@ t_int *pmpd_tilde_perform(t_int *w)
 
 	t_float F,L;
 	t_int i, si;
-//	struct _mass mass_1, mass_2;
 
-    t_sample **in = x->inlet_vector;
-    t_sample **out = x->outlet_vector;
+	t_sample **in = x->inlet_vector;
+	t_sample **out = x->outlet_vector;
 
 	for (si=0; si<n; si++)
 	{
@@ -471,19 +444,19 @@ void pmpd_tilde_reset(t_pmpd_tilde *x)
 }
 
 void pmpd_tilde_free(t_pmpd_tilde *x) {
-    if (x->outlet) freebytes(x->outlet, x->nb_outlet * sizeof(t_float));
+	if (x->outlet) freebytes(x->outlet, x->nb_outlet * sizeof(t_float));
 
-    if (x->inlet_vector) freebytes(x->inlet_vector, x->nb_inlet * sizeof(t_sample *));
-    if (x->outlet_vector) freebytes(x->outlet_vector, x->nb_outlet * sizeof(t_sample *));
+	if (x->inlet_vector) freebytes(x->inlet_vector, x->nb_inlet * sizeof(t_sample *));
+	if (x->outlet_vector) freebytes(x->outlet_vector, x->nb_outlet * sizeof(t_sample *));
 
-    if (x->mass) freebytes(x->mass, x->nb_mass * sizeof(struct _mass));
-    if (x->link) freebytes(x->link, x->nb_link * sizeof(struct _link));
-    if (x->NLlink) freebytes(x->NLlink, x->nb_NLlink * sizeof(struct _NLlink));
+	if (x->mass) freebytes(x->mass, x->nb_mass * sizeof(struct _mass));
+	if (x->link) freebytes(x->link, x->nb_link * sizeof(struct _link));
+	if (x->NLlink) freebytes(x->NLlink, x->nb_NLlink * sizeof(struct _NLlink));
 
-    if (x->inPos) freebytes(x->inPos, x->nb_inPos * sizeof(struct _inPos));
-    if (x->inForce) freebytes(x->inForce, x->nb_inForce * sizeof(struct _inForce));
-    if (x->outPos) freebytes(x->outPos, x->nb_outPos * sizeof(struct _outPos));
-    if (x->outSpeed) freebytes(x->outSpeed, x->nb_outSpeed * sizeof(struct _outSpeed));
+	if (x->inPos) freebytes(x->inPos, x->nb_inPos * sizeof(struct _inPos));
+	if (x->inForce) freebytes(x->inForce, x->nb_inForce * sizeof(struct _inForce));
+	if (x->outPos) freebytes(x->outPos, x->nb_outPos * sizeof(struct _outPos));
+	if (x->outSpeed) freebytes(x->outSpeed, x->nb_outSpeed * sizeof(struct _outSpeed));
 }
 
 void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
@@ -504,17 +477,17 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 	x->outlet = (t_float *)getbytes(x->nb_outlet * sizeof(t_float));
 
-    x->inlet_vector = (t_sample **)getbytes(x->nb_inlet * sizeof(t_sample *));
-    x->outlet_vector = (t_sample **)getbytes(x->nb_outlet * sizeof(t_sample *));
+	x->inlet_vector  = (t_sample **)getbytes(x->nb_inlet  * sizeof(t_sample *));
+	x->outlet_vector = (t_sample **)getbytes(x->nb_outlet * sizeof(t_sample *));
 
-    x->mass   = (struct _mass *  )getbytes(x->nb_max_mass * sizeof(struct _link));
-    x->link   = (struct _link *  )getbytes(x->nb_max_link * sizeof(struct _link));
-    x->NLlink = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
+	x->mass   = (struct _mass *)getbytes(x->nb_max_mass * sizeof(struct _link));
+	x->link   = (struct _link *)getbytes(x->nb_max_link * sizeof(struct _link));
+	x->NLlink = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
 
-    x->inPos    = (struct _inPos *   )getbytes(x->nb_max_in  * sizeof(struct _inPos));
-    x->inForce  = (struct _inForce * )getbytes(x->nb_max_in  * sizeof(struct _inForce));
-    x->outPos   = (struct _outPos *  )getbytes(x->nb_max_out * sizeof(struct _outPos));
-    x->outSpeed = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
+	x->inPos    = (struct _inPos *)getbytes(x->nb_max_in  * sizeof(struct _inPos));
+	x->inForce  = (struct _inForce *)getbytes(x->nb_max_in  * sizeof(struct _inForce));
+	x->outPos   = (struct _outPos *)getbytes(x->nb_max_out * sizeof(struct _outPos));
+	x->outSpeed = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
 
 	for(i=0; i<x->nb_inlet-1; i++)
 		inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
@@ -531,10 +504,10 @@ PMPD_EXPORT void pmpd_tilde_setup(void) {
 		(t_method)pmpd_tilde_free,
 		sizeof(t_pmpd_tilde), CLASS_DEFAULT, A_GIMME, 0);
 
-    if(!pmpd_tilde_class)
-        return;
+	if(!pmpd_tilde_class)
+		return;
 
-    verbose(4, "pmpd~ version %s (%s)", pmpd_tag(), pmpd_sha());
+	verbose(4, "pmpd~ version %s (%s)", pmpd_tag(), pmpd_sha());
 
 	CLASS_MAINSIGNALIN(pmpd_tilde_class, t_pmpd_tilde, f);
 

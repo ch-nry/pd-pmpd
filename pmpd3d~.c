@@ -96,27 +96,27 @@ struct _outSpeed {
 typedef struct _pmpd3d_tilde {
 	t_object  x_obj;
 
-    struct _link *link;
-    struct _NLlink *NLlink;
-    struct _mass *mass;
+	struct _link *link;
+	struct _NLlink *NLlink;
+	struct _mass *mass;
 
-    struct _inPos *inPosX;
-    struct _inPos *inPosY;
-    struct _inPos *inPosZ;
-    struct _inForce *inForceX;
-    struct _inForce *inForceY;
-    struct _inForce *inForceZ;
-    struct _outPos *outPosX;
-    struct _outPos *outPosY;
-    struct _outPos *outPosZ;
-    struct _outSpeed *outSpeedX;
-    struct _outSpeed *outSpeedY;
-    struct _outSpeed *outSpeedZ;
-    struct _outSpeed *outSpeed;
+	struct _inPos *inPosX;
+	struct _inPos *inPosY;
+	struct _inPos *inPosZ;
+	struct _inForce *inForceX;
+	struct _inForce *inForceY;
+	struct _inForce *inForceZ;
+	struct _outPos *outPosX;
+	struct _outPos *outPosY;
+	struct _outPos *outPosZ;
+	struct _outSpeed *outSpeedX;
+	struct _outSpeed *outSpeedY;
+	struct _outSpeed *outSpeedZ;
+	struct _outSpeed *outSpeed;
 
 	t_float *outlet;
-    t_sample **inlet_vector;
-    t_sample **outlet_vector;
+	t_sample **inlet_vector;
+	t_sample **outlet_vector;
 	t_int nb_max_link, nb_max_mass;
 	t_int nb_link, nb_NLlink, nb_mass;
 	t_int nb_inlet, nb_outlet, nb_max_in, nb_max_out;
@@ -135,8 +135,8 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
 	t_float F, FX, FY, FZ, L, LX, LY, LZ, deltaL;
 	t_int i, si;
 
-    t_sample **in = x->inlet_vector;
-    t_sample **out = x->outlet_vector;
+	t_sample **in = x->inlet_vector;
+	t_sample **out = x->outlet_vector;
 
 	for (i=0; i<x->nb_inlet; i++) in[i]= x->inlet_vector[i];
 	for (i=0; i<x->nb_outlet; i++) out[i]= x->outlet_vector[i];
@@ -176,8 +176,8 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
 
 				if(L !=0 ) { // si L = 0 : on ne sais pas dans quel direction apliquer la force : c'est un point d'equilibre instable
 					FX = F * LX/L;
-		            FY = F * LY/L;
-		            FZ = F * LZ/L;
+					FY = F * LY/L;
+					FZ = F * LZ/L;
 				} else {
 					FX = 0;
 					FY = 0;
@@ -688,28 +688,28 @@ void pmpd3d_tilde_reset(t_pmpd3d_tilde *x) {
 }
 
 void pmpd3d_tilde_free(t_pmpd3d_tilde *x) {
-    if (x->outlet) freebytes(x->outlet, x->nb_outlet * sizeof(t_float));
+	if (x->outlet) freebytes(x->outlet, x->nb_outlet * sizeof(t_float));
 
-    if (x->inlet_vector) freebytes(x->inlet_vector, x->nb_inlet * sizeof(t_sample *));
-    if (x->outlet_vector) freebytes(x->outlet_vector, x->nb_outlet * sizeof(t_sample *));
+	if (x->inlet_vector) freebytes(x->inlet_vector, x->nb_inlet * sizeof(t_sample *));
+	if (x->outlet_vector) freebytes(x->outlet_vector, x->nb_outlet * sizeof(t_sample *));
 
-    if (x->mass) freebytes(x->mass, x->nb_mass * sizeof(struct _mass));
-    if (x->link) freebytes(x->link, x->nb_link * sizeof(struct _link));
-    if (x->NLlink) freebytes(x->NLlink, x->nb_NLlink * sizeof(struct _NLlink));
+	if (x->mass) freebytes(x->mass, x->nb_mass * sizeof(struct _mass));
+	if (x->link) freebytes(x->link, x->nb_link * sizeof(struct _link));
+	if (x->NLlink) freebytes(x->NLlink, x->nb_NLlink * sizeof(struct _NLlink));
 
-    if (x->inPosX) freebytes(x->inPosX, x->nb_inPosX * sizeof(struct _inPos));
-    if (x->inPosY) freebytes(x->inPosY, x->nb_inPosY * sizeof(struct _inPos));
-    if (x->inPosZ) freebytes(x->inPosZ, x->nb_inPosZ * sizeof(struct _inPos));
-    if (x->inForceX) freebytes(x->inForceX, x->nb_inForceX * sizeof(struct _inForce));
-    if (x->inForceY) freebytes(x->inForceY, x->nb_inForceY * sizeof(struct _inForce));
-    if (x->inForceZ) freebytes(x->inForceZ, x->nb_inForceZ * sizeof(struct _inForce));
-    if (x->outPosX) freebytes(x->outPosX, x->nb_outPosX * sizeof(struct _outPos));
-    if (x->outPosY) freebytes(x->outPosY, x->nb_outPosY * sizeof(struct _outPos));
-    if (x->outPosZ) freebytes(x->outPosZ, x->nb_outPosZ * sizeof(struct _outPos));
-    if (x->outSpeedX) freebytes(x->outSpeedX, x->nb_outSpeedX * sizeof(struct _outSpeed));
-    if (x->outSpeedY) freebytes(x->outSpeedY, x->nb_outSpeedY * sizeof(struct _outSpeed));
-    if (x->outSpeedZ) freebytes(x->outSpeedZ, x->nb_outSpeedZ * sizeof(struct _outSpeed));
-    if (x->outSpeed) freebytes(x->outSpeed, x->nb_outSpeed * sizeof(struct _outSpeed));
+	if (x->inPosX) freebytes(x->inPosX, x->nb_inPosX * sizeof(struct _inPos));
+	if (x->inPosY) freebytes(x->inPosY, x->nb_inPosY * sizeof(struct _inPos));
+	if (x->inPosZ) freebytes(x->inPosZ, x->nb_inPosZ * sizeof(struct _inPos));
+	if (x->inForceX) freebytes(x->inForceX, x->nb_inForceX * sizeof(struct _inForce));
+	if (x->inForceY) freebytes(x->inForceY, x->nb_inForceY * sizeof(struct _inForce));
+	if (x->inForceZ) freebytes(x->inForceZ, x->nb_inForceZ * sizeof(struct _inForce));
+	if (x->outPosX) freebytes(x->outPosX, x->nb_outPosX * sizeof(struct _outPos));
+	if (x->outPosY) freebytes(x->outPosY, x->nb_outPosY * sizeof(struct _outPos));
+	if (x->outPosZ) freebytes(x->outPosZ, x->nb_outPosZ * sizeof(struct _outPos));
+	if (x->outSpeedX) freebytes(x->outSpeedX, x->nb_outSpeedX * sizeof(struct _outSpeed));
+	if (x->outSpeedY) freebytes(x->outSpeedY, x->nb_outSpeedY * sizeof(struct _outSpeed));
+	if (x->outSpeedZ) freebytes(x->outSpeedZ, x->nb_outSpeedZ * sizeof(struct _outSpeed));
+	if (x->outSpeed) freebytes(x->outSpeed, x->nb_outSpeed * sizeof(struct _outSpeed));
 }
 
 void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv) {
@@ -728,26 +728,26 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv) {
 
 	x->outlet = (t_float *)getbytes(x->nb_outlet * sizeof(t_float));
 
-    x->inlet_vector = (t_sample **)getbytes(x->nb_inlet * sizeof(t_sample *));
-    x->outlet_vector = (t_sample **)getbytes(x->nb_outlet * sizeof(t_sample *));
+	x->inlet_vector = (t_sample **)getbytes(x->nb_inlet * sizeof(t_sample *));
+	x->outlet_vector = (t_sample **)getbytes(x->nb_outlet * sizeof(t_sample *));
 
-    x->mass   = (struct _mass *  )getbytes(x->nb_max_mass * sizeof(struct _link));
-    x->link   = (struct _link *  )getbytes(x->nb_max_link * sizeof(struct _link));
-    x->NLlink = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
+	x->mass   = (struct _mass *  )getbytes(x->nb_max_mass * sizeof(struct _link));
+	x->link   = (struct _link *  )getbytes(x->nb_max_link * sizeof(struct _link));
+	x->NLlink = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
 
-    x->inPosX    = (struct _inPos *   )getbytes(x->nb_max_in  * sizeof(struct _inPos));
-    x->inPosY    = (struct _inPos *   )getbytes(x->nb_max_in  * sizeof(struct _inPos));
-    x->inPosZ    = (struct _inPos *   )getbytes(x->nb_max_in  * sizeof(struct _inPos));
-    x->inForceX  = (struct _inForce * )getbytes(x->nb_max_in  * sizeof(struct _inForce));
-    x->inForceY  = (struct _inForce * )getbytes(x->nb_max_in  * sizeof(struct _inForce));
-    x->inForceZ  = (struct _inForce * )getbytes(x->nb_max_in  * sizeof(struct _inForce));
-    x->outPosX   = (struct _outPos *  )getbytes(x->nb_max_out * sizeof(struct _outPos));
-    x->outPosY   = (struct _outPos *  )getbytes(x->nb_max_out * sizeof(struct _outPos));
-    x->outPosZ   = (struct _outPos *  )getbytes(x->nb_max_out * sizeof(struct _outPos));
-    x->outSpeedX = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
-    x->outSpeedY = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
-    x->outSpeedZ = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
-    x->outSpeed  = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
+	x->inPosX    = (struct _inPos *   )getbytes(x->nb_max_in  * sizeof(struct _inPos));
+	x->inPosY    = (struct _inPos *   )getbytes(x->nb_max_in  * sizeof(struct _inPos));
+	x->inPosZ    = (struct _inPos *   )getbytes(x->nb_max_in  * sizeof(struct _inPos));
+	x->inForceX  = (struct _inForce * )getbytes(x->nb_max_in  * sizeof(struct _inForce));
+	x->inForceY  = (struct _inForce * )getbytes(x->nb_max_in  * sizeof(struct _inForce));
+	x->inForceZ  = (struct _inForce * )getbytes(x->nb_max_in  * sizeof(struct _inForce));
+	x->outPosX   = (struct _outPos *  )getbytes(x->nb_max_out * sizeof(struct _outPos));
+	x->outPosY   = (struct _outPos *  )getbytes(x->nb_max_out * sizeof(struct _outPos));
+	x->outPosZ   = (struct _outPos *  )getbytes(x->nb_max_out * sizeof(struct _outPos));
+	x->outSpeedX = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
+	x->outSpeedY = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
+	x->outSpeedZ = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
+	x->outSpeed  = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
 
 	for(i=0; i<x->nb_inlet-1; i++)
 		inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
@@ -760,10 +760,10 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv) {
 PMPD_EXPORT void pmpd3d_tilde_setup(void) {
 	pmpd3d_tilde_class = class_new(gensym("pmpd3d~"), (t_newmethod)pmpd3d_tilde_new, 0, sizeof(t_pmpd3d_tilde), CLASS_DEFAULT, A_GIMME, 0);
 
-    if(!pmpd3d_tilde_class)
-        return;
+	if(!pmpd3d_tilde_class)
+		return;
 
-    verbose(4, "pmpd3d~ version %s (%s)", pmpd_tag(), pmpd_sha());
+	verbose(4, "pmpd3d~ version %s (%s)", pmpd_tag(), pmpd_sha());
 
 	CLASS_MAINSIGNALIN(pmpd3d_tilde_class, t_pmpd3d_tilde, f);
 
