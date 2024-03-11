@@ -72,7 +72,7 @@ jobs:
     - name: Build for x86_64 and ARM64 (Single Precision)
       if: matrix.precision == 'pd32'
       run: |
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14"
         cmake --build build
         cmake --build build --target install  
    
@@ -86,7 +86,7 @@ jobs:
     - name: Build for x86_64 and ARM64 (Double Precision)
       if: matrix.precision == 'pd64'
       run: |
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DPD_FLOATSIZE64=ON
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" -DPD_FLOATSIZE64=ON
         cmake --build build
         cmake --build build --target install  
    
