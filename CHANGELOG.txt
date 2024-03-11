@@ -1,7 +1,12 @@
 version 0.13
 - add pmpd2d~ and pmpd3d~ 
 - add setM message to pmpd, pmpd2d and pmpd3d
-- various update, small bugfix
+- various bugfix
+- name uniformisation in pmpd* methodes
+- free the memory allocation when closing the objects
+- help file review
+Thanks for Benjamin Wesch for all the help
+
 
 from version 0.11 to version 0.12
 - new buils system (thankx Avilleret)
