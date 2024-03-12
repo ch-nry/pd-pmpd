@@ -1,3 +1,6 @@
+version 0.13.1 (osX only release)
+- add compilation flag to e compatible with old osX version. 
+
 version 0.13
 - add pmpd2d~ and pmpd3d~ 
 - add setM message to pmpd, pmpd2d and pmpd3d
