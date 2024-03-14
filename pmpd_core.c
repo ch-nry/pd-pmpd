@@ -122,11 +122,11 @@ void pmpd_bang(t_pmpd *x)
     // compute new masses position
         if (x->mass[i].mobile > 0) // only if mobile
         {
-			// amplify force that opose to movement
+			// amplify force that oppose to movement
 			if (x->mass[i].overdamp != 0)
 			{
 				tmpX = x->mass[i].speedX * x->mass[i].forceX;
-				tmpX = min(0,tmpX); // overdamped only if force opose movment
+				tmpX = min(0,tmpX); // overdamped only if force oppose movment
 				tmpX *= -x->mass[i].overdamp;
 				tmpX += 1;
 				x->mass[i].forceX *= tmpX;
