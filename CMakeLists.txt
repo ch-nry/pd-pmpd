@@ -10,12 +10,72 @@ else()
   set(CMAKE_C_FLAGS "-Wall -O3 -ffast-math -ffinite-math-only -finline-functions -funroll-loops")
 endif()
 
-# apply with argument -DPD_FLOATSIZE64=ON
-set(FLOATSIZE_SUFFIX 32)
-if(PD_FLOATSIZE64)
-  add_definitions(-DPD_FLOATSIZE=64)
-  set(FLOATSIZE_SUFFIX 64)
+if(APPLE)
+  set(platform "darwin")
+elseif(LINUX)
+  set(platform "linux")
+elseif(WIN32)
+  set(platform "windows")
 endif()
+if(platform STREQUAL "windows")
+  set(extension "dll")
+else()
+  set(extension "so")
+endif()
+if(CMAKE_GENERATOR_PLATFORM MATCHES Win32)
+  set(arch i386)
+elseif(APPLE AND CMAKE_SYSTEM_NAME MATCHES "Darwin")
+  set(arch "fat")
+elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm64.*")
+  set(arch "arm64")
+elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm.*")
+  set(arch "arm")
+elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*aarch64.*")
+  set(arch "aarch64")
+elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*64.*")
+  set(arch "amd64")
+elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*86.*")
+  set(arch "i386")
+endif()
+
+if(PD_FLOATSIZE64)
+ set(floatsize "64")
+else()
+ set(floatsize "32")
+endif()
+
+set (PUREDATA_PLATFORM_SUFFIX "${platform}" CACHE STRING "the target platform (darwin, linux, windows) - leave empty to autodetect")
+set (PUREDATA_ARCH_SUFFIX "${arch}" CACHE STRING "the target architecture (amd64, arm, arm64, i386, fat) - leave empty to autodetect")
+set (PUREDATA_LIB_SUFFIX "${extension}" CACHE STRING "the dynamic library extension (so, dll) - leave empty to autodetect")
+
+
+# apply with argument '-DPD_FLOATSIZE64=ON' or '-DPUREDATA_FLOATSIZE=64'
+set(PUREDATA_FLOATSIZE ${floatsize} CACHE STRING "the floatsize for processing (32, 64) - the default is 32")
+if(PUREDATA_FLOATSIZE STREQUAL 64)
+  add_definitions(-DPD_FLOATSIZE=64)
+elseif(PUREDATA_FLOATSIZE STREQUAL 32)
+else()
+  message(FATAL "FLOATSIZE must be 32 or 64")
+endif()
+
+set (PUREDATA_SUFFIX "" CACHE STRING "the external extension (.linux_amd64_64.so, .d_fat, .dll) - leave empty to autodetect (.${platform}-${arch}-${floatsize}.${extension})")
+
+if(PUREDATA_SUFFIX STREQUAL "")
+  if(PUREDATA_PLATFORM_SUFFIX STREQUAL "")
+    message(FATAL "Could not determine target platform")
+  endif()
+  if(PUREDATA_ARCH_SUFFIX STREQUAL "")
+    message(FATAL "Could not determine target architecture")
+  endif()
+
+  set(PUREDATA_SUFFIX ".${PUREDATA_PLATFORM_SUFFIX}-${PUREDATA_ARCH_SUFFIX}-${PUREDATA_FLOATSIZE}.${PUREDATA_LIB_SUFFIX}")
+  # necessary exception?
+  if(PUREDATA_FLOATSIZE STREQUAL 32 AND APPLE AND CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    set(PUREDATA_SUFFIX ".d_fat")
+  endif()
+endif()
+
+
 
 set(PUREDATA_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/pure-data/src" CACHE PATH "Path to folder containing m_pd.h" )
 if(WIN32)
@@ -97,40 +157,7 @@ foreach(SOURCE IN LISTS SOURCES)
       DEFINE_SYMBOL "PMPD_EXPORTS"
   )
 
-  if(APPLE)
-    set(PLATFORM_SUFFIX "darwin")
-    set(LIB_SUFFIX "so")
-  elseif(UNIX)
-    set(PLATFORM_SUFFIX "linux")
-    set(LIB_SUFFIX "so")
-  else()
-    set(PLATFORM_SUFFIX "windows")
-    set(LIB_SUFFIX "dll")
-  endif()
- 
-  if(CMAKE_GENERATOR_PLATFORM MATCHES Win32)
-    set(ARCH_SUFFIX i386)
-  elseif(APPLE AND CMAKE_SYSTEM_NAME MATCHES "Darwin")
-    set(ARCH_SUFFIX "fat")
-  elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm64.*")
-    set(ARCH_SUFFIX "arm64")
-  elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm.*")
-    set(ARCH_SUFFIX "arm")
-  elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*aarch64.*")
-    set(ARCH_SUFFIX "aarch64")
-  elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*64.*")
-    set(ARCH_SUFFIX "amd64")
-  elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*86.*")
-    set(ARCH_SUFFIX "i386")
-  else()
-    message(FATAL "Could not determine target architecture")
-  endif()
-
-  set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".${PLATFORM_SUFFIX}-${ARCH_SUFFIX}-${FLOATSIZE_SUFFIX}.${LIB_SUFFIX}")
-  # necessary exception?
-  if(NOT PD_FLOATSIZE64 AND APPLE AND CMAKE_SYSTEM_NAME MATCHES "Darwin")
-    set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX ".d_fat")
-  endif()
+  set_target_properties(${PMPD_TARGET} PROPERTIES SUFFIX "${PUREDATA_SUFFIX}")
 
   install(TARGETS ${PMPD_TARGET}
       DESTINATION pmpd
@@ -148,7 +175,7 @@ generate_export_header(pmpd)
 install(DIRECTORY examples/ DESTINATION pmpd/examples
         FILES_MATCHING PATTERN "*.pd" PATTERN "*.html")
 
-install(FILES 
+install(FILES
   LICENSE.txt
   README.md
   DESTINATION pmpd
