@@ -646,7 +646,7 @@ void pmpd2d_setLCurrent(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else if ( (argc == 3) && ( argv[0].a_type == A_FLOAT ) && ( argv[1].a_type == A_FLOAT ) && ( argv[2].a_type == A_FLOAT ) )
-    { // set a range of link to a mix between  it's curent length and it's size
+    { // set a range of link to a mix between  it's current length and it's size
         tmp = atom_getfloatarg(0, argc, argv);
         tmp = max(0, min( x->nb_link-1, tmp));
         end = atom_getfloatarg(1, argc, argv);
@@ -665,7 +665,7 @@ void pmpd2d_setLCurrent(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
         }
     }
     else if ( (argc == 2) && ( argv[0].a_type == A_SYMBOL ) && ( argv[1].a_type == A_FLOAT ) )
-    { // set a class of link to a mix between it's curent length and it's size
+    { // set a class of link to a mix between it's current length and it's size
         for (i=0; i< x->nb_link; i++)
         {
             if ( atom_getsymbolarg(0,argc,argv) == x->link[i].Id)
