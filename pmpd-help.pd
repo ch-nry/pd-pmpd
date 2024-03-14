@@ -297,8 +297,8 @@
 #X msg 33 130 print;
 #X msg 19 371 link \$1 \$2 \$3 \$4 \$5 [\$6 [\$7 [\$8 ]]];
 #X text 128 130 post current physical model topology;
-#X text 287 498 [\$7] : minimum lenght of link;
-#X text 288 515 [\$8] : maximum lenght of link;
+#X text 287 498 [\$7] : minimum length of link;
+#X text 288 515 [\$8] : maximum length of link;
 #X text 288 479 [\$6] : Power of the rigidity distance;
 #X restore 12 546 pd creation____________;
 #N canvas 50 82 901 640 More_Info 0;
@@ -461,7 +461,7 @@
 #X text 495 248 You can build specific links using different link messages defining the characteristic step by step.;
 #X text 28 41 pmpd is the 2D object of the pmpd objects collection.;
 #X text 27 155 Be careful : if masses are deleted \, list messages won't work;
-#X text 27 216 Rigidity \, damping and power are defined by the creation messages. The lenght is initialised to the distance between the two masses at creation.;
+#X text 27 216 Rigidity \, damping and power are defined by the creation messages. The length is initialised to the distance between the two masses at creation.;
 #X text 27 257 Links can be created in one shot between multiple masses \, instead of creation number \, the masses linked are defined by their Id.;
 #X text 28 187 Links connect masses two by two. They've got 4 physical parameters : length \, rigidity \, damping and power.;
 #X text 27 60 It is designed to implement particle physical models in PD.The model is based on a two element type : mass and link. The pmpd masses are the principal objects of the model. They've got only one physical parameter \, the value of their mass. They can be mobile or fixed \, in this case forces applied to them automatically \, by links \, or manually \, by messages \, don't do anything.;

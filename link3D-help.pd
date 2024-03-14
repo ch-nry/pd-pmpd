@@ -1,4 +1,4 @@
-#N canvas 395 152 636 714 10;
+#N canvas 118 233 636 714 10;
 #X text 260 13 link between 2 masses;
 #X text 136 593 1 : force to apply to mass 1 (float);
 #X text 165 564 2 : force to apply to mass 2 (float);
@@ -15,8 +15,7 @@
 #X text 227 185 4 : Damping of the link deformation;
 #X text 227 214 5 : Damping of the masses speed;
 #X msg 104 424 setLmax 10000;
-#X text 251 84 you can use it in pd to send messages / bang / etc to
-the lia. this is for simplifying connection.;
+#X text 251 84 you can use it in pd to send messages / bang / etc to the lia. this is for simplifying connection.;
 #X text 227 510 position of mass 2;
 #X obj 36 538 link3D;
 #X obj 67 565 unpack s f f f;
@@ -27,27 +26,20 @@ the lia. this is for simplifying connection.;
 #X text 250 134 changes Length of the link;
 #X text 249 166 changes rigidity;
 #X text 230 238 changes position of mass 1;
-#X text 229 266 computes and outputs forces \, according to the last
-masses positions;
-#X text 226 297 resets position of masses and sets speed of the link
-to zero;
+#X text 229 266 computes and outputs forces \, according to the last masses positions;
+#X text 226 297 resets position of masses and sets speed of the link to zero;
 #X text 226 324 resets damping and inertial force of the link.;
 #X text 228 371 sets the minimum size of the link;
 #X text 227 351 sets the length of the link to its current length;
-#X text 228 383 if the size of the link is < Lmin then the force of
-the link will be null;
+#X text 228 383 if the size of the link is < Lmin then the force of the link will be null;
 #X text 229 424 sets the maximum size of the link;
-#X text 228 437 if the size of the link is > Lmax then the force of
-the link will be null;
-#X text 227 472 change muscle force : a muscle can change the link
-size (link size = muscle * lenght);
-#X text 159 607 forces depend of the physicals properies of the link
-;
-#X text 117 650 this object is a 3D version of link. more example can
-be find in the link help;
+#X text 228 437 if the size of the link is > Lmax then the force of the link will be null;
+#X text 227 472 change muscle force : a muscle can change the link size (link size = muscle * length);
+#X text 117 650 this object is a 3D version of link. more example can be find in the link help;
 #X text 230 37 lia3D : get position of masses \, output force.;
 #X msg 58 239 position3D 0 0 0;
 #X msg 67 511 position3D 0 0 0;
+#X text 159 607 forces depend of the physicals properties of the link;
 #X connect 4 0 18 0;
 #X connect 5 0 18 0;
 #X connect 6 0 18 0;
@@ -61,5 +53,5 @@ be find in the link help;
 #X connect 18 0 20 0;
 #X connect 18 1 19 0;
 #X connect 21 0 18 0;
-#X connect 39 0 18 0;
-#X connect 40 0 18 1;
+#X connect 38 0 18 0;
+#X connect 39 0 18 1;

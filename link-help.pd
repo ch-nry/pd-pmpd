@@ -59,7 +59,7 @@ the link will be null;
 the link will be null;
 #X text 13 304 note : D2 is damping associated with the mass but not
 with the link. So it's not affected by Lmin and Lmax;
-#X restore 477 456 pd Lmin Lmax exemple;
+#X restore 477 456 pd Lmin Lmax example;
 #N canvas 6 105 231 186 name 0;
 #X obj 23 6 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1 -1
 ;

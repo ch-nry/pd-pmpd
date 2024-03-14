@@ -40,7 +40,7 @@ and the sphere center.;
 the mass and the sphere.;
 #X text 176 457 10 : Damping;
 #X text 174 487 11 : Normal constant displacement;
-#X text 175 518 12 : Normal force proportional to 1/sqare(distance)
+#X text 175 518 12 : Normal force proportional to 1/square(distance)
 between the mass and the sphere.;
 #X text 173 556 13 : Constant displacement normal to the circle. (0)
 ;

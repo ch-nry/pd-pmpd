@@ -31,7 +31,7 @@
 #X text 189 696 16 : Y displacement field;
 #X text 189 719 17 : Z displacement field;
 #X text 222 168 this is the mass name interacting with this object.
-you can also conect the output of this object to a mass \, to allow
+you can also connect the output of this object to a mass \, to allow
 an interaction with this mass.;
 #X text 58 117 message to change parameter / default value / creation
 arg number / description;

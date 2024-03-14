@@ -22,7 +22,7 @@ the lia. this is for simplifying connection.;
 #X text 244 508 position of mass 2;
 #X obj 64 563 unpack s f f;
 #X obj 33 591 unpack s f f;
-#X text 131 647 this object is a 3D version of link. more exemple can
+#X text 131 647 this object is a 3D version of link. more example can
 be find in the link help;
 #X msg 104 475 setM 1;
 #X text 248 122 2 : Length;
@@ -30,7 +30,7 @@ be find in the link help;
 the link will be null;
 #X text 242 436 if the size of the link is > Lmax then the force of
 the link will be null;
-#X text 150 609 forces depend of the physicals properies of the link
+#X text 150 609 forces depend of the physicals propertiess of the link
 ;
 #X text 272 134 changes Length of the link;
 #X text 272 166 changes rigidity;
@@ -45,7 +45,7 @@ to zero;
 #X text 245 372 sets the minimum size of the link;
 #X text 243 424 sets the maximum size of the link;
 #X text 244 473 changes muscle force : a muscle can change the link
-size (link size = muscle * lenght);
+size (link size = muscle * length);
 #X text 247 68 1 : Name;
 #X text 217 31 link2D : get position of masses \, output forces.;
 #N canvas 50 82 1017 894 diagram 0;
