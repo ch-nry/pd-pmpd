@@ -599,7 +599,7 @@ t_float posx1, posy1, posz1, Nx, Ny, Nz, distance, Dmax, tmp;
 		// 5 : F normal
 		// 6 : K normal
 		// 7 : F normal proportionel a 1/R
-		// 8 : Damp de liason normal 
+		// 8 : Damp de liaison normal 
 		// 9 : deplacement N Ct
 		// 10 : position ancienne de l'interacteur en X
 		// 11 : position abcienne de l'interacteur en Y
