@@ -249,7 +249,7 @@ void pmpd2d_iMatrix_XY(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	// 0 : mass to apply this interactor
 	// 1 : K;
 	// 2, 3 : Xmin, Xmax 
-	// 4, 5 : Ymin, Ymax physical location of the interator
+	// 4, 5 : Ymin, Ymax physical location of the interactor
 	// 6, 7 : matrix size
 	// 8, 9 : table name containing the matrix
 	
@@ -338,7 +338,7 @@ void pmpd2d_iMatrix_delta(t_pmpd2d *x, t_symbol *s, int argc, t_atom *argv)
 	// 0 : mass to apply this interactor
 	// 1 : K;
 	// 2, 3 : Xmin, Xmax 
-	// 4, 5 : Ymin, Ymax physical location of the interator
+	// 4, 5 : Ymin, Ymax physical location of the interactor
 	// 6, 7 : matrix size
 	// 8, 9 : table name containing the matrix
 	
