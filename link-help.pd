@@ -1,6 +1,6 @@
 #N canvas 344 139 656 761 10;
 #N canvas 88 77 622 478 physical 0;
-#X text 23 268 Generated force is the sum of 3 differents forces :
+#X text 23 268 Generated force is the sum of 3 different forces :
 ;
 #X text 102 142 eL[t] = L[t] - L[0];
 #X text 78 166 -> Elongation-Speed of a link :;

@@ -50,7 +50,7 @@ zero. send its position to its outlet.;
 #X text 269 570 resets the total forces applied to the mass;
 #X text 270 592 stops mass mouvement;
 #X text 269 612 restarts mass movement;
-#X text 270 634 outputs curent position;
+#X text 270 634 outputs current position;
 #X text 148 760 X Y Z position of the mass;
 #X text 156 23 mass3D : gets link forces and outputs position.;
 #X text 155 37 The sum of forces applied to a mass modifies its velocity

@@ -128,7 +128,7 @@
 #X text 229 173 changes position of mass 1;
 #X text 230 123 computes and outputs forces according to the last masses
 positions.;
-#X text 227 31 outputs informations about a tested link.;
+#X text 227 31 outputs information about a tested link.;
 #X msg 65 175 position3D 0 0 0;
 #X msg 66 205 position3D 0 0 0;
 #X connect 4 0 7 0;
