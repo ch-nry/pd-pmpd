@@ -124,7 +124,7 @@ pmpd2d_class = class_new(gensym("pmpd2d"),
 /*
  pmpd2d_list 
  --
- Fucntions to output internal state of the object in lists
+ Functions to output internal state of the object in lists
  Output Syntax : 1 list with all elements
 */
 
