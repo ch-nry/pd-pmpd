@@ -151,7 +151,7 @@ t_int *pmpd_tilde_perform(t_int *w)
                 x->NLlink[i].L = L;
                 if ((L < x->NLlink[i].Lmax) && (L > x->NLlink[i].Lmin))
                 {
-                    F  = x->NLlink[i].K1 * pow((L), x->NLlink[i].Pow);
+                    F  = x->NLlink[i].K1 * pow((abs(L)), x->NLlink[i].Pow);
                     if (L < 0) F *= -1;
                     // spring
 
