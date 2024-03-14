@@ -30,7 +30,7 @@ static t_class *tLine2D_class;
 typedef struct _tLine2D {
   t_object  x_obj;
   t_float  X1, X2, Y1, Y2, P, P_old;
-  //extrem =  Xmin, Ymin, Xmax, Ymax;
+  //extremum =  Xmin, Ymin, Xmax, Ymax;
   t_outlet *force_new;// outlet
   t_outlet *profondeur;// outlet
   t_outlet *vitesse;// outlet

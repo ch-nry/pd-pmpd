@@ -30,7 +30,7 @@ static t_class *iAmbient3D_class;
 typedef struct _iAmbient3D {
   t_object  x_obj;
   t_atom  force[17];
-/*	1 : name of the mass (send interactors informations to this masses)
+/*	1 : name of the mass (send interactors information to this masses)
 	2 : FX (constant X force apply to the masses) (0)
 	3 : FY (constant Y force apply to the masses) (0)
 	4 : FZ (constant Z force apply to the masses) (0)

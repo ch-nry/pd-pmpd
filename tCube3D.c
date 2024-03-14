@@ -30,7 +30,7 @@ static t_class *tCube3D_class;
 typedef struct _tCube3D {
   t_object  x_obj;
   t_float  Xmin, Xmax, Ymin, Ymax, Zmin, Zmax;
-  //extrem =  Xmin, Ymin, Xmax, Ymax;
+  //extremum =  Xmin, Ymin, Xmax, Ymax;
   t_outlet *force_new;// outlet
 } t_tCube3D;
 

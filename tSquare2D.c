@@ -30,7 +30,7 @@ static t_class *tSquare2D_class;
 typedef struct _tSquare2D {
   t_object  x_obj;
   t_float  Xmin, Xmax, Ymin, Ymax;
-  //extrem =  Xmin, Ymin, Xmax, Ymax;
+  //extremum =  Xmin, Ymin, Xmax, Ymax;
   t_outlet *force_new;// outlet
 } t_tSquare2D;
 
