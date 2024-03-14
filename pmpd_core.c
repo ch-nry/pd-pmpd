@@ -126,7 +126,7 @@ void pmpd_bang(t_pmpd *x)
 			if (x->mass[i].overdamp != 0)
 			{
 				tmpX = x->mass[i].speedX * x->mass[i].forceX;
-				tmpX = min(0,tmpX); // overdamped only if force oppose movment
+				tmpX = min(0,tmpX); // overdamped only if force oppose movement
 				tmpX *= -x->mass[i].overdamp;
 				tmpX += 1;
 				x->mass[i].forceX *= tmpX;

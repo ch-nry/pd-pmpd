@@ -131,7 +131,7 @@ void pmpd3d_bang(t_pmpd3d *x)
 			if (x->mass[i].overdamp != 0)
 			{
 				tmp = x->mass[i].speedX * x->mass[i].forceX + x->mass[i].speedY * x->mass[i].forceY + x->mass[i].speedZ * x->mass[i].forceZ;
-				tmp = min(0,tmp); // overdamped only if force oppose movment
+				tmp = min(0,tmp); // overdamped only if force oppose movement
 				tmp *= -x->mass[i].overdamp;
 				tmp += 1;
 				x->mass[i].forceX *= tmp;
