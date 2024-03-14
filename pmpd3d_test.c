@@ -280,7 +280,7 @@ int pmpd3d_test_3d_mass(int i, t_pmpd3d *x, int argc, t_atom *argv)
 			}
 			else
 			{
-				pd_error(x,"Option \"%s\" not reconized, stoping test",atom_getsymbolarg(j,argc,argv)->s_name);
+				pd_error(x,"Option \"%s\" not recognized, stopping test",atom_getsymbolarg(j,argc,argv)->s_name);
 				return(-1);
 			}
 		}
@@ -443,7 +443,7 @@ int pmpd3d_test_3d_link(int i, t_pmpd3d *x, int argc, t_atom *argv)
 			}
 			else
 			{
-				pd_error(x,"Option \"%s\" not reconized, stoping test",atom_getsymbolarg(j,argc,argv)->s_name);
+				pd_error(x,"Option \"%s\" not recognized, stopping test",atom_getsymbolarg(j,argc,argv)->s_name);
 				return(-1);
 			}
 		}
