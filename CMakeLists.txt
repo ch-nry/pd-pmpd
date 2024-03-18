@@ -4,10 +4,10 @@ project(pd-pmpd C)
 # Platform-specific and compiler-specific settings
 if(MSVC)
   # MSVC-specific flags
-  set(CMAKE_C_FLAGS "/W3 /O2 /Ot /fp:fast")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W3 /O2 /Ot /fp:fast")
 else()
   # GCC/Clang-specific flags
-  set(CMAKE_C_FLAGS "-Wall -O3 -ffast-math -ffinite-math-only -finline-functions -funroll-loops")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O3 -ffast-math -ffinite-math-only -finline-functions -funroll-loops")
 endif()
 
 if(APPLE)
