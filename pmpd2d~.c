@@ -203,6 +203,7 @@ t_int *pmpd2d_tilde_perform(t_int *w) {
                     x->NLlink[i].mass1->forceY += FY;
                     x->NLlink[i].mass2->forceY -= FY;
                 }
+                else x->NLlink[i].L = L; // on la sauve pour la prochaine itération (uniquement pour le "bang")
             }
             for (i=0; i<x->nb_mass; i++)
             {

@@ -224,6 +224,7 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
                     x->NLlink[i].mass1->forceZ += FZ;
                     x->NLlink[i].mass2->forceZ -= FZ;
                 }
+                else x->NLlink[i].L = L; // on la sauve pour la prochaine itération (uniquement pour le "bang")
             }
             for (i=0; i<x->nb_mass; i++)
             {
@@ -281,7 +282,7 @@ void pmpd3d_tilde_bang(t_pmpd3d_tilde *x) {
 
     for (i=0; i<x->nb_mass; i++) logpost(x, 2, "mass:%ld, M:%f, posX:%f, posY:%f, posZ:%f, D2:%f, D2offset:%f",i, x->mass[i].invM<=0.?0:1/x->mass[i].invM, x->mass[i].posX,x->mass[i].posY,x->mass[i].posZ,x->mass[i].D,x->mass[i].Doffset);
     for (i=0; i<x->nb_link; i++) logpost(x, 2, "link:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f", i, x->link[i].mass1->Id, x->link[i].mass2->Id, x->link[i].K1, x->link[i].D1, x->link[i].L0, x->link[i].L);
-    for (i=0; i<x->nb_NLlink; i++) logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f, Lmin:%f, Lmax:%f, Pow:%f", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K1, x->NLlink[i].D1, x->NLlink[i].L0, x->NLlink[i].L, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
+    for (i=0; i<x->nb_NLlink; i++) logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f, Lmin:%f, Lmax:%f, Pow:%f, blabla", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K1, x->NLlink[i].D1, x->NLlink[i].L0, x->NLlink[i].L, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
     for (i=0; i<x->nb_inPosX; i++) logpost(x, 2, "In_posX:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosX[i].nbr_inlet, x->inPosX[i].mass1->Id, x->inPosX[i].influence);
     for (i=0; i<x->nb_inPosY; i++) logpost(x, 2, "In_posY:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosY[i].nbr_inlet, x->inPosY[i].mass1->Id, x->inPosY[i].influence);
     for (i=0; i<x->nb_inPosZ; i++) logpost(x, 2, "In_posZ:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosZ[i].nbr_inlet, x->inPosZ[i].mass1->Id, x->inPosZ[i].influence);
