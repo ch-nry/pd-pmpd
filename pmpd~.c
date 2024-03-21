@@ -381,7 +381,7 @@ void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float
         pd_error(x, "too many inPos assigned (increase limit with creation argument)");
         return;
     }
-    x->inPos[x->nb_inPos].nbr_inlet = max(0, min( x->nb_inlet,(int)nb_inlet));
+    x->inPos[x->nb_inPos].nbr_inlet = max(0, min( x->nb_inlet-1,(int)nb_inlet));
     x->inPos[x->nb_inPos].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->inPos[x->nb_inPos].influence = influence;
     x->nb_inPos++;
@@ -396,7 +396,7 @@ void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_flo
         pd_error(x, "too many inForce assigned (increase limit with creation argument)");
         return;
     }
-    x->inForce[x->nb_inForce].nbr_inlet = max(0, min( x->nb_inlet,(int)nb_inlet));
+    x->inForce[x->nb_inForce].nbr_inlet = max(0, min( x->nb_inlet-1,(int)nb_inlet));
     x->inForce[x->nb_inForce].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->inForce[x->nb_inForce].influence = influence;
     x->nb_inForce++;
@@ -411,7 +411,7 @@ void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_flo
         pd_error(x, "too many outPos assigned (increase limit with creation argument)");
         return;
     }
-    x->outPos[x->nb_outPos].nbr_outlet = max(0, min( x->nb_outlet,(int)nb_outlet));
+    x->outPos[x->nb_outPos].nbr_outlet = max(0, min( x->nb_outlet-1,(int)nb_outlet));
     x->outPos[x->nb_outPos].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->outPos[x->nb_outPos].influence = influence;
     x->nb_outPos++ ;
@@ -426,7 +426,7 @@ void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_f
         pd_error(x, "too many outSpeed assigned (increase limit with creation argument)");
         return;
     }
-    x->outSpeed[x->nb_outSpeed].nbr_outlet = max(0, min( x->nb_outlet,(int)nb_outlet));
+    x->outSpeed[x->nb_outSpeed].nbr_outlet = max(0, min( x->nb_outlet-1,(int)nb_outlet));
     x->outSpeed[x->nb_outSpeed].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->outSpeed[x->nb_outSpeed].influence = influence;
     x->nb_outSpeed++ ;
