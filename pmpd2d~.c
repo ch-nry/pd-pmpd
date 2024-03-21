@@ -469,7 +469,7 @@ void pmpd2d_tilde_inPosX(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_
         pd_error(x, "too many inPosX assigned (increase limit with creation argument)");
         return;
     }
-    x->inPosX[x->nb_inPosX].nbr_inlet = max(0, min( x->nb_inlet,(int)nb_inlet));
+    x->inPosX[x->nb_inPosX].nbr_inlet = max(0, min( x->nb_inlet-1,(int)nb_inlet));
     x->inPosX[x->nb_inPosX].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->inPosX[x->nb_inPosX].influence = influence;
     x->nb_inPosX++;
@@ -483,7 +483,7 @@ void pmpd2d_tilde_inPosY(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, t_
         pd_error(x, "too many inPosY assigned (increase limit with creation argument)");
         return;
     }
-    x->inPosY[x->nb_inPosY].nbr_inlet = max(0, min( x->nb_inlet,(int)nb_inlet));
+    x->inPosY[x->nb_inPosY].nbr_inlet = max(0, min( x->nb_inlet-1,(int)nb_inlet));
     x->inPosY[x->nb_inPosY].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->inPosY[x->nb_inPosY].influence = influence;
     x->nb_inPosY++;
@@ -495,7 +495,7 @@ void pmpd2d_tilde_inForceX(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, 
         pd_error(x, "too many inForceX assigned (increase limit with creation argument)");
         return;
     }
-    x->inForceX[x->nb_inForceX].nbr_inlet = max(0, min( x->nb_inlet,(int)nb_inlet));
+    x->inForceX[x->nb_inForceX].nbr_inlet = max(0, min( x->nb_inlet-1,(int)nb_inlet));
     x->inForceX[x->nb_inForceX].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->inForceX[x->nb_inForceX].influence = influence;
     x->nb_inForceX++;
@@ -507,7 +507,7 @@ void pmpd2d_tilde_inForceY(t_pmpd2d_tilde *x, t_float nb_inlet, t_float mass_1, 
         pd_error(x, "too many inForceY assigned (increase limit with creation argument)");
         return;
     }
-    x->inForceY[x->nb_inForceY].nbr_inlet = max(0, min( x->nb_inlet,(int)nb_inlet));
+    x->inForceY[x->nb_inForceY].nbr_inlet = max(0, min( x->nb_inlet-1,(int)nb_inlet));
     x->inForceY[x->nb_inForceY].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->inForceY[x->nb_inForceY].influence = influence;
     x->nb_inForceY++;
@@ -519,7 +519,7 @@ void pmpd2d_tilde_outPosX(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, 
         pd_error(x, "too many outPosX assigned (increase limit with creation argument)");
         return;
     }
-    x->outPosX[x->nb_outPosX].nbr_outlet = max(0, min( x->nb_outlet,(int)nb_outlet));
+    x->outPosX[x->nb_outPosX].nbr_outlet = max(0, min( x->nb_outlet-1,(int)nb_outlet));
     x->outPosX[x->nb_outPosX].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->outPosX[x->nb_outPosX].influence = influence;
     x->nb_outPosX++;
@@ -531,7 +531,7 @@ void pmpd2d_tilde_outPosY(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1, 
         pd_error(x, "too many outPosY assigned (increase limit with creation argument)");
         return;
     }
-    x->outPosY[x->nb_outPosY].nbr_outlet = max(0, min( x->nb_outlet,(int)nb_outlet));
+    x->outPosY[x->nb_outPosY].nbr_outlet = max(0, min( x->nb_outlet-1,(int)nb_outlet));
     x->outPosY[x->nb_outPosY].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->outPosY[x->nb_outPosY].influence = influence;
     x->nb_outPosY++;
@@ -543,7 +543,7 @@ void pmpd2d_tilde_outSpeedX(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1
         pd_error(x, "too many outSpeedX assigned (increase limit with creation argument)");
         return;
     }
-    x->outSpeedX[x->nb_outSpeedX].nbr_outlet = max(0, min( x->nb_outlet,(int)nb_outlet));
+    x->outSpeedX[x->nb_outSpeedX].nbr_outlet = max(0, min( x->nb_outlet-1,(int)nb_outlet));
     x->outSpeedX[x->nb_outSpeedX].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->outSpeedX[x->nb_outSpeedX].influence = influence;
     x->nb_outSpeedX++;
@@ -555,7 +555,7 @@ void pmpd2d_tilde_outSpeedY(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1
         pd_error(x, "too many outSpeedY assigned (increase limit with creation argument)");
         return;
     }
-    x->outSpeedY[x->nb_outSpeedY].nbr_outlet = max(0, min( x->nb_outlet,(int)nb_outlet));
+    x->outSpeedY[x->nb_outSpeedY].nbr_outlet = max(0, min( x->nb_outlet-1,(int)nb_outlet));
     x->outSpeedY[x->nb_outSpeedY].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->outSpeedY[x->nb_outSpeedY].influence = influence;
     x->nb_outSpeedY++;
@@ -567,7 +567,7 @@ void pmpd2d_tilde_outSpeed(t_pmpd2d_tilde *x, t_float nb_outlet, t_float mass_1,
         pd_error(x, "too many outSpeed assigned (increase limit with creation argument)");
         return;
     }
-    x->outSpeed[x->nb_outSpeed].nbr_outlet = max(0, min( x->nb_outlet,(int)nb_outlet));
+    x->outSpeed[x->nb_outSpeed].nbr_outlet = max(0, min( x->nb_outlet-1,(int)nb_outlet));
     x->outSpeed[x->nb_outSpeed].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
     x->outSpeed[x->nb_outSpeed].influence = influence;
     x->nb_outSpeed++;
