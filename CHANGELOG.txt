@@ -1,5 +1,9 @@
+version 0.13.2
+- bugfix : pmpd*~ crashed when data is send to an non existant outlet
+- fix binary name when compile on UNIX
+
 version 0.13.1 (osX only release)
-- add compilation flag to e compatible with old osX version. 
+- add compilation flag to be compatible with old osX version. 
 
 version 0.13
 - add pmpd2d~ and pmpd3d~ 
