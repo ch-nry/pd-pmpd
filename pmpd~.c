@@ -350,8 +350,6 @@ void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 // t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
 {
-    t_float arg;
-
     if (x->nb_NLlink == x->nb_max_link)
     {
         pd_error(x, "too many NLlinks (increase link limit with creation argument)");
@@ -369,69 +367,62 @@ void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
     x->nb_NLlink++ ;
 }
 
-void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence)
-// add an input point
-// nbr_inlet, *mass1, influence;
+void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float inlet_idx, t_float mass, t_float influence)
 {
     if (x->nb_inPos == x->nb_max_in)
     {
         pd_error(x, "too many inPos assigned (increase inlet assignment limit with creation argument)");
         return;
     }
-    int inlet_idx = (int)nb_inlet - 1;
-    inlet_idx = max(0, min((int)x->nb_inlet-1, inlet_idx));
-    if (nb_inlet != inlet_idx+1)
-        logpost(x, 2, "no inlet %i, assigning inPos to inlet %i", (int)nb_inlet, inlet_idx+1);
+    if (inlet_idx < 0 || inlet_idx > x->nb_inlet-1)
+        logpost(x, 2, "assigning inPos to inlet at index %i", (int)(inlet_idx = max(0, min(x->nb_inlet-1, inlet_idx))));
     x->inPos[x->nb_inPos].nbr_inlet = inlet_idx;
-    x->inPos[x->nb_inPos].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass_1))];
+    x->inPos[x->nb_inPos].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass))];
     x->inPos[x->nb_inPos].influence = influence;
     x->nb_inPos++;
 }
 
-void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence)
-// add an input point
-// nbr_inlet, *mass1, influence;
+void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float inlet_idx, t_float mass, t_float influence)
 {
     if (x->nb_inForce == x->nb_max_in)
     {
         pd_error(x, "too many inForce assigned (increase inlet assignment limit with creation argument)");
         return;
     }
-    if (nb_inlet > x->nb_inlet-1) logpost(x, 2, "no inlet %i, assigning inForce to inlet %i", (int)nb_inlet, (int)x->nb_inlet-1);
-    x->inForce[x->nb_inForce].nbr_inlet = max(0, min(x->nb_inlet-1, (int)nb_inlet));
-    x->inForce[x->nb_inForce].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass_1))];
+    if (inlet_idx < 0 || inlet_idx > x->nb_inlet-1)
+        logpost(x, 2, "assigning inForce to inlet at index %i", (int)(inlet_idx = max(0, min(x->nb_inlet-1, inlet_idx))));
+    x->inForce[x->nb_inForce].nbr_inlet = inlet_idx;
+    x->inForce[x->nb_inForce].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass))];
     x->inForce[x->nb_inForce].influence = influence;
     x->nb_inForce++;
 }
 
-void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence)
-// add an output point
-// nbr_outlet, *mass1, influence;
+void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float outlet_idx, t_float mass, t_float influence)
 {
     if (x->nb_outPos == x->nb_max_out)
     {
         pd_error(x, "too many outPos assigned (increase outlet assignment limit with creation argument)");
         return;
     }
-    if (nb_outlet > x->nb_outlet-1) logpost(x, 2, "no outlet %i, assigning outPos to outlet %i", (int)nb_outlet, (int)x->nb_outlet-1);
-    x->outPos[x->nb_outPos].nbr_outlet = max(0, min(x->nb_outlet-1, (int)nb_outlet));
-    x->outPos[x->nb_outPos].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass_1))];
+    if (outlet_idx < 0 || outlet_idx > x->nb_outlet-1)
+        logpost(x, 2, "assigning outPos to outlet at index %i", (int)(outlet_idx = max(0, min(x->nb_outlet-1, outlet_idx))));
+    x->outPos[x->nb_outPos].nbr_outlet = outlet_idx;
+    x->outPos[x->nb_outPos].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass))];
     x->outPos[x->nb_outPos].influence = influence;
     x->nb_outPos++ ;
 }
 
-void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_float influence)
-// add an output point
-// nbr_outlet, *mass1, influence;
+void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float outlet_idx, t_float mass, t_float influence)
 {
     if (x->nb_outSpeed == x->nb_max_out)
     {
         pd_error(x, "too many outSpeed assigned (increase outlet assignment limit with creation argument)");
         return;
     }
-    if (nb_outlet > x->nb_outlet-1) logpost(x, 2, "no outlet %i, assigning outSpeed to outlet %i", (int)nb_outlet, x->nb_outlet-1);
-    x->outSpeed[x->nb_outSpeed].nbr_outlet = max(0, min(x->nb_outlet-1, (int)nb_outlet));
-    x->outSpeed[x->nb_outSpeed].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass_1))];
+    if (outlet_idx < 0 || outlet_idx > x->nb_outlet-1)
+        logpost(x, 2, "assigning outPos to outSpeed at index %i", (int)(outlet_idx = max(0, min(x->nb_outlet-1, outlet_idx))));
+    x->outSpeed[x->nb_outSpeed].nbr_outlet = outlet_idx;
+    x->outSpeed[x->nb_outSpeed].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass))];
     x->outSpeed[x->nb_outSpeed].influence = influence;
     x->nb_outSpeed++ ;
 }
