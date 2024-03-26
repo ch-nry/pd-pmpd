@@ -335,7 +335,7 @@ void pmpd_tilde_link(t_pmpd_tilde *x, t_float mass_1, t_float mass_2, t_float K1
 {
     if (x->nb_link == x->nb_max_link)
     {
-        pd_error(x, "too many links (increase limit with creation argument)");
+        pd_error(x, "too many links (increase link limit with creation argument)");
         return;
     }
     x->link[x->nb_link].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
@@ -350,24 +350,21 @@ void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 // t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
 {
-    if (argc != 8)
-    {
-        pd_error(x, "wrong argument count for NLlink");
-        return;
-    }
+    t_float arg;
+
     if (x->nb_NLlink == x->nb_max_link)
     {
-        pd_error(x, "too many NLlinks (increase limit with creation argument)");
+        pd_error(x, "too many NLlinks (increase link limit with creation argument)");
         return;
     }
     x->NLlink[x->nb_NLlink].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)atom_getfloatarg(0, argc, argv)))];
     x->NLlink[x->nb_NLlink].mass2 = &x->mass[max(0, min ( x->nb_mass, (int)atom_getfloatarg(1, argc, argv)))];
-    x->NLlink[x->nb_NLlink].K1    = atom_getfloatarg(2, argc, argv);
-    x->NLlink[x->nb_NLlink].D1    = atom_getfloatarg(3, argc, argv);
-    x->NLlink[x->nb_NLlink].Pow   = atom_getfloatarg(4, argc, argv);
-    x->NLlink[x->nb_NLlink].L0    = atom_getfloatarg(5, argc, argv);
-    x->NLlink[x->nb_NLlink].Lmin  = atom_getfloatarg(6, argc, argv);
-    x->NLlink[x->nb_NLlink].Lmax  = atom_getfloatarg(7, argc, argv);
+    x->NLlink[x->nb_NLlink].K1 = (argc >= 3) ? atom_getfloatarg(2, argc, argv) : 0;
+    x->NLlink[x->nb_NLlink].D1 = (argc >= 4) ? atom_getfloatarg(3, argc, argv) : 0;
+    x->NLlink[x->nb_NLlink].Pow = (argc >= 5) ? atom_getfloatarg(4, argc, argv) : 1;
+    x->NLlink[x->nb_NLlink].L0 = (argc >= 6) ? atom_getfloatarg(5, argc, argv) : 0;
+    x->NLlink[x->nb_NLlink].Lmin = (argc >= 7) ? atom_getfloatarg(6, argc, argv) : -1000000;
+    x->NLlink[x->nb_NLlink].Lmax = (argc >= 8) ? atom_getfloatarg(7, argc, argv) : 1000000;
 
     x->nb_NLlink++ ;
 }
@@ -378,11 +375,14 @@ void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float
 {
     if (x->nb_inPos == x->nb_max_in)
     {
-        pd_error(x, "too many inPos assigned (increase limit with creation argument)");
+        pd_error(x, "too many inPos assigned (increase inlet assignment limit with creation argument)");
         return;
     }
-    if (nb_inlet > x->nb_inlet-1) logpost(x, 2, "no inlet %i, assigning inPos to inlet %i", (int)nb_inlet, (int)x->nb_inlet-1);
-    x->inPos[x->nb_inPos].nbr_inlet = max(0, min(x->nb_inlet-1, (int)nb_inlet));
+    int inlet_idx = (int)nb_inlet - 1;
+    inlet_idx = max(0, min((int)x->nb_inlet-1, inlet_idx));
+    if (nb_inlet != inlet_idx+1)
+        logpost(x, 2, "no inlet %i, assigning inPos to inlet %i", (int)nb_inlet, inlet_idx+1);
+    x->inPos[x->nb_inPos].nbr_inlet = inlet_idx;
     x->inPos[x->nb_inPos].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass_1))];
     x->inPos[x->nb_inPos].influence = influence;
     x->nb_inPos++;
@@ -394,7 +394,7 @@ void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_flo
 {
     if (x->nb_inForce == x->nb_max_in)
     {
-        pd_error(x, "too many inForce assigned (increase limit with creation argument)");
+        pd_error(x, "too many inForce assigned (increase inlet assignment limit with creation argument)");
         return;
     }
     if (nb_inlet > x->nb_inlet-1) logpost(x, 2, "no inlet %i, assigning inForce to inlet %i", (int)nb_inlet, (int)x->nb_inlet-1);
@@ -410,7 +410,7 @@ void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_flo
 {
     if (x->nb_outPos == x->nb_max_out)
     {
-        pd_error(x, "too many outPos assigned (increase limit with creation argument)");
+        pd_error(x, "too many outPos assigned (increase outlet assignment limit with creation argument)");
         return;
     }
     if (nb_outlet > x->nb_outlet-1) logpost(x, 2, "no outlet %i, assigning outPos to outlet %i", (int)nb_outlet, (int)x->nb_outlet-1);
@@ -426,7 +426,7 @@ void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_f
 {
     if (x->nb_outSpeed == x->nb_max_out)
     {
-        pd_error(x, "too many outSpeed assigned (increase limit with creation argument)");
+        pd_error(x, "too many outSpeed assigned (increase outlet assignment limit with creation argument)");
         return;
     }
     if (nb_outlet > x->nb_outlet-1) logpost(x, 2, "no outlet %i, assigning outSpeed to outlet %i", (int)nb_outlet, x->nb_outlet-1);
