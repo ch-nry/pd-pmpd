@@ -373,7 +373,7 @@ void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 }
 
 void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence)
-//add an input point
+// add an input point
 // nbr_inlet, *mass1, influence;
 {
     if (x->nb_inPos == x->nb_max_in)
@@ -381,14 +381,15 @@ void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float
         pd_error(x, "too many inPos assigned (increase limit with creation argument)");
         return;
     }
-    x->inPos[x->nb_inPos].nbr_inlet = max(0, min( x->nb_inlet-1,(int)nb_inlet));
-    x->inPos[x->nb_inPos].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
+    if (nb_inlet > x->nb_inlet-1) logpost(x, 2, "no inlet %i, assigning inPos to inlet %i", (int)nb_inlet, (int)x->nb_inlet-1);
+    x->inPos[x->nb_inPos].nbr_inlet = max(0, min(x->nb_inlet-1, (int)nb_inlet));
+    x->inPos[x->nb_inPos].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass_1))];
     x->inPos[x->nb_inPos].influence = influence;
     x->nb_inPos++;
 }
 
 void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_float influence)
-//add an input point
+// add an input point
 // nbr_inlet, *mass1, influence;
 {
     if (x->nb_inForce == x->nb_max_in)
@@ -396,8 +397,9 @@ void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float nb_inlet, t_float mass_1, t_flo
         pd_error(x, "too many inForce assigned (increase limit with creation argument)");
         return;
     }
-    x->inForce[x->nb_inForce].nbr_inlet = max(0, min( x->nb_inlet-1,(int)nb_inlet));
-    x->inForce[x->nb_inForce].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
+    if (nb_inlet > x->nb_inlet-1) logpost(x, 2, "no inlet %i, assigning inForce to inlet %i", (int)nb_inlet, (int)x->nb_inlet-1);
+    x->inForce[x->nb_inForce].nbr_inlet = max(0, min(x->nb_inlet-1, (int)nb_inlet));
+    x->inForce[x->nb_inForce].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass_1))];
     x->inForce[x->nb_inForce].influence = influence;
     x->nb_inForce++;
 }
@@ -411,8 +413,9 @@ void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_flo
         pd_error(x, "too many outPos assigned (increase limit with creation argument)");
         return;
     }
-    x->outPos[x->nb_outPos].nbr_outlet = max(0, min( x->nb_outlet-1,(int)nb_outlet));
-    x->outPos[x->nb_outPos].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
+    if (nb_outlet > x->nb_outlet-1) logpost(x, 2, "no outlet %i, assigning outPos to outlet %i", (int)nb_outlet, (int)x->nb_outlet-1);
+    x->outPos[x->nb_outPos].nbr_outlet = max(0, min(x->nb_outlet-1, (int)nb_outlet));
+    x->outPos[x->nb_outPos].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass_1))];
     x->outPos[x->nb_outPos].influence = influence;
     x->nb_outPos++ ;
 }
@@ -426,8 +429,9 @@ void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float nb_outlet, t_float mass_1, t_f
         pd_error(x, "too many outSpeed assigned (increase limit with creation argument)");
         return;
     }
-    x->outSpeed[x->nb_outSpeed].nbr_outlet = max(0, min( x->nb_outlet-1,(int)nb_outlet));
-    x->outSpeed[x->nb_outSpeed].mass1 = &x->mass[max(0, min ( x->nb_mass, (int)mass_1))];
+    if (nb_outlet > x->nb_outlet-1) logpost(x, 2, "no outlet %i, assigning outSpeed to outlet %i", (int)nb_outlet, x->nb_outlet-1);
+    x->outSpeed[x->nb_outSpeed].nbr_outlet = max(0, min(x->nb_outlet-1, (int)nb_outlet));
+    x->outSpeed[x->nb_outSpeed].mass1 = &x->mass[max(0, min(x->nb_mass, (int)mass_1))];
     x->outSpeed[x->nb_outSpeed].influence = influence;
     x->nb_outSpeed++ ;
 }
@@ -469,7 +473,7 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
     x->nb_inlet    = max(1, (int)atom_getfloatarg(0, argc, argv));
     x->nb_outlet   = max(1, (int)atom_getfloatarg(1, argc, argv));
-    x->nb_loop     = max(1, (int)atom_getfloatarg(2, argc, argv) );
+    x->nb_loop     = max(1, (int)atom_getfloatarg(2, argc, argv));
     x->nb_max_mass = (arg = (int)atom_getfloatarg(3, argc, argv)) > 0 ? arg : NB_MAX_MASS_DEFAULT;
     x->nb_max_link = (arg = (int)atom_getfloatarg(4, argc, argv)) > 0 ? arg : NB_MAX_LINK_DEFAULT;
     x->nb_max_in   = (arg = (int)atom_getfloatarg(5, argc, argv)) > 0 ? arg : NB_MAX_IN_DEFAULT;
