@@ -284,7 +284,7 @@ void pmpd_tilde_setNLK(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
     if (!validate_index(x, idx_link, x->nb_NLlink, "NLlink")) return;
     if (argv[1].a_type == A_FLOAT)
         x->NLlink[idx_link].K1 = atom_getfloatarg(1,argc,argv);
-    if (argc >= 3 && argv[2].a_type == A_FLOAT)
+    if (argc > 2 && argv[2].a_type == A_FLOAT)
         x->NLlink[idx_link].Pow = atom_getfloatarg(2,argc,argv);
 }
 
@@ -328,7 +328,7 @@ void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *ar
     }
     idx_link = (int)atom_getfloatarg(0,argc,argv);
     if (!validate_index(x, idx_link, x->nb_NLlink, "NLlink")) return;
-    if (argc >= 2 && argv[1].a_type == A_FLOAT)
+    if (argc > 1 && argv[1].a_type == A_FLOAT)
         percent = atom_getfloatarg(1,argc,argv);
     else
         percent = 1;
@@ -390,12 +390,13 @@ void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float inlet, t_float mass, t_float influence)
 {
+    int idx_inlet;
     if (x->nb_inPos == x->nb_max_in)
     {
         pd_error(x, "pmpd~: too many inlet assignments (increase limit with creation argument)");
         return;
     }
-    int idx_inlet = clamp((int)inlet, 0, x->nb_inlet-1);
+    idx_inlet = clamp((int)inlet, 0, x->nb_inlet-1);
     if (idx_inlet != (int)inlet)
         logpost(x, 2, "pmpd~: no inlet at index %i, assigning inPos to index %i", (int)inlet, idx_inlet);
     x->inPos[x->nb_inPos].nbr_inlet = (int)idx_inlet;
@@ -406,12 +407,13 @@ void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float inlet, t_float mass, t_float infl
 
 void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float inlet, t_float mass, t_float influence)
 {
+    int idx_inlet;
     if (x->nb_inForce == x->nb_max_in)
     {
         pd_error(x, "pmpd~: too many inlet assignments (increase limit with creation argument)");
         return;
     }
-    int idx_inlet = clamp((int)inlet, 0, x->nb_inlet-1);
+    idx_inlet = clamp((int)inlet, 0, x->nb_inlet-1);
     if (idx_inlet != (int)inlet)
         logpost(x, 2, "pmpd~: no inlet at index %i, assigning inForce to index %i", (int)inlet, idx_inlet);
     x->inForce[x->nb_inForce].nbr_inlet = (int)idx_inlet;
@@ -422,12 +424,13 @@ void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float inlet, t_float mass, t_float in
 
 void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float outlet, t_float mass, t_float influence)
 {
+    int idx_outlet;
     if (x->nb_outPos == x->nb_max_out)
     {
         pd_error(x, "pmpd~: too many outlet assignments (increase limit with creation argument)");
         return;
     }
-    int idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
+    idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
     if (idx_outlet != (int)outlet)
         logpost(x, 2, "pmpd~: no outlet at index %i, assigning outPos to index %i", (int)outlet, idx_outlet);
     x->outPos[x->nb_outPos].nbr_outlet = (int)idx_outlet;
@@ -438,12 +441,13 @@ void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float outlet, t_float mass, t_float in
 
 void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float outlet, t_float mass, t_float influence)
 {
+    int idx_outlet;
     if (x->nb_outSpeed == x->nb_max_out)
     {
         pd_error(x, "pmpd~: too many outlet assignments (increase limit with creation argument)");
         return;
     }
-    int idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
+    idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
     if (idx_outlet != (int)outlet)
         logpost(x, 2, "pmpd~: no outlet at index %i, assigning outSpeed to index %i", (int)outlet, idx_outlet);
     x->outSpeed[x->nb_outSpeed].nbr_outlet = idx_outlet;
