@@ -397,7 +397,7 @@ void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float inlet, t_float mass, t_float infl
     }
     int inlet_idx = clamp((int)inlet, 0, x->nb_inlet-1);
     if (inlet_idx != (int)inlet)
-        logpost(x, 3, "pmpd~: no inlet at index %i, assigning inPos to index %i", (int)inlet, inlet_idx);
+        logpost(x, 2, "pmpd~: no inlet at index %i, assigning inPos to index %i", (int)inlet, inlet_idx);
     x->inPos[x->nb_inPos].nbr_inlet = (int)inlet_idx;
     x->inPos[x->nb_inPos].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->inPos[x->nb_inPos].influence = influence;
@@ -413,7 +413,7 @@ void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float inlet, t_float mass, t_float in
     }
     int inlet_idx = clamp((int)inlet, 0, x->nb_inlet-1);
     if (inlet_idx != (int)inlet)
-        logpost(x, 3, "pmpd~: no inlet at index %i, assigning inForce to index %i", (int)inlet, inlet_idx);
+        logpost(x, 2, "pmpd~: no inlet at index %i, assigning inForce to index %i", (int)inlet, inlet_idx);
     x->inForce[x->nb_inForce].nbr_inlet = (int)inlet_idx;
     x->inForce[x->nb_inForce].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->inForce[x->nb_inForce].influence = influence;
@@ -429,7 +429,7 @@ void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float outlet, t_float mass, t_float in
     }
     int outlet_idx = clamp((int)outlet, 0, x->nb_outlet-1);
     if (outlet_idx != (int)outlet)
-        logpost(x, 3, "pmpd~: no outlet at index %i, assigning outPos to index %i", (int)outlet, outlet_idx);
+        logpost(x, 2, "pmpd~: no outlet at index %i, assigning outPos to index %i", (int)outlet, outlet_idx);
     x->outPos[x->nb_outPos].nbr_outlet = (int)outlet_idx;
     x->outPos[x->nb_outPos].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->outPos[x->nb_outPos].influence = influence;
@@ -445,7 +445,7 @@ void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float outlet, t_float mass, t_float 
     }
     int outlet_idx = clamp((int)outlet, 0, x->nb_outlet-1);
     if (outlet_idx != (int)outlet)
-        logpost(x, 3, "pmpd~: no outlet at index %i, assigning outSpeed to index %i", (int)outlet, outlet_idx);
+        logpost(x, 2, "pmpd~: no outlet at index %i, assigning outSpeed to index %i", (int)outlet, outlet_idx);
     x->outSpeed[x->nb_outSpeed].nbr_outlet = outlet_idx;
     x->outSpeed[x->nb_outSpeed].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->outSpeed[x->nb_outSpeed].influence = influence;
