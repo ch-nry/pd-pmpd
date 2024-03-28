@@ -229,47 +229,47 @@ void pmpd_tilde_float(t_pmpd_tilde *x, t_float force)
         x->mass[i].forceX += force;
 }
 
-void pmpd_tilde_forceX(t_pmpd_tilde *x, t_float mass_idx, t_float force)
+void pmpd_tilde_forceX(t_pmpd_tilde *x, t_float idx_mass, t_float force)
 {
 // add a force to a specific mass
-    if (!validate_index(x, (int)mass_idx, x->nb_mass, "mass")) return;
-    x->mass[(int)mass_idx].forceX += force;
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].forceX += force;
 }
 
-void pmpd_tilde_posX(t_pmpd_tilde *x, t_float mass_idx, t_float posX)
+void pmpd_tilde_posX(t_pmpd_tilde *x, t_float idx_mass, t_float posX)
 {
 // move a mass to a certain position
-    if (!validate_index(x, (int)mass_idx, x->nb_mass, "mass")) return;
-    x->mass[(int)mass_idx].posX = posX;
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].posX = posX;
 }
 
-void pmpd_tilde_setM(t_pmpd_tilde *x, t_float mass_idx, t_float M)
+void pmpd_tilde_setM(t_pmpd_tilde *x, t_float idx_mass, t_float M)
 {
-    if (!validate_index(x, (int)mass_idx, x->nb_mass, "mass")) return;
-    x->mass[(int)mass_idx].invM = M>0 ? 1/M : 0;
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].invM = M>0 ? 1/M : 0;
 }
 
-void pmpd_tilde_setK(t_pmpd_tilde *x, t_float link_idx, t_float K)
+void pmpd_tilde_setK(t_pmpd_tilde *x, t_float idx_link, t_float K)
 {
-    if (!validate_index(x, (int)link_idx, x->nb_link, "link")) return;
-    x->link[(int)link_idx].K1 = K;
+    if (!validate_index(x, (int)idx_link, x->nb_link, "link")) return;
+    x->link[(int)idx_link].K1 = K;
 }
 
-void pmpd_tilde_setD(t_pmpd_tilde *x, t_float link_idx, t_float D)
+void pmpd_tilde_setD(t_pmpd_tilde *x, t_float idx_link, t_float D)
 {
-    if (!validate_index(x, (int)link_idx, x->nb_link, "link")) return;
-    x->link[(int)link_idx].D1 = D;
+    if (!validate_index(x, (int)idx_link, x->nb_link, "link")) return;
+    x->link[(int)idx_link].D1 = D;
 }
 
-void pmpd_tilde_setNLD(t_pmpd_tilde *x, t_float link_idx, t_float D)
+void pmpd_tilde_setNLD(t_pmpd_tilde *x, t_float idx_link, t_float D)
 {
-    if (!validate_index(x, (int)link_idx, x->nb_NLlink, "NLlink")) return;
-    x->NLlink[(int)link_idx].D1 = D;
+    if (!validate_index(x, (int)idx_link, x->nb_NLlink, "NLlink")) return;
+    x->NLlink[(int)idx_link].D1 = D;
 }
 
 void pmpd_tilde_setNLK(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int link_idx;
+    int idx_link;
     if (argc < 2)
     {
         pd_error(x, "needs at least 2 arguments");
@@ -280,41 +280,41 @@ void pmpd_tilde_setNLK(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
         pd_error(x, "invalid link index");
         return;
     }
-    link_idx = (int)atom_getfloatarg(0,argc,argv);
-    if (!validate_index(x, link_idx, x->nb_NLlink, "NLlink")) return;
+    idx_link = (int)atom_getfloatarg(0,argc,argv);
+    if (!validate_index(x, idx_link, x->nb_NLlink, "NLlink")) return;
     if (argv[1].a_type == A_FLOAT)
-        x->NLlink[link_idx].K1 = atom_getfloatarg(1,argc,argv);
+        x->NLlink[idx_link].K1 = atom_getfloatarg(1,argc,argv);
     if (argc >= 3 && argv[2].a_type == A_FLOAT)
-        x->NLlink[link_idx].Pow = atom_getfloatarg(2,argc,argv);
+        x->NLlink[idx_link].Pow = atom_getfloatarg(2,argc,argv);
 }
 
-void pmpd_tilde_setNLKPow(t_pmpd_tilde *x, t_float link_idx, t_float Pow)
+void pmpd_tilde_setNLKPow(t_pmpd_tilde *x, t_float idx_link, t_float Pow)
 {
-    if (!validate_index(x, (int)link_idx, x->nb_NLlink, "NLlink")) return;
-    x->NLlink[(int)link_idx].Pow = Pow;
+    if (!validate_index(x, (int)idx_link, x->nb_NLlink, "NLlink")) return;
+    x->NLlink[(int)idx_link].Pow = Pow;
 }
 
-void pmpd_tilde_setNLL(t_pmpd_tilde *x, t_float link_idx, t_float L)
+void pmpd_tilde_setNLL(t_pmpd_tilde *x, t_float idx_link, t_float L)
 {
-    if (!validate_index(x, (int)link_idx, x->nb_NLlink, "NLlink")) return;
-    x->NLlink[(int)link_idx].L0 = L;
+    if (!validate_index(x, (int)idx_link, x->nb_NLlink, "NLlink")) return;
+    x->NLlink[(int)idx_link].L0 = L;
 }
 
-void pmpd_tilde_setNLLMin(t_pmpd_tilde *x, t_float link_idx, t_float M)
+void pmpd_tilde_setNLLMin(t_pmpd_tilde *x, t_float idx_link, t_float M)
 {
-    if (!validate_index(x, (int)link_idx, x->nb_NLlink, "NLlink")) return;
-    x->NLlink[(int)link_idx].Lmin = M;
+    if (!validate_index(x, (int)idx_link, x->nb_NLlink, "NLlink")) return;
+    x->NLlink[(int)idx_link].Lmin = M;
 }
 
-void pmpd_tilde_setNLLMax(t_pmpd_tilde *x, t_float link_idx, t_float M)
+void pmpd_tilde_setNLLMax(t_pmpd_tilde *x, t_float idx_link, t_float M)
 {
-    if (!validate_index(x, (int)link_idx, x->nb_NLlink, "NLlink")) return;
-    x->NLlink[(int)link_idx].Lmax = M;
+    if (!validate_index(x, (int)idx_link, x->nb_NLlink, "NLlink")) return;
+    x->NLlink[(int)idx_link].Lmax = M;
 }
 
 void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int link_idx;
+    int idx_link;
     t_float percent;
     if (argc < 2)
     {
@@ -326,13 +326,13 @@ void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *ar
         pd_error(x, "invalid link index");
         return;
     }
-    link_idx = (int)atom_getfloatarg(0,argc,argv);
-    if (!validate_index(x, link_idx, x->nb_NLlink, "NLlink")) return;
+    idx_link = (int)atom_getfloatarg(0,argc,argv);
+    if (!validate_index(x, idx_link, x->nb_NLlink, "NLlink")) return;
     if (argc >= 2 && argv[1].a_type == A_FLOAT)
         percent = atom_getfloatarg(1,argc,argv);
     else
         percent = 1;
-    x->NLlink[link_idx].L0 += percent * (x->NLlink[link_idx].L - x->NLlink[link_idx].L0);
+    x->NLlink[idx_link].L0 += percent * (x->NLlink[idx_link].L - x->NLlink[idx_link].L0);
 }
 
 void pmpd_tilde_mass(t_pmpd_tilde *x, t_float M, t_float posX)
