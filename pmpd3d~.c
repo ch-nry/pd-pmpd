@@ -391,15 +391,23 @@ void pmpd3d_tilde_setLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *
 {
     int idx_link;
     t_float percent;
-    if ( (argc >= 1) && (argv[0].a_type == A_FLOAT) ) {
-        idx_link = (int)atom_getfloatarg(0,argc,argv);
-        if ( (argc >= 2) && (argv[1].a_type == A_FLOAT) )
-            percent = atom_getfloatarg(1,argc,argv);
-        else
-            percent = 1.;
-        if( (idx_link >= 0) && (idx_link < x->nb_link) )
-            x->link[idx_link].L0 += percent * (x->link[idx_link].L - x->link[idx_link].L0);
+    if (argc < 1)
+    {
+        pd_error(x, "pmpd3d~: 'setLCurrent' requires link index argument");
+        return;
+    } 
+    if (argv[0].a_type != A_FLOAT)
+    {
+        pd_error(x, "pmpd3d~: invalid link index for 'setLCurrent'");
+        return;
     }
+    idx_link = (int)atom_getfloatarg(0,argc,argv);
+    if (!validate_index(x, idx_link, x->nb_link, "link")) return;
+    if (argc > 1 && argv[1].a_type == A_FLOAT)
+        percent = atom_getfloatarg(1,argc,argv);
+    else
+        percent = 1;
+    x->link[idx_link].L0 += percent * (x->link[idx_link].L - x->link[idx_link].L0);
 }
 
 void pmpd3d_tilde_setNLD(t_pmpd3d_tilde *x, t_float idx_NLlink, t_float D)
@@ -411,18 +419,22 @@ void pmpd3d_tilde_setNLD(t_pmpd3d_tilde *x, t_float idx_NLlink, t_float D)
 void pmpd3d_tilde_setNLK(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 {
     int idx_NLlink;
-    if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) ) {
-        idx_NLlink = atom_getfloatarg(0,argc,argv);
-        if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )
-            x->NLlink[(int)idx_NLlink].K1 = atom_getfloatarg(1,argc,argv);;
-    } else
-    if ( (argc == 3) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) ) {
-        idx_NLlink = atom_getfloatarg(0,argc,argv);
-        if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  {
-            x->NLlink[(int)idx_NLlink].K1 = atom_getfloatarg(1,argc,argv);
-            x->NLlink[(int)idx_NLlink].Pow = atom_getfloatarg(2,argc,argv);
-        }
+    if (argc < 2)
+    {
+        pd_error(x, "pmpd3d~: 'setNLK' requires link index and rigidity arguments");
+        return;
     }
+    if (argv[0].a_type != A_FLOAT)
+    {
+        pd_error(x, "pmpd3d~: invalid link index for 'setNLK'");
+        return;
+    }
+    idx_NLlink = (int)atom_getfloatarg(0,argc,argv);
+    if (!validate_index(x, idx_NLlink, x->nb_NLlink, "NLlink")) return;
+    if (argv[1].a_type == A_FLOAT)
+        x->NLlink[idx_NLlink].K1 = atom_getfloatarg(1,argc,argv);
+    if (argc > 2 && argv[2].a_type == A_FLOAT)
+        x->NLlink[idx_NLlink].Pow = atom_getfloatarg(2,argc,argv);
 }
 
 void pmpd3d_tilde_setNLKPow(t_pmpd3d_tilde *x, t_float idx_NLlink, t_float Pow)
@@ -453,33 +465,35 @@ void pmpd3d_tilde_setNLLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom
 {
     int idx_NLlink;
     t_float percent;
-    if ( (argc >= 1) && (argv[0].a_type == A_FLOAT) ) {
-        idx_NLlink = (int)atom_getfloatarg(0,argc,argv);
-        if ( (argc >= 2) && (argv[1].a_type == A_FLOAT) )
-            percent = atom_getfloatarg(1,argc,argv);
-        else
-            percent = 1.;
-        if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )
-            x->NLlink[idx_NLlink].L0 += percent * (x->NLlink[idx_NLlink].L - x->NLlink[idx_NLlink].L0);
+    if (argc < 1)
+    {
+        pd_error(x, "pmpd3d~: 'setNLLCurrent' requires link index argument");
+        return;
+    } 
+    if (argv[0].a_type != A_FLOAT)
+    {
+        pd_error(x, "pmpd3d~: invalid link index for 'setNLLCurrent'");
+        return;
     }
+    idx_NLlink = (int)atom_getfloatarg(0,argc,argv);
+    if (!validate_index(x, idx_NLlink, x->nb_NLlink, "NLlink")) return;
+    if (argc > 1 && argv[1].a_type == A_FLOAT)
+        percent = atom_getfloatarg(1,argc,argv);
+    else
+        percent = 1;
+    x->NLlink[idx_NLlink].L0 += percent * (x->NLlink[idx_NLlink].L - x->NLlink[idx_NLlink].L0);
 }
 
 void pmpd3d_tilde_mass(t_pmpd3d_tilde *x, t_float M, t_float posX, t_float posY, t_float posZ, t_float D)
 {
 // add a mass
 //invM speedX posX force
-    if (x->nb_mass == x->nb_max_mass) {
-        pd_error(x, "too many masses (increase limit with creation argument)");
+    if (x->nb_mass == x->nb_max_mass)
+    {
+        pd_error(x, "pmpd3d~: too many masses (increase limit with creation argument)");
         return;
     }
-    if (M<=0)
-    {
-        M = 0;
-        x->mass[x->nb_mass].invM = 0;
-    }
-    else
-        x->mass[x->nb_mass].invM = 1/M;
-
+    x->mass[x->nb_mass].invM = M>0 ? 1/M : 0;
     x->mass[x->nb_mass].speedX = 0;
     x->mass[x->nb_mass].speedY = 0;
     x->mass[x->nb_mass].speedZ = 0;
@@ -500,7 +514,7 @@ void pmpd3d_tilde_link(t_pmpd3d_tilde *x, t_float mass_1, t_float mass_2, t_floa
 // add a link
 // *mass1, *mass2, K1, D1;
     if (x->nb_link == x->nb_max_link) {
-        pd_error(x, "too many links (increase limit with creation argument)");
+        pd_error(x, "pmpd3d~: too many links (increase limit with creation argument)");
         return;
     }
     t_float LX, LY, LZ;
@@ -523,25 +537,20 @@ void pmpd3d_tilde_NLlink(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 {
 // t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
-    if (argc != 8)
-    {
-        pd_error(x, "wrong argument count for NLlink");
-        return;
-    }
     if (x->nb_NLlink == x->nb_max_link)
     {
-        pd_error(x, "too many NLlinks (increase limit with creation argument)");
+        pd_error(x, "pmpd3d~: too many NLlinks (increase link limit with creation argument)");
         return;
     }
     t_float LX, LY, LZ;
     x->NLlink[x->nb_NLlink].mass1 = &x->mass[clamp((int)atom_getfloatarg(0, argc, argv), 0, x->nb_mass-1)];
     x->NLlink[x->nb_NLlink].mass2 = &x->mass[clamp((int)atom_getfloatarg(1, argc, argv), 0, x->nb_mass-1)];
-    x->NLlink[x->nb_NLlink].K1 = atom_getfloatarg(2, argc, argv);
-    x->NLlink[x->nb_NLlink].D1 = atom_getfloatarg(3, argc, argv);
-    x->NLlink[x->nb_NLlink].Pow = atom_getfloatarg(4, argc, argv);
-    x->NLlink[x->nb_NLlink].L0 = atom_getfloatarg(5, argc, argv);
-    x->NLlink[x->nb_NLlink].Lmin = atom_getfloatarg(6, argc, argv);
-    x->NLlink[x->nb_NLlink].Lmax = atom_getfloatarg(7, argc, argv);
+    x->NLlink[x->nb_NLlink].K1 = (argc >= 3) ? atom_getfloatarg(2, argc, argv) : 0;
+    x->NLlink[x->nb_NLlink].D1 = (argc >= 4) ? atom_getfloatarg(3, argc, argv) : 0;
+    x->NLlink[x->nb_NLlink].Pow = (argc >= 5) ? atom_getfloatarg(4, argc, argv) : 1;
+    x->NLlink[x->nb_NLlink].L0 = (argc >= 6) ? atom_getfloatarg(5, argc, argv) : 0;
+    x->NLlink[x->nb_NLlink].Lmin = (argc >= 7) ? atom_getfloatarg(6, argc, argv) : -1000000;
+    x->NLlink[x->nb_NLlink].Lmax = (argc >= 8) ? atom_getfloatarg(7, argc, argv) : 1000000;
 
     // initialize L with actual distance between masses
     LX = x->NLlink[x->nb_NLlink].mass2->posX - x->NLlink[x->nb_NLlink].mass1->posX;
@@ -551,176 +560,228 @@ void pmpd3d_tilde_NLlink(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
     x->nb_NLlink++;
 }
 
-void pmpd3d_tilde_inPosX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+void pmpd3d_tilde_inPosX(t_pmpd3d_tilde *x, t_float inlet, t_float mass, t_float influence)
 {
 //add an input point
 // nbr_inlet, *mass, influence;
+    int idx_inlet;
     if (x->nb_inPosX == x->nb_max_in)
     {
-        pd_error(x, "too many inPosX assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd2d~: too many inlet assignments (increase limit with creation argument)");
         return;
     }
-    x->inPosX[x->nb_inPosX].nbr_inlet = clamp((int)nb_inlet, 0, x->nb_inlet-1);
+    idx_inlet = clamp((int)inlet, 0, x->nb_inlet-1);
+    if (idx_inlet != (int)inlet)
+        logpost(x, 2, "pmpd2d~: no inlet at index %i, assigning inPosX to index %i", (int)inlet, idx_inlet);
+    x->inPosX[x->nb_inPosX].nbr_inlet = clamp((int)idx_inlet, 0, x->nb_inlet-1);
     x->inPosX[x->nb_inPosX].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->inPosX[x->nb_inPosX].influence = influence;
     x->nb_inPosX++;
 }
 
-void pmpd3d_tilde_inPosY(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+void pmpd3d_tilde_inPosY(t_pmpd3d_tilde *x, t_float inlet, t_float mass, t_float influence)
 {
 //add an input point
 // nbr_inlet, *mass, influence;
+    int idx_inlet;
     if (x->nb_inPosY == x->nb_max_in)
     {
-        pd_error(x, "too many inPosY assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd2d~: too many inlet assignments (increase limit with creation argument)");
         return;
     }
-    x->inPosY[x->nb_inPosY].nbr_inlet = clamp((int)nb_inlet, 0, x->nb_inlet-1);
+    idx_inlet = clamp((int)inlet, 0, x->nb_inlet-1);
+    if (idx_inlet != (int)inlet)
+        logpost(x, 2, "pmpd2d~: no inlet at index %i, assigning inPosY to index %i", (int)inlet, idx_inlet);
+    x->inPosY[x->nb_inPosY].nbr_inlet = clamp((int)idx_inlet, 0, x->nb_inlet-1);
     x->inPosY[x->nb_inPosY].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->inPosY[x->nb_inPosY].influence = influence;
     x->nb_inPosY++;
 }
 
-void pmpd3d_tilde_inPosZ(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+void pmpd3d_tilde_inPosZ(t_pmpd3d_tilde *x, t_float inlet, t_float mass, t_float influence)
 {
 //add an input point
 // nbr_inlet, *mass, influence;
+    int idx_inlet;
     if (x->nb_inPosZ == x->nb_max_in)
     {
-        pd_error(x, "too many inPosZ assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd2d~: too many inlet assignments (increase limit with creation argument)");
         return;
     }
-    x->inPosZ[x->nb_inPosZ].nbr_inlet = clamp((int)nb_inlet, 0, x->nb_inlet-1);
+    idx_inlet = clamp((int)inlet, 0, x->nb_inlet-1);
+    if (idx_inlet != (int)inlet)
+        logpost(x, 2, "pmpd2d~: no inlet at index %i, assigning inPosZ to index %i", (int)inlet, idx_inlet);
+    x->inPosZ[x->nb_inPosZ].nbr_inlet = clamp((int)idx_inlet, 0, x->nb_inlet-1);
     x->inPosZ[x->nb_inPosZ].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->inPosZ[x->nb_inPosZ].influence = influence;
     x->nb_inPosZ++;
 }
 
-void pmpd3d_tilde_inForceX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+void pmpd3d_tilde_inForceX(t_pmpd3d_tilde *x, t_float inlet, t_float mass, t_float influence)
 {
+    int idx_inlet;
     if (x->nb_inForceX == x->nb_max_in)
     {
-        pd_error(x, "too many inForceX assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd2d~: too many inlet assignments (increase limit with creation argument)");
         return;
     }
-    x->inForceX[x->nb_inForceX].nbr_inlet = clamp((int)nb_inlet, 0, x->nb_inlet-1);
+    idx_inlet = clamp((int)inlet, 0, x->nb_inlet-1);
+    if (idx_inlet != (int)inlet)
+        logpost(x, 2, "pmpd2d~: no inlet at index %i, assigning inForceX to index %i", (int)inlet, idx_inlet);
+    x->inForceX[x->nb_inForceX].nbr_inlet = clamp((int)idx_inlet, 0, x->nb_inlet-1);
     x->inForceX[x->nb_inForceX].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->inForceX[x->nb_inForceX].influence = influence;
     x->nb_inForceX++;
 }
 
-void pmpd3d_tilde_inForceY(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+void pmpd3d_tilde_inForceY(t_pmpd3d_tilde *x, t_float inlet, t_float mass, t_float influence)
 {
+    int idx_inlet;
     if (x->nb_inForceY == x->nb_max_in)
     {
-        pd_error(x, "too many inForceY assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd2d~: too many inlet assignments (increase limit with creation argument)");
         return;
     }
-    x->inForceY[x->nb_inForceY].nbr_inlet = clamp((int)nb_inlet, 0, x->nb_inlet-1);
+    idx_inlet = clamp((int)inlet, 0, x->nb_inlet-1);
+    if (idx_inlet != (int)inlet)
+        logpost(x, 2, "pmpd2d~: no inlet at index %i, assigning inForceY to index %i", (int)inlet, idx_inlet);
+    x->inForceY[x->nb_inForceY].nbr_inlet = clamp((int)idx_inlet, 0, x->nb_inlet-1);
     x->inForceY[x->nb_inForceY].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->inForceY[x->nb_inForceY].influence = influence;
     x->nb_inForceY++;
 }
 
-void pmpd3d_tilde_inForceZ(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+void pmpd3d_tilde_inForceZ(t_pmpd3d_tilde *x, t_float inlet, t_float mass, t_float influence)
 {
+    int idx_inlet;
     if (x->nb_inForceZ == x->nb_max_in)
     {
-        pd_error(x, "too many inForceZ assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd2d~: too many inlet assignments (increase limit with creation argument)");
         return;
     }
-    x->inForceZ[x->nb_inForceZ].nbr_inlet = clamp((int)nb_inlet, 0, x->nb_inlet-1);
+    idx_inlet = clamp((int)inlet, 0, x->nb_inlet-1);
+    if (idx_inlet != (int)inlet)
+        logpost(x, 2, "pmpd2d~: no inlet at index %i, assigning inForceZ to index %i", (int)inlet, idx_inlet);
+    x->inForceZ[x->nb_inForceZ].nbr_inlet = clamp((int)idx_inlet, 0, x->nb_inlet-1);
     x->inForceZ[x->nb_inForceZ].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->inForceZ[x->nb_inForceZ].influence = influence;
     x->nb_inForceZ++;
 }
 
-void pmpd3d_tilde_outPosX(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+void pmpd3d_tilde_outPosX(t_pmpd3d_tilde *x, t_float outlet, t_float mass, t_float influence)
 {
+    int idx_outlet;
     if (x->nb_outPosX == x->nb_max_out)
     {
-        pd_error(x, "too many outPosX assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd3d~: too many outlet assignments (increase limit with creation argument)");
         return;
     }
-    x->outPosX[x->nb_outPosX].nbr_outlet = clamp((int)nb_outlet, 0, x->nb_outlet-1);
+    idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
+    if (idx_outlet != (int)outlet)
+        logpost(x, 2, "pmpd3d~: no outlet at index %i, assigning outPosX to index %i", (int)outlet, idx_outlet);
+    x->outPosX[x->nb_outPosX].nbr_outlet = clamp((int)idx_outlet, 0, x->nb_outlet-1);
     x->outPosX[x->nb_outPosX].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->outPosX[x->nb_outPosX].influence = influence;
     x->nb_outPosX++;
 }
 
-void pmpd3d_tilde_outPosY(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+void pmpd3d_tilde_outPosY(t_pmpd3d_tilde *x, t_float outlet, t_float mass, t_float influence)
 {
+    int idx_outlet;
     if (x->nb_outPosY == x->nb_max_out)
     {
-        pd_error(x, "too many outPosY assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd3d~: too many outlet assignments (increase limit with creation argument)");
         return;
     }
-    x->outPosY[x->nb_outPosY].nbr_outlet = clamp((int)nb_outlet, 0, x->nb_outlet-1);
+    idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
+    if (idx_outlet != (int)outlet)
+        logpost(x, 2, "pmpd3d~: no outlet at index %i, assigning outPosY to index %i", (int)outlet, idx_outlet);
+    x->outPosY[x->nb_outPosY].nbr_outlet = clamp((int)idx_outlet, 0, x->nb_outlet-1);
     x->outPosY[x->nb_outPosY].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->outPosY[x->nb_outPosY].influence = influence;
     x->nb_outPosY++;
 }
 
-void pmpd3d_tilde_outPosZ(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+void pmpd3d_tilde_outPosZ(t_pmpd3d_tilde *x, t_float outlet, t_float mass, t_float influence)
 {
+    int idx_outlet;
     if (x->nb_outPosZ == x->nb_max_out)
     {
-        pd_error(x, "too many outPosZ assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd3d~: too many outlet assignments (increase limit with creation argument)");
         return;
     }
-    x->outPosZ[x->nb_outPosZ].nbr_outlet = clamp((int)nb_outlet, 0, x->nb_outlet-1);
+    idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
+    if (idx_outlet != (int)outlet)
+        logpost(x, 2, "pmpd3d~: no outlet at index %i, assigning outPosZ to index %i", (int)outlet, idx_outlet);
+    x->outPosZ[x->nb_outPosZ].nbr_outlet = clamp((int)idx_outlet, 0, x->nb_outlet-1);
     x->outPosZ[x->nb_outPosZ].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->outPosZ[x->nb_outPosZ].influence = influence;
     x->nb_outPosZ++;
 }
 
-void pmpd3d_tilde_outSpeedX(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+void pmpd3d_tilde_outSpeedX(t_pmpd3d_tilde *x, t_float outlet, t_float mass, t_float influence)
 {
+    int idx_outlet;
     if (x->nb_outSpeedX == x->nb_max_out)
     {
-        pd_error(x, "too many outSpeedX assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd3d~: too many outlet assignments (increase limit with creation argument)");
         return;
     }
-    x->outSpeedX[x->nb_outSpeedX].nbr_outlet = clamp((int)nb_outlet, 0, x->nb_outlet-1);
+    idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
+    if (idx_outlet != (int)outlet)
+        logpost(x, 2, "pmpd3d~: no outlet at index %i, assigning outSpeedX to index %i", (int)outlet, idx_outlet);
+    x->outSpeedX[x->nb_outSpeedX].nbr_outlet = clamp((int)idx_outlet, 0, x->nb_outlet-1);
     x->outSpeedX[x->nb_outSpeedX].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->outSpeedX[x->nb_outSpeedX].influence = influence;
     x->nb_outSpeedX++;
 }
 
-void pmpd3d_tilde_outSpeedY(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+void pmpd3d_tilde_outSpeedY(t_pmpd3d_tilde *x, t_float outlet, t_float mass, t_float influence)
 {
+    int idx_outlet;
     if (x->nb_outSpeedY == x->nb_max_out)
     {
-        pd_error(x, "too many outSpeedY assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd3d~: too many outlet assignments (increase limit with creation argument)");
         return;
     }
-    x->outSpeedY[x->nb_outSpeedY].nbr_outlet = clamp((int)nb_outlet, 0, x->nb_outlet-1);
+    idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
+    if (idx_outlet != (int)outlet)
+        logpost(x, 2, "pmpd3d~: no outlet at index %i, assigning outSpeedY to index %i", (int)outlet, idx_outlet);
+    x->outSpeedY[x->nb_outSpeedY].nbr_outlet = clamp((int)idx_outlet, 0, x->nb_outlet-1);
     x->outSpeedY[x->nb_outSpeedY].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->outSpeedY[x->nb_outSpeedY].influence = influence;
     x->nb_outSpeedY++;
 }
 
-void pmpd3d_tilde_outSpeedZ(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+void pmpd3d_tilde_outSpeedZ(t_pmpd3d_tilde *x, t_float outlet, t_float mass, t_float influence)
 {
+    int idx_outlet;
     if (x->nb_outSpeedZ == x->nb_max_out)
     {
-        pd_error(x, "too many outSpeedZ assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd3d~: too many outlet assignments (increase limit with creation argument)");
         return;
     }
-    x->outSpeedZ[x->nb_outSpeedZ].nbr_outlet = clamp((int)nb_outlet, 0, x->nb_outlet-1);
+    idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
+    if (idx_outlet != (int)outlet)
+        logpost(x, 2, "pmpd3d~: no outlet at index %i, assigning outSpeedZ to index %i", (int)outlet, idx_outlet);
+    x->outSpeedZ[x->nb_outSpeedZ].nbr_outlet = clamp((int)idx_outlet, 0, x->nb_outlet-1);
     x->outSpeedZ[x->nb_outSpeedZ].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->outSpeedZ[x->nb_outSpeedZ].influence = influence;
     x->nb_outSpeedZ++;
 }
 
-void pmpd3d_tilde_outSpeed(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+void pmpd3d_tilde_outSpeed(t_pmpd3d_tilde *x, t_float outlet, t_float mass, t_float influence)
 {
+    int idx_outlet;
     if (x->nb_outSpeed == x->nb_max_out)
     {
-        pd_error(x, "too many outSpeed assigned (increase limit with creation argument)");
+        pd_error(x, "pmpd3d~: too many outlet assignments (increase limit with creation argument)");
         return;
     }
-    x->outSpeed[x->nb_outSpeed].nbr_outlet = clamp((int)nb_outlet, 0, x->nb_outlet-1);
+    idx_outlet = clamp((int)outlet, 0, x->nb_outlet-1);
+    if (idx_outlet != (int)outlet)
+        logpost(x, 2, "pmpd3d~: no outlet at index %i, assigning outSpeed to index %i", (int)outlet, idx_outlet);
+    x->outSpeed[x->nb_outSpeed].nbr_outlet = clamp((int)idx_outlet, 0, x->nb_outlet-1);
     x->outSpeed[x->nb_outSpeed].mass = &x->mass[clamp((int)mass, 0, x->nb_mass-1)];
     x->outSpeed[x->nb_outSpeed].influence = influence;
     x->nb_outSpeed++;
