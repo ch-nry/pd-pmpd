@@ -126,9 +126,9 @@ typedef struct _pmpd3d_tilde {
     t_int loop, nb_loop; // to be able not to compute everything a each iteration
 } t_pmpd3d_tilde;
 
-
-t_int *pmpd3d_tilde_perform(t_int *w) {
+t_int *pmpd3d_tilde_perform(t_int *w)
 ///////////////////////////////////////////////////////////////////////////////////
+{
     t_pmpd3d_tilde *x = (t_pmpd3d_tilde *)(w[1]);
     int n = (int)(w[2]);
 
@@ -267,7 +267,8 @@ t_int *pmpd3d_tilde_perform(t_int *w) {
     return(w+3);
 }
 
-void pmpd3d_tilde_dsp(t_pmpd3d_tilde *x, t_signal **sp) {
+void pmpd3d_tilde_dsp(t_pmpd3d_tilde *x, t_signal **sp)
+{
     int i;
     for (i=0; i<x->nb_inlet; i++)
         x->inlet_vector[i] = sp[i]->s_vec;
@@ -278,9 +279,9 @@ void pmpd3d_tilde_dsp(t_pmpd3d_tilde *x, t_signal **sp) {
     dsp_add(pmpd3d_tilde_perform, 2, x, sp[0]->s_n); // S_n : la taille du vecteur
 }
 
-void pmpd3d_tilde_bang(t_pmpd3d_tilde *x) {
+void pmpd3d_tilde_bang(t_pmpd3d_tilde *x)
+{
     t_int i;
-
     for (i=0; i<x->nb_mass; i++) logpost(x, 2, "mass:%ld, M:%f, posX:%f, posY:%f, posZ:%f, D2:%f, D2offset:%f",i, x->mass[i].invM<=0.?0:1/x->mass[i].invM, x->mass[i].posX,x->mass[i].posY,x->mass[i].posZ,x->mass[i].D,x->mass[i].Doffset);
     for (i=0; i<x->nb_link; i++) logpost(x, 2, "link:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f", i, x->link[i].mass1->Id, x->link[i].mass2->Id, x->link[i].K1, x->link[i].D1, x->link[i].L0, x->link[i].L);
     for (i=0; i<x->nb_NLlink; i++) logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f, Lmin:%f, Lmax:%f, Pow:%f, blabla", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K1, x->NLlink[i].D1, x->NLlink[i].L0, x->NLlink[i].L, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
@@ -299,7 +300,8 @@ void pmpd3d_tilde_bang(t_pmpd3d_tilde *x) {
     for (i=0; i<x->nb_outSpeedZ; i++) logpost(x, 2, "Out_speedZ:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedZ[i].nbr_outlet, x->outSpeedZ[i].mass->Id, x->outSpeedZ[i].influence);
 }
 
-int validate_index(t_pmpd3d_tilde *x, int idx, t_int count, const char* type) {
+int validate_index(t_pmpd3d_tilde *x, int idx, t_int count, const char* type)
+{
     if (idx < 0 || idx+1 > count) {
         pd_error(x, "pmpd3d~: no %s at index %i", type, idx);
         return 0;
@@ -307,59 +309,86 @@ int validate_index(t_pmpd3d_tilde *x, int idx, t_int count, const char* type) {
     return 1;
 }
 
-void pmpd3d_tilde_forceX(t_pmpd3d_tilde *x, t_float idx_mass, t_float force) {
+void pmpd3d_tilde_forceX(t_pmpd3d_tilde *x, t_float idx_mass, t_float force)
+{
 // add a force to a specific mass
-    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) ) x->mass[(int)idx_mass].forceX += force;
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].forceX += force;
 }
 
-void pmpd3d_tilde_forceY(t_pmpd3d_tilde *x, t_float idx_mass, t_float force) { // add a force to a specific mass
-    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) ) x->mass[(int)idx_mass].forceY += force;
+void pmpd3d_tilde_forceY(t_pmpd3d_tilde *x, t_float idx_mass, t_float force)
+{
+// add a force to a specific mass
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].forceY += force;
 }
 
-void pmpd3d_tilde_forceZ(t_pmpd3d_tilde *x, t_float idx_mass, t_float force) { // add a force to a specific mass
-    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) ) x->mass[(int)idx_mass].forceZ += force;
+void pmpd3d_tilde_forceZ(t_pmpd3d_tilde *x, t_float idx_mass, t_float force)
+{
+// add a force to a specific mass
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].forceZ += force;
 }
 
-void pmpd3d_tilde_posX(t_pmpd3d_tilde *x, t_float idx_mass, t_float posX) { // move a mass to a certain position
-    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) )  x->mass[(int)idx_mass].posX = posX;
+void pmpd3d_tilde_posX(t_pmpd3d_tilde *x, t_float idx_mass, t_float posX)
+{
+// move a mass to a certain position
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].posX = posX;
 }
 
-void pmpd3d_tilde_posY(t_pmpd3d_tilde *x, t_float idx_mass, t_float posY) { // move a mass to a certain position
-    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) )  x->mass[(int)idx_mass].posY = posY;
+void pmpd3d_tilde_posY(t_pmpd3d_tilde *x, t_float idx_mass, t_float posY)
+{
+// move a mass to a certain position
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].posY = posY;
 }
 
-void pmpd3d_tilde_posZ(t_pmpd3d_tilde *x, t_float idx_mass, t_float posZ) { // move a mass to a certain position
-    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) )  x->mass[(int)idx_mass].posZ = posZ;
+void pmpd3d_tilde_posZ(t_pmpd3d_tilde *x, t_float idx_mass, t_float posZ)
+{
+// move a mass to a certain position
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].posZ = posZ;
 }
 
-void pmpd3d_tilde_setD2(t_pmpd3d_tilde *x, t_float idx_mass, t_float D) {
-    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) )  x->mass[(int)idx_mass].D = D;
+void pmpd3d_tilde_setD2(t_pmpd3d_tilde *x, t_float idx_mass, t_float D)
+{
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].D = D;
 }
 
-void pmpd3d_tilde_setD2offset(t_pmpd3d_tilde *x, t_float idx_mass, t_float D) {
-    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) )  x->mass[(int)idx_mass].Doffset = D;
+void pmpd3d_tilde_setD2offset(t_pmpd3d_tilde *x, t_float idx_mass, t_float D)
+{
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].Doffset = D;
 }
 
-void pmpd3d_tilde_setM(t_pmpd3d_tilde *x, t_float idx_mass, t_float M) {
-    if( (idx_mass >= 0) && (idx_mass < x->nb_mass)) {
-        if (M> 0) x->mass[(int)idx_mass].invM = 1./M;
-        else x->mass[(int)idx_mass].invM = 0;
-    }
+void pmpd3d_tilde_setM(t_pmpd3d_tilde *x, t_float idx_mass, t_float M)
+{
+    if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
+    x->mass[(int)idx_mass].invM = M>0 ? 1/M : 0;
 }
 
-void pmpd3d_tilde_setK(t_pmpd3d_tilde *x, t_float idx_link, t_float K) {
-    if( (idx_link >= 0) && (idx_link < x->nb_link) ) x->link[(int)idx_link].K1 = K;
+void pmpd3d_tilde_setK(t_pmpd3d_tilde *x, t_float idx_link, t_float K)
+{
+    if (!validate_index(x, (int)idx_link, x->nb_link, "link")) return;
+    x->link[(int)idx_link].K1 = K;
 }
 
-void pmpd3d_tilde_setD(t_pmpd3d_tilde *x, t_float idx_link, t_float D) {
-    if( (idx_link >= 0) && (idx_link < x->nb_link) ) x->link[(int)idx_link].D1 = D;
+void pmpd3d_tilde_setD(t_pmpd3d_tilde *x, t_float idx_link, t_float D)
+{
+    if (!validate_index(x, (int)idx_link, x->nb_link, "link")) return;
+    x->link[(int)idx_link].D1 = D;
 }
 
-void pmpd3d_tilde_setL(t_pmpd3d_tilde *x, t_float idx_link, t_float L) {
-    if( (idx_link >= 0) && (idx_link < x->nb_link) ) x->link[(int)idx_link].L0 = L;
+void pmpd3d_tilde_setL(t_pmpd3d_tilde *x, t_float idx_link, t_float L)
+{
+    if (!validate_index(x, (int)idx_link, x->nb_link, "link")) return;
+    x->link[(int)idx_link].L0 = L;
 }
 
-void pmpd3d_tilde_setLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv) {
+void pmpd3d_tilde_setLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
+{
     int idx_link;
     t_float percent;
     if ( (argc >= 1) && (argv[0].a_type == A_FLOAT) ) {
@@ -375,7 +404,8 @@ void pmpd3d_tilde_setLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *
 
 void pmpd3d_tilde_setNLD(t_pmpd3d_tilde *x, t_float idx_NLlink, t_float D)
 {
-    if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  x->NLlink[(int)idx_NLlink].D1 = D;
+    if (!validate_index(x, (int)idx_NLlink, x->nb_NLlink, "NLlink")) return;
+    x->NLlink[(int)idx_NLlink].D1 = D;
 }
 
 void pmpd3d_tilde_setNLK(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
@@ -397,25 +427,30 @@ void pmpd3d_tilde_setNLK(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 
 void pmpd3d_tilde_setNLKPow(t_pmpd3d_tilde *x, t_float idx_NLlink, t_float Pow)
 {
-    if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  x->NLlink[(int)idx_NLlink].Pow = Pow;
+    if (!validate_index(x, (int)idx_NLlink, x->nb_NLlink, "NLlink")) return;
+    x->NLlink[(int)idx_NLlink].Pow = Pow;
 }
 
 void pmpd3d_tilde_setNLL(t_pmpd3d_tilde *x, t_float idx_NLlink, t_float L)
 {
-    if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  x->NLlink[(int)idx_NLlink].L0 = L;
+    if (!validate_index(x, (int)idx_NLlink, x->nb_NLlink, "NLlink")) return;
+    x->NLlink[(int)idx_NLlink].L0 = L;
 }
 
 void pmpd3d_tilde_setNLLMin(t_pmpd3d_tilde *x, t_float idx_NLlink, t_float M)
 {
-    if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  x->NLlink[(int)idx_NLlink].Lmin = M;
+    if (!validate_index(x, (int)idx_NLlink, x->nb_NLlink, "NLlink")) return;
+    x->NLlink[(int)idx_NLlink].Lmin = M;
 }
 
 void pmpd3d_tilde_setNLLMax(t_pmpd3d_tilde *x, t_float idx_NLlink, t_float M)
 {
-    if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  x->NLlink[(int)idx_NLlink].Lmax = M;
+    if (!validate_index(x, (int)idx_NLlink, x->nb_NLlink, "NLlink")) return;
+    x->NLlink[(int)idx_NLlink].Lmax = M;
 }
 
-void pmpd3d_tilde_setNLLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv) {
+void pmpd3d_tilde_setNLLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
+{
     int idx_NLlink;
     t_float percent;
     if ( (argc >= 1) && (argv[0].a_type == A_FLOAT) ) {
@@ -429,7 +464,8 @@ void pmpd3d_tilde_setNLLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom
     }
 }
 
-void pmpd3d_tilde_mass(t_pmpd3d_tilde *x, t_float M, t_float posX, t_float posY, t_float posZ, t_float D) {
+void pmpd3d_tilde_mass(t_pmpd3d_tilde *x, t_float M, t_float posX, t_float posY, t_float posZ, t_float D)
+{
 // add a mass
 //invM speedX posX force
     if (x->nb_mass == x->nb_max_mass) {
@@ -459,7 +495,8 @@ void pmpd3d_tilde_mass(t_pmpd3d_tilde *x, t_float M, t_float posX, t_float posY,
     x->nb_mass++;
 }
 
-void pmpd3d_tilde_link(t_pmpd3d_tilde *x, t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float L0) {
+void pmpd3d_tilde_link(t_pmpd3d_tilde *x, t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float L0)
+{
 // add a link
 // *mass1, *mass2, K1, D1;
     if (x->nb_link == x->nb_max_link) {
@@ -482,7 +519,8 @@ void pmpd3d_tilde_link(t_pmpd3d_tilde *x, t_float mass_1, t_float mass_2, t_floa
     x->nb_link++;
 }
 
-void pmpd3d_tilde_NLlink(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv) {
+void pmpd3d_tilde_NLlink(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
+{
 // t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
     if (argc != 8)
@@ -513,7 +551,8 @@ void pmpd3d_tilde_NLlink(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom *argv)
     x->nb_NLlink++;
 }
 
-void pmpd3d_tilde_inPosX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_inPosX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+{
 //add an input point
 // nbr_inlet, *mass, influence;
     if (x->nb_inPosX == x->nb_max_in)
@@ -527,7 +566,8 @@ void pmpd3d_tilde_inPosX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_fl
     x->nb_inPosX++;
 }
 
-void pmpd3d_tilde_inPosY(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_inPosY(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+{
 //add an input point
 // nbr_inlet, *mass, influence;
     if (x->nb_inPosY == x->nb_max_in)
@@ -541,7 +581,8 @@ void pmpd3d_tilde_inPosY(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_fl
     x->nb_inPosY++;
 }
 
-void pmpd3d_tilde_inPosZ(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_inPosZ(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+{
 //add an input point
 // nbr_inlet, *mass, influence;
     if (x->nb_inPosZ == x->nb_max_in)
@@ -555,7 +596,8 @@ void pmpd3d_tilde_inPosZ(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_fl
     x->nb_inPosZ++;
 }
 
-void pmpd3d_tilde_inForceX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_inForceX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+{
     if (x->nb_inForceX == x->nb_max_in)
     {
         pd_error(x, "too many inForceX assigned (increase limit with creation argument)");
@@ -567,7 +609,8 @@ void pmpd3d_tilde_inForceX(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_
     x->nb_inForceX++;
 }
 
-void pmpd3d_tilde_inForceY(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_inForceY(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+{
     if (x->nb_inForceY == x->nb_max_in)
     {
         pd_error(x, "too many inForceY assigned (increase limit with creation argument)");
@@ -579,7 +622,8 @@ void pmpd3d_tilde_inForceY(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_
     x->nb_inForceY++;
 }
 
-void pmpd3d_tilde_inForceZ(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_inForceZ(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_float influence)
+{
     if (x->nb_inForceZ == x->nb_max_in)
     {
         pd_error(x, "too many inForceZ assigned (increase limit with creation argument)");
@@ -591,7 +635,8 @@ void pmpd3d_tilde_inForceZ(t_pmpd3d_tilde *x, t_float nb_inlet, t_float mass, t_
     x->nb_inForceZ++;
 }
 
-void pmpd3d_tilde_outPosX(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_outPosX(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+{
     if (x->nb_outPosX == x->nb_max_out)
     {
         pd_error(x, "too many outPosX assigned (increase limit with creation argument)");
@@ -603,7 +648,8 @@ void pmpd3d_tilde_outPosX(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_
     x->nb_outPosX++;
 }
 
-void pmpd3d_tilde_outPosY(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_outPosY(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+{
     if (x->nb_outPosY == x->nb_max_out)
     {
         pd_error(x, "too many outPosY assigned (increase limit with creation argument)");
@@ -615,7 +661,8 @@ void pmpd3d_tilde_outPosY(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_
     x->nb_outPosY++;
 }
 
-void pmpd3d_tilde_outPosZ(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_outPosZ(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+{
     if (x->nb_outPosZ == x->nb_max_out)
     {
         pd_error(x, "too many outPosZ assigned (increase limit with creation argument)");
@@ -627,7 +674,8 @@ void pmpd3d_tilde_outPosZ(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_
     x->nb_outPosZ++;
 }
 
-void pmpd3d_tilde_outSpeedX(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_outSpeedX(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+{
     if (x->nb_outSpeedX == x->nb_max_out)
     {
         pd_error(x, "too many outSpeedX assigned (increase limit with creation argument)");
@@ -639,7 +687,8 @@ void pmpd3d_tilde_outSpeedX(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, 
     x->nb_outSpeedX++;
 }
 
-void pmpd3d_tilde_outSpeedY(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_outSpeedY(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+{
     if (x->nb_outSpeedY == x->nb_max_out)
     {
         pd_error(x, "too many outSpeedY assigned (increase limit with creation argument)");
@@ -651,7 +700,8 @@ void pmpd3d_tilde_outSpeedY(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, 
     x->nb_outSpeedY++;
 }
 
-void pmpd3d_tilde_outSpeedZ(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_outSpeedZ(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+{
     if (x->nb_outSpeedZ == x->nb_max_out)
     {
         pd_error(x, "too many outSpeedZ assigned (increase limit with creation argument)");
@@ -663,7 +713,8 @@ void pmpd3d_tilde_outSpeedZ(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, 
     x->nb_outSpeedZ++;
 }
 
-void pmpd3d_tilde_outSpeed(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence) {
+void pmpd3d_tilde_outSpeed(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t_float influence)
+{
     if (x->nb_outSpeed == x->nb_max_out)
     {
         pd_error(x, "too many outSpeed assigned (increase limit with creation argument)");
@@ -675,7 +726,8 @@ void pmpd3d_tilde_outSpeed(t_pmpd3d_tilde *x, t_float nb_outlet, t_float mass, t
     x->nb_outSpeed++;
 }
 
-void pmpd3d_tilde_reset(t_pmpd3d_tilde *x) {
+void pmpd3d_tilde_reset(t_pmpd3d_tilde *x)
+{
     x->nb_link      = 0;
     x->nb_NLlink    = 0;
     x->nb_mass      = 0;
@@ -694,7 +746,8 @@ void pmpd3d_tilde_reset(t_pmpd3d_tilde *x) {
     x->nb_outPosZ   = 0;
 }
 
-void pmpd3d_tilde_free(t_pmpd3d_tilde *x) {
+void pmpd3d_tilde_free(t_pmpd3d_tilde *x)
+{
     if (x->outlet) freebytes(x->outlet, x->nb_outlet * sizeof(t_float));
 
     if (x->inlet_vector) freebytes(x->inlet_vector, x->nb_inlet * sizeof(t_sample *));
@@ -719,7 +772,8 @@ void pmpd3d_tilde_free(t_pmpd3d_tilde *x) {
     if (x->outSpeed) freebytes(x->outSpeed, x->nb_outSpeed * sizeof(struct _outSpeed));
 }
 
-void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv) {
+void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
+{
     int i, arg;
     t_pmpd3d_tilde *x = (t_pmpd3d_tilde *)pd_new(pmpd3d_tilde_class);
 
@@ -764,7 +818,8 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv) {
     return (void *)x;
 }
 
-PMPD_EXPORT void pmpd3d_tilde_setup(void) {
+PMPD_EXPORT void pmpd3d_tilde_setup(void)
+{
     pmpd3d_tilde_class = class_new(gensym("pmpd3d~"), (t_newmethod)pmpd3d_tilde_new, 0, sizeof(t_pmpd3d_tilde), CLASS_DEFAULT, A_GIMME, 0);
 
     if(!pmpd3d_tilde_class)
