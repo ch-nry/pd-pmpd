@@ -258,15 +258,15 @@ void pmpd2d_tilde_bang(t_pmpd2d_tilde *x)
     for (i=0; i<x->nb_mass; i++) logpost(x, 2, "mass:%ld, M:%f, posX:%f, posY:%f, D2:%f, D2offset:%f",i, x->mass[i].invM<=0.?0:1/x->mass[i].invM, x->mass[i].posX,x->mass[i].posY,x->mass[i].D,x->mass[i].Doffset);
     for (i=0; i<x->nb_link; i++) logpost(x, 2, "link:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f", i, x->link[i].mass1->Id, x->link[i].mass2->Id, x->link[i].K1, x->link[i].D1, x->link[i].L0, x->link[i].L);
     for (i=0; i<x->nb_NLlink; i++) logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f, Lmin:%f, Lmax:%f, Pow:%f", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K1, x->NLlink[i].D1, x->NLlink[i].L0, x->NLlink[i].L, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
-    for (i=0; i<x->nb_inPosX; i++) logpost(x, 2, "In_posX:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosX[i].nbr_inlet, x->inPosX[i].mass->Id, x->inPosX[i].influence);
-    for (i=0; i<x->nb_inPosY; i++) logpost(x, 2, "In_posY:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosY[i].nbr_inlet, x->inPosY[i].mass->Id, x->inPosY[i].influence);
-    for (i=0; i<x->nb_inForceX; i++) logpost(x, 2, "In_forceX:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForceX[i].nbr_inlet, x->inForceX[i].mass->Id, x->inForceX[i].influence);
-    for (i=0; i<x->nb_inForceY; i++) logpost(x, 2, "In_forceY:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForceY[i].nbr_inlet, x->inForceY[i].mass->Id, x->inForceY[i].influence);
-    for (i=0; i<x->nb_outPosX; i++) logpost(x, 2, "Out_posX:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPosX[i].nbr_outlet, x->outPosX[i].mass->Id, x->outPosX[i].influence);
-    for (i=0; i<x->nb_outPosY; i++) logpost(x, 2, "Out_posY:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPosY[i].nbr_outlet, x->outPosY[i].mass->Id, x->outPosY[i].influence);
-    for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "Out_speed:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass->Id, x->outSpeed[i].influence);
-    for (i=0; i<x->nb_outSpeedX; i++) logpost(x, 2, "Out_speedX:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedX[i].nbr_outlet, x->outSpeedX[i].mass->Id, x->outSpeedX[i].influence);
-    for (i=0; i<x->nb_outSpeedY; i++) logpost(x, 2, "Out_speedY:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedY[i].nbr_outlet, x->outSpeedY[i].mass->Id, x->outSpeedY[i].influence);
+    for (i=0; i<x->nb_inPosX; i++) logpost(x, 2, "inPosX:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosX[i].nbr_inlet, x->inPosX[i].mass->Id, x->inPosX[i].influence);
+    for (i=0; i<x->nb_inPosY; i++) logpost(x, 2, "inPosY:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosY[i].nbr_inlet, x->inPosY[i].mass->Id, x->inPosY[i].influence);
+    for (i=0; i<x->nb_inForceX; i++) logpost(x, 2, "inForceX:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForceX[i].nbr_inlet, x->inForceX[i].mass->Id, x->inForceX[i].influence);
+    for (i=0; i<x->nb_inForceY; i++) logpost(x, 2, "inForceY:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForceY[i].nbr_inlet, x->inForceY[i].mass->Id, x->inForceY[i].influence);
+    for (i=0; i<x->nb_outPosX; i++) logpost(x, 2, "outPosX:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPosX[i].nbr_outlet, x->outPosX[i].mass->Id, x->outPosX[i].influence);
+    for (i=0; i<x->nb_outPosY; i++) logpost(x, 2, "outPosY:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPosY[i].nbr_outlet, x->outPosY[i].mass->Id, x->outPosY[i].influence);
+    for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "outSpeed:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass->Id, x->outSpeed[i].influence);
+    for (i=0; i<x->nb_outSpeedX; i++) logpost(x, 2, "outSpeedX:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedX[i].nbr_outlet, x->outSpeedX[i].mass->Id, x->outSpeedX[i].influence);
+    for (i=0; i<x->nb_outSpeedY; i++) logpost(x, 2, "outSpeedY:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedY[i].nbr_outlet, x->outSpeedY[i].mass->Id, x->outSpeedY[i].influence);
 }
 
 int validate_index(t_pmpd2d_tilde *x, int idx, t_int count, const char* type)
