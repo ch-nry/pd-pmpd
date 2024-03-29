@@ -272,12 +272,12 @@ void pmpd_tilde_setNLK(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
     int idx_NLlink;
     if (argc < 2)
     {
-        pd_error(x, "pmpd~: 'setNLK' message requires at least 2 arguments (link index and rigidity)");
+        pd_error(x, "pmpd~: 'setNLK' requires link index and rigidity arguments");
         return;
     }
     if (argv[0].a_type != A_FLOAT)
     {
-        pd_error(x, "pmpd~: invalid link index for setNLK");
+        pd_error(x, "pmpd~: invalid link index for 'setNLK'");
         return;
     }
     idx_NLlink = (int)atom_getfloatarg(0,argc,argv);
@@ -318,12 +318,12 @@ void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *ar
     t_float percent;
     if (argc < 1)
     {
-        pd_error(x, "pmpd~: 'setNLLCurrent' message requires at least a link index argument");
+        pd_error(x, "pmpd~: 'setNLLCurrent' requires link index argument");
         return;
     } 
     if (argv[0].a_type != A_FLOAT)
     {
-        pd_error(x, "pmpd~: invalid link index for setNLLCurrent");
+        pd_error(x, "pmpd~: invalid link index for 'setNLLCurrent'");
         return;
     }
     idx_NLlink = (int)atom_getfloatarg(0,argc,argv);
@@ -489,7 +489,6 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
     t_pmpd_tilde *x = (t_pmpd_tilde *)pd_new(pmpd_tilde_class);
 
     pmpd_tilde_reset(x);
-    // makeseed_pmpd_tilde();
 
     x->nb_inlet    = max(1, (int)atom_getfloatarg(0, argc, argv));
     x->nb_outlet   = max(1, (int)atom_getfloatarg(1, argc, argv));
