@@ -269,117 +269,125 @@ void pmpd2d_tilde_bang(t_pmpd2d_tilde *x) {
     for (i=0; i<x->nb_outSpeedY; i++) logpost(x, 2, "Out_speedY:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedY[i].nbr_outlet, x->outSpeedY[i].mass->Id, x->outSpeedY[i].influence);
 }
 
-void pmpd2d_tilde_forceX(t_pmpd2d_tilde *x, t_float nbr_mass, t_float force) {
+int validate_index(t_pmpd2d_tilde *x, int idx, t_int count, const char* type) {
+    if (idx < 0 || idx+1 > count) {
+        pd_error(x, "pmpd2d~: no %s at index %i", type, idx);
+        return 0;
+    }
+    return 1;
+}
+
+void pmpd2d_tilde_forceX(t_pmpd2d_tilde *x, t_float idx_mass, t_float force) {
 // add a force to a specific mass
-    if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass) ) x->mass[(int)nbr_mass].forceX += force;
+    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) ) x->mass[(int)idx_mass].forceX += force;
 }
 
-void pmpd2d_tilde_forceY(t_pmpd2d_tilde *x, t_float nbr_mass, t_float force) { // add a force to a specific mass
-    if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass) ) x->mass[(int)nbr_mass].forceY += force;
+void pmpd2d_tilde_forceY(t_pmpd2d_tilde *x, t_float idx_mass, t_float force) { // add a force to a specific mass
+    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) ) x->mass[(int)idx_mass].forceY += force;
 }
 
-void pmpd2d_tilde_posX(t_pmpd2d_tilde *x, t_float nbr_mass, t_float posX) { // move a mass to a certain position
-    if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass) )  x->mass[(int)nbr_mass].posX = posX;
+void pmpd2d_tilde_posX(t_pmpd2d_tilde *x, t_float idx_mass, t_float posX) { // move a mass to a certain position
+    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) )  x->mass[(int)idx_mass].posX = posX;
 }
 
-void pmpd2d_tilde_posY(t_pmpd2d_tilde *x, t_float nbr_mass, t_float posY) { // move a mass to a certain position
-    if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass) )  x->mass[(int)nbr_mass].posY = posY;
+void pmpd2d_tilde_posY(t_pmpd2d_tilde *x, t_float idx_mass, t_float posY) { // move a mass to a certain position
+    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) )  x->mass[(int)idx_mass].posY = posY;
 }
 
-void pmpd2d_tilde_setD2(t_pmpd2d_tilde *x, t_float nbr_mass, t_float D) {
-    if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass) )  x->mass[(int)nbr_mass].D = D;
+void pmpd2d_tilde_setD2(t_pmpd2d_tilde *x, t_float idx_mass, t_float D) {
+    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) )  x->mass[(int)idx_mass].D = D;
 }
 
-void pmpd2d_tilde_setD2offset(t_pmpd2d_tilde *x, t_float nbr_mass, t_float D) {
-    if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass) )  x->mass[(int)nbr_mass].Doffset = D;
+void pmpd2d_tilde_setD2offset(t_pmpd2d_tilde *x, t_float idx_mass, t_float D) {
+    if( (idx_mass >= 0) && (idx_mass < x->nb_mass) )  x->mass[(int)idx_mass].Doffset = D;
 }
 
-void pmpd2d_tilde_setM(t_pmpd2d_tilde *x, t_float nbr_mass, t_float M) {
-    if( (nbr_mass >= 0) && (nbr_mass < x->nb_mass)) {
-        if (M> 0) x->mass[(int)nbr_mass].invM = 1./M;
-        else x->mass[(int)nbr_mass].invM = 0;
+void pmpd2d_tilde_setM(t_pmpd2d_tilde *x, t_float idx_mass, t_float M) {
+    if( (idx_mass >= 0) && (idx_mass < x->nb_mass)) {
+        if (M> 0) x->mass[(int)idx_mass].invM = 1./M;
+        else x->mass[(int)idx_mass].invM = 0;
     }
 }
 
-void pmpd2d_tilde_setK(t_pmpd2d_tilde *x, t_float nbr_link, t_float K) {
-    if( (nbr_link >= 0) && (nbr_link < x->nb_link) ) x->link[(int)nbr_link].K1 = K;
+void pmpd2d_tilde_setK(t_pmpd2d_tilde *x, t_float idx_link, t_float K) {
+    if( (idx_link >= 0) && (idx_link < x->nb_link) ) x->link[(int)idx_link].K1 = K;
 }
 
-void pmpd2d_tilde_setD(t_pmpd2d_tilde *x, t_float nbr_link, t_float D) {
-    if( (nbr_link >= 0) && (nbr_link < x->nb_link) ) x->link[(int)nbr_link].D1 = D;
+void pmpd2d_tilde_setD(t_pmpd2d_tilde *x, t_float idx_link, t_float D) {
+    if( (idx_link >= 0) && (idx_link < x->nb_link) ) x->link[(int)idx_link].D1 = D;
 }
 
-void pmpd2d_tilde_setL(t_pmpd2d_tilde *x, t_float nbr_link, t_float L) {
-    if( (nbr_link >= 0) && (nbr_link < x->nb_link) ) x->link[(int)nbr_link].L0 = L;
+void pmpd2d_tilde_setL(t_pmpd2d_tilde *x, t_float idx_link, t_float L) {
+    if( (idx_link >= 0) && (idx_link < x->nb_link) ) x->link[(int)idx_link].L0 = L;
 }
 
 void pmpd2d_tilde_setLCurrent(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv) {
-    int nbr_link;
+    int idx_link;
     t_float percent;
     if ( (argc >= 1) && (argv[0].a_type == A_FLOAT) ) {
-        nbr_link = (int)atom_getfloatarg(0,argc,argv);
+        idx_link = (int)atom_getfloatarg(0,argc,argv);
         if ( (argc >= 2) && (argv[1].a_type == A_FLOAT) )
             percent = atom_getfloatarg(1,argc,argv);
         else
             percent = 1.;
-        if( (nbr_link >= 0) && (nbr_link < x->nb_link) )
-            x->link[nbr_link].L0 += percent * (x->link[nbr_link].L - x->link[nbr_link].L0);
+        if( (idx_link >= 0) && (idx_link < x->nb_link) )
+            x->link[idx_link].L0 += percent * (x->link[idx_link].L - x->link[idx_link].L0);
     }
 }
 
-void pmpd2d_tilde_setNLD(t_pmpd2d_tilde *x, t_float nbr_NLlink, t_float D)
+void pmpd2d_tilde_setNLD(t_pmpd2d_tilde *x, t_float idx_NLlink, t_float D)
 {
-    if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  x->NLlink[(int)nbr_NLlink].D1 = D;
+    if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  x->NLlink[(int)idx_NLlink].D1 = D;
 }
 
 void pmpd2d_tilde_setNLK(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 {
-    int nbr_NLlink;
+    int idx_NLlink;
     if ( (argc == 2) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) ) {
-        nbr_NLlink = atom_getfloatarg(0,argc,argv);
-        if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )
-            x->NLlink[(int)nbr_NLlink].K1 = atom_getfloatarg(1,argc,argv);;
+        idx_NLlink = atom_getfloatarg(0,argc,argv);
+        if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )
+            x->NLlink[(int)idx_NLlink].K1 = atom_getfloatarg(1,argc,argv);;
     } else
     if ( (argc == 3) && (argv[0].a_type == A_FLOAT) && (argv[1].a_type == A_FLOAT) && (argv[2].a_type == A_FLOAT) ) {
-        nbr_NLlink = atom_getfloatarg(0,argc,argv);
-        if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  {
-            x->NLlink[(int)nbr_NLlink].K1 = atom_getfloatarg(1,argc,argv);
-            x->NLlink[(int)nbr_NLlink].Pow = atom_getfloatarg(2,argc,argv);
+        idx_NLlink = atom_getfloatarg(0,argc,argv);
+        if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  {
+            x->NLlink[(int)idx_NLlink].K1 = atom_getfloatarg(1,argc,argv);
+            x->NLlink[(int)idx_NLlink].Pow = atom_getfloatarg(2,argc,argv);
         }
     }
 }
 
-void pmpd2d_tilde_setNLKPow(t_pmpd2d_tilde *x, t_float nbr_NLlink, t_float Pow)
+void pmpd2d_tilde_setNLKPow(t_pmpd2d_tilde *x, t_float idx_NLlink, t_float Pow)
 {
-    if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  x->NLlink[(int)nbr_NLlink].Pow = Pow;
+    if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  x->NLlink[(int)idx_NLlink].Pow = Pow;
 }
 
-void pmpd2d_tilde_setNLL(t_pmpd2d_tilde *x, t_float nbr_NLlink, t_float L)
+void pmpd2d_tilde_setNLL(t_pmpd2d_tilde *x, t_float idx_NLlink, t_float L)
 {
-    if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  x->NLlink[(int)nbr_NLlink].L0 = L;
+    if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  x->NLlink[(int)idx_NLlink].L0 = L;
 }
 
-void pmpd2d_tilde_setNLLMin(t_pmpd2d_tilde *x, t_float nbr_NLlink, t_float M)
+void pmpd2d_tilde_setNLLMin(t_pmpd2d_tilde *x, t_float idx_NLlink, t_float M)
 {
-    if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  x->NLlink[(int)nbr_NLlink].Lmin = M;
+    if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  x->NLlink[(int)idx_NLlink].Lmin = M;
 }
 
-void pmpd2d_tilde_setNLLMax(t_pmpd2d_tilde *x, t_float nbr_NLlink, t_float M)
+void pmpd2d_tilde_setNLLMax(t_pmpd2d_tilde *x, t_float idx_NLlink, t_float M)
 {
-    if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )  x->NLlink[(int)nbr_NLlink].Lmax = M;
+    if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )  x->NLlink[(int)idx_NLlink].Lmax = M;
 }
 
 void pmpd2d_tilde_setNLLCurrent(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv) {
-    int nbr_NLlink;
+    int idx_NLlink;
     t_float percent;
     if ( (argc >= 1) && (argv[0].a_type == A_FLOAT) ) {
-        nbr_NLlink = (int)atom_getfloatarg(0,argc,argv);
+        idx_NLlink = (int)atom_getfloatarg(0,argc,argv);
         if ( (argc >= 2) && (argv[1].a_type == A_FLOAT) )
             percent = atom_getfloatarg(1,argc,argv);
         else
             percent = 1.;
-        if( (nbr_NLlink >= 0) && (nbr_NLlink < x->nb_NLlink) )
-            x->NLlink[nbr_NLlink].L0 += percent * (x->NLlink[nbr_NLlink].L - x->NLlink[nbr_NLlink].L0);
+        if( (idx_NLlink >= 0) && (idx_NLlink < x->nb_NLlink) )
+            x->NLlink[idx_NLlink].L0 += percent * (x->NLlink[idx_NLlink].L - x->NLlink[idx_NLlink].L0);
     }
 }
 
