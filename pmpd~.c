@@ -213,7 +213,8 @@ void pmpd_tilde_bang(t_pmpd_tilde *x)
     for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "outSpeed:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass->Id, x->outSpeed[i].influence);
 }
 
-int validate_index(t_pmpd_tilde *x, int idx, t_int count, const char* type) {
+int validate_index(t_pmpd_tilde *x, int idx, t_int count, const char* type)
+{
     if (idx < 0 || idx+1 > count) {
         pd_error(x, "pmpd~: no %s at index %i", type, idx);
         return 0;
@@ -231,14 +232,12 @@ void pmpd_tilde_float(t_pmpd_tilde *x, t_float force)
 
 void pmpd_tilde_forceX(t_pmpd_tilde *x, t_float idx_mass, t_float force)
 {
-// add a force to a specific mass
     if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
     x->mass[(int)idx_mass].forceX += force;
 }
 
 void pmpd_tilde_posX(t_pmpd_tilde *x, t_float idx_mass, t_float posX)
 {
-// move a mass to a certain position
     if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
     x->mass[(int)idx_mass].posX = posX;
 }
@@ -318,12 +317,12 @@ void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *ar
     t_float percent;
     if (argc < 1)
     {
-        pd_error(x, "pmpd~: 'setNLLCurrent' requires link index argument");
+        pd_error(x, "pmpd~: 'setNLLCurrent' requires NLlink index argument");
         return;
     } 
     if (argv[0].a_type != A_FLOAT)
     {
-        pd_error(x, "pmpd~: invalid link index for 'setNLLCurrent'");
+        pd_error(x, "pmpd~: invalid NLlink index for 'setNLLCurrent'");
         return;
     }
     idx_NLlink = (int)atom_getfloatarg(0,argc,argv);
@@ -337,8 +336,9 @@ void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *ar
 
 int validate_count(t_pmpd_tilde *x, t_int count, t_int count_max, const char* type)
 {
-    if (count == count_max) {
-        pd_error(x, "pmpd~: too many %ss (increase limit with creation argument)", type);
+    if (count == count_max)
+    {
+        pd_error(x, "pmpd~: too many %s (increase limit with creation argument)", type);
         return 0;
     }
     return 1;
@@ -370,8 +370,8 @@ void pmpd_tilde_link(t_pmpd_tilde *x, t_float mass_1, t_float mass_2, t_float K1
 }
 
 void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
-// t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 // add a NLlink
+// t_float mass_1, t_float mass_2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 {
     if (!validate_count(x, x->nb_NLlink, x->nb_max_link, "NLlinks")) return;
     x->NLlink[x->nb_NLlink].mass1 = &x->mass[clamp((int)atom_getfloatarg(0, argc, argv), 0, x->nb_mass-1)];
@@ -386,10 +386,10 @@ void pmpd_tilde_NLlink(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *argv)
 }
 
 void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float idx_inlet, t_float idx_mass, t_float influence)
-{
 //add an input point
 // nbr_inlet, *mass, influence;
-    if (!validate_count(x, x->nb_inPos, x->nb_max_in, "inlet assignment") ||
+{
+    if (!validate_count(x, x->nb_inPos, x->nb_max_in, "inPos inlet assignments") ||
         !validate_index(x, idx_inlet, x->nb_inlet, "inlet") ||
         !validate_index(x, idx_mass, x->nb_mass, "mass")) return;
     x->inPos[x->nb_inPos].nbr_inlet = (int)idx_inlet;
@@ -400,7 +400,7 @@ void pmpd_tilde_inPos(t_pmpd_tilde *x, t_float idx_inlet, t_float idx_mass, t_fl
 
 void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float idx_inlet, t_float idx_mass, t_float influence)
 {
-    if (!validate_count(x, x->nb_inForce, x->nb_max_in, "inlet assignment") ||
+    if (!validate_count(x, x->nb_inForce, x->nb_max_in, "inForce inlet assignments") ||
         !validate_index(x, idx_inlet, x->nb_inlet, "inlet") ||
         !validate_index(x, idx_mass, x->nb_mass, "mass")) return;
     x->inForce[x->nb_inForce].nbr_inlet = (int)idx_inlet;
@@ -411,7 +411,7 @@ void pmpd_tilde_inForce(t_pmpd_tilde *x, t_float idx_inlet, t_float idx_mass, t_
 
 void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float idx_outlet, t_float idx_mass, t_float influence)
 {
-    if (!validate_count(x, x->nb_outPos, x->nb_max_out, "outlet assignment") ||
+    if (!validate_count(x, x->nb_outPos, x->nb_max_out, "outPos outlet assignments") ||
         !validate_index(x, idx_outlet, x->nb_outlet, "outlet") ||
         !validate_index(x, idx_mass, x->nb_mass, "mass")) return;
     x->outPos[x->nb_outPos].nbr_outlet = (int)idx_outlet;
@@ -422,7 +422,7 @@ void pmpd_tilde_outPos(t_pmpd_tilde *x, t_float idx_outlet, t_float idx_mass, t_
 
 void pmpd_tilde_outSpeed(t_pmpd_tilde *x, t_float idx_outlet, t_float idx_mass, t_float influence)
 {
-    if (!validate_count(x, x->nb_outSpeed, x->nb_max_out, "outlet assignment") ||
+    if (!validate_count(x, x->nb_outSpeed, x->nb_max_out, "outSpeed outlet assignments") ||
         !validate_index(x, idx_outlet, x->nb_outlet, "outlet") ||
         !validate_index(x, idx_mass, x->nb_mass, "mass")) return;
     x->outSpeed[x->nb_outSpeed].nbr_outlet = (int)idx_outlet;
@@ -510,7 +510,7 @@ PMPD_EXPORT void pmpd_tilde_setup(void) {
     CLASS_MAINSIGNALIN(pmpd_tilde_class, t_pmpd_tilde, f);
 
     class_addbang(pmpd_tilde_class, pmpd_tilde_bang);
-    class_addfloat(pmpd_tilde_class,  (t_method)pmpd_tilde_float);
+    class_addfloat(pmpd_tilde_class, (t_method)pmpd_tilde_float);
     class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_mass, gensym("mass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_link, gensym("link"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_NLlink, gensym("NLlink"), A_GIMME, 0);
@@ -538,5 +538,5 @@ PMPD_EXPORT void pmpd_tilde_setup(void) {
     class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLCurrent, gensym("setNLLCurrent"), A_GIMME, 0);
 
     class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_reset, gensym("reset"), 0);
-    class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_dsp, gensym("dsp"),  A_CANT, 0);
+    class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_dsp, gensym("dsp"), A_CANT, 0);
 }
