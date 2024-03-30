@@ -27,8 +27,6 @@
 #include "m_pd.h"
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) )
-#define min(a,b) ( ((a) < (b)) ? (a) : (b) )
-#define clamp(a,b,c) (min(max((a), (b)), (c)))
 
 #define NB_MAX_LINK_DEFAULT 10000
 #define NB_MAX_MASS_DEFAULT 10000
@@ -347,15 +345,10 @@ void pmpd2d_tilde_setLCurrent(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *
         pd_error(x, "pmpd2d~: 'setLCurrent' requires link index argument");
         return;
     } 
-    if (argv[0].a_type != A_FLOAT)
-    {
-        pd_error(x, "pmpd2d~: invalid link index for 'setLCurrent'");
-        return;
-    }
-    idx_link = (int)atom_getfloatarg(0,argc,argv);
+    idx_link = (int)atom_getfloatarg(0, argc, argv);
     if (!validate_index(x, idx_link, x->nb_link, "link")) return;
-    if (argc > 1 && argv[1].a_type == A_FLOAT)
-        percent = atom_getfloatarg(1,argc,argv);
+    if (argc > 1)
+        percent = atom_getfloatarg(1, argc, argv);
     else
         percent = 1;
     x->link[idx_link].L0 += percent * (x->link[idx_link].L - x->link[idx_link].L0);
@@ -375,17 +368,11 @@ void pmpd2d_tilde_setNLK(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
         pd_error(x, "pmpd2d~: 'setNLK' requires link index and rigidity arguments");
         return;
     }
-    if (argv[0].a_type != A_FLOAT)
-    {
-        pd_error(x, "pmpd2d~: invalid link index for 'setNLK'");
-        return;
-    }
-    idx_NLlink = (int)atom_getfloatarg(0,argc,argv);
+    idx_NLlink = (int)atom_getfloatarg(0, argc, argv);
     if (!validate_index(x, idx_NLlink, x->nb_NLlink, "NLlink")) return;
-    if (argv[1].a_type == A_FLOAT)
-        x->NLlink[idx_NLlink].K1 = atom_getfloatarg(1,argc,argv);
-    if (argc > 2 && argv[2].a_type == A_FLOAT)
-        x->NLlink[idx_NLlink].Pow = atom_getfloatarg(2,argc,argv);
+    x->NLlink[idx_NLlink].K1 = atom_getfloatarg(1, argc, argv);
+    if (argc > 2)
+        x->NLlink[idx_NLlink].Pow = atom_getfloatarg(2, argc, argv);
 }
 
 void pmpd2d_tilde_setNLKPow(t_pmpd2d_tilde *x, t_float idx_NLlink, t_float Pow)
@@ -421,15 +408,10 @@ void pmpd2d_tilde_setNLLCurrent(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom
         pd_error(x, "pmpd2d~: 'setNLLCurrent' requires NLlink index argument");
         return;
     } 
-    if (argv[0].a_type != A_FLOAT)
-    {
-        pd_error(x, "pmpd2d~: invalid NLlink index for 'setNLLCurrent'");
-        return;
-    }
-    idx_NLlink = (int)atom_getfloatarg(0,argc,argv);
+    idx_NLlink = (int)atom_getfloatarg(0, argc, argv);
     if (!validate_index(x, idx_NLlink, x->nb_NLlink, "NLlink")) return;
-    if (argc > 1 && argv[1].a_type == A_FLOAT)
-        percent = atom_getfloatarg(1,argc,argv);
+    if (argc > 1)
+        percent = atom_getfloatarg(1, argc, argv);
     else
         percent = 1;
     x->NLlink[idx_NLlink].L0 += percent * (x->NLlink[idx_NLlink].L - x->NLlink[idx_NLlink].L0);
@@ -466,10 +448,12 @@ void pmpd2d_tilde_link(t_pmpd2d_tilde *x, t_float mass_1, t_float mass_2, t_floa
 // add a link
 // *mass1, *mass2, K1, D1;
 {
-    if (!validate_count(x, x->nb_link, x->nb_max_link, "links")) return;
     t_float LX, LY;
-    x->link[x->nb_link].mass1 = &x->mass[clamp((int)mass_1, 0, x->nb_mass-1)];
-    x->link[x->nb_link].mass2 = &x->mass[clamp((int)mass_2, 0, x->nb_mass-1)];
+    if (!validate_count(x, x->nb_link, x->nb_max_link, "links") ||
+        !validate_index(x, (int)mass_1, x->nb_mass, "mass1") ||
+        !validate_index(x, (int)mass_2, x->nb_mass, "mass2")) return;
+    x->link[x->nb_link].mass1 = &x->mass[(int)mass_1];
+    x->link[x->nb_link].mass2 = &x->mass[(int)mass_2];
     x->link[x->nb_link].K1 = K1;
     x->link[x->nb_link].D1 = D1;
     x->link[x->nb_link].L0 = L0;
@@ -485,10 +469,20 @@ void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
 // add a NLlink
 // t_float mass1, t_float mass2, t_float K1, t_float D1, t_float Pow, t_float L0, t_float Lmin, t_float Lmax
 {
-    if (!validate_count(x, x->nb_NLlink, x->nb_max_link, "NLlinks")) return;
     t_float LX, LY;
-    x->NLlink[x->nb_NLlink].mass1 = &x->mass[clamp((int)atom_getfloatarg(0, argc, argv), 0, x->nb_mass-1)];
-    x->NLlink[x->nb_NLlink].mass2 = &x->mass[clamp((int)atom_getfloatarg(1, argc, argv), 0, x->nb_mass-1)];
+    int mass_1, mass_2;
+    if (argc < 2)
+    {
+        pd_error(x, "pmpd2d~: 'NLlink' requires 2 mass index arguments");
+        return;
+    } 
+    mass_1 = (int)atom_getfloatarg(0, argc, argv);
+    mass_2 = (int)atom_getfloatarg(1, argc, argv);
+    if (!validate_count(x, x->nb_NLlink, x->nb_max_link, "NLlinks") ||
+        !validate_index(x, mass_1, x->nb_mass, "mass1") ||
+        !validate_index(x, mass_2, x->nb_mass, "mass2")) return;
+    x->NLlink[x->nb_NLlink].mass1 = &x->mass[mass_1];
+    x->NLlink[x->nb_NLlink].mass2 = &x->mass[mass_2];
     x->NLlink[x->nb_NLlink].K1 = (argc >= 3) ? atom_getfloatarg(2, argc, argv) : 0;
     x->NLlink[x->nb_NLlink].D1 = (argc >= 4) ? atom_getfloatarg(3, argc, argv) : 0;
     x->NLlink[x->nb_NLlink].Pow = (argc >= 5) ? atom_getfloatarg(4, argc, argv) : 1;
