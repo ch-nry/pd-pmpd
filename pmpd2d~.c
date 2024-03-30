@@ -253,7 +253,7 @@ void pmpd2d_tilde_dsp(t_pmpd2d_tilde *x, t_signal **sp)
 void pmpd2d_tilde_bang(t_pmpd2d_tilde *x)
 {
     t_int i;
-    for (i=0; i<x->nb_mass; i++) logpost(x, 2, "mass:%ld, M:%f, posX:%f, posY:%f, D2:%f, D2offset:%f",i, x->mass[i].invM<=0.?0:1/x->mass[i].invM, x->mass[i].posX,x->mass[i].posY,x->mass[i].D,x->mass[i].Doffset);
+    for (i=0; i<x->nb_mass; i++) logpost(x, 2, "mass:%ld, M:%f, posX:%f, posY:%f, DEnv:%f, DEnvOffset:%f",i, x->mass[i].invM<=0.?0:1/x->mass[i].invM, x->mass[i].posX,x->mass[i].posY,x->mass[i].D,x->mass[i].Doffset);
     for (i=0; i<x->nb_link; i++) logpost(x, 2, "link:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f", i, x->link[i].mass1->Id, x->link[i].mass2->Id, x->link[i].K1, x->link[i].D1, x->link[i].L0, x->link[i].L);
     for (i=0; i<x->nb_NLlink; i++) logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f, Lmin:%f, Lmax:%f, Pow:%f", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K1, x->NLlink[i].D1, x->NLlink[i].L0, x->NLlink[i].L, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
     for (i=0; i<x->nb_inPosX; i++) logpost(x, 2, "inPosX:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosX[i].nbr_inlet, x->inPosX[i].mass->Id, x->inPosX[i].influence);
@@ -300,13 +300,13 @@ void pmpd2d_tilde_posY(t_pmpd2d_tilde *x, t_float idx_mass, t_float posY)
     x->mass[(int)idx_mass].posY = posY;
 }
 
-void pmpd2d_tilde_setD2(t_pmpd2d_tilde *x, t_float idx_mass, t_float D)
+void pmpd2d_tilde_setDEnv(t_pmpd2d_tilde *x, t_float idx_mass, t_float D)
 {
     if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
     x->mass[(int)idx_mass].D = D;
 }
 
-void pmpd2d_tilde_setD2offset(t_pmpd2d_tilde *x, t_float idx_mass, t_float D)
+void pmpd2d_tilde_setDEnvOffset(t_pmpd2d_tilde *x, t_float idx_mass, t_float D)
 {
     if (!validate_index(x, (int)idx_mass, x->nb_mass, "mass")) return;
     x->mass[(int)idx_mass].Doffset = D;
@@ -708,8 +708,8 @@ PMPD_EXPORT void pmpd2d_tilde_setup(void)
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_posY, gensym("posY"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_forceX, gensym("forceX"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_forceY, gensym("forceY"), A_DEFFLOAT, A_DEFFLOAT, 0);
-    class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setD2, gensym("setDEnv"), A_DEFFLOAT, A_DEFFLOAT, 0);
-    class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setD2offset, gensym("setDEnvOffset"), A_DEFFLOAT, A_DEFFLOAT, 0);
+    class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setDEnv, gensym("setDEnv"), A_DEFFLOAT, A_DEFFLOAT, 0);
+    class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setDEnvOffset, gensym("setDEnvOffset"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setK, gensym("setK"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setD, gensym("setD"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setL, gensym("setL"), A_DEFFLOAT, A_DEFFLOAT, 0);
