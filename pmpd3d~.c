@@ -597,7 +597,7 @@ void pmpd3d_tilde_inForceX(t_pmpd3d_tilde *x, t_float idx_inlet, t_float idx_mas
 
 void pmpd3d_tilde_inForceY(t_pmpd3d_tilde *x, t_float idx_inlet, t_float idx_mass, t_float influence)
 {
-    if (!validate_count(x, x->nb_inForceY, x->nb_max_in, "inForceY inlet assignment") ||
+    if (!validate_count(x, x->nb_inForceY, x->nb_max_in, "inForceY inlet assignments") ||
         !validate_index(x, idx_inlet, x->nb_inlet, "inlet") ||
         !validate_index(x, idx_mass, x->nb_mass, "mass")) return;
     x->inForceY[x->nb_inForceY].nbr_inlet = (int)idx_inlet;
@@ -608,7 +608,7 @@ void pmpd3d_tilde_inForceY(t_pmpd3d_tilde *x, t_float idx_inlet, t_float idx_mas
 
 void pmpd3d_tilde_inForceZ(t_pmpd3d_tilde *x, t_float idx_inlet, t_float idx_mass, t_float influence)
 {
-    if (!validate_count(x, x->nb_inForceZ, x->nb_max_in, "inForceZ inlet assignment") ||
+    if (!validate_count(x, x->nb_inForceZ, x->nb_max_in, "inForceZ inlet assignments") ||
         !validate_index(x, idx_inlet, x->nb_inlet, "inlet") ||
         !validate_index(x, idx_mass, x->nb_mass, "mass")) return;
     x->inForceZ[x->nb_inForceZ].nbr_inlet = (int)idx_inlet;
