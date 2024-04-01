@@ -1,0 +1,11 @@
+#N canvas 57 572 450 300 12;
+#X obj 44 26 inlet;
+#X obj 67 217 outlet;
+#X obj 73 141 /;
+#X msg 70 101 288.5 \$1;
+#X text 200 26 time to damping covertion;
+#X text 194 51 (the 60dB decay time);
+#X text 156 103 aproxive equation;
+#X connect 0 0 3 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
