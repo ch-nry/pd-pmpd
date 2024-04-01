@@ -298,7 +298,7 @@ void pmpd3d_tilde_bang(t_pmpd3d_tilde *x)
     for (i=0; i<x->nb_outSpeedZ; i++) logpost(x, 2, "outSpeedZ:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedZ[i].nbr_outlet, x->outSpeedZ[i].mass->Id, x->outSpeedZ[i].influence);
 }
 
-int validate_index(t_pmpd3d_tilde *x, int idx, t_int count, const char* type)
+inline int validate_index(t_pmpd3d_tilde *x, int idx, t_int count, const char* type)
 {
     if (idx < 0 || idx+1 > count) {
         pd_error(x, "pmpd3d~: no %s at index %i", type, idx);
@@ -460,7 +460,7 @@ void pmpd3d_tilde_setNLLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom
     x->NLlink[idx_NLlink].L0 += percent * (x->NLlink[idx_NLlink].L - x->NLlink[idx_NLlink].L0);
 }
 
-int validate_count(t_pmpd3d_tilde *x, t_int count, t_int count_max, const char* type)
+inline int validate_count(t_pmpd3d_tilde *x, t_int count, t_int count_max, const char* type)
 {
     if (count == count_max) {
         pd_error(x, "pmpd3d~: too many %s (increase limit with creation argument)", type);

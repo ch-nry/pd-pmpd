@@ -211,7 +211,7 @@ void pmpd_tilde_bang(t_pmpd_tilde *x)
     for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "outSpeed:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass->Id, x->outSpeed[i].influence);
 }
 
-int validate_index(t_pmpd_tilde *x, int idx, t_int count, const char* type)
+inline int validate_index(t_pmpd_tilde *x, int idx, t_int count, const char* type)
 {
     if (idx < 0 || idx+1 > count) {
         pd_error(x, "pmpd~: no %s at index %i", type, idx);
@@ -321,7 +321,7 @@ void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *ar
     x->NLlink[idx_NLlink].L0 += percent * (x->NLlink[idx_NLlink].L - x->NLlink[idx_NLlink].L0);
 }
 
-int validate_count(t_pmpd_tilde *x, t_int count, t_int count_max, const char* type)
+inline int validate_count(t_pmpd_tilde *x, t_int count, t_int count_max, const char* type)
 {
     if (count == count_max)
     {
