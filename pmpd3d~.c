@@ -115,6 +115,7 @@ typedef struct _pmpd3d_tilde {
     t_float *outlet;
     t_sample **inlet_vector;
     t_sample **outlet_vector;
+    t_int multichannel;
     t_int nb_max_link, nb_max_mass;
     t_int nb_link, nb_NLlink, nb_mass;
     t_int nb_inlet, nb_outlet, nb_max_in, nb_max_out;
@@ -128,7 +129,7 @@ t_int *pmpd3d_tilde_perform(t_int *w)
 ///////////////////////////////////////////////////////////////////////////////////
 {
     t_pmpd3d_tilde *x = (t_pmpd3d_tilde *)(w[1]);
-    int n = (int)(w[2]);
+    t_int n = w[2]; // sample count from sp[0]->s_n
 
     t_float F, FX, FY, FZ, L, LX, LY, LZ, deltaL;
     t_int i, si;
@@ -268,13 +269,27 @@ t_int *pmpd3d_tilde_perform(t_int *w)
 void pmpd3d_tilde_dsp(t_pmpd3d_tilde *x, t_signal **sp)
 {
     int i;
-    for (i=0; i<x->nb_inlet; i++)
-        x->inlet_vector[i] = sp[i]->s_vec;
-
-    for (i=0; i<x->nb_outlet; i++)
-        x->outlet_vector[i] = sp[i+x->nb_inlet]->s_vec;
-
-    dsp_add(pmpd3d_tilde_perform, 2, x, sp[0]->s_n); // S_n : la taille du vecteur
+    t_int nsamples = (t_int)sp[0]->s_n;
+    t_int nchans = (t_int)sp[0]->s_nchans;
+    if (x->multichannel) {
+        // set inlet vectors and wrap around input channels
+        // if expected count > given count
+        for (i=0; i<x->nb_inlet; i++)
+            x->inlet_vector[i] = sp[0]->s_vec + nsamples * (i % nchans);
+        // set outlet multichannel count
+        signal_setmultiout(&sp[1], x->nb_outlet);
+        for (i=0; i<x->nb_outlet; i++)
+            x->outlet_vector[i] = sp[1]->s_vec + nsamples * i;
+    } else {
+        for (i=0; i<x->nb_inlet; i++)
+            x->inlet_vector[i] = sp[i]->s_vec;
+        for (i=0; i<x->nb_outlet; i++) {
+            // set outlets to single channel if multichannel mode not active
+            signal_setmultiout(&sp[i+x->nb_inlet], 1);
+            x->outlet_vector[i] = sp[i+x->nb_inlet]->s_vec;
+        }
+    }
+    dsp_add(pmpd3d_tilde_perform, 2, x, nsamples);
 }
 
 void pmpd3d_tilde_bang(t_pmpd3d_tilde *x)
@@ -738,12 +753,22 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
 {
     int i, arg;
     t_pmpd3d_tilde *x = (t_pmpd3d_tilde *)pd_new(pmpd3d_tilde_class);
+    x->multichannel = 0;
 
     pmpd3d_tilde_reset(x);
 
-    x->nb_inlet    = max(1, (int)atom_getfloatarg(0, argc, argv));
-    x->nb_outlet   = max(1, (int)atom_getfloatarg(1, argc, argv));
-    x->nb_loop     = max(1, (int)atom_getfloatarg(2, argc, argv));
+    // check for flags (currently need to be positioned first)
+    while (argc && argv->a_type == A_SYMBOL) {
+        if (atom_getsymbol(argv) == gensym("-m"))
+            x->multichannel = 1;
+        else
+            pd_error(x, "[pmpd~]: invalid argument");
+        argc--, argv++;
+    }
+
+    x->nb_inlet = max(1, (int)atom_getfloatarg(0, argc, argv));
+    x->nb_outlet = max(1, (int)atom_getfloatarg(1, argc, argv));
+    x->nb_loop = max(1, (int)atom_getfloatarg(2, argc, argv));
     x->nb_max_mass = (arg = (int)atom_getfloatarg(3, argc, argv)) > 0 ? arg : NB_MAX_MASS_DEFAULT;
     x->nb_max_link = (arg = (int)atom_getfloatarg(4, argc, argv)) > 0 ? arg : NB_MAX_LINK_DEFAULT;
     x->nb_max_in   = (arg = (int)atom_getfloatarg(5, argc, argv)) > 0 ? arg : NB_MAX_IN_DEFAULT;
@@ -772,20 +797,24 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
     x->outSpeedZ = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
     x->outSpeed  = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
 
-    for(i=0; i<x->nb_inlet-1; i++)
-        inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    for(i=0; i<x->nb_outlet; i++)
-        outlet_new(&x->x_obj, &s_signal);
-
+    outlet_new(&x->x_obj, &s_signal);
+    // add more channels if multichannel not set
+    if (!x->multichannel) {
+        for(i=0; i<x->nb_inlet-1; i++)
+            inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+        for(i=0; i<x->nb_outlet-1; i++)
+            outlet_new(&x->x_obj, &s_signal);
+    }
     return (void *)x;
 }
 
 PMPD_EXPORT void pmpd3d_tilde_setup(void)
 {
-    pmpd3d_tilde_class = class_new(gensym("pmpd3d~"),
+    pmpd3d_tilde_class = class_new(
+        gensym("pmpd3d~"), 
         (t_newmethod)pmpd3d_tilde_new,
         (t_method)pmpd3d_tilde_free,
-        sizeof(t_pmpd3d_tilde), CLASS_DEFAULT, A_GIMME, 0);
+        sizeof(t_pmpd3d_tilde), CLASS_MULTICHANNEL, A_GIMME, 0);
 
     if(!pmpd3d_tilde_class)
         return;
