@@ -104,7 +104,7 @@ typedef struct _pmpd_tilde {
     t_int nb_inlet, nb_outlet, nb_max_in, nb_max_out;
     t_int nb_inPos, nb_inForce, nb_outPos, nb_outSpeed;
     t_sample f; // used for signal inlet
-    t_int loop, nb_loop; // to be able not to compute everything a each iteration
+    t_int nb_loop; // to be able not to compute everything a each iteration
 } t_pmpd_tilde;
 
 t_int *pmpd_tilde_perform(t_int *w)
@@ -114,15 +114,14 @@ t_int *pmpd_tilde_perform(t_int *w)
     t_int n = w[2]; // sample count from sp[0]->s_n
 
     t_float F,L;
-    t_int i, si;
+    t_int i, si, loop;
 
     t_sample **in = x->inlet_vector;
     t_sample **out = x->outlet_vector;
 
     for (si=0; si<n; si++)
     {
-        x->loop = 0;
-        while (x->loop++ < x->nb_loop)
+        for (loop=0; loop<x->nb_loop; loop++)
         {
             for (i=0; i<x->nb_inPos; i++)
                 // get inlet value and make it a position to the specified mass
