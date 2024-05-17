@@ -67,7 +67,14 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        brew install ninja cmake
+        brew update
+        brew install ninja
+        if brew list cmake &>/dev/null; then
+          echo "cmake is already installed."
+        else
+          echo "Installing cmake..."
+          brew install --formula cmake
+        fi
 
     - name: Build for x86_64 and ARM64 (Single Precision)
       if: matrix.precision == 'pd32'
