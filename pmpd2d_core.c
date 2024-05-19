@@ -40,7 +40,8 @@ static inline t_float pmpd2d_pow(t_float x, t_float y)
 
 static inline t_float pmpd2d_mix(t_float X, t_float Y, t_float pmpd2d_mix)
 {
-    return (1-pmpd2d_mix)*X + pmpd2d_mix*Y ;
+    //return (1-pmpd2d_mix)*X + pmpd2d_mix*Y;
+    return X + (Y-X) * pmpd2d_mix;
 }
 
 static inline t_float pmpd2d_tabread2(t_pmpd2d *x, t_float pos, t_symbol *array)

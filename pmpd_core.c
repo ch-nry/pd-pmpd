@@ -39,7 +39,8 @@ static inline t_float pmpd_sqr(t_float x)
 
 static inline t_float pmpd_mix(t_float X, t_float Y, t_float pmpd_mix)
 {
-    return (1-pmpd_mix)*X + pmpd_mix*Y ;
+    //return (1-pmpd_mix)*X + pmpd_mix*Y ;
+    return X + (Y-X) * pmpd_mix;
 }
 
 t_float pmpd_tabread2(t_pmpd *x, t_float pos, t_symbol *array)
