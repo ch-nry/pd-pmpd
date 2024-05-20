@@ -782,7 +782,10 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 PMPD_EXPORT void pmpd3d_tilde_setup(void)
 {
-    pmpd3d_tilde_class = class_new(gensym("pmpd3d~"), (t_newmethod)pmpd3d_tilde_new, 0, sizeof(t_pmpd3d_tilde), CLASS_DEFAULT, A_GIMME, 0);
+    pmpd3d_tilde_class = class_new(gensym("pmpd3d~"),
+        (t_newmethod)pmpd3d_tilde_new,
+        (t_method)pmpd3d_tilde_free,
+        sizeof(t_pmpd3d_tilde), CLASS_DEFAULT, A_GIMME, 0);
 
     if(!pmpd3d_tilde_class)
         return;
