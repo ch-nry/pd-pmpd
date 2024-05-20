@@ -1,0 +1,12 @@
+#N canvas 60 529 422 323 12;
+#X obj 48 42 inlet~;
+#X obj 87 137 table \$0-inlet 64;
+#X obj 48 108 tabwrite~ \$0-inlet;
+#X obj 46 198 tabread \$0-inlet;
+#X obj 46 236 outlet;
+#X obj 72 80 r \$1-inlet_init;
+#X obj 46 164 r \$1-inlet_index;
+#X connect 0 0 2 0;
+#X connect 3 0 4 0;
+#X connect 5 0 2 0;
+#X connect 6 0 3 0;
