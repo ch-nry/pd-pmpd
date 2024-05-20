@@ -186,7 +186,7 @@ PMPD_EXPORT void iLine2D_setup(void)
   if(!iLine2D_class)
       return;
 
-  verbose(4, "iLine2D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "iLine2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iLine2D_new, gensym("pmpd.iLine2D"),  A_GIMME, 0);
  

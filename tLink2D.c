@@ -162,7 +162,7 @@ PMPD_EXPORT void tLink2D_setup(void)
   if(!tLink2D_class)
     return;
 
-  verbose(4, "tLink2D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tLink2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tLink2D_new, gensym("tLia2D"), A_DEFSYM, 0);
 

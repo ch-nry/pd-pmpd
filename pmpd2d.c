@@ -49,7 +49,7 @@ pmpd2d_class = class_new(gensym("pmpd2d"),
     if(!pmpd2d_class)
         return;
 
-    verbose(4, "pmpd2d version %s (%s)", pmpd_tag(), pmpd_sha());
+    //verbose(4, "pmpd2d version %s (%s)", pmpd_tag(), pmpd_sha());
 
 /*
  pmpd2d_core

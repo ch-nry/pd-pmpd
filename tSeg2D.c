@@ -153,7 +153,7 @@ PMPD_EXPORT void tSeg2D_setup(void)
   if(!tSeg2D_class)
     return;
 
-  verbose(4, "tSeg2D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tSeg2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tSeg2D_new, gensym("pmpd.tSeg2D"), A_GIMME, 0);
 

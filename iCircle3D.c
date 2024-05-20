@@ -216,7 +216,7 @@ PMPD_EXPORT void iCircle3D_setup(void)
   if(!iCircle3D_class)
     return;
 
-  verbose(4, "iCircle3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "iCircle3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iCircle3D_new, gensym("pmpd.iCircle3D"),  A_GIMME, 0);
 

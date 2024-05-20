@@ -504,7 +504,7 @@ PMPD_EXPORT void pmpd_tilde_setup(void) {
     if(!pmpd_tilde_class)
         return;
 
-    verbose(4, "pmpd~ version %s (%s)", pmpd_tag(), pmpd_sha());
+    //verbose(4, "pmpd~ version %s (%s)", pmpd_tag(), pmpd_sha());
 
     CLASS_MAINSIGNALIN(pmpd_tilde_class, t_pmpd_tilde, f);
 

@@ -202,7 +202,7 @@ PMPD_EXPORT void iAmbient2D_setup(void)
   if(!iAmbient2D_class)
       return;
 
-  verbose(4, "iAmbient2D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "iAmbient2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iAmbient2D_new, gensym("pmpd.iAmbient2D"), A_GIMME, 0);
 

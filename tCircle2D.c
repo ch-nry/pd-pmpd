@@ -128,7 +128,7 @@ PMPD_EXPORT void tCircle2D_setup(void)
   if(!tCircle2D_class)
       return;
 
-  verbose(4, "tCircle2D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tCircle2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tCircle2D_new, gensym("pmpd.tCircle2D"), A_GIMME, 0);
 

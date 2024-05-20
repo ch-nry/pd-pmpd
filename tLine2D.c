@@ -150,7 +150,7 @@ PMPD_EXPORT void tLine2D_setup(void)
   if(!tLine2D_class)
     return;
 
-  verbose(4, "tLine2D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tLine2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tLine2D_new, gensym("pmpd.tLine2D"), A_GIMME, 0);
 

@@ -172,7 +172,7 @@ PMPD_EXPORT void link_setup(void)
   if(!linkKD_class)
     return;
 
-  verbose(4, "link version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "link version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)linkKD_new, gensym("lia"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 

@@ -277,7 +277,7 @@ PMPD_EXPORT void iCircle2D_setup(void)
   if(!iCircle2D_class)
     return;
 
-  verbose(4, "iCircle2D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "iCircle2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iCircle2D_new, gensym("pmpd.iCircle2D"),  A_GIMME, 0);
  

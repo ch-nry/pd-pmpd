@@ -256,7 +256,7 @@ PMPD_EXPORT void iSphere3D_setup(void)
   if(!iSphere3D_class)
       return;
 
-  verbose(4, "iSphere3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "iSphere3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iSphere3D_new, gensym("pmpd.iSphere3D"),  A_GIMME, 0);
  

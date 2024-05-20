@@ -1084,7 +1084,7 @@ PMPD_EXPORT void mass3D_setup(void)
   if(!mass3D_class)
       return;
 
-  verbose(4, "mass3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "mass3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)mass3D_new, gensym("masse3D"), A_GIMME, 0);
 

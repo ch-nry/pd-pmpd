@@ -48,7 +48,7 @@ pmpd_class = class_new(gensym("pmpd"),
     if(!pmpd_class)
       return;
 
-    verbose(4, "pmpd version %s (%s)", pmpd_tag(), pmpd_sha());
+    //verbose(4, "pmpd version %s (%s)", pmpd_tag(), pmpd_sha());
 
 /*
  pmpd_core

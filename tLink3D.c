@@ -158,7 +158,7 @@ PMPD_EXPORT void tLink3D_setup(void)
   if(!tLink3D_class)
       return;
 
-  verbose(4, "tLink3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tLink3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tLink3D_new, gensym("tLia3D"), A_DEFSYM, 0);
 

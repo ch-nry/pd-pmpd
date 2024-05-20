@@ -140,7 +140,7 @@ PMPD_EXPORT void tSphere3D_setup(void)
   if(!tSphere3D_class)
       return;
 
-  verbose(4, "tSphere3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tSphere3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tSphere3D_new, gensym("pmpd.tSphere3D"),  A_GIMME, 0);
  

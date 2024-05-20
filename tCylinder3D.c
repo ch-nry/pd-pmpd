@@ -224,7 +224,7 @@ PMPD_EXPORT void tCylinder3D_setup(void)
   if(!tCylinder3D_class)
       return;
 
-  verbose(4, "tCylinder3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tCylinder3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tCylinder3D_new, gensym("pmpd.tCylinder3D"),  A_GIMME, 0);
  

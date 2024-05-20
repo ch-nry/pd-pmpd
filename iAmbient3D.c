@@ -260,7 +260,7 @@ PMPD_EXPORT void iAmbient3D_setup(void)
   if(!iAmbient3D_class)
     return;
 
-  verbose(4, "iAmbient3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "iAmbient3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iAmbient3D_new, gensym("pmpd.iAmbient3D"), A_GIMME, 0);
 

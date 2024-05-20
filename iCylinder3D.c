@@ -289,7 +289,7 @@ PMPD_EXPORT void iCylinder3D_setup(void)
   if(!iCylinder3D_class)
     return;
 
-  verbose(4, "iCylinder3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "iCylinder3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iCylinder3D_new, gensym("pmpd.iCylinder3D"),  A_GIMME, 0);
  

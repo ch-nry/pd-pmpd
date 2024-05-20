@@ -805,7 +805,7 @@ PMPD_EXPORT void mass2D_setup(void)
   if(!mass2D_class)
       return;
 
-  verbose(4, "mass2D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "mass2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)mass2D_new, gensym("masse2D"), A_GIMME, 0);
 

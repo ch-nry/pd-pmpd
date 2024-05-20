@@ -126,7 +126,7 @@ PMPD_EXPORT void tCube3D_setup(void)
   if(!tCube3D_class)
       return;
 
-  verbose(4, "tCube3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tCube3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tCube3D_new, gensym("pmpd.tCube3D"), A_GIMME, 0);
 

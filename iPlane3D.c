@@ -199,7 +199,7 @@ PMPD_EXPORT void iPlane3D_setup(void)
   if(!iPlane3D_class)
     return;
 
-  verbose(4, "iPlane3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "iPlane3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)iPlane3D_new, gensym("pmpd.iPlane3D"),  A_GIMME, 0);
  

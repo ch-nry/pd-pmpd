@@ -220,7 +220,7 @@ PMPD_EXPORT void link2D_setup(void)
   if(!link2D_class)
       return;
 
-  verbose(4, "link2D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "link2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)link2D_new, gensym("lia2D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 

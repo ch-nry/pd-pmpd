@@ -202,7 +202,7 @@ PMPD_EXPORT void tCircle3D_setup(void)
   if(!tCircle3D_class)
     return;
 
-  verbose(4, "tCircle3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tCircle3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tCircle3D_new, gensym("pmpd.tCircle3D"),  A_GIMME, 0);
  

@@ -106,7 +106,7 @@ PMPD_EXPORT void tSquare2D_setup(void)
   if(!tSquare2D_class)
       return;
 
-  verbose(4, "tSquare2D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tSquare2D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tSquare2D_new, gensym("pmpd.tSquare2D"), A_GIMME, 0);
 

@@ -245,7 +245,7 @@ PMPD_EXPORT void link3D_setup(void)
   if(!link3D_class)
       return;
 
-  verbose(4, "link3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "link3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)link3D_new, gensym("lia3D"), A_DEFSYM, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
 

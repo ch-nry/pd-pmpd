@@ -184,7 +184,7 @@ PMPD_EXPORT void tPlane3D_setup(void)
   if(!tPlane3D_class)
     return;
 
-  verbose(4, "tPlane3D version %s (%s)", pmpd_tag(), pmpd_sha());
+  //verbose(4, "tPlane3D version %s (%s)", pmpd_tag(), pmpd_sha());
 
   class_addcreator((t_newmethod)tPlane3D_new, gensym("pmpd.tPlane3D"),  A_GIMME, 0);
  
