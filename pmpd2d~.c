@@ -692,6 +692,8 @@ PMPD_EXPORT void pmpd2d_tilde_setup(void)
     CLASS_MAINSIGNALIN(pmpd2d_tilde_class, t_pmpd2d_tilde, f);
 
     class_addbang(pmpd2d_tilde_class, pmpd2d_tilde_bang);
+    class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_bang, gensym("print"), 0);
+        
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_mass, gensym("mass"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_link, gensym("link"), A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_NLlink, gensym("NLlink"), A_GIMME, 0);
