@@ -18,13 +18,18 @@
 // pmpd = physical modeling for pure data
 // ch@chnry.net
 
+#include "m_pd.h"
 #include <stdio.h>
 #include <math.h>
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <dlfcn.h>
+#endif
 
 #include "pmpd_export.h"
 #include "pmpd_version.h"
 
-#include "m_pd.h"
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) )
 
@@ -33,6 +38,8 @@
 #define NB_MAX_IN_DEFAULT    1000
 #define NB_MAX_OUT_DEFAULT   1000
 
+typedef void (*signal_setmultiout_fn)(t_signal **, int); 
+signal_setmultiout_fn g_signal_setmultiout;
 static t_class *pmpd3d_tilde_class;
 
 struct _mass {
@@ -276,7 +283,7 @@ void pmpd3d_tilde_dsp(t_pmpd3d_tilde *x, t_signal **sp)
         for (i=0; i<x->nb_inlet; i++)
             x->inlet_vector[i] = sp[0]->s_vec + nsamples * (i % nchans);
         // set outlet multichannel count
-        signal_setmultiout(&sp[1], x->nb_outlet);
+        g_signal_setmultiout(&sp[1], x->nb_outlet);
         for (i=0; i<x->nb_outlet; i++)
             x->outlet_vector[i] = sp[1]->s_vec + nsamples * i;
     } else {
@@ -284,7 +291,8 @@ void pmpd3d_tilde_dsp(t_pmpd3d_tilde *x, t_signal **sp)
             x->inlet_vector[i] = sp[i]->s_vec;
         for (i=0; i<x->nb_outlet; i++) {
             // set outlets to single channel if multichannel mode not active
-            signal_setmultiout(&sp[i+x->nb_inlet], 1);
+            if (g_signal_setmultiout)
+                g_signal_setmultiout(&sp[i+x->nb_inlet], 1);
             x->outlet_vector[i] = sp[i+x->nb_inlet]->s_vec;
         }
     }
@@ -752,6 +760,8 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
 {
     int i, arg;
     t_pmpd3d_tilde *x = (t_pmpd3d_tilde *)pd_new(pmpd3d_tilde_class);
+    int maj = 0, min = 0, bug = 0;
+    sys_getversion(&maj, &min, &bug);
     x->multichannel = 0;
 
     pmpd3d_tilde_reset(x);
@@ -759,7 +769,10 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
     // check for flags (currently need to be positioned first)
     while (argc && argv->a_type == A_SYMBOL) {
         if (atom_getsymbol(argv) == gensym("-m"))
-            x->multichannel = 1;
+            if(maj>=0 && min>=54)
+                x->multichannel = 1;
+            else
+                pd_error(x, "[pmpd3d~]: no multichannel support in Pd %i.%i-%i, ignoring '-m' flag", maj, min, bug);
         else
             pd_error(x, "[pmpd~]: invalid argument");
         argc--, argv++;
@@ -809,6 +822,12 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 PMPD_EXPORT void pmpd3d_tilde_setup(void)
 {
+    #ifdef _WIN32
+    g_signal_setmultiout = (signal_setmultiout_fn)GetProcAddress(GetModuleHandle(NULL), "signal_setmultiout");
+    #else
+    g_signal_setmultiout = (signal_setmultiout_fn)dlsym(dlopen(NULL, RTLD_NOW), "signal_setmultiout");
+    #endif
+
     pmpd3d_tilde_class = class_new(
         gensym("pmpd3d~"), 
         (t_newmethod)pmpd3d_tilde_new,
