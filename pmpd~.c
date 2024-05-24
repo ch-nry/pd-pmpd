@@ -519,10 +519,21 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 PMPD_EXPORT void pmpd_tilde_setup(void)
 {
+// multichannel handling copied from https://github.com/Spacechild1/vstplugin/blob/3f0ed8a800ea238bf204a2ead940b2d1324ac909/pd/src/vstplugin~.cpp#L4122-L4136
 #ifdef _WIN32
-    g_signal_setmultiout = (t_signal_setmultiout)GetProcAddress(GetModuleHandle(NULL), "signal_setmultiout");
+    // get a handle to the module containing the Pd API functions.
+    // NB: GetModuleHandle("pd.dll") does not cover all cases.
+    HMODULE module;
+    if (GetModuleHandleEx(
+            GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+            (LPCSTR)&pd_typedmess, &module)) {
+        g_signal_setmultiout = (t_signal_setmultiout)(void *)GetProcAddress(
+            module, "signal_setmultiout");
+    }
 #else
-    g_signal_setmultiout = (t_signal_setmultiout)dlsym(dlopen(NULL, RTLD_NOW), "signal_setmultiout");
+    // search recursively, starting from the main program
+    g_signal_setmultiout = (t_signal_setmultiout)dlsym(
+        dlopen(NULL, RTLD_NOW), "signal_setmultiout");
 #endif
 
     pmpd_tilde_class = class_new(
