@@ -38,8 +38,8 @@
 #define NB_MAX_IN_DEFAULT    1000
 #define NB_MAX_OUT_DEFAULT   1000
 
-typedef void (*signal_setmultiout_fn)(t_signal **, int); 
-signal_setmultiout_fn g_signal_setmultiout;
+typedef void (*t_signal_setmultiout)(t_signal **, int); 
+static t_signal_setmultiout g_signal_setmultiout;
 static t_class *pmpd3d_tilde_class;
 
 struct _mass {
@@ -753,7 +753,7 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
     // check for flags (currently need to be positioned first)
     while (argc && argv->a_type == A_SYMBOL) {
         if (atom_getsymbol(argv) == gensym("-m"))
-            if(maj>=0 && min>=54)
+            if(g_signal_setmultiout)
                 x->multichannel = 1;
             else
                 pd_error(x, "[pmpd3d~]: no multichannel support in Pd %i.%i-%i, ignoring '-m' flag", maj, min, bug);
@@ -806,11 +806,11 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 PMPD_EXPORT void pmpd3d_tilde_setup(void)
 {
-    #ifdef _WIN32
-    g_signal_setmultiout = (signal_setmultiout_fn)GetProcAddress(GetModuleHandle(NULL), "signal_setmultiout");
-    #else
-    g_signal_setmultiout = (signal_setmultiout_fn)dlsym(dlopen(NULL, RTLD_NOW), "signal_setmultiout");
-    #endif
+#ifdef _WIN32
+    g_signal_setmultiout = (t_signal_setmultiout)GetProcAddress(GetModuleHandle(NULL), "signal_setmultiout");
+#else
+    g_signal_setmultiout = (t_signal_setmultiout)dlsym(dlopen(NULL, RTLD_NOW), "signal_setmultiout");
+#endif
 
     pmpd3d_tilde_class = class_new(
         gensym("pmpd3d~"), 
