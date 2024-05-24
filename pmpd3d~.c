@@ -70,29 +70,13 @@ struct _NLlink {
     t_float K, D, L0, L, Lmin, Lmax, Pow;
 };
 
-struct _inPos {
-    // in en position
+struct _input {
     t_int nbr_inlet;
     struct _mass *mass;
     t_float influence;
 };
 
-struct _inForce {
-    // in en force
-    t_int nbr_inlet;
-    struct _mass *mass;
-    t_float influence;
-};
-
-struct _outPos {
-    // out en position
-    t_int nbr_outlet;
-    struct _mass *mass;
-    t_float influence;
-};
-
-struct _outSpeed {
-    // out en vitesse
+struct _output {
     t_int nbr_outlet;
     struct _mass *mass;
     t_float influence;
@@ -105,19 +89,19 @@ typedef struct _pmpd3d_tilde {
     struct _NLlink *NLlink;
     struct _mass *mass;
 
-    struct _inPos *inPosX;
-    struct _inPos *inPosY;
-    struct _inPos *inPosZ;
-    struct _inForce *inForceX;
-    struct _inForce *inForceY;
-    struct _inForce *inForceZ;
-    struct _outPos *outPosX;
-    struct _outPos *outPosY;
-    struct _outPos *outPosZ;
-    struct _outSpeed *outSpeedX;
-    struct _outSpeed *outSpeedY;
-    struct _outSpeed *outSpeedZ;
-    struct _outSpeed *outSpeed;
+    struct _input *inPosX;
+    struct _input *inPosY;
+    struct _input *inPosZ;
+    struct _input *inForceX;
+    struct _input *inForceY;
+    struct _input *inForceZ;
+    struct _output *outPosX;
+    struct _output *outPosY;
+    struct _output *outPosZ;
+    struct _output *outSpeedX;
+    struct _output *outSpeedY;
+    struct _output *outSpeedZ;
+    struct _output *outSpeed;
 
     t_float *outlet;
     t_sample **inlet_vector;
@@ -741,19 +725,19 @@ void pmpd3d_tilde_free(t_pmpd3d_tilde *x)
     if (x->link) freebytes(x->link, x->nb_link * sizeof(struct _link));
     if (x->NLlink) freebytes(x->NLlink, x->nb_NLlink * sizeof(struct _NLlink));
 
-    if (x->inPosX) freebytes(x->inPosX, x->nb_inPosX * sizeof(struct _inPos));
-    if (x->inPosY) freebytes(x->inPosY, x->nb_inPosY * sizeof(struct _inPos));
-    if (x->inPosZ) freebytes(x->inPosZ, x->nb_inPosZ * sizeof(struct _inPos));
-    if (x->inForceX) freebytes(x->inForceX, x->nb_inForceX * sizeof(struct _inForce));
-    if (x->inForceY) freebytes(x->inForceY, x->nb_inForceY * sizeof(struct _inForce));
-    if (x->inForceZ) freebytes(x->inForceZ, x->nb_inForceZ * sizeof(struct _inForce));
-    if (x->outPosX) freebytes(x->outPosX, x->nb_outPosX * sizeof(struct _outPos));
-    if (x->outPosY) freebytes(x->outPosY, x->nb_outPosY * sizeof(struct _outPos));
-    if (x->outPosZ) freebytes(x->outPosZ, x->nb_outPosZ * sizeof(struct _outPos));
-    if (x->outSpeedX) freebytes(x->outSpeedX, x->nb_outSpeedX * sizeof(struct _outSpeed));
-    if (x->outSpeedY) freebytes(x->outSpeedY, x->nb_outSpeedY * sizeof(struct _outSpeed));
-    if (x->outSpeedZ) freebytes(x->outSpeedZ, x->nb_outSpeedZ * sizeof(struct _outSpeed));
-    if (x->outSpeed) freebytes(x->outSpeed, x->nb_outSpeed * sizeof(struct _outSpeed));
+    if (x->inPosX) freebytes(x->inPosX, x->nb_inPosX * sizeof(struct _input));
+    if (x->inPosY) freebytes(x->inPosY, x->nb_inPosY * sizeof(struct _input));
+    if (x->inPosZ) freebytes(x->inPosZ, x->nb_inPosZ * sizeof(struct _input));
+    if (x->inForceX) freebytes(x->inForceX, x->nb_inForceX * sizeof(struct _input));
+    if (x->inForceY) freebytes(x->inForceY, x->nb_inForceY * sizeof(struct _input));
+    if (x->inForceZ) freebytes(x->inForceZ, x->nb_inForceZ * sizeof(struct _input));
+    if (x->outPosX) freebytes(x->outPosX, x->nb_outPosX * sizeof(struct _output));
+    if (x->outPosY) freebytes(x->outPosY, x->nb_outPosY * sizeof(struct _output));
+    if (x->outPosZ) freebytes(x->outPosZ, x->nb_outPosZ * sizeof(struct _output));
+    if (x->outSpeedX) freebytes(x->outSpeedX, x->nb_outSpeedX * sizeof(struct _output));
+    if (x->outSpeedY) freebytes(x->outSpeedY, x->nb_outSpeedY * sizeof(struct _output));
+    if (x->outSpeedZ) freebytes(x->outSpeedZ, x->nb_outSpeedZ * sizeof(struct _output));
+    if (x->outSpeed) freebytes(x->outSpeed, x->nb_outSpeed * sizeof(struct _output));
 }
 
 void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
@@ -795,19 +779,19 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
     x->link   = (struct _link *)getbytes(x->nb_max_link * sizeof(struct _link));
     x->NLlink = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
 
-    x->inPosX    = (struct _inPos *)getbytes(x->nb_max_in * sizeof(struct _inPos));
-    x->inPosY    = (struct _inPos *)getbytes(x->nb_max_in * sizeof(struct _inPos));
-    x->inPosZ    = (struct _inPos *)getbytes(x->nb_max_in * sizeof(struct _inPos));
-    x->inForceX  = (struct _inForce *)getbytes(x->nb_max_in * sizeof(struct _inForce));
-    x->inForceY  = (struct _inForce *)getbytes(x->nb_max_in * sizeof(struct _inForce));
-    x->inForceZ  = (struct _inForce *)getbytes(x->nb_max_in * sizeof(struct _inForce));
-    x->outPosX   = (struct _outPos *)getbytes(x->nb_max_out * sizeof(struct _outPos));
-    x->outPosY   = (struct _outPos *)getbytes(x->nb_max_out * sizeof(struct _outPos));
-    x->outPosZ   = (struct _outPos *)getbytes(x->nb_max_out * sizeof(struct _outPos));
-    x->outSpeedX = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
-    x->outSpeedY = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
-    x->outSpeedZ = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
-    x->outSpeed  = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
+    x->inPosX    = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
+    x->inPosY    = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
+    x->inPosZ    = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
+    x->inForceX  = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
+    x->inForceY  = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
+    x->inForceZ  = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
+    x->outPosX   = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
+    x->outPosY   = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
+    x->outPosZ   = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
+    x->outSpeedX = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
+    x->outSpeedY = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
+    x->outSpeedZ = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
+    x->outSpeed  = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
 
     outlet_new(&x->x_obj, &s_signal);
     // add more channels if multichannel not set

@@ -61,29 +61,13 @@ struct _NLlink {
     t_float K, D, L, L0, Lmin, Lmax, Pow;
 };
 
-struct _inPos {
-    // in en position
+struct _input {
     t_int nbr_inlet;
     struct _mass *mass;
     t_float influence;
 };
 
-struct _inForce {
-    // in en force
-    t_int nbr_inlet;
-    struct _mass *mass;
-    t_float influence;
-};
-
-struct _outPos {
-    // out en position
-    t_int nbr_outlet;
-    struct _mass *mass;
-    t_float influence;
-};
-
-struct _outSpeed {
-    // out en vitesse
+struct _output {
     t_int nbr_outlet;
     struct _mass *mass;
     t_float influence;
@@ -96,10 +80,10 @@ typedef struct _pmpd_tilde {
     struct _link *link;
     struct _NLlink *NLlink;
 
-    struct _inPos *inPos;
-    struct _inForce *inForce;
-    struct _outPos *outPos;
-    struct _outSpeed *outSpeed;
+    struct _input *inPos;
+    struct _input *inForce;
+    struct _output *outPos;
+    struct _output *outSpeed;
 
     t_float *outlet;
     t_sample **inlet_vector;
@@ -472,10 +456,10 @@ void pmpd_tilde_free(t_pmpd_tilde *x) {
     if (x->link) freebytes(x->link, x->nb_link * sizeof(struct _link));
     if (x->NLlink) freebytes(x->NLlink, x->nb_NLlink * sizeof(struct _NLlink));
 
-    if (x->inPos) freebytes(x->inPos, x->nb_inPos * sizeof(struct _inPos));
-    if (x->inForce) freebytes(x->inForce, x->nb_inForce * sizeof(struct _inForce));
-    if (x->outPos) freebytes(x->outPos, x->nb_outPos * sizeof(struct _outPos));
-    if (x->outSpeed) freebytes(x->outSpeed, x->nb_outSpeed * sizeof(struct _outSpeed));
+    if (x->inPos) freebytes(x->inPos, x->nb_inPos * sizeof(struct _input));
+    if (x->inForce) freebytes(x->inForce, x->nb_inForce * sizeof(struct _input));
+    if (x->outPos) freebytes(x->outPos, x->nb_outPos * sizeof(struct _output));
+    if (x->outSpeed) freebytes(x->outSpeed, x->nb_outSpeed * sizeof(struct _output));
 }
 
 void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
@@ -517,10 +501,10 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
     x->link     = (struct _link *)getbytes(x->nb_max_link * sizeof(struct _link));
     x->NLlink   = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
 
-    x->inPos    = (struct _inPos *)getbytes(x->nb_max_in * sizeof(struct _inPos));
-    x->inForce  = (struct _inForce *)getbytes(x->nb_max_in * sizeof(struct _inForce));
-    x->outPos   = (struct _outPos *)getbytes(x->nb_max_out * sizeof(struct _outPos));
-    x->outSpeed = (struct _outSpeed *)getbytes(x->nb_max_out * sizeof(struct _outSpeed));
+    x->inPos    = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
+    x->inForce  = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
+    x->outPos   = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
+    x->outSpeed = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
 
     outlet_new(&x->x_obj, &s_signal);
     // add more channels if multichannel not set
