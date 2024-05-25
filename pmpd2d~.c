@@ -351,7 +351,7 @@ void pmpd2d_tilde_setLCurrent(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *
         pd_error(x, "pmpd2d~: 'setLCurrent' requires link index argument");
         return;
     } 
-    idx_link = (int)atom_getfloatarg(0, argc, argv);
+    idx_link = atom_getintarg(0, argc, argv);
     if (!validate_index(x, idx_link, x->nb_link, "link")) return;
     if (argc > 1)
         percent = atom_getfloatarg(1, argc, argv);
@@ -374,7 +374,7 @@ void pmpd2d_tilde_setNLK(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
         pd_error(x, "pmpd2d~: 'setNLK' requires link index and rigidity arguments");
         return;
     }
-    idx_NLlink = (int)atom_getfloatarg(0, argc, argv);
+    idx_NLlink = atom_getintarg(0, argc, argv);
     if (!validate_index(x, idx_NLlink, x->nb_NLlink, "NLlink")) return;
     x->NLlink[idx_NLlink].K = atom_getfloatarg(1, argc, argv);
     if (argc > 2)
@@ -414,7 +414,7 @@ void pmpd2d_tilde_setNLLCurrent(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom
         pd_error(x, "pmpd2d~: 'setNLLCurrent' requires NLlink index argument");
         return;
     } 
-    idx_NLlink = (int)atom_getfloatarg(0, argc, argv);
+    idx_NLlink = atom_getintarg(0, argc, argv);
     if (!validate_index(x, idx_NLlink, x->nb_NLlink, "NLlink")) return;
     if (argc > 1)
         percent = atom_getfloatarg(1, argc, argv);
@@ -482,8 +482,8 @@ void pmpd2d_tilde_NLlink(t_pmpd2d_tilde *x, t_symbol *s, int argc, t_atom *argv)
         pd_error(x, "pmpd2d~: 'NLlink' requires 2 mass index arguments");
         return;
     } 
-    mass_1 = (int)atom_getfloatarg(0, argc, argv);
-    mass_2 = (int)atom_getfloatarg(1, argc, argv);
+    mass_1 = atom_getintarg(0, argc, argv);
+    mass_2 = atom_getintarg(1, argc, argv);
     if (!validate_count(x, x->nb_NLlink, x->nb_max_link, "NLlinks") ||
         !validate_index(x, mass_1, x->nb_mass, "mass1") ||
         !validate_index(x, mass_2, x->nb_mass, "mass2")) return;
@@ -662,13 +662,13 @@ void *pmpd2d_tilde_new(t_symbol *s, int argc, t_atom *argv)
         argc--, argv++;
     }
 
-    x->nb_inlet = max(1, (int)atom_getfloatarg(0, argc, argv));
-    x->nb_outlet = max(1, (int)atom_getfloatarg(1, argc, argv));
-    x->nb_loop = max(1, (int)atom_getfloatarg(2, argc, argv));
-    x->nb_max_mass = (arg = (int)atom_getfloatarg(3, argc, argv)) > 0 ? arg : NB_MAX_MASS_DEFAULT;
-    x->nb_max_link = (arg = (int)atom_getfloatarg(4, argc, argv)) > 0 ? arg : NB_MAX_LINK_DEFAULT;
-    x->nb_max_in   = (arg = (int)atom_getfloatarg(5, argc, argv)) > 0 ? arg : NB_MAX_IN_DEFAULT;
-    x->nb_max_out  = (arg = (int)atom_getfloatarg(6, argc, argv)) > 0 ? arg : NB_MAX_OUT_DEFAULT;
+    x->nb_inlet = max(1, atom_getintarg(0, argc, argv));
+    x->nb_outlet = max(1, atom_getintarg(1, argc, argv));
+    x->nb_loop = max(1, atom_getintarg(2, argc, argv));
+    x->nb_max_mass = (arg = atom_getintarg(3, argc, argv)) > 0 ? arg : NB_MAX_MASS_DEFAULT;
+    x->nb_max_link = (arg = atom_getintarg(4, argc, argv)) > 0 ? arg : NB_MAX_LINK_DEFAULT;
+    x->nb_max_in   = (arg = atom_getintarg(5, argc, argv)) > 0 ? arg : NB_MAX_IN_DEFAULT;
+    x->nb_max_out  = (arg = atom_getintarg(6, argc, argv)) > 0 ? arg : NB_MAX_OUT_DEFAULT;
 
     x->outlet = (t_float *)getbytes(x->nb_outlet * sizeof(t_float));
 
