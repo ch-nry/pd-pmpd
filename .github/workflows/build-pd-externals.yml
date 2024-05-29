@@ -10,53 +10,44 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        precision: [pd32, pd64]
+        arch: [amd64, arm64]
+        floatsize: [32, 64]
     steps:
     - uses: actions/checkout@v4
       with:
         submodules: true
     - name: Clone Pure-Data
       run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
-    
+
     - name: Update package lists
       run: sudo apt-get update -yqq
 
     - name: Install dependencies
       run: sudo apt-get install -yqq ninja-build cmake --fix-missing
-    
-    - name: Build (Single Precision)
-      if: matrix.precision == 'pd32'
+
+    - name: Prepare cross-compilation for arm64
+      if: matrix.arch == 'arm64'
       run: |
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+        sudo apt install gcc-aarch64-linux-gnu -y
+        echo "CC=aarch64-linux-gnu-gcc" >> $GITHUB_ENV
+
+    - name: Build
+      run: |
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPUREDATA_ARCH_SUFFIX=${{ matrix.arch }} -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
         cmake --build build
         cmake --build build --target install
 
     - name: Archive Package
-      if: matrix.precision == 'pd32'
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-ubuntu-pd32
+        name: pmpd-ubuntu-${{ matrix.arch }}-pd${{ matrix.floatsize }}
         path: build/package/pmpd
 
-    - name: Build (Double Precision)
-      if: matrix.precision == 'pd64'
-      run: |
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPD_FLOATSIZE64=ON
-        cmake --build build
-        cmake --build build --target install
-
-    - name: Archive Package
-      if: matrix.precision == 'pd64'
-      uses: actions/upload-artifact@v4
-      with:
-        name: pmpd-ubuntu-pd64
-        path: build/package/pmpd
-
-  build_macos:
+  build_macos_universal:
     runs-on: macos-latest
     strategy:
       matrix:
-        precision: [pd32, pd64]
+        floatsize: [32, 64]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -76,32 +67,16 @@ jobs:
           brew install --formula cmake
         fi
 
-    - name: Build for x86_64 and ARM64 (Single Precision)
-      if: matrix.precision == 'pd32'
+    - name: Build for x86_64 and ARM64
       run: |
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14"
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
         cmake --build build
-        cmake --build build --target install  
-   
-    - name: Archive Package
-      if: matrix.precision == 'pd32'
-      uses: actions/upload-artifact@v4
-      with:
-        name: pmpd-macos-pd32
-        path: build/package/pmpd
+        cmake --build build --target install
 
-    - name: Build for x86_64 and ARM64 (Double Precision)
-      if: matrix.precision == 'pd64'
-      run: |
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" -DPD_FLOATSIZE64=ON
-        cmake --build build
-        cmake --build build --target install  
-   
     - name: Archive Package
-      if: matrix.precision == 'pd64'
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-macos-pd64
+        name: pmpd-macos-pd${{ matrix.floatsize }}
         path: build/package/pmpd
 
   build_windows:
@@ -130,6 +105,9 @@ jobs:
 
   build_windows_x64:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        floatsize: [32, 64]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -137,19 +115,27 @@ jobs:
 
     - name: Download Pure-Data Binaries
       run: |
-        Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${env:PD_VERSION}.msw.zip" -OutFile "pd-${env:PD_VERSION}.msw.zip"
-        Expand-Archive -Path "pd-${env:PD_VERSION}.msw.zip" -DestinationPath .
+        if (${{ matrix.floatsize }} -eq 32) {
+          Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${{env.PD_VERSION}}.msw.zip" -OutFile "pd${{ matrix.floatsize }}-${{env.PD_VERSION}}.msw.zip"
+        } else {
+          Invoke-WebRequest -Uri "https://puredata.info/downloads/pure-data/releases/${{env.PD_VERSION}}-pd64/Pd64-${{env.PD_VERSION}}.msw.zip" -OutFile "pd${{ matrix.floatsize }}-${{env.PD_VERSION}}.msw.zip"
+        }
+        Expand-Archive -Path "pd${{ matrix.floatsize }}-${{env.PD_VERSION}}.msw.zip" -DestinationPath .
 
-    - name: Build (Single Precision)
+    - name: Build
       run: |
-        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64
+        if (${{ matrix.floatsize }} -eq 32) {
+          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
+        } else {
+          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="Pd-0.54.1/src" -DPUREDATA_LIB="Pd-0.54.1/bin/pd64.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
+        }
         cmake --build build --config Release
         cmake --build build --config Release --target install
 
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-windows-x64-pd32
+        name: pmpd-windows-x64-pd${{ matrix.floatsize }}
         path: build/package/pmpd
 
   build_rpi:
@@ -176,16 +162,24 @@ jobs:
 
   package_release:
     runs-on: ubuntu-latest
-    needs: [ build_ubuntu, build_macos, build_windows, build_windows_x64, build_rpi ]
+    needs: [ build_ubuntu, build_macos_universal, build_windows, build_windows_x64, build_rpi ]
     steps:
       # Download all artifacts
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-ubuntu-pd32
+          name: pmpd-ubuntu-amd64-pd32
           path: artifacts/ubuntu
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-ubuntu-pd64
+          name: pmpd-ubuntu-amd64-pd64
+          path: artifacts/ubuntu
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-ubuntu-arm64-pd32
+          path: artifacts/ubuntu
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-ubuntu-arm64-pd64
           path: artifacts/ubuntu
       - uses: actions/download-artifact@v4
         with:
@@ -202,6 +196,10 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: pmpd-windows-x64-pd32
+          path: artifacts/windows-x64
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-windows-x64-pd64
           path: artifacts/windows-x64
       - uses: actions/download-artifact@v4
         with:
