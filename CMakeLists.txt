@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.14)
+cmake_minimum_required (VERSION 3.15)
 project(pd-pmpd C)
 
 # Platform-specific and compiler-specific settings
@@ -28,12 +28,10 @@ if(CMAKE_GENERATOR_PLATFORM MATCHES Win32)
   set(arch i386)
 elseif(APPLE AND CMAKE_SYSTEM_NAME MATCHES "Darwin")
   set(arch "fat")
-elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm64.*")
+elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm64.*" OR ${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*aarch64.*")
   set(arch "arm64")
 elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*arm.*")
   set(arch "arm")
-elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*aarch64.*")
-  set(arch "arm64")
 elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*64.*")
   set(arch "amd64")
 elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES ".*86.*")
@@ -86,9 +84,9 @@ endif()
 
 include_directories(${PUREDATA_INCLUDE_DIRS} ${CMAKE_BINARY_DIR})
 
-IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  SET(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/package" CACHE PATH "Package destination folder" FORCE)
-ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/package" CACHE PATH "Package destination folder" FORCE)
+endif()
 
 if("${CMAKE_C_COMPILER_ID}" MATCHES "Clang$")
   set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
