@@ -191,7 +191,7 @@ jobs:
       - name: Upload release content as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pmpd
+          name: pmpd-win
           path: pmpd
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -226,7 +226,7 @@ jobs:
       - name: Upload release content as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pmpd
+          name: pmpd-osx
           path: pmpd
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -269,11 +269,11 @@ jobs:
         run: |
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
           SLUG=${SHORT//\//_} # replace '/' with '_'
-          zip -r pmpd-${SLUG}.zip pmpd
+          zip -r pmpd-${SLUG}-linux.zip pmpd
       - name: Upload release content as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pmpd
+          name: pmpd-linux
           path: pmpd
       - name: Release
         uses: softprops/action-gh-release@v1
