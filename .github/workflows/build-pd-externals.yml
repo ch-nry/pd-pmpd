@@ -43,6 +43,28 @@ jobs:
         name: pmpd-ubuntu-${{ matrix.arch }}-pd${{ matrix.floatsize }}
         path: build/package/pmpd
 
+  build_rpi:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Clone Pure-Data
+      run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update && sudo apt-get upgrade -yqq
+        sudo apt-get update && DEBIAN_FRONTEND=noninteractive sudo apt-get install -yqq git build-essential cmake gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf ninja-build puredata
+
+    - name: Build (Single Precision)
+      run: ./cross_compile_rpi.sh
+
+    - name: Archive Package
+      uses: actions/upload-artifact@v4
+      with:
+        name: pmpd-rpi-pd32
+        path: build/package/pmpd
+
   build_macos_universal:
     runs-on: macos-latest
     strategy:
@@ -136,28 +158,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: pmpd-windows-x64-pd${{ matrix.floatsize }}
-        path: build/package/pmpd
-
-  build_rpi:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Clone Pure-Data
-      run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
-
-    - name: Install Dependencies
-      run: |
-        sudo apt-get update && sudo apt-get upgrade -yqq
-        sudo apt-get update && DEBIAN_FRONTEND=noninteractive sudo apt-get install -yqq git build-essential cmake gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf ninja-build puredata
-
-    - name: Build (Single Precision)
-      run: ./cross_compile_rpi.sh
-
-    - name: Archive Package
-      uses: actions/upload-artifact@v4
-      with:
-        name: pmpd-rpi-pd32
         path: build/package/pmpd
 
   package_release_windows:
