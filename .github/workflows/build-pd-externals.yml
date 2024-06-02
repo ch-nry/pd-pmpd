@@ -6,7 +6,7 @@ env:
   PD_VERSION: 0.54-1
 
 jobs:
-  build_ubuntu:
+  build_linux:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -40,10 +40,10 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-ubuntu-${{ matrix.arch }}-pd${{ matrix.floatsize }}
+        name: pmpd-linux-${{ matrix.arch }}-pd${{ matrix.floatsize }}
         path: build/package/pmpd
 
-  build_rpi:
+  build_linux_rpi:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -62,7 +62,7 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-rpi-pd32
+        name: pmpd-linux-rpi-pd32
         path: build/package/pmpd
 
   build_macos_universal:
@@ -98,7 +98,7 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-macos-pd${{ matrix.floatsize }}
+        name: pmpd-macos-universal-pd${{ matrix.floatsize }}
         path: build/package/pmpd
 
   build_windows_i386:
@@ -122,7 +122,7 @@ jobs:
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-windows-pd32
+        name: pmpd-windows-i386-pd32
         path: build/package/pmpd
 
   build_windows_x64:
@@ -166,8 +166,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-windows-pd32
-          path: artifacts/windows
+          name: pmpd-windows-i386-pd32
+          path: artifacts/windows-i386
       - uses: actions/download-artifact@v4
         with:
           name: pmpd-windows-x64-pd32
@@ -188,7 +188,7 @@ jobs:
       - name: Upload release content as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pmpd-win
+          name: pmpd-windows
           path: pmpd
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -196,17 +196,17 @@ jobs:
         with:
           files: pmpd*.zip
 
-  package_release_osx:
+  package_release_macos:
     runs-on: ubuntu-latest
     needs: [ build_macos_universal ]
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-macos-pd32
+          name: pmpd-macos-universal-pd32
           path: artifacts/macos
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-macos-pd64
+          name: pmpd-macos-universal-pd64
           path: artifacts/macos
       - name: Merge Artifacts
         run: |
@@ -220,7 +220,7 @@ jobs:
       - name: Upload release content as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: pmpd-osx
+          name: pmpd-macos
           path: pmpd
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -230,27 +230,27 @@ jobs:
 
   package_release_linux:
     runs-on: ubuntu-latest
-    needs: [ build_ubuntu, build_rpi ]
+    needs: [ build_linux, build_linux_rpi ]
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-ubuntu-amd64-pd32
-          path: artifacts/ubuntu
+          name: pmpd-linux-amd64-pd32
+          path: artifacts/linux
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-ubuntu-amd64-pd64
-          path: artifacts/ubuntu
+          name: pmpd-linux-amd64-pd64
+          path: artifacts/linux
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-ubuntu-arm64-pd32
-          path: artifacts/ubuntu
+          name: pmpd-linux-arm64-pd32
+          path: artifacts/linux
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-ubuntu-arm64-pd64
-          path: artifacts/ubuntu
+          name: pmpd-linux-arm64-pd64
+          path: artifacts/linux
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-rpi-pd32
+          name: pmpd-linux-rpi-pd32
           path: artifacts/rpi
       - name: Merge Artifacts
         run: |
@@ -275,10 +275,10 @@ jobs:
   upload_build_to_deken:
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-    needs: [ package_release_windows, package_release_osx, package_release_linux ]
+    needs: [ package_release_windows, package_release_macos, package_release_linux ]
     strategy:
       matrix:
-        os: [win, osx, linux]
+        os: [windows, macos, linux]
     steps:
       - uses: actions/download-artifact@v4
         with:
