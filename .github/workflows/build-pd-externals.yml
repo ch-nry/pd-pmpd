@@ -101,7 +101,7 @@ jobs:
         name: pmpd-macos-pd${{ matrix.floatsize }}
         path: build/package/pmpd
 
-  build_windows:
+  build_windows_i386:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
@@ -162,9 +162,8 @@ jobs:
 
   package_release_windows:
     runs-on: ubuntu-latest
-    needs: [ build_windows, build_windows_x64 ]
+    needs: [ build_windows_i386, build_windows_x64 ]
     steps:
-      # Download all artifacts
       - uses: actions/download-artifact@v4
         with:
           name: pmpd-windows-pd32
@@ -177,12 +176,10 @@ jobs:
         with:
           name: pmpd-windows-x64-pd64
           path: artifacts/windows-x64
-      # Extract and merge all files into a single directory
       - name: Merge Artifacts
         run: |
           mkdir pmpd
           cp -rn artifacts/*/* pmpd/
-      # Zip the merged directory
       - name: Rezip
         run: |
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
@@ -203,7 +200,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ build_macos_universal ]
     steps:
-      # Download all artifacts
       - uses: actions/download-artifact@v4
         with:
           name: pmpd-macos-pd32
@@ -212,12 +208,10 @@ jobs:
         with:
           name: pmpd-macos-pd64
           path: artifacts/macos
-      # Extract and merge all files into a single directory
       - name: Merge Artifacts
         run: |
           mkdir pmpd
           cp -rn artifacts/*/* pmpd/
-      # Zip the merged directory
       - name: Rezip
         run: |
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
@@ -238,7 +232,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ build_ubuntu, build_rpi ]
     steps:
-      # Download all artifacts
       - uses: actions/download-artifact@v4
         with:
           name: pmpd-ubuntu-amd64-pd32
@@ -259,12 +252,10 @@ jobs:
         with:
           name: pmpd-rpi-pd32
           path: artifacts/rpi
-      # Extract and merge all files into a single directory
       - name: Merge Artifacts
         run: |
           mkdir pmpd
           cp -rn artifacts/*/* pmpd/
-      # Zip the merged directory
       - name: Rezip
         run: |
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
@@ -281,18 +272,18 @@ jobs:
         with:
           files: pmpd*.zip
 
-  upload_to_deken:
+  upload_build_to_deken:
     runs-on: ubuntu-latest
-    needs: [ package_release_windows, package_release_osx, package_release_linux ]
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    needs: [ package_release_windows, package_release_osx, package_release_linux ]
+    strategy:
+      matrix:
+        os: [win, osx, linux]
     steps:
-      - uses: actions/checkout@v4
-        with:
-          path: pmpd-src
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd
-          path: pmpd
+          name: pmpd-${{ matrix.os }}
+          path: pmpd-${{ matrix.os }}
       - name: Create Deken Package
         shell: bash
         env:
@@ -301,5 +292,26 @@ jobs:
         run: |
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
           SLUG=${SHORT//\//_} # replace '/' with '_'
-          docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD --volume ${PWD}/pmpd-src:/pmpd registry.git.iem.at/pd/deken deken upload -v "${SLUG}" /pmpd
-          docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD --volume ${PWD}/pmpd:/pmpd     registry.git.iem.at/pd/deken deken upload --no-source-error -v "${SLUG}" /pmpd
+          docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD \
+            --volume ${PWD}/pmpd-${{ matrix.os }}:/pmpd registry.git.iem.at/pd/deken \
+            deken upload --no-source-error -v "${SLUG}" /pmpd
+
+  upload_source_to_deken:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    needs: [ upload_build_to_deken ] # waiting for build uploads to avoid src-only uploads in case of errors
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: pmpd-src
+      - name: Upload Source to Deken
+        shell: bash
+        env:
+          DEKEN_USERNAME: ${{ secrets.DEKEN_USERNAME }}
+          DEKEN_PASSWORD: ${{ secrets.DEKEN_PASSWORD }}
+        run: |
+          SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
+          SLUG=${SHORT//\//_} # replace '/' with '_'
+          docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD \
+            --volume ${PWD}/pmpd-src:/pmpd-src registry.git.iem.at/pd/deken \
+            deken upload -v "${SLUG}" /pmpd-src
