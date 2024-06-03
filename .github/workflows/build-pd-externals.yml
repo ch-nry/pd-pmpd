@@ -163,6 +163,9 @@ jobs:
   package_release_windows:
     runs-on: ubuntu-latest
     needs: [ build_windows_i386, build_windows_x64 ]
+    permissions:
+      contents: write
+      actions: read
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -191,7 +194,7 @@ jobs:
           name: pmpd-windows
           path: pmpd
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: pmpd*.zip
@@ -199,6 +202,9 @@ jobs:
   package_release_macos:
     runs-on: ubuntu-latest
     needs: [ build_macos_universal ]
+    permissions:
+      contents: write
+      actions: read
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -223,7 +229,7 @@ jobs:
           name: pmpd-macos
           path: pmpd
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: pmpd*.zip
@@ -231,6 +237,9 @@ jobs:
   package_release_linux:
     runs-on: ubuntu-latest
     needs: [ build_linux, build_linux_rpi ]
+    permissions:
+      contents: write
+      actions: read
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -267,44 +276,36 @@ jobs:
           name: pmpd-linux
           path: pmpd
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: pmpd*.zip
 
-  upload_build_to_deken:
+  deken_check_and_upload:
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     needs: [ package_release_windows, package_release_macos, package_release_linux ]
-    strategy:
-      matrix:
-        os: [windows, macos, linux]
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-${{ matrix.os }}
-          path: pmpd-${{ matrix.os }}
-      - name: Create Deken Package
-        shell: bash
-        env:
-          DEKEN_USERNAME: ${{ secrets.DEKEN_USERNAME }}
-          DEKEN_PASSWORD: ${{ secrets.DEKEN_PASSWORD }}
-        run: |
-          SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
-          SLUG=${SHORT//\//_} # replace '/' with '_'
-          docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD \
-            --volume ${PWD}/pmpd-${{ matrix.os }}:/pmpd registry.git.iem.at/pd/deken \
-            deken upload --no-source-error -v "${SLUG}" /pmpd
-
-  upload_source_to_deken:
-    runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-    needs: [ upload_build_to_deken ] # waiting for build uploads to avoid src-only uploads in case of errors
+    if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - uses: actions/checkout@v4
         with:
           path: pmpd-src
-      - name: Upload Source to Deken
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-windows
+          path: pmpd-windows
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-macos
+          path: pmpd-macos
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: pmpd-linux
+          path: pmpd-linux
+
+      - name: Create Deken Package and upload
         shell: bash
         env:
           DEKEN_USERNAME: ${{ secrets.DEKEN_USERNAME }}
@@ -312,6 +313,31 @@ jobs:
         run: |
           SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
           SLUG=${SHORT//\//_} # replace '/' with '_'
-          docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD \
-            --volume ${PWD}/pmpd-src:/pmpd-src registry.git.iem.at/pd/deken \
-            deken upload -v "${SLUG}" /pmpd-src
+
+          if [[ "${SLUG}" == *"test"* ]]; then
+            for os in linux macos windows; do
+              echo "## ${os}" | tee -a $GITHUB_STEP_SUMMARY
+              mkdir -p package-${os}
+              docker run --rm --user $(id -u) --volume ./pmpd-${os}:/pmpd \
+                --volume ./package-${os}:/package registry.git.iem.at/pd/deken \
+                deken package --output-dir /package -v "${SLUG}" /pmpd
+
+              dek_files=$(ls package-${os}/*.dek)
+              for dek_file in $dek_files; do
+                filename=$(basename "$dek_file")
+                echo -e "#### \`$filename\`" | tee -a $GITHUB_STEP_SUMMARY
+                echo '```' | tee -a $GITHUB_STEP_SUMMARY
+                unzip -l "$dek_file" | awk 'NR>3 {print $4}' | sed '/^$/d' | tee -a $GITHUB_STEP_SUMMARY
+                echo '```' | tee -a $GITHUB_STEP_SUMMARY
+              done
+            done
+          else
+            for os in linux macos windows; do
+              docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD \
+                --volume ./pmpd-${os}:/pmpd registry.git.iem.at/pd/deken \
+                deken upload --no-source-error -v "${SLUG}" /pmpd
+            done
+            docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD \
+              --volume ./pmpd-src:/pmpd registry.git.iem.at/pd/deken \
+              deken upload -v "${SLUG}" /pmpd
+          fi
