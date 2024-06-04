@@ -14,19 +14,16 @@ jobs:
         floatsize: [32, 64]
     steps:
     - uses: actions/checkout@v4
-      with:
-        submodules: true
 
-    - name: Clone Pure-Data
+    - name: Clone Pure Data
       run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
 
-    - name: Update package lists
-      run: sudo apt-get update -yqq
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update -yqq
+        sudo apt-get install -yqq ninja-build cmake --fix-missing
 
-    - name: Install dependencies
-      run: sudo apt-get install -yqq ninja-build cmake --fix-missing
-
-    - name: Prepare cross-compilation for arm64
+    - name: Prepare Cross-Compilation for arm64
       if: matrix.arch == 'arm64'
       run: |
         sudo apt install gcc-aarch64-linux-gnu -y
@@ -34,14 +31,14 @@ jobs:
 
     - name: Build
       run: |
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPUREDATA_ARCH_SUFFIX=${{ matrix.arch }} -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPUREDATA_ARCH_SUFFIX=${{matrix.arch}} -DPUREDATA_FLOATSIZE=${{matrix.floatsize}}
         cmake --build build
         cmake --build build --target install
 
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-linux-${{ matrix.arch }}-pd${{ matrix.floatsize }}
+        name: pmpd-linux-${{matrix.arch}}-pd${{matrix.floatsize}}
         path: build/package/pmpd
 
   build_linux_arm7:
@@ -49,13 +46,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Clone Pure-Data
+    - name: Clone Pure Data
       run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
 
     - name: Install Dependencies
       run: |
-        sudo apt-get update && sudo apt-get upgrade -yqq
-        sudo apt-get update && DEBIAN_FRONTEND=noninteractive sudo apt-get install -yqq git build-essential cmake gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf ninja-build puredata
+        sudo apt-get update
+        DEBIAN_FRONTEND=noninteractive sudo apt-get install -yqq git build-essential cmake gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf ninja-build puredata
 
     - name: Build (Single Precision)
       run: ./cross_compile_rpi.sh
@@ -73,10 +70,8 @@ jobs:
         floatsize: [32, 64]
     steps:
     - uses: actions/checkout@v4
-      with:
-        submodules: true
 
-    - name: Clone Pure-Data
+    - name: Clone Pure Data
       run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
 
     - name: Install Dependencies
@@ -90,26 +85,57 @@ jobs:
           brew install --formula cmake
         fi
 
-    - name: Build for x86_64 and ARM64
+    - name: Build for amd64 and arm64
       run: |
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" -DPUREDATA_FLOATSIZE=${{matrix.floatsize}}
         cmake --build build
         cmake --build build --target install
 
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-macos-universal-pd${{ matrix.floatsize }}
+        name: pmpd-macos-universal-pd${{matrix.floatsize}}
+        path: build/package/pmpd
+
+  build_windows_amd64:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        floatsize: [32, 64]
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download Pure Data Binaries
+      run: |
+        if (${{matrix.floatsize}} -eq 32) {
+          Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${{env.PD_VERSION}}.msw.zip" -OutFile "pd${{matrix.floatsize}}-${{env.PD_VERSION}}.msw.zip"
+        } else {
+          Invoke-WebRequest -Uri "https://puredata.info/downloads/pure-data/releases/${{env.PD_VERSION}}-pd64/Pd64-${{env.PD_VERSION}}.msw.zip" -OutFile "pd${{matrix.floatsize}}-${{env.PD_VERSION}}.msw.zip"
+        }
+        Expand-Archive -Path "pd${{matrix.floatsize}}-${{env.PD_VERSION}}.msw.zip" -DestinationPath .
+
+    - name: Build
+      run: |
+        if (${{matrix.floatsize}} -eq 32) {
+          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{matrix.floatsize}}
+        } else {
+          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="Pd-0.54.1/src" -DPUREDATA_LIB="Pd-0.54.1/bin/pd64.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{matrix.floatsize}}
+        }
+        cmake --build build --config Release
+        cmake --build build --config Release --target install
+
+    - name: Archive Package
+      uses: actions/upload-artifact@v4
+      with:
+        name: pmpd-windows-amd64-pd${{matrix.floatsize}}
         path: build/package/pmpd
 
   build_windows_i386:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-      with:
-        submodules: true
 
-    - name: Download Pure-Data Binaries
+    - name: Download Pure Data Binaries
       run: |
         Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${env:PD_VERSION}-i386.msw.zip" -OutFile "pd-${env:PD_VERSION}-i386.msw.zip"
         Expand-Archive -Path "pd-${env:PD_VERSION}-i386.msw.zip" -DestinationPath .
@@ -126,169 +152,41 @@ jobs:
         name: pmpd-windows-i386-pd32
         path: build/package/pmpd
 
-  build_windows_x64:
-    runs-on: windows-latest
+  package_and_release:
+    runs-on: ubuntu-latest
+    needs: [build_linux, build_linux_arm7, build_macos_universal, build_windows_i386, build_windows_amd64]
     strategy:
       matrix:
-        floatsize: [32, 64]
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        submodules: true
-
-    - name: Download Pure-Data Binaries
-      run: |
-        if (${{ matrix.floatsize }} -eq 32) {
-          Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${{env.PD_VERSION}}.msw.zip" -OutFile "pd${{ matrix.floatsize }}-${{env.PD_VERSION}}.msw.zip"
-        } else {
-          Invoke-WebRequest -Uri "https://puredata.info/downloads/pure-data/releases/${{env.PD_VERSION}}-pd64/Pd64-${{env.PD_VERSION}}.msw.zip" -OutFile "pd${{ matrix.floatsize }}-${{env.PD_VERSION}}.msw.zip"
-        }
-        Expand-Archive -Path "pd${{ matrix.floatsize }}-${{env.PD_VERSION}}.msw.zip" -DestinationPath .
-
-    - name: Build
-      run: |
-        if (${{ matrix.floatsize }} -eq 32) {
-          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
-        } else {
-          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="Pd-0.54.1/src" -DPUREDATA_LIB="Pd-0.54.1/bin/pd64.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
-        }
-        cmake --build build --config Release
-        cmake --build build --config Release --target install
-
-    - name: Archive Package
-      uses: actions/upload-artifact@v4
-      with:
-        name: pmpd-windows-x64-pd${{ matrix.floatsize }}
-        path: build/package/pmpd
-
-  package_release_windows:
-    runs-on: ubuntu-latest
-    needs: [ build_windows_i386, build_windows_x64 ]
+        os: [linux, macos, windows]
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: pmpd-windows-i386-pd32
-          path: artifacts
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-windows-x64-pd32
-          path: artifacts
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-windows-x64-pd64
           path: artifacts
 
       - name: Merge Artifacts to Package
         run: |
-          mkdir pmpd
-          cp -rn artifacts/* pmpd/
+          mkdir -p pmpd
+          cp -rn artifacts/pmpd-${{matrix.os}}*/* pmpd
 
       - name: Upload Package
         uses: actions/upload-artifact@v4
         with:
-          name: pmpd-windows
+          name: pmpd-${{matrix.os}}
           path: pmpd
 
       - name: Create Zip for Release
         if: startsWith(github.ref, 'refs/tags/v')
-        run: zip -r pmpd-windows.zip pmpd
-
-      - name: Add Zip to Release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: pmpd-windows.zip
-
-  package_release_macos:
-    runs-on: ubuntu-latest
-    needs: [ build_macos_universal ]
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-macos-universal-pd32
-          path: artifacts
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-macos-universal-pd64
-          path: artifacts
-
-      - name: Merge Artifacts to Package
-        run: |
-          mkdir pmpd
-          cp -rn artifacts/* pmpd/
-
-      - name: Upload Package
-        uses: actions/upload-artifact@v4
-        with:
-          name: pmpd-macos
-          path: pmpd
-
-      - name: Create Zip for Release
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: zip -r pmpd-macos.zip pmpd
+        run: zip -r pmpd-${{matrix.os}}.zip pmpd
 
       - name: Add Zip to Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: pmpd-macos.zip
-
-  package_release_linux:
-    runs-on: ubuntu-latest
-    needs: [ build_linux, build_linux_arm7 ]
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-linux-amd64-pd32
-          path: artifacts
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-linux-amd64-pd64
-          path: artifacts
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-linux-arm64-pd32
-          path: artifacts
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-linux-arm64-pd64
-          path: artifacts
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: pmpd-linux-arm7-pd32
-          path: artifacts
-
-      - name: Merge Artifacts to Package
-        run: |
-          mkdir pmpd
-          cp -rn artifacts/* pmpd/
-
-      - name: Upload Package
-        uses: actions/upload-artifact@v4
-        with:
-          name: pmpd-linux
-          path: pmpd
-
-      - name: Create Zip for Release
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: zip -r pmpd-linux.zip pmpd
-
-      - name: Add Zip to Release
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: pmpd-linux.zip
+          files: pmpd-${{matrix.os}}.zip
 
   deken_check_and_upload:
     runs-on: ubuntu-latest
-    needs: [ package_release_windows, package_release_macos, package_release_linux ]
+    needs: [package_and_release]
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
       - uses: actions/checkout@v4
@@ -333,11 +231,11 @@ jobs:
           done
 
       - name: Upload Deken Package
-        if: ${{ !contains(github.ref, 'test') }} # upload if not a "test" release
+        if: ${{!contains(github.ref, 'test')}} # upload if not a "test" release
         shell: bash
         env:
-          DEKEN_USERNAME: ${{ secrets.DEKEN_USERNAME }}
-          DEKEN_PASSWORD: ${{ secrets.DEKEN_PASSWORD }}
+          DEKEN_USERNAME: ${{secrets.DEKEN_USERNAME}}
+          DEKEN_PASSWORD: ${{secrets.DEKEN_PASSWORD}}
         run: |
           SHORT=${GITHUB_REF:11}
           SLUG=${SHORT//\//_}
