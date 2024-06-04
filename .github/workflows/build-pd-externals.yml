@@ -180,28 +180,26 @@ jobs:
           name: pmpd-windows-x64-pd64
           path: artifacts
 
-      - name: Merge Artifacts
+      - name: Merge Artifacts to Package
         run: |
           mkdir pmpd
           cp -rn artifacts/* pmpd/
 
-      - name: Upload package
+      - name: Upload Package
         uses: actions/upload-artifact@v4
         with:
           name: pmpd-windows
           path: pmpd
 
-      - name: Rezip for release
-        run: |
-          SHORT=${GITHUB_REF:11} # remove the 'refs/tags/v' prefix
-          SLUG=${SHORT//\//_} # replace '/' with '_'
-          zip -r pmpd-${SLUG}-windows.zip pmpd
+      - name: Create Zip for Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: zip -r pmpd-windows.zip pmpd
 
-      - name: Release
-        uses: softprops/action-gh-release@v2
+      - name: Add Zip to Release
         if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
         with:
-          files: pmpd*.zip
+          files: pmpd-windows.zip
 
   package_release_macos:
     runs-on: ubuntu-latest
@@ -217,28 +215,26 @@ jobs:
           name: pmpd-macos-universal-pd64
           path: artifacts
 
-      - name: Merge Artifacts
+      - name: Merge Artifacts to Package
         run: |
           mkdir pmpd
           cp -rn artifacts/* pmpd/
 
-      - name: Upload package
+      - name: Upload Package
         uses: actions/upload-artifact@v4
         with:
           name: pmpd-macos
           path: pmpd
 
-      - name: Rezip for release
-        run: |
-          SHORT=${GITHUB_REF:11} # remove the 'refs/tags/v' prefix
-          SLUG=${SHORT//\//_} # replace '/' with '_'
-          zip -r pmpd-${SLUG}-macos.zip pmpd
-
-      - name: Release
-        uses: softprops/action-gh-release@v2
+      - name: Create Zip for Release
         if: startsWith(github.ref, 'refs/tags/v')
+        run: zip -r pmpd-macos.zip pmpd
+
+      - name: Add Zip to Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
         with:
-          files: pmpd*.zip
+          files: pmpd-macos.zip
 
   package_release_linux:
     runs-on: ubuntu-latest
@@ -269,28 +265,26 @@ jobs:
           name: pmpd-linux-arm7-pd32
           path: artifacts
 
-      - name: Merge Artifacts
+      - name: Merge Artifacts to Package
         run: |
           mkdir pmpd
           cp -rn artifacts/* pmpd/
 
-      - name: Upload package
+      - name: Upload Package
         uses: actions/upload-artifact@v4
         with:
           name: pmpd-linux
           path: pmpd
 
-      - name: Rezip for release
-        run: |
-          SHORT=${GITHUB_REF:11} # remove the 'refs/tags/v' prefix
-          SLUG=${SHORT//\//_} # replace '/' with '_'
-          zip -r pmpd-${SLUG}-linux.zip pmpd
+      - name: Create Zip for Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: zip -r pmpd-linux.zip pmpd
 
-      - name: Release
+      - name: Add Zip to Release
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: pmpd*.zip
+          files: pmpd-linux.zip
 
   deken_check_and_upload:
     runs-on: ubuntu-latest
@@ -316,39 +310,42 @@ jobs:
           name: pmpd-linux
           path: pmpd-linux
 
-      - name: Create Deken Package and check or upload
+      - name: Check Deken Package
+        shell: bash
+        run: |
+          SHORT=${GITHUB_REF:11}
+          SLUG=${SHORT//\//_}
+          for os in linux macos windows; do
+            echo "## ${os}" | tee -a $GITHUB_STEP_SUMMARY
+            mkdir -p package-${os}
+            docker run --rm --user $(id -u) --volume ./pmpd-${os}:/pmpd \
+              --volume ./package-${os}:/package registry.git.iem.at/pd/deken \
+              deken package --output-dir /package -v "${SLUG}" /pmpd
+
+            dek_files=$(ls package-${os}/*.dek)
+            for dek_file in $dek_files; do
+              filename=$(basename "$dek_file")
+              echo -e "#### \`$filename\`" | tee -a $GITHUB_STEP_SUMMARY
+              echo '```' | tee -a $GITHUB_STEP_SUMMARY
+              unzip -l "$dek_file" | awk 'NR>3 {print $4}' | sed '/^$/d' | tee -a $GITHUB_STEP_SUMMARY
+              echo '```' | tee -a $GITHUB_STEP_SUMMARY
+            done
+          done
+
+      - name: Upload Deken Package
+        if: ${{ !contains(github.ref, 'test') }} # upload if not a "test" release
         shell: bash
         env:
           DEKEN_USERNAME: ${{ secrets.DEKEN_USERNAME }}
           DEKEN_PASSWORD: ${{ secrets.DEKEN_PASSWORD }}
         run: |
-          SHORT=${GITHUB_REF:11} # remove the 'refs/tags/' prefix
-          SLUG=${SHORT//\//_} # replace '/' with '_'
-
-          if [[ "${SLUG}" == *"test"* ]]; then
-            for os in linux macos windows; do
-              echo "## ${os}" | tee -a $GITHUB_STEP_SUMMARY
-              mkdir -p package-${os}
-              docker run --rm --user $(id -u) --volume ./pmpd-${os}:/pmpd \
-                --volume ./package-${os}:/package registry.git.iem.at/pd/deken \
-                deken package --output-dir /package -v "${SLUG}" /pmpd
-
-              dek_files=$(ls package-${os}/*.dek)
-              for dek_file in $dek_files; do
-                filename=$(basename "$dek_file")
-                echo -e "#### \`$filename\`" | tee -a $GITHUB_STEP_SUMMARY
-                echo '```' | tee -a $GITHUB_STEP_SUMMARY
-                unzip -l "$dek_file" | awk 'NR>3 {print $4}' | sed '/^$/d' | tee -a $GITHUB_STEP_SUMMARY
-                echo '```' | tee -a $GITHUB_STEP_SUMMARY
-              done
-            done
-          else
-            for os in linux macos windows; do
-              docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD \
-                --volume ./pmpd-${os}:/pmpd registry.git.iem.at/pd/deken \
-                deken upload --no-source-error -v "${SLUG}" /pmpd
-            done
+          SHORT=${GITHUB_REF:11}
+          SLUG=${SHORT//\//_}
+          for os in linux macos windows; do
             docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD \
-              --volume ./pmpd-src:/pmpd registry.git.iem.at/pd/deken \
-              deken upload -v "${SLUG}" /pmpd
-          fi
+              --volume ./pmpd-${os}:/pmpd registry.git.iem.at/pd/deken \
+              deken upload --no-source-error -v "${SLUG}" /pmpd
+          done
+          docker run --rm -e DEKEN_USERNAME -e DEKEN_PASSWORD \
+            --volume ./pmpd-src:/pmpd registry.git.iem.at/pd/deken \
+            deken upload -v "${SLUG}" /pmpd
