@@ -121,6 +121,8 @@ t_int *pmpd2d_tilde_perform(t_int *w)
     t_sample **in = x->inlet_vector;
     t_sample **out = x->outlet_vector;
 
+	t_float sqspeed;
+	
     for (i=0; i<x->nb_inlet; i++) in[i]= x->inlet_vector[i];
     for (i=0; i<x->nb_outlet; i++) out[i]= x->outlet_vector[i];
 
@@ -199,11 +201,11 @@ t_int *pmpd2d_tilde_perform(t_int *w)
             {
             // compute new masses position
             // a mass does not move if M=0 (i.e : invM = 0)
-                if ( (x->mass[i].D != 0) && ((x->mass[i].speedX != 0) || (x->mass[i].speedY != 0)) ) { // amortissement en fct de la vitesse
-                    L = sqrt(x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY);
-                    F = -(L - x->mass[i].Doffset) * x->mass[i].D;
-                     x->mass[i].forceX += F * x->mass[i].speedX / L;
-                     x->mass[i].forceY += F * x->mass[i].speedY / L;
+                if (x->mass[i].D != 0 && ((sqspeed = (x->mass[i].speedX * x->mass[i].speedX) + (x->mass[i].speedY * x->mass[i].speedY)) != 0)) { // velocity damping
+	            	L = sqrt(sqspeed);
+	            	F = -(L - x->mass[i].Doffset) * x->mass[i].D;
+	                x->mass[i].forceX += F * x->mass[i].speedX / L;
+	                x->mass[i].forceY += F * x->mass[i].speedY / L;
                 }
                 x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
                 x->mass[i].speedY += x->mass[i].forceY * x->mass[i].invM;
