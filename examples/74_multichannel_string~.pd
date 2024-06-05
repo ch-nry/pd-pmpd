@@ -68,10 +68,10 @@
 #X obj 162 133 *~ 0.2;
 #X obj 49 140 *~ 0.5;
 #X obj 49 86 pow~ 6;
-#X obj 299 499 pow~ 2;
 #X text 182 10 This example show how to use multichannel signals with pmpd.;
 #X text 182 30 A single inlet control forces send to 16 masses \, and the outlet output position of this 16 masses. Clones objects allow to send the force to the desired position and to pick the needed value.;
 #X floatatom 49 22 5 0 0 0 - - - 0;
+#X obj 299 499 pow~ 4;
 #X connect 0 0 4 0;
 #X connect 1 0 2 0;
 #X connect 2 0 7 0;
@@ -80,7 +80,7 @@
 #X connect 4 0 14 0;
 #X connect 4 0 1 0;
 #X connect 5 0 6 0;
-#X connect 6 0 30 0;
+#X connect 6 0 33 0;
 #X connect 8 0 4 0;
 #X connect 10 0 11 0;
 #X connect 11 0 0 1;
@@ -103,5 +103,5 @@
 #X connect 27 0 24 1;
 #X connect 28 0 20 0;
 #X connect 29 0 28 0;
-#X connect 30 0 2 1;
-#X connect 33 0 17 0;
+#X connect 32 0 17 0;
+#X connect 33 0 2 1;
