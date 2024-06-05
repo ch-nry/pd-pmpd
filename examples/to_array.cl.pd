@@ -1,0 +1,11 @@
+#N canvas 228 25 450 300 12;
+#X obj 57 51 inlet~;
+#X obj 57 115 snapshot~;
+#X obj 151 50 bang~;
+#X obj 57 147 pack f \$1;
+#X obj 57 179 tabwrite \$2;
+#X obj 237 49 block~ 512;
+#X connect 0 0 1 0;
+#X connect 1 0 3 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
