@@ -1,3 +1,8 @@
+version 0.14 
+- add multichanel support
+- bugfix when speedX!=0 but speedX*speedX == 0
+- better github action to compile for multiple platform / CPU and pd version
+
 version 0.13.2
 - bugfix : pmpd*~ crashed when data is send to an non existant outlet
 - fix binary name when compile on UNIX
