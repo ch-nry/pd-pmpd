@@ -31,14 +31,13 @@ jobs:
 
     - name: Build
       run: |
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPUREDATA_ARCH_SUFFIX=${{matrix.arch}} -DPUREDATA_FLOATSIZE=${{matrix.floatsize}}
-        cmake --build build
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DPUREDATA_ARCH_SUFFIX=${{ matrix.arch }} -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
         cmake --build build --target install
 
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-linux-${{matrix.arch}}-pd${{matrix.floatsize}}
+        name: pmpd-linux-${{ matrix.arch }}-pd${{ matrix.floatsize }}
         path: build/package/pmpd
 
   build_linux_arm7:
@@ -87,14 +86,13 @@ jobs:
 
     - name: Build for amd64 and arm64
       run: |
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" -DPUREDATA_FLOATSIZE=${{matrix.floatsize}}
-        cmake --build build
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_OSX_DEPLOYMENT_TARGET="10.14" -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
         cmake --build build --target install
 
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-macos-universal-pd${{matrix.floatsize}}
+        name: pmpd-macos-universal-pd${{ matrix.floatsize }}
         path: build/package/pmpd
 
   build_windows_amd64:
@@ -106,28 +104,30 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Download Pure Data Binaries
+      shell: pwsh
       run: |
-        if (${{matrix.floatsize}} -eq 32) {
-          Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${{env.PD_VERSION}}.msw.zip" -OutFile "pd${{matrix.floatsize}}-${{env.PD_VERSION}}.msw.zip"
+        if (${{ matrix.floatsize }} -eq 32) {
+          Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-$env:PD_VERSION.msw.zip" -OutFile "pd${{ matrix.floatsize }}-$env:PD_VERSION.msw.zip"
         } else {
-          Invoke-WebRequest -Uri "https://puredata.info/downloads/pure-data/releases/${{env.PD_VERSION}}-pd64/Pd64-${{env.PD_VERSION}}.msw.zip" -OutFile "pd${{matrix.floatsize}}-${{env.PD_VERSION}}.msw.zip"
+          Invoke-WebRequest -Uri "https://puredata.info/downloads/pure-data/releases/$env:PD_VERSION-pd64/Pd64-$env:PD_VERSION.msw.zip" -OutFile "pd${{ matrix.floatsize }}-$env:PD_VERSION.msw.zip"
         }
-        Expand-Archive -Path "pd${{matrix.floatsize}}-${{env.PD_VERSION}}.msw.zip" -DestinationPath .
+        Expand-Archive -Path "pd${{ matrix.floatsize }}-$env:PD_VERSION.msw.zip" -DestinationPath .
 
     - name: Build
+      shell: pwsh
       run: |
-        if (${{matrix.floatsize}} -eq 32) {
-          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}/bin/pd.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{matrix.floatsize}}
+        if (${{ matrix.floatsize }} -eq 32) {
+          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-$env:PD_VERSION/src" -DPUREDATA_LIB="pd-$env:PD_VERSION/bin/pd.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
         } else {
-          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="Pd-0.54.1/src" -DPUREDATA_LIB="Pd-0.54.1/bin/pd64.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{matrix.floatsize}}
+          $pd64_version = $env:PD_VERSION -replace '-', '.'
+          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="Pd-$pd64_version/src" -DPUREDATA_LIB="Pd-$pd64_version/bin/pd64.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
         }
-        cmake --build build --config Release
-        cmake --build build --config Release --target install
+        cmake --build build --target install
 
     - name: Archive Package
       uses: actions/upload-artifact@v4
       with:
-        name: pmpd-windows-amd64-pd${{matrix.floatsize}}
+        name: pmpd-windows-amd64-pd${{ matrix.floatsize }}
         path: build/package/pmpd
 
   build_windows_i386:
@@ -137,14 +137,13 @@ jobs:
 
     - name: Download Pure Data Binaries
       run: |
-        Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-${env:PD_VERSION}-i386.msw.zip" -OutFile "pd-${env:PD_VERSION}-i386.msw.zip"
-        Expand-Archive -Path "pd-${env:PD_VERSION}-i386.msw.zip" -DestinationPath .
+        Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-$env:PD_VERSION-i386.msw.zip" -OutFile "pd-$env:PD_VERSION-i386.msw.zip"
+        Expand-Archive -Path "pd-$env:PD_VERSION-i386.msw.zip" -DestinationPath .
 
     - name: Build (Single Precision)
       run: |
-        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-${env:PD_VERSION}-i386/src" -DPUREDATA_LIB="pd-${env:PD_VERSION}-i386/bin/pd.lib" -G "Visual Studio 17 2022" -A Win32
-        cmake --build build --config Release
-        cmake --build build --config Release --target install
+        cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-$env:PD_VERSION-i386/src" -DPUREDATA_LIB="pd-$env:PD_VERSION-i386/bin/pd.lib" -G "Visual Studio 17 2022" -A Win32
+        cmake --build build --target install
 
     - name: Archive Package
       uses: actions/upload-artifact@v4
@@ -166,23 +165,23 @@ jobs:
       - name: Merge Artifacts to Package
         run: |
           mkdir -p pmpd
-          cp -rn artifacts/pmpd-${{matrix.os}}*/* pmpd
+          cp -rn artifacts/pmpd-${{ matrix.os }}*/* pmpd
 
       - name: Upload Package
         uses: actions/upload-artifact@v4
         with:
-          name: pmpd-${{matrix.os}}
+          name: pmpd-${{ matrix.os }}
           path: pmpd
 
       - name: Create Zip for Release
         if: startsWith(github.ref, 'refs/tags/v')
-        run: zip -r pmpd-${{matrix.os}}.zip pmpd
+        run: zip -r pmpd-${{ matrix.os }}.zip pmpd
 
       - name: Add Zip to Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: pmpd-${{matrix.os}}.zip
+          files: pmpd-${{ matrix.os }}.zip
 
   deken_check_and_upload:
     runs-on: ubuntu-latest
@@ -231,11 +230,11 @@ jobs:
           done
 
       - name: Upload Deken Package
-        if: ${{!contains(github.ref, 'test')}} # upload if not a "test" release
+        if: ${{ !contains(github.ref, 'test') }} # upload if not a "test" release
         shell: bash
         env:
-          DEKEN_USERNAME: ${{secrets.DEKEN_USERNAME}}
-          DEKEN_PASSWORD: ${{secrets.DEKEN_PASSWORD}}
+          DEKEN_USERNAME: ${{ secrets.DEKEN_USERNAME }}
+          DEKEN_PASSWORD: ${{ secrets.DEKEN_PASSWORD }}
         run: |
           SHORT=${GITHUB_REF:11}
           SLUG=${SHORT//\//_}
