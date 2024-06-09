@@ -122,7 +122,7 @@ t_int *pmpd3d_tilde_perform(t_int *w)
     t_pmpd3d_tilde *x = (t_pmpd3d_tilde *)(w[1]);
     t_int n = w[2]; // sample count from sp[0]->s_n
 
-    t_float F, FX, FY, FZ, L, LX, LY, LZ, deltaL;
+    t_float F, FX, FY, FZ, L, LX, LY, LZ, deltaL, invL;
     t_int i, si, loop;
 
     t_sample **in = x->inlet_vector;
@@ -158,22 +158,17 @@ t_int *pmpd3d_tilde_perform(t_int *w)
                 LY = x->link[i].mass2->posY - x->link[i].mass1->posY;
                 LZ = x->link[i].mass2->posZ - x->link[i].mass1->posZ;
                 L = sqrt(LY*LY + LX*LX + LZ*LZ);
-                F  = x->link[i].K * (L - x->link[i].L0);
+                F = x->link[i].K * (L - x->link[i].L0);
                 // spring
 
-                F  += x->link[i].D * (L - x->link[i].L); // on derive la longeur L calculé précedement
+                F += x->link[i].D * (L - x->link[i].L); // on derive la longeur L calculé précedement
                 x->link[i].L = L; // on la sauve pour la prochaine itération
                 // dashpot
 
-                if(L !=0 ) { // si L = 0 : on ne sais pas dans quel direction apliquer la force : c'est un point d'equilibre instable
-                    FX = F * LX/L;
-                    FY = F * LY/L;
-                    FZ = F * LZ/L;
-                } else {
-                    FX = 0;
-                    FY = 0;
-                    FZ = 0;
-                }
+                invL = (L != 0) ? 1.0f / L : 0;
+                FX = F * LX * invL;
+                FY = F * LY * invL;
+                FZ = F * LZ * invL;
 
                 x->link[i].mass1->forceX += FX;
                 x->link[i].mass2->forceX -= FX;
@@ -192,23 +187,19 @@ t_int *pmpd3d_tilde_perform(t_int *w)
                 L = sqrt(LY*LY + LX*LX + LZ*LZ);
                 if ((L < x->NLlink[i].Lmax) && (L > x->NLlink[i].Lmin)) {
                     deltaL = L - x->NLlink[i].L0;
-                    F  = x->NLlink[i].K * pow(fabs(deltaL), x->NLlink[i].Pow);
-                    if (deltaL < 0) F *= -1;
+                    F = x->NLlink[i].K * pow(fabs(deltaL), x->NLlink[i].Pow);
+                    F = (deltaL < 0) ? -F : F;
                     // spring
 
                     F += x->NLlink[i].D * (L - x->NLlink[i].L); // on derive la longeur L calculé précedement
                     x->NLlink[i].L = L; // on la sauve pour la prochaine itération
                     // dashpot
 
-                    if(L !=0 ) { // si L = 0 : on ne sais pas dans quel direction apliquer la force : c'est un point d'equilibre instable
-                        FX = F * LX/L;
-                        FY = F * LY/L;
-                        FZ = F * LZ/L;
-                    } else {
-                        FX = 0;
-                        FY = 0;
-                        FZ = 0;
-                    }
+                    invL = (L != 0) ? 1.0f / L : 0;
+                    FX = F * LX * invL;
+                    FY = F * LY * invL;
+                    FZ = F * LZ * invL;
+
                     x->NLlink[i].mass1->forceX += FX;
                     x->NLlink[i].mass2->forceX -= FX;
                     x->NLlink[i].mass1->forceY += FY;
