@@ -242,7 +242,6 @@ t_int *pmpd3d_tilde_perform(t_int *w)
         }
 
         // compute output vector value
-        for (i=0; i<x->nb_outlet; i++) x->outlet[i] = 0;
         for (i=0; i<x->nb_outPosX; i++) x->outlet[x->outPosX[i].nbr_outlet] += x->outPosX[i].mass->posX * x->outPosX[i].influence;
         for (i=0; i<x->nb_outPosY; i++) x->outlet[x->outPosY[i].nbr_outlet] += x->outPosY[i].mass->posY * x->outPosY[i].influence;
         for (i=0; i<x->nb_outPosZ; i++) x->outlet[x->outPosZ[i].nbr_outlet] += x->outPosZ[i].mass->posZ * x->outPosZ[i].influence;
@@ -251,9 +250,11 @@ t_int *pmpd3d_tilde_perform(t_int *w)
         for (i=0; i<x->nb_outSpeedZ; i++) x->outlet[x->outSpeedZ[i].nbr_outlet] += x->outSpeedZ[i].mass->speedZ * x->outSpeedZ[i].influence;
         for (i=0; i<x->nb_outSpeed; i++) x->outlet[x->outSpeed[i].nbr_outlet] += sqrt(x->outSpeed[i].mass->speedX*x->outSpeed[i].mass->speedX + x->outSpeed[i].mass->speedY * x->outSpeed[i].mass->speedY + x->outSpeed[i].mass->speedZ * x->outSpeed[i].mass->speedZ) * x->outSpeed[i].influence;
 
-        // send vector value to the vector pointer
-        for (i=0; i<x->nb_outlet; i++)
+        // send vector value to the vector pointer and reset for next iteration
+        for (i=0; i<x->nb_outlet; i++) {
             out[i][si] = x->outlet[i];
+            x->outlet[i] = 0;
+        }
     }
     return(w+3);
 }
