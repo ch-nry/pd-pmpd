@@ -122,7 +122,7 @@ jobs:
           $pd64_version = $env:PD_VERSION -replace '-', '.'
           cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="Pd-$pd64_version/src" -DPUREDATA_LIB="Pd-$pd64_version/bin/pd64.lib" -G "Visual Studio 17 2022" -A x64 -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
         }
-        cmake --build build --target install
+        cmake --build build --config Release --target install
 
     - name: Archive Package
       uses: actions/upload-artifact@v4
@@ -143,7 +143,7 @@ jobs:
     - name: Build (Single Precision)
       run: |
         cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-$env:PD_VERSION-i386/src" -DPUREDATA_LIB="pd-$env:PD_VERSION-i386/bin/pd.lib" -G "Visual Studio 17 2022" -A Win32
-        cmake --build build --target install
+        cmake --build build --config Release --target install
 
     - name: Archive Package
       uses: actions/upload-artifact@v4
