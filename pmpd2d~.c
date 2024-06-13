@@ -118,7 +118,7 @@ t_int *pmpd2d_tilde_perform(t_int *w)
     t_float F, FX, FY, L, LX, LY, deltaL, invL;
     t_int i, si, loop;
 
-	t_float sqspeed;
+	t_float sqSpeed;
 	
     for (si=0; si<n; si++)
     {
@@ -147,7 +147,7 @@ t_int *pmpd2d_tilde_perform(t_int *w)
                 x->link[i].L = L; // on la sauve pour la prochaine itération
                 // dashpot
 
-                invL = (L != 0) ? 1.0f / L : 0;
+                invL = L ? 1/L : 0;
                 FX = F * LX * invL;
                 FY = F * LY * invL;
 
@@ -173,7 +173,7 @@ t_int *pmpd2d_tilde_perform(t_int *w)
                     x->NLlink[i].L = L; // on la sauve pour la prochaine itération
                     // dashpot
 
-                    invL = (L != 0) ? 1.0f / L : 0;
+                    invL = L ? 1/L : 0;
                     FX = F * LX * invL;
                     FY = F * LY * invL;
 
@@ -188,8 +188,8 @@ t_int *pmpd2d_tilde_perform(t_int *w)
             {
             // compute new masses position
             // a mass does not move if M=0 (i.e : invM = 0)
-                if (x->mass[i].D != 0 && ((sqspeed = (x->mass[i].speedX * x->mass[i].speedX) + (x->mass[i].speedY * x->mass[i].speedY)) != 0)) { // velocity damping
-	            	L = sqrt(sqspeed);
+                if (x->mass[i].D && (sqSpeed = x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY) ) { // velocity damping
+	            	L = sqrt(sqSpeed);
 	            	F = -(L - x->mass[i].Doffset) * x->mass[i].D;
 	                x->mass[i].forceX += F * x->mass[i].speedX / L;
 	                x->mass[i].forceY += F * x->mass[i].speedY / L;
