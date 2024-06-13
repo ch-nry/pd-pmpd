@@ -159,7 +159,7 @@ t_int *pmpd3d_tilde_perform(t_int *w)
                 x->link[i].L = L; // on la sauve pour la prochaine itération
                 // dashpot
 
-                invL = (L != 0) ? 1.0f / L : 0;
+                invL = L ? 1/L : 0;
                 FX = F * LX * invL;
                 FY = F * LY * invL;
                 FZ = F * LZ * invL;
@@ -189,7 +189,7 @@ t_int *pmpd3d_tilde_perform(t_int *w)
                     x->NLlink[i].L = L; // on la sauve pour la prochaine itération
                     // dashpot
 
-                    invL = (L != 0) ? 1.0f / L : 0;
+                    invL = L ? 1/L : 0;
                     FX = F * LX * invL;
                     FY = F * LY * invL;
                     FZ = F * LZ * invL;
@@ -207,7 +207,7 @@ t_int *pmpd3d_tilde_perform(t_int *w)
             {
             // compute new masses position
             // a mass does not move if M=0 (i.e : invM = 0)
-                if ( (x->mass[i].D != 0) && ((sqspeed = (x->mass[i].speedX * x->mass[i].speedX) + (x->mass[i].speedY * x->mass[i].speedY) + (x->mass[i].speedZ * x->mass[i].speedZ)) != 0)) { // velocity damping
+                if ( x->mass[i].D && (sqspeed = x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY + x->mass[i].speedZ * x->mass[i].speedZ) ) { // velocity damping
                     L = sqrt(sqspeed);
                     F = -(L - x->mass[i].Doffset) * x->mass[i].D;
                     x->mass[i].forceX += F * x->mass[i].speedX / L;
@@ -276,7 +276,7 @@ void pmpd3d_tilde_bang(t_pmpd3d_tilde *x)
     t_int i;
     for (i=0; i<x->nb_mass; i++) logpost(x, 2, "mass:%ld, M:%f, posX:%f, posY:%f, posZ:%f, DEnv:%f, DEnvOffset:%f",i, x->mass[i].invM<=0.?0:1/x->mass[i].invM, x->mass[i].posX,x->mass[i].posY,x->mass[i].posZ,x->mass[i].D,x->mass[i].Doffset);
     for (i=0; i<x->nb_link; i++) logpost(x, 2, "link:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f", i, x->link[i].mass1->Id, x->link[i].mass2->Id, x->link[i].K, x->link[i].D, x->link[i].L0, x->link[i].L);
-    for (i=0; i<x->nb_NLlink; i++) logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f, Lmin:%f, Lmax:%f, Pow:%f, blabla", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K, x->NLlink[i].D, x->NLlink[i].L0, x->NLlink[i].L, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
+    for (i=0; i<x->nb_NLlink; i++) logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f, Lmin:%f, Lmax:%f, Pow:%f", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K, x->NLlink[i].D, x->NLlink[i].L0, x->NLlink[i].L, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
     for (i=0; i<x->nb_inPosX; i++) logpost(x, 2, "inPosX:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosX[i].nbr_inlet, x->inPosX[i].mass->Id, x->inPosX[i].influence);
     for (i=0; i<x->nb_inPosY; i++) logpost(x, 2, "inPosY:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosY[i].nbr_inlet, x->inPosY[i].mass->Id, x->inPosY[i].influence);
     for (i=0; i<x->nb_inPosZ; i++) logpost(x, 2, "inPosZ:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPosZ[i].nbr_inlet, x->inPosZ[i].mass->Id, x->inPosZ[i].influence);
