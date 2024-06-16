@@ -209,10 +209,11 @@ t_int *pmpd3d_tilde_perform(t_int *w)
             // a mass does not move if M=0 (i.e : invM = 0)
                 if ( x->mass[i].D && (sqspeed = x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY + x->mass[i].speedZ * x->mass[i].speedZ) ) { // velocity damping
                     L = sqrt(sqspeed);
+                    invL = 1 / L;
                     F = -(L - x->mass[i].Doffset) * x->mass[i].D;
-                    x->mass[i].forceX += F * x->mass[i].speedX / L;
-                    x->mass[i].forceY += F * x->mass[i].speedY / L;
-                    x->mass[i].forceZ += F * x->mass[i].speedZ / L;
+                    x->mass[i].forceX += F * x->mass[i].speedX * invL;
+                    x->mass[i].forceY += F * x->mass[i].speedY * invL;
+                    x->mass[i].forceZ += F * x->mass[i].speedZ * invL;
                 }
                 x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
                 x->mass[i].speedY += x->mass[i].forceY * x->mass[i].invM;
