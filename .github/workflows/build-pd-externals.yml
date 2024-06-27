@@ -224,7 +224,7 @@ jobs:
               filename=$(basename "$dek_file")
               echo -e "#### \`$filename\`" | tee -a $GITHUB_STEP_SUMMARY
               echo '```' | tee -a $GITHUB_STEP_SUMMARY
-              unzip -l "$dek_file" | awk 'NR>3 {print $4}' | sed '/^$/d' | tee -a $GITHUB_STEP_SUMMARY
+              unzip -l "$dek_file" | awk 'NR>3 {print $4}' | sed '/^$/d' | sort | tee -a $GITHUB_STEP_SUMMARY
               echo '```' | tee -a $GITHUB_STEP_SUMMARY
             done
           done
