@@ -95,6 +95,8 @@ typedef struct _pmpd_tilde {
     t_int nb_inPos, nb_inForce, nb_outPos, nb_outSpeed;
     t_sample f; // used for signal inlet
     t_int nb_loop; // to be able not to compute everything a each iteration
+    t_int constrained;  // whether to use position constraints
+    t_float minX, maxX;
 } t_pmpd_tilde;
 
 t_int *pmpd_tilde_perform(t_int *w)
@@ -157,6 +159,18 @@ t_int *pmpd_tilde_perform(t_int *w)
                     // only used for denormal problem
                     // -ffast-math -O6 does not solve the problem
                 x->mass[i].posX += x->mass[i].speedX;
+
+                // apply constraints if set
+                if (x->constrained) {
+                    if (x->mass[i].posX < x->minX) {
+                        x->mass[i].posX = x->minX;
+                        x->mass[i].speedX = 0;
+                    }
+                    else if (x->mass[i].posX > x->maxX) {
+                        x->mass[i].posX = x->maxX;
+                        x->mass[i].speedX = 0;
+                    }
+                }
             }
         }
 
@@ -467,19 +481,36 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
     int maj = 0, min = 0, bug = 0;
     sys_getversion(&maj, &min, &bug);
     x->multichannel = 0;
+    x->constrained = 0;
 
     pmpd_tilde_reset(x);
 
     // check for flags (currently need to be positioned first)
     while (argc && argv->a_type == A_SYMBOL) {
-        if (atom_getsymbol(argv) == gensym("-m")) {
+        t_symbol *flag = atom_getsymbol(argv);
+        if (flag == gensym("-m")) {
             if(g_signal_setmultiout)
                 x->multichannel = 1;
             else
                 pd_error(x, "[pmpd~]: no multichannel support in Pd %i.%i-%i, ignoring '-m' flag", maj, min, bug);
-        } else
-            pd_error(x, "[pmpd~]: invalid argument");
-        argc--, argv++;
+            argc--, argv++;
+        }
+        else if (flag == gensym("-c")) {
+            if (argc >= 3) {  // Need 2 more args for constraints
+                x->constrained = 1;
+                x->minX = atom_getfloatarg(1, argc, argv);
+                x->maxX = atom_getfloatarg(2, argc, argv);
+                argc -= 3;
+                argv += 3;
+            } else {
+                pd_error(x, "[pmpd~]: -c flag requires 2 values: minX maxX");
+                argc--, argv++;
+            }
+        }
+        else {
+            pd_error(x, "[pmpd~]: invalid argument %s", flag->s_name);
+            argc--, argv++;
+        }
     }
 
     x->nb_inlet = max(1, atom_getintarg(0, argc, argv));
@@ -495,9 +526,9 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
     x->inlet_vector = (t_sample **)getbytes(x->nb_inlet * sizeof(t_sample *));
     x->outlet_vector = (t_sample **)getbytes(x->nb_outlet * sizeof(t_sample *));
 
-    x->mass     = (struct _mass *)getbytes(x->nb_max_mass * sizeof(struct _link));
+    x->mass     = (struct _mass *)getbytes(x->nb_max_mass * sizeof(struct _mass));
     x->link     = (struct _link *)getbytes(x->nb_max_link * sizeof(struct _link));
-    x->NLlink   = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
+    x->NLlink   = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _NLlink));
 
     x->inPos    = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
     x->inForce  = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));

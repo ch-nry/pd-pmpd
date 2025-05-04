@@ -114,6 +114,10 @@ typedef struct _pmpd3d_tilde {
     t_int nb_outPosX, nb_outPosY, nb_outPosZ, nb_outSpeedX, nb_outSpeedY, nb_outSpeedZ, nb_outSpeed;
     t_sample f; // used for signal inlet
     t_int nb_loop; // to be able not to compute everything a each iteration
+    t_int constrained;  // whether to use position constraints
+    t_float minX, maxX;
+    t_float minY, maxY;
+    t_float minZ, maxZ;
 } t_pmpd3d_tilde;
 
 t_int *pmpd3d_tilde_perform(t_int *w)
@@ -224,6 +228,34 @@ t_int *pmpd3d_tilde_perform(t_int *w)
                 x->mass[i].posX += x->mass[i].speedX;
                 x->mass[i].posY += x->mass[i].speedY;
                 x->mass[i].posZ += x->mass[i].speedZ;
+
+                // apply constraints if set
+                if (x->constrained) {
+                    if (x->mass[i].posX < x->minX) {
+                        x->mass[i].posX = x->minX;
+                        x->mass[i].speedX = 0;
+                    }
+                    else if (x->mass[i].posX > x->maxX) {
+                        x->mass[i].posX = x->maxX;
+                        x->mass[i].speedX = 0;
+                    }
+                    if (x->mass[i].posY < x->minY) {
+                        x->mass[i].posY = x->minY;
+                        x->mass[i].speedY = 0;
+                    }
+                    else if (x->mass[i].posY > x->maxY) {
+                        x->mass[i].posY = x->maxY;
+                        x->mass[i].speedY = 0;
+                    }
+                    if (x->mass[i].posZ < x->minZ) {
+                        x->mass[i].posZ = x->minZ;
+                        x->mass[i].speedZ = 0;
+                    }
+                    else if (x->mass[i].posZ > x->maxZ) {
+                        x->mass[i].posZ = x->maxZ;
+                        x->mass[i].speedZ = 0;
+                    }
+                }
             }
         }
 
@@ -736,19 +768,40 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
     int maj = 0, min = 0, bug = 0;
     sys_getversion(&maj, &min, &bug);
     x->multichannel = 0;
+    x->constrained = 0;
 
     pmpd3d_tilde_reset(x);
 
     // check for flags (currently need to be positioned first)
     while (argc && argv->a_type == A_SYMBOL) {
-        if (atom_getsymbol(argv) == gensym("-m"))
+        t_symbol *flag = atom_getsymbol(argv);
+        if (flag == gensym("-m")) {
             if(g_signal_setmultiout)
                 x->multichannel = 1;
             else
                 pd_error(x, "[pmpd3d~]: no multichannel support in Pd %i.%i-%i, ignoring '-m' flag", maj, min, bug);
-        else
-            pd_error(x, "[pmpd~]: invalid argument");
-        argc--, argv++;
+            argc--, argv++;
+        }
+        else if (flag == gensym("-c")) {
+            if (argc >= 7) {  // Need 6 more args for constraints
+                x->constrained = 1;
+                x->minX = atom_getfloatarg(1, argc, argv);
+                x->maxX = atom_getfloatarg(2, argc, argv);
+                x->minY = atom_getfloatarg(3, argc, argv);
+                x->maxY = atom_getfloatarg(4, argc, argv);
+                x->minZ = atom_getfloatarg(5, argc, argv);
+                x->maxZ = atom_getfloatarg(6, argc, argv);
+                argc -= 7;
+                argv += 7;
+            } else {
+                pd_error(x, "[pmpd3d~]: -c flag requires 6 values: minX maxX minY maxY minZ maxZ");
+                argc--, argv++;
+            }
+        }
+        else {
+            pd_error(x, "[pmpd3d~]: invalid argument %s", flag->s_name);
+            argc--, argv++;
+        }
     }
 
     x->nb_inlet = max(1, atom_getintarg(0, argc, argv));
@@ -764,9 +817,9 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
     x->inlet_vector = (t_sample **)getbytes(x->nb_inlet * sizeof(t_sample *));
     x->outlet_vector = (t_sample **)getbytes(x->nb_outlet * sizeof(t_sample *));
 
-    x->mass   = (struct _mass *)getbytes(x->nb_max_mass * sizeof(struct _link));
+    x->mass   = (struct _mass *)getbytes(x->nb_max_mass * sizeof(struct _mass));
     x->link   = (struct _link *)getbytes(x->nb_max_link * sizeof(struct _link));
-    x->NLlink = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _link));
+    x->NLlink = (struct _NLlink *)getbytes(x->nb_max_link * sizeof(struct _NLlink));
 
     x->inPosX    = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
     x->inPosY    = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
