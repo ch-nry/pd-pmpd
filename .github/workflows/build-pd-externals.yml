@@ -76,7 +76,6 @@ jobs:
     - name: Install Dependencies
       run: |
         brew update
-        brew install ninja
         if brew list cmake &>/dev/null; then
           echo "cmake is already installed."
         else
