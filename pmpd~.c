@@ -31,11 +31,16 @@
 #include "pmpd_version.h"
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) )
+#define min(a,b) ( ((a) < (b)) ? (a) : (b) )
+#define clamp(x,lo,hi) ( min(hi, max(lo, x)) )
 
 #define NB_MAX_LINK_DEFAULT 10000
 #define NB_MAX_MASS_DEFAULT 10000
 #define NB_MAX_IN_DEFAULT    1000
 #define NB_MAX_OUT_DEFAULT   1000
+
+#define HARD_MIN_LENGTH -1e20f
+#define HARD_MAX_LENGTH  1e20f
 
 typedef void (*t_signal_setmultiout)(t_signal **, int); 
 static t_signal_setmultiout g_signal_setmultiout;
@@ -137,6 +142,10 @@ t_int *pmpd_tilde_perform(t_int *w)
             {
                 L=x->NLlink[i].mass1->posX - x->NLlink[i].mass2->posX - x->NLlink[i].L0;
                 x->NLlink[i].L = L;
+
+                // Clamp length to hard limits
+                L = clamp(L, HARD_MIN_LENGTH, HARD_MAX_LENGTH);
+
                 if ((L < x->NLlink[i].Lmax) && (L > x->NLlink[i].Lmin))
                 {
                     F = x->NLlink[i].K * pow((fabs(L)), x->NLlink[i].Pow);
