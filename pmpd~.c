@@ -106,7 +106,7 @@ typedef struct _pmpd_tilde {
     t_int nb_inPos, nb_inForce, nb_outPos, nb_outSpeed;
     t_sample f; // used for signal inlet
     t_int nb_loop; // to be able not to compute everything a each iteration
-    t_int constrained;  // whether to use position constraints
+    t_int limited;  // whether to use position limits
     t_float minX, maxX;
 } t_pmpd_tilde;
 
@@ -175,8 +175,8 @@ t_int *pmpd_tilde_perform(t_int *w)
                     // -ffast-math -O6 does not solve the problem
                 x->mass[i].posX += x->mass[i].speedX;
 
-                // apply constraints if set
-                if (x->constrained) {
+                // apply limits if set
+                if (x->limited) {
                     if (x->mass[i].posX < x->minX) {
                         x->mass[i].posX = x->minX;
                         x->mass[i].speedX = 0;
@@ -496,7 +496,7 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
     int maj = 0, min = 0, bug = 0;
     sys_getversion(&maj, &min, &bug);
     x->multichannel = 0;
-    x->constrained = 0;
+    x->limited = 0;
 
     pmpd_tilde_reset(x);
 
@@ -510,15 +510,15 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
                 pd_error(x, "[pmpd~]: no multichannel support in Pd %i.%i-%i, ignoring '-m' flag", maj, min, bug);
             argc--, argv++;
         }
-        else if (flag == gensym("-c")) {
-            if (argc >= 3) {  // Need 2 more args for constraints
-                x->constrained = 1;
+        else if (flag == gensym("-l")) {
+            if (argc >= 3) {  // need 2 more args for limits
+                x->limited = 1;
                 x->minX = atom_getfloatarg(1, argc, argv);
                 x->maxX = atom_getfloatarg(2, argc, argv);
                 argc -= 3;
                 argv += 3;
             } else {
-                pd_error(x, "[pmpd~]: -c flag requires 2 values: minX maxX");
+                pd_error(x, "[pmpd~]: -l flag requires 2 limit values: minX maxX");
                 argc--, argv++;
             }
         }
