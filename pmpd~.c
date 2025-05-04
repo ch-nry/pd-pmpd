@@ -39,8 +39,14 @@
 #define NB_MAX_IN_DEFAULT    1000
 #define NB_MAX_OUT_DEFAULT   1000
 
-#define HARD_MIN_LENGTH -1e20f
-#define HARD_MAX_LENGTH  1e20f
+// Hard limits based on float size
+#if PD_FLOATSIZE == 32
+#define HARD_MIN_LENGTH -1e30f
+#define HARD_MAX_LENGTH  1e30f
+#elif PD_FLOATSIZE == 64
+#define HARD_MIN_LENGTH -1e300
+#define HARD_MAX_LENGTH  1e300
+#endif
 
 typedef void (*t_signal_setmultiout)(t_signal **, int); 
 static t_signal_setmultiout g_signal_setmultiout;
