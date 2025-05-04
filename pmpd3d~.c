@@ -125,7 +125,7 @@ typedef struct _pmpd3d_tilde {
     t_int nb_outPosX, nb_outPosY, nb_outPosZ, nb_outSpeedX, nb_outSpeedY, nb_outSpeedZ, nb_outSpeed;
     t_sample f; // used for signal inlet
     t_int nb_loop; // to be able not to compute everything a each iteration
-    t_int constrained;  // whether to use position constraints
+    t_int limited;  // whether to use position limits
     t_float minX, maxX;
     t_float minY, maxY;
     t_float minZ, maxZ;
@@ -244,8 +244,8 @@ t_int *pmpd3d_tilde_perform(t_int *w)
                 x->mass[i].posY += x->mass[i].speedY;
                 x->mass[i].posZ += x->mass[i].speedZ;
 
-                // apply constraints if set
-                if (x->constrained) {
+                // apply limits if set
+                if (x->limited) {
                     if (x->mass[i].posX < x->minX) {
                         x->mass[i].posX = x->minX;
                         x->mass[i].speedX = 0;
@@ -783,7 +783,7 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
     int maj = 0, min = 0, bug = 0;
     sys_getversion(&maj, &min, &bug);
     x->multichannel = 0;
-    x->constrained = 0;
+    x->limited = 0;
 
     pmpd3d_tilde_reset(x);
 
@@ -797,9 +797,9 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
                 pd_error(x, "[pmpd3d~]: no multichannel support in Pd %i.%i-%i, ignoring '-m' flag", maj, min, bug);
             argc--, argv++;
         }
-        else if (flag == gensym("-c")) {
-            if (argc >= 7) {  // Need 6 more args for constraints
-                x->constrained = 1;
+        else if (flag == gensym("-l")) {
+            if (argc >= 7) {  // need 6 more args for limits
+                x->limited = 1;
                 x->minX = atom_getfloatarg(1, argc, argv);
                 x->maxX = atom_getfloatarg(2, argc, argv);
                 x->minY = atom_getfloatarg(3, argc, argv);
@@ -809,7 +809,7 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
                 argc -= 7;
                 argv += 7;
             } else {
-                pd_error(x, "[pmpd3d~]: -c flag requires 6 values: minX maxX minY maxY minZ maxZ");
+                pd_error(x, "[pmpd3d~]: -l flag requires 6 limit values: minX maxX minY maxY minZ maxZ");
                 argc--, argv++;
             }
         }
