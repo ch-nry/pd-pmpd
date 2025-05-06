@@ -515,17 +515,6 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
                 pd_error(x, "[pmpd~]: no multichannel support in Pd %i.%i-%i, ignoring '-m' flag", maj, min, bug);
             argc--, argv++;
         }
-        else if (flag == gensym("-l")) {
-            if (argc >= 3) {  // need 2 more args for limits
-                x->minX = atom_getfloatarg(1, argc, argv);
-                x->maxX = atom_getfloatarg(2, argc, argv);
-                argc -= 3;
-                argv += 3;
-            } else {
-                pd_error(x, "[pmpd~]: -l flag requires 2 limit values: minX maxX");
-                argc--, argv++;
-            }
-        }
         else {
             pd_error(x, "[pmpd~]: invalid argument %s", flag->s_name);
             argc--, argv++;
