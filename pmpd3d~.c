@@ -125,10 +125,7 @@ typedef struct _pmpd3d_tilde {
     t_int nb_outPosX, nb_outPosY, nb_outPosZ, nb_outSpeedX, nb_outSpeedY, nb_outSpeedZ, nb_outSpeed;
     t_sample f; // used for signal inlet
     t_int nb_loop; // to be able not to compute everything a each iteration
-    t_int limited;  // whether to use position limits
-    t_float minX, maxX;
-    t_float minY, maxY;
-    t_float minZ, maxZ;
+    t_float minX, maxX, minY, maxY, minZ, maxZ;
 } t_pmpd3d_tilde;
 
 t_int *pmpd3d_tilde_perform(t_int *w)
@@ -137,7 +134,7 @@ t_int *pmpd3d_tilde_perform(t_int *w)
     t_pmpd3d_tilde *x = (t_pmpd3d_tilde *)(w[1]);
     t_int n = w[2]; // sample count from sp[0]->s_n
 
-    t_float F, FX, FY, FZ, L, LX, LY, LZ, deltaL, invL;
+    t_float F, FX, FY, FZ, L, LX, LY, LZ, deltaL, invL, tmpX, tmpY, tmpZ;
     t_int i, si, loop;
 
 	t_float sqspeed;
@@ -195,9 +192,6 @@ t_int *pmpd3d_tilde_perform(t_int *w)
                 LZ = x->NLlink[i].mass2->posZ - x->NLlink[i].mass1->posZ;
                 L = sqrt(LY*LY + LX*LX + LZ*LZ);
 
-                // Clamp length to hard limits
-                L = clamp(L, HARD_MIN_LENGTH, HARD_MAX_LENGTH);
-
                 if ((L < x->NLlink[i].Lmax) && (L > x->NLlink[i].Lmin)) {
                     deltaL = L - x->NLlink[i].L0;
                     F = x->NLlink[i].K * pow(fabs(deltaL), x->NLlink[i].Pow);
@@ -244,32 +238,20 @@ t_int *pmpd3d_tilde_perform(t_int *w)
                 x->mass[i].posY += x->mass[i].speedY;
                 x->mass[i].posZ += x->mass[i].speedZ;
 
-                // apply limits if set
-                if (x->limited) {
-                    if (x->mass[i].posX < x->minX) {
-                        x->mass[i].posX = x->minX;
-                        x->mass[i].speedX = 0;
-                    }
-                    else if (x->mass[i].posX > x->maxX) {
-                        x->mass[i].posX = x->maxX;
-                        x->mass[i].speedX = 0;
-                    }
-                    if (x->mass[i].posY < x->minY) {
-                        x->mass[i].posY = x->minY;
-                        x->mass[i].speedY = 0;
-                    }
-                    else if (x->mass[i].posY > x->maxY) {
-                        x->mass[i].posY = x->maxY;
-                        x->mass[i].speedY = 0;
-                    }
-                    if (x->mass[i].posZ < x->minZ) {
-                        x->mass[i].posZ = x->minZ;
-                        x->mass[i].speedZ = 0;
-                    }
-                    else if (x->mass[i].posZ > x->maxZ) {
-                        x->mass[i].posZ = x->maxZ;
-                        x->mass[i].speedZ = 0;
-                    }
+                // space limitation
+                if ((x->mass[i].posX < x->minX) || (x->mass[i].posX > x->maxX) || 
+                    (x->mass[i].posY < x->minY) || (x->mass[i].posY > x->maxY) ||
+                    (x->mass[i].posZ < x->minZ) || (x->mass[i].posZ > x->maxZ)) 
+                {
+                    tmpX = min(x->maxX, max(x->minX, x->mass[i].posX));
+                    tmpY = min(x->maxY, max(x->minY, x->mass[i].posY));
+                    tmpZ = min(x->maxZ, max(x->minZ, x->mass[i].posZ));
+                    x->mass[i].speedX -= x->mass[i].posX - tmpX;
+                    x->mass[i].speedY -= x->mass[i].posY - tmpY;
+                    x->mass[i].speedZ -= x->mass[i].posZ - tmpZ;
+                    x->mass[i].posX = tmpX;
+                    x->mass[i].posY = tmpY;
+                    x->mass[i].posZ = tmpZ;
                 }
             }
         }
@@ -500,6 +482,36 @@ void pmpd3d_tilde_setNLLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom
     else
         percent = 1;
     x->NLlink[idx_NLlink].L0 += percent * (x->NLlink[idx_NLlink].L - x->NLlink[idx_NLlink].L0);
+}
+
+void pmpd3d_tilde_minX(t_pmpd3d_tilde *x, t_float min)
+{
+    x->minX = min;
+}
+
+void pmpd3d_tilde_maxX(t_pmpd3d_tilde *x, t_float max)
+{
+    x->maxX = max;
+}
+
+void pmpd3d_tilde_minY(t_pmpd3d_tilde *x, t_float min)
+{
+    x->minY = min;
+}
+
+void pmpd3d_tilde_maxY(t_pmpd3d_tilde *x, t_float max)
+{
+    x->maxY = max;
+}
+
+void pmpd3d_tilde_minZ(t_pmpd3d_tilde *x, t_float min)
+{
+    x->minZ = min;
+}
+
+void pmpd3d_tilde_maxZ(t_pmpd3d_tilde *x, t_float max)
+{
+    x->maxZ = max;
 }
 
 inline int validate_count(t_pmpd3d_tilde *x, t_int count, t_int count_max, const char* type)
@@ -735,6 +747,12 @@ void pmpd3d_tilde_reset(t_pmpd3d_tilde *x)
     x->nb_link      = 0;
     x->nb_NLlink    = 0;
     x->nb_mass      = 0;
+    x->minX         = -1000000;
+    x->maxX         = 1000000;
+    x->minY         = -1000000;
+    x->maxY         = 1000000;
+    x->minZ         = -1000000;
+    x->maxZ         = 1000000;
     x->nb_inPosX    = 0;
     x->nb_inPosY    = 0;
     x->nb_inPosZ    = 0;
@@ -783,7 +801,6 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
     int maj = 0, min = 0, bug = 0;
     sys_getversion(&maj, &min, &bug);
     x->multichannel = 0;
-    x->limited = 0;
 
     pmpd3d_tilde_reset(x);
 
@@ -799,7 +816,6 @@ void *pmpd3d_tilde_new(t_symbol *s, int argc, t_atom *argv)
         }
         else if (flag == gensym("-l")) {
             if (argc >= 7) {  // need 6 more args for limits
-                x->limited = 1;
                 x->minX = atom_getfloatarg(1, argc, argv);
                 x->maxX = atom_getfloatarg(2, argc, argv);
                 x->minY = atom_getfloatarg(3, argc, argv);
@@ -931,6 +947,12 @@ PMPD_EXPORT void pmpd3d_tilde_setup(void)
     class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLLMin, gensym("setNLLMin"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLLMax, gensym("setNLLMax"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_setNLLCurrent, gensym("setNLLCurrent"), A_GIMME, 0);
+    class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_minX, gensym("minX"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_maxX, gensym("maxX"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_minY, gensym("minY"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_maxY, gensym("maxY"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_minZ, gensym("minZ"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_maxZ, gensym("maxZ"), A_DEFFLOAT, 0);
 
     class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_reset, gensym("reset"), 0);
     class_addmethod(pmpd3d_tilde_class, (t_method)pmpd3d_tilde_dsp, gensym("dsp"), A_CANT, 0);
