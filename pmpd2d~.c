@@ -33,21 +33,11 @@
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) )
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) )
-#define clamp(x,lo,hi) ( min(hi, max(lo, x)) )
 
 #define NB_MAX_LINK_DEFAULT 10000
 #define NB_MAX_MASS_DEFAULT 10000
 #define NB_MAX_IN_DEFAULT    1000
 #define NB_MAX_OUT_DEFAULT   1000
-
-// Hard limits based on float size
-#if PD_FLOATSIZE == 32
-#define HARD_MIN_LENGTH -1e30f
-#define HARD_MAX_LENGTH  1e30f
-#elif PD_FLOATSIZE == 64
-#define HARD_MIN_LENGTH -1e300
-#define HARD_MAX_LENGTH  1e300
-#endif
 
 typedef void (*t_signal_setmultiout)(t_signal **, int); 
 static t_signal_setmultiout g_signal_setmultiout;
@@ -175,9 +165,6 @@ t_int *pmpd2d_tilde_perform(t_int *w)
                 LX = x->NLlink[i].mass2->posX - x->NLlink[i].mass1->posX;
                 LY = x->NLlink[i].mass2->posY - x->NLlink[i].mass1->posY;
                 L = sqrt(LY*LY + LX*LX);
-
-                // Clamp length to hard limits
-                L = clamp(L, HARD_MIN_LENGTH, HARD_MAX_LENGTH);
 
                 if ((L < x->NLlink[i].Lmax) && (L > x->NLlink[i].Lmin)) {
                     deltaL = L - x->NLlink[i].L0;
