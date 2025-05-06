@@ -117,7 +117,7 @@ t_int *pmpd2d_tilde_perform(t_int *w)
     t_pmpd2d_tilde *x = (t_pmpd2d_tilde *)(w[1]);
     t_int n = w[2]; // sample count from sp[0]->s_n
 
-    t_float F, FX, FY, L, LX, LY, tmpX, tmpY, deltaL, invL;
+    t_float F, FX, FY, L, LX, LY, deltaL, invL, tmpX, tmpY;
     t_int i, si, loop;
 
 	t_float sqSpeed;
