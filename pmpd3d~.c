@@ -320,6 +320,7 @@ void pmpd3d_tilde_bang(t_pmpd3d_tilde *x)
     for (i=0; i<x->nb_outSpeedX; i++) logpost(x, 2, "outSpeedX:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedX[i].nbr_outlet, x->outSpeedX[i].mass->Id, x->outSpeedX[i].influence);
     for (i=0; i<x->nb_outSpeedY; i++) logpost(x, 2, "outSpeedY:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedY[i].nbr_outlet, x->outSpeedY[i].mass->Id, x->outSpeedY[i].influence);
     for (i=0; i<x->nb_outSpeedZ; i++) logpost(x, 2, "outSpeedZ:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedZ[i].nbr_outlet, x->outSpeedZ[i].mass->Id, x->outSpeedZ[i].influence);
+    logpost(x, 2, "minX:%f, maxX:%f, minY:%f, maxY:%f, minZ:%f, maxZ:%f", x->minX, x->maxX, x->minY, x->maxY, x->minZ, x->maxZ);
 }
 
 inline int validate_index(t_pmpd3d_tilde *x, int idx, t_int count, const char* type)

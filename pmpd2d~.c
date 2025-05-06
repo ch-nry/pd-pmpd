@@ -277,6 +277,7 @@ void pmpd2d_tilde_bang(t_pmpd2d_tilde *x)
     for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "outSpeed:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass->Id, x->outSpeed[i].influence);
     for (i=0; i<x->nb_outSpeedX; i++) logpost(x, 2, "outSpeedX:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedX[i].nbr_outlet, x->outSpeedX[i].mass->Id, x->outSpeedX[i].influence);
     for (i=0; i<x->nb_outSpeedY; i++) logpost(x, 2, "outSpeedY:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeedY[i].nbr_outlet, x->outSpeedY[i].mass->Id, x->outSpeedY[i].influence);
+    logpost(x, 2, "minX:%f, maxX:%f, minY:%f, maxY:%f", x->minX, x->maxX, x->minY, x->maxY);
 }
 
 inline int validate_index(t_pmpd2d_tilde *x, int idx, t_int count, const char* type)
