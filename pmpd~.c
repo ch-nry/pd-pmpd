@@ -39,15 +39,6 @@
 #define NB_MAX_IN_DEFAULT    1000
 #define NB_MAX_OUT_DEFAULT   1000
 
-// Hard limits based on float size
-#if PD_FLOATSIZE == 32
-#define HARD_MIN_LENGTH -1e30f
-#define HARD_MAX_LENGTH  1e30f
-#elif PD_FLOATSIZE == 64
-#define HARD_MIN_LENGTH -1e300
-#define HARD_MAX_LENGTH  1e300
-#endif
-
 typedef void (*t_signal_setmultiout)(t_signal **, int); 
 static t_signal_setmultiout g_signal_setmultiout;
 static t_class *pmpd_tilde_class;
@@ -174,7 +165,7 @@ t_int *pmpd_tilde_perform(t_int *w)
                 // space limitation
                 if ((x->mass[i].posX < x->minX) || (x->mass[i].posX > x->maxX)) 
                 {
-                    tmpX = min(x->maxX, max(x->minX, x->mass[i].posX));
+                    tmpX = clamp(x->mass[i].posX, x->minX, x->maxX);
                     x->mass[i].speedX -= x->mass[i].posX - tmpX;
                     x->mass[i].posX = tmpX;
                 }
@@ -347,12 +338,12 @@ void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *ar
 }
 
 
-void pmpd_tilde_min(t_pmpd_tilde *x, t_float min)
+void pmpd_tilde_minX(t_pmpd_tilde *x, t_float min)
 {
     x->minX = min;
 }
 
-void pmpd_tilde_max(t_pmpd_tilde *x, t_float max)
+void pmpd_tilde_maxX(t_pmpd_tilde *x, t_float max)
 {
     x->maxX = max;
 }
@@ -614,10 +605,10 @@ PMPD_EXPORT void pmpd_tilde_setup(void)
     class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLMin, gensym("setNLLMin"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLMax, gensym("setNLLMax"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_setNLLCurrent, gensym("setNLLCurrent"), A_GIMME, 0);
-    class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_min, gensym("min"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_min, gensym("minX"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_max, gensym("max"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_max, gensym("maxX"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_minX, gensym("min"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_minX, gensym("minX"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_maxX, gensym("max"), A_DEFFLOAT, 0);
+    class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_maxX, gensym("maxX"), A_DEFFLOAT, 0);
 
     class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_reset, gensym("reset"), 0);
     class_addmethod(pmpd_tilde_class, (t_method)pmpd_tilde_dsp, gensym("dsp"), A_CANT, 0);

@@ -40,15 +40,6 @@
 #define NB_MAX_IN_DEFAULT    1000
 #define NB_MAX_OUT_DEFAULT   1000
 
-// Hard limits based on float size
-#if PD_FLOATSIZE == 32
-#define HARD_MIN_LENGTH -1e30f
-#define HARD_MAX_LENGTH  1e30f
-#elif PD_FLOATSIZE == 64
-#define HARD_MIN_LENGTH -1e300
-#define HARD_MAX_LENGTH  1e300
-#endif
-
 typedef void (*t_signal_setmultiout)(t_signal **, int); 
 static t_signal_setmultiout g_signal_setmultiout;
 static t_class *pmpd3d_tilde_class;
@@ -243,9 +234,9 @@ t_int *pmpd3d_tilde_perform(t_int *w)
                     (x->mass[i].posY < x->minY) || (x->mass[i].posY > x->maxY) ||
                     (x->mass[i].posZ < x->minZ) || (x->mass[i].posZ > x->maxZ)) 
                 {
-                    tmpX = min(x->maxX, max(x->minX, x->mass[i].posX));
-                    tmpY = min(x->maxY, max(x->minY, x->mass[i].posY));
-                    tmpZ = min(x->maxZ, max(x->minZ, x->mass[i].posZ));
+                    tmpX = clamp(x->mass[i].posX, x->minX, x->maxX);
+                    tmpY = clamp(x->mass[i].posY, x->minY, x->maxY);
+                    tmpZ = clamp(x->mass[i].posZ, x->minZ, x->maxZ);
                     x->mass[i].speedX -= x->mass[i].posX - tmpX;
                     x->mass[i].speedY -= x->mass[i].posY - tmpY;
                     x->mass[i].speedZ -= x->mass[i].posZ - tmpZ;
@@ -483,6 +474,20 @@ void pmpd3d_tilde_setNLLCurrent(t_pmpd3d_tilde *x, t_symbol *s, int argc, t_atom
     else
         percent = 1;
     x->NLlink[idx_NLlink].L0 += percent * (x->NLlink[idx_NLlink].L - x->NLlink[idx_NLlink].L0);
+}
+
+void pmpd3d_tilde_min(t_pmpd3d_tilde *x, t_float minX, t_float minY, t_float minZ)
+{
+    x->minX = minX;
+    x->minY = minY;
+    x->minZ = minZ;
+}
+
+void pmpd3d_tilde_max(t_pmpd3d_tilde *x, t_float maxX, t_float maxY, t_float maxZ)
+{
+    x->maxX = maxX;
+    x->maxY = maxY;
+    x->maxZ = maxZ;
 }
 
 void pmpd3d_tilde_minX(t_pmpd3d_tilde *x, t_float min)

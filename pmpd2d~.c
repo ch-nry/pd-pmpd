@@ -33,6 +33,7 @@
 
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) )
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) )
+#define clamp(x,lo,hi) ( min(hi, max(lo, x)) )
 
 #define NB_MAX_LINK_DEFAULT 10000
 #define NB_MAX_MASS_DEFAULT 10000
@@ -209,8 +210,8 @@ t_int *pmpd2d_tilde_perform(t_int *w)
                 // space limitation
                 if ( (x->mass[i].posX < x->minX) || (x->mass[i].posX > x->maxX) || (x->mass[i].posY < x->minY) || (x->mass[i].posY > x->maxY) ) 
                 {
-                    tmpX = min(x->maxX,max(x->minX,x->mass[i].posX));
-                    tmpY = min(x->maxY,max(x->minY,x->mass[i].posY));
+                    tmpX = clamp(x->mass[i].posX, x->minX, x->maxX);
+                    tmpY = clamp(x->mass[i].posY, x->minY, x->maxY);
                     x->mass[i].speedX -= x->mass[i].posX - tmpX;
                     x->mass[i].speedY -= x->mass[i].posY - tmpY;
                     x->mass[i].posX = tmpX;
@@ -814,10 +815,6 @@ PMPD_EXPORT void pmpd2d_tilde_setup(void)
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_setNLLCurrent, gensym("setNLLCurrent"), A_GIMME, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_min, gensym("min"), A_DEFFLOAT, A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_max, gensym("max"), A_DEFFLOAT, A_DEFFLOAT, 0);
-    class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_minX, gensym("Xmin"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_maxX, gensym("Xmax"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_minY, gensym("Ymin"), A_DEFFLOAT, 0);
-    class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_maxY, gensym("Ymax"), A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_minX, gensym("minX"), A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_maxX, gensym("maxX"), A_DEFFLOAT, 0);
     class_addmethod(pmpd2d_tilde_class, (t_method)pmpd2d_tilde_minY, gensym("minY"), A_DEFFLOAT, 0);
