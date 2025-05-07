@@ -1,3 +1,8 @@
+current git (thanks to ben wesch) : 
+- add min / max limit to masses for pmpd~* objects
+- debug memory allocation
+- update build system
+
 version 0.14 
 - add multichanel support
 - bugfix when speedX!=0 but speedX*speedX == 0
