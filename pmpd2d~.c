@@ -118,10 +118,8 @@ t_int *pmpd2d_tilde_perform(t_int *w)
     t_pmpd2d_tilde *x = (t_pmpd2d_tilde *)(w[1]);
     t_int n = w[2]; // sample count from sp[0]->s_n
 
-    t_float F, FX, FY, L, LX, LY, deltaL, invL, tmpX, tmpY;
+    t_float F, FX, FY, L, LX, LY, deltaL, invL, tmpX, tmpY, speed, invSpeed;
     t_int i, si, loop;
-
-	t_float sqSpeed;
 	
     for (si=0; si<n; si++)
     {
@@ -192,12 +190,12 @@ t_int *pmpd2d_tilde_perform(t_int *w)
             {
             // compute new masses position
             // a mass does not move if M=0 (i.e : invM = 0)
-                if (x->mass[i].D && (sqSpeed = x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY) ) { // velocity damping
-                    L = sqrt(sqSpeed);
-                    invL = 1 / L;
+                if ( (x->mass[i].D) && (speed = sqrt(x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY)) ) { // velocity damping
+	                invSpeed = 1/speed;
+                    //invSpeed = speed ? 1/speed : 0;
                     F = -(L - x->mass[i].Doffset) * x->mass[i].D;
-                    x->mass[i].forceX += F * x->mass[i].speedX * invL;
-                    x->mass[i].forceY += F * x->mass[i].speedY * invL;
+                    x->mass[i].forceX += F * x->mass[i].speedX * invSpeed;
+                    x->mass[i].forceY += F * x->mass[i].speedY * invSpeed;
                 }
                 x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
                 x->mass[i].speedY += x->mass[i].forceY * x->mass[i].invM;
