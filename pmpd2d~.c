@@ -30,7 +30,6 @@
 #include "pmpd_export.h"
 #include "pmpd_version.h"
 
-
 #define max(a,b) ( ((a) > (b)) ? (a) : (b) )
 #define min(a,b) ( ((a) < (b)) ? (a) : (b) )
 #define clamp(x,lo,hi) ( min(hi, max(lo, x)) )
@@ -52,7 +51,7 @@ struct _mass {
     t_float posY;
     t_float forceX;
     t_float forceY;
-    t_float D; // damping de vitesse
+    t_float D; // velocity damping
     t_float Doffset;
     t_int Id;
 };
@@ -190,10 +189,10 @@ t_int *pmpd2d_tilde_perform(t_int *w)
             {
             // compute new masses position
             // a mass does not move if M=0 (i.e : invM = 0)
-                if ( (x->mass[i].D) && (speed = sqrt(x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY)) ) { // velocity damping
+                if ( (x->mass[i].D) && (speed = x->mass[i].speedX * x->mass[i].speedX + x->mass[i].speedY * x->mass[i].speedY) ) { // velocity damping
+	                speed = sqrt(speed);
 	                invSpeed = 1/speed;
-                    //invSpeed = speed ? 1/speed : 0;
-                    F = -(L - x->mass[i].Doffset) * x->mass[i].D;
+                    F = -(speed - x->mass[i].Doffset) * x->mass[i].D;
                     x->mass[i].forceX += F * x->mass[i].speedX * invSpeed;
                     x->mass[i].forceY += F * x->mass[i].speedY * invSpeed;
                 }
