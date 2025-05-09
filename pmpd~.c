@@ -164,11 +164,11 @@ t_int *pmpd_tilde_perform(t_int *w)
 
                 // space limitation
                 if ((x->mass[i].posX < x->minX) || (x->mass[i].posX > x->maxX)) 
-                {
+                 {
                     tmpX = clamp(x->mass[i].posX, x->minX, x->maxX);
                     x->mass[i].speedX -= x->mass[i].posX - tmpX;
                     x->mass[i].posX = tmpX;
-                }
+                 }     
             }
         }
 
@@ -219,7 +219,7 @@ void pmpd_tilde_bang(t_pmpd_tilde *x)
     t_int i;
     for (i=0; i<x->nb_mass; i++)     logpost(x, 2, "mass:%ld, M:%f, pos:%f", i, x->mass[i].invM > 0 ? 1/x->mass[i].invM : 0, x->mass[i].posX);
     for (i=0; i<x->nb_link; i++)     logpost(x, 2, "link:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f", i, x->link[i].mass1->Id, x->link[i].mass2->Id, x->link[i].K, x->link[i].D);
-    for (i=0; i<x->nb_NLlink; i++)   logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, Lmin:%f, Lmax:%f, Pow:%f", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K, x->NLlink[i].D, x->NLlink[i].L0, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
+    for (i=0; i<x->nb_NLlink; i++)   logpost(x, 2, "NLlink:%ld, mass1:%ld, mass2:%ld, K:%f, D:%f, L0:%f, L:%f, Lmin:%f, Lmax:%f, Pow:%f", i, x->NLlink[i].mass1->Id, x->NLlink[i].mass2->Id, x->NLlink[i].K, x->NLlink[i].D, x->NLlink[i].L0, x->NLlink[i].L, x->NLlink[i].Lmin, x->NLlink[i].Lmax, x->NLlink[i].Pow);
     for (i=0; i<x->nb_inPos; i++)    logpost(x, 2, "inPos:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inPos[i].nbr_inlet, x->inPos[i].mass->Id, x->inPos[i].influence);
     for (i=0; i<x->nb_inForce; i++)  logpost(x, 2, "inForce:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForce[i].nbr_inlet, x->inForce[i].mass->Id, x->inForce[i].influence);
     for (i=0; i<x->nb_outPos; i++)   logpost(x, 2, "outPos:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPos[i].nbr_outlet, x->outPos[i].mass->Id, x->outPos[i].influence);
