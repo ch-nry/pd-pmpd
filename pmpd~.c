@@ -98,6 +98,7 @@ typedef struct _pmpd_tilde {
     t_sample f; // used for signal inlet
     t_int nb_loop; // to be able not to compute everything a each iteration
     t_float minX, maxX;
+    t_int test_minmax;
 } t_pmpd_tilde;
 
 t_int *pmpd_tilde_perform(t_int *w)
@@ -152,24 +153,38 @@ t_int *pmpd_tilde_perform(t_int *w)
                     x->NLlink[i].mass2->forceX += F;
                 }
             }
-            for (i=0; i<x->nb_mass; i++)
-            {
-            // compute new masses position
-            // a mass does not move if M=0 (i.e : invM = 0)
-                x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
-                x->mass[i].forceX = 0; //random_bang_pmpd_tilde(x) * 1e-25;
-                    // only used for denormal problem
-                    // -ffast-math -O6 does not solve the problem
-                x->mass[i].posX += x->mass[i].speedX;
-
-                // space limitation
-                if ((x->mass[i].posX < x->minX) || (x->mass[i].posX > x->maxX)) 
-                 {
-                    tmpX = clamp(x->mass[i].posX, x->minX, x->maxX);
-                    x->mass[i].speedX -= x->mass[i].posX - tmpX;
-                    x->mass[i].posX = tmpX;
-                 }     
+            if (!x->test_minmax) { // minimal test for high performances
+		        for (i=0; i<x->nb_mass; i++)
+		        {
+				    // compute new masses position
+				    // a mass does not move if M=0 (i.e : invM = 0)
+				        x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
+				        x->mass[i].forceX = 0; 
+				        x->mass[i].posX += x->mass[i].speedX;     
+		        }
             }
+            else 
+            { // lot's of test for better accuracy
+                for (i=0; i<x->nb_mass; i++)
+		        { 
+		        	if(x->mass[i].invM!=0) 
+		        	{
+				    // compute new masses position
+				    // a mass does not move if M=0 (i.e : invM = 0)
+				        x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
+				        x->mass[i].forceX = 0; 
+				        x->mass[i].posX += x->mass[i].speedX;
+
+				        // space limitation
+				         if ((x->mass[i].posX < x->minX) || (x->mass[i].posX > x->maxX)) 
+				         {
+				            tmpX = clamp(x->mass[i].posX, x->minX, x->maxX);
+				            x->mass[i].speedX -= x->mass[i].posX - tmpX;
+				            x->mass[i].posX = tmpX;
+				         }     
+		             }
+		        }
+			}
         }
 
         // compute output vector value
@@ -224,7 +239,7 @@ void pmpd_tilde_bang(t_pmpd_tilde *x)
     for (i=0; i<x->nb_inForce; i++)  logpost(x, 2, "inForce:%ld, Inlet:%ld, Mass:%ld, Amplitude:%f", i, x->inForce[i].nbr_inlet, x->inForce[i].mass->Id, x->inForce[i].influence);
     for (i=0; i<x->nb_outPos; i++)   logpost(x, 2, "outPos:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outPos[i].nbr_outlet, x->outPos[i].mass->Id, x->outPos[i].influence);
     for (i=0; i<x->nb_outSpeed; i++) logpost(x, 2, "outSpeed:%ld, Outlet:%ld, Mass:%ld, Amplitude:%f", i, x->outSpeed[i].nbr_outlet, x->outSpeed[i].mass->Id, x->outSpeed[i].influence);
-    logpost(x, 2, "minX:%f, maxX:%f", x->minX, x->maxX);
+    if(x->test_minmax) { logpost(x, 2, "minX:%f, maxX:%f", x->minX, x->maxX); }
 }
 
 inline int validate_index(t_pmpd_tilde *x, int idx, t_int count, const char* type)
@@ -341,11 +356,13 @@ void pmpd_tilde_setNLLCurrent(t_pmpd_tilde *x, t_symbol *s, int argc, t_atom *ar
 void pmpd_tilde_minX(t_pmpd_tilde *x, t_float min)
 {
     x->minX = min;
+    x->test_minmax = 1;
 }
 
 void pmpd_tilde_maxX(t_pmpd_tilde *x, t_float max)
 {
     x->maxX = max;
+    x->test_minmax = 1;
 }
 
 inline int validate_count(t_pmpd_tilde *x, t_int count, t_int count_max, const char* type)
@@ -533,6 +550,7 @@ void *pmpd_tilde_new(t_symbol *s, int argc, t_atom *argv)
     x->inForce  = (struct _input *)getbytes(x->nb_max_in * sizeof(struct _input));
     x->outPos   = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
     x->outSpeed = (struct _output *)getbytes(x->nb_max_out * sizeof(struct _output));
+    x->test_minmax = 0;
 
     outlet_new(&x->x_obj, &s_signal);
     // add more channels if multichannel not set
