@@ -153,24 +153,20 @@ t_int *pmpd_tilde_perform(t_int *w)
                     x->NLlink[i].mass2->forceX += F;
                 }
             }
-            if (!x->test_minmax) { // minimal test for high performances
+            if (!x->test_minmax) { // High-performance loop, but accuracy errors can occur.
 		        for (i=0; i<x->nb_mass; i++)
-		        {
-				    // compute new masses position
-				    // a mass does not move if M=0 (i.e : invM = 0)
-				        x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
-				        x->mass[i].forceX = 0; 
-				        x->mass[i].posX += x->mass[i].speedX;     
+		        { // compute new masses position
+			        x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
+			        x->mass[i].forceX = 0; 
+			        x->mass[i].posX += x->mass[i].speedX;     
 		        }
             }
-            else 
+            else  // slower loop but more robust computation
             { // lot's of test for better accuracy
                 for (i=0; i<x->nb_mass; i++)
-		        { 
+		        { // compute new masses position
 		        	if(x->mass[i].invM!=0) 
-		        	{
-				    // compute new masses position
-				    // a mass does not move if M=0 (i.e : invM = 0)
+		        	{ // a mass does not move if M=0 (i.e : invM = 0)
 				        x->mass[i].speedX += x->mass[i].forceX * x->mass[i].invM;
 				        x->mass[i].forceX = 0; 
 				        x->mass[i].posX += x->mass[i].speedX;
