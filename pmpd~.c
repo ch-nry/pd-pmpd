@@ -481,6 +481,7 @@ void pmpd_tilde_reset(t_pmpd_tilde *x)
     x->nb_inForce  = 0;
     x->nb_outSpeed = 0;
     x->nb_outPos   = 0;
+    x->test_minmax = 0;
 }
 
 void pmpd_tilde_free(t_pmpd_tilde *x) {
