@@ -1,4 +1,4 @@
-current git (thanks to ben wesch) : 
+version 0.14.2 (thanks to ben wesch) : 
 - add min / max limit to masses for pmpd~* objects
 - debug memory allocation
 - update build system
