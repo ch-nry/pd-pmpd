@@ -21,11 +21,6 @@
 #include "m_pd.h"
 #include <stdio.h>
 #include <math.h>
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <dlfcn.h>
-#endif
 
 #include "pmpd_export.h"
 #include "pmpd_version.h"
@@ -39,8 +34,8 @@
 #define NB_MAX_IN_DEFAULT    1000
 #define NB_MAX_OUT_DEFAULT   1000
 
-typedef void (*t_signal_setmultiout)(t_signal **, int); 
-static t_signal_setmultiout g_signal_setmultiout;
+typedef void (*t_signal_setmultiout_fn)(t_signal **, int); 
+static t_signal_setmultiout_fn g_signal_setmultiout;
 static t_class *pmpd2d_tilde_class;
 
 struct _mass {
@@ -778,22 +773,8 @@ void *pmpd2d_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 PMPD_EXPORT void pmpd2d_tilde_setup(void)
 {
-// multichannel handling copied from https://github.com/Spacechild1/vstplugin/blob/3f0ed8a800ea238bf204a2ead940b2d1324ac909/pd/src/vstplugin~.cpp#L4122-L4136
-#ifdef _WIN32
-    // get a handle to the module containing the Pd API functions.
-    // NB: GetModuleHandle("pd.dll") does not cover all cases.
-    HMODULE module;
-    if (GetModuleHandleEx(
-            GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-            (LPCSTR)&pd_typedmess, &module)) {
-        g_signal_setmultiout = (t_signal_setmultiout)(void *)GetProcAddress(
-            module, "signal_setmultiout");
-    }
-#else
-    // search recursively, starting from the main program
-    g_signal_setmultiout = (t_signal_setmultiout)dlsym(
-        dlopen(NULL, RTLD_NOW), "signal_setmultiout");
-#endif
+    // get the signal_setmultiout function (added in Pd 0.54)
+    g_signal_setmultiout = (t_signal_setmultiout_fn)sys_getfunbyname("signal_setmultiout");
 
     pmpd2d_tilde_class = class_new(
         gensym("pmpd2d~"),
