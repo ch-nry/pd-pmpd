@@ -3,7 +3,7 @@ name: Build Pure-Data externals
 on: [push, pull_request]
 
 env:
-  PD_VERSION: 0.54-1
+  PD_VERSION: 0.55-0
 
 jobs:
   build_linux:
