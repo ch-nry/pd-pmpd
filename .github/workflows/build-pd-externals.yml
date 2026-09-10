@@ -13,7 +13,7 @@ jobs:
         arch: [amd64, arm64]
         floatsize: [32, 64]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Clone Pure Data
       run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
@@ -35,7 +35,7 @@ jobs:
         cmake --build build --target install
 
     - name: Archive Package
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: pmpd-linux-${{ matrix.arch }}-pd${{ matrix.floatsize }}
         path: build/package/pmpd
@@ -43,7 +43,7 @@ jobs:
   build_linux_arm7:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Clone Pure Data
       run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
@@ -57,7 +57,7 @@ jobs:
       run: ./cross_compile_rpi.sh
 
     - name: Archive Package
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: pmpd-linux-arm7-pd32
         path: build/package/pmpd
@@ -68,7 +68,7 @@ jobs:
       matrix:
         floatsize: [32, 64]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Clone Pure Data
       run: git clone --branch=${PD_VERSION} --depth=1 https://github.com/pure-data/pure-data.git
@@ -89,7 +89,7 @@ jobs:
         cmake --build build --target install
 
     - name: Archive Package
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: pmpd-macos-universal-pd${{ matrix.floatsize }}
         path: build/package/pmpd
@@ -100,7 +100,7 @@ jobs:
       matrix:
         floatsize: [32, 64]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Install Pure Data
       shell: pwsh
@@ -124,7 +124,7 @@ jobs:
         cmake --build build --config Release --target install
 
     - name: Archive Package
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: pmpd-windows-amd64-pd${{ matrix.floatsize }}
         path: build/package/pmpd
@@ -132,7 +132,7 @@ jobs:
   build_windows_i386:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Download Pure Data Binaries
       run: |
@@ -145,7 +145,7 @@ jobs:
         cmake --build build --config Release --target install
 
     - name: Archive Package
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: pmpd-windows-i386-pd32
         path: build/package/pmpd
@@ -157,7 +157,7 @@ jobs:
       matrix:
         os: [linux, macos, windows]
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: artifacts
 
@@ -167,7 +167,7 @@ jobs:
           cp -rn artifacts/pmpd-${{ matrix.os }}*/* pmpd
 
       - name: Upload Package
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pmpd-${{ matrix.os }}
           path: pmpd
@@ -187,21 +187,21 @@ jobs:
     needs: [package_and_release]
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           path: pmpd-src
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: pmpd-windows
           path: pmpd-windows
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: pmpd-macos
           path: pmpd-macos
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: pmpd-linux
           path: pmpd-linux
