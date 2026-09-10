@@ -3,7 +3,7 @@ name: Build Pure-Data externals
 on: [push, pull_request]
 
 env:
-  PD_VERSION: 0.54-1
+  PD_VERSION: 0.56-2
 
 jobs:
   build_linux:
@@ -102,25 +102,25 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Download Pure Data Binaries
+    - name: Install Pure Data
       shell: pwsh
       run: |
         if (${{ matrix.floatsize }} -eq 32) {
-          Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-$env:PD_VERSION.msw.zip" -OutFile "pd${{ matrix.floatsize }}-$env:PD_VERSION.msw.zip"
+          Invoke-WebRequest -Uri "http://msp.ucsd.edu/Software/pd-$env:PD_VERSION.msw.zip" -OutFile "pd-$env:PD_VERSION.msw.zip"
+          Expand-Archive -Path "pd-$env:PD_VERSION.msw.zip" -DestinationPath .
+          "PD_HOME=$(Resolve-Path pd-$env:PD_VERSION)" | Out-File -FilePath $env:GITHUB_ENV -Append
         } else {
-          Invoke-WebRequest -Uri "https://puredata.info/downloads/pure-data/releases/$env:PD_VERSION-pd64/Pd64-$env:PD_VERSION.msw.zip" -OutFile "pd${{ matrix.floatsize }}-$env:PD_VERSION.msw.zip"
+          winget install --id MillerPuckette.Pd64 --exact --version $env:PD_VERSION --silent --accept-package-agreements --accept-source-agreements --disable-interactivity
+          $lib = Get-ChildItem -Path "${env:ProgramFiles}\Pd64","${env:LOCALAPPDATA}\Pd64" -Filter pd64.lib -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $lib) { throw "pd64.lib not found after winget install" }
+          "PD_HOME=$($lib.Directory.Parent.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append
         }
-        Expand-Archive -Path "pd${{ matrix.floatsize }}-$env:PD_VERSION.msw.zip" -DestinationPath .
 
     - name: Build
       shell: pwsh
       run: |
-        if (${{ matrix.floatsize }} -eq 32) {
-          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="pd-$env:PD_VERSION/src" -DPUREDATA_LIB="pd-$env:PD_VERSION/bin/pd.lib" -A x64 -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
-        } else {
-          $pd64_version = $env:PD_VERSION -replace '-', '.'
-          cmake -S . -B build -DPUREDATA_INCLUDE_DIRS="Pd-$pd64_version/src" -DPUREDATA_LIB="Pd-$pd64_version/bin/pd64.lib" -A x64 -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
-        }
+        $pdlib = if (${{ matrix.floatsize }} -eq 64) { "pd64.lib" } else { "pd.lib" }
+        cmake -S . -B build "-DPUREDATA_INCLUDE_DIRS=$env:PD_HOME/src" "-DPUREDATA_LIB=$env:PD_HOME/bin/$pdlib" -A x64 -DPUREDATA_FLOATSIZE=${{ matrix.floatsize }}
         cmake --build build --config Release --target install
 
     - name: Archive Package
